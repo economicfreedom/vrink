@@ -270,6 +270,7 @@
 										<form method="post" action="contact.php" name="contactform" id="contactform">
 											<div class="row">
 												<div class="col-md-12">
+
 													<i class="fa fa-user"></i>
 													<input name="name" type="text" id="name" class="input-style" placeholder="Name" />
 												</div>
