@@ -4,7 +4,7 @@ spring:
       prefix: /WEB-INF/view/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://16ce926b4e8e583903503d8632969b8b80e72c9e.cmta58hzn9se.ap-northeast-2.rds.amazonaws.com/vrink?serverTimeZone=Asia/Seoul
+    url: jdbc:mysql://ls-16ce926b4e8e583903503d8632969b8b80e72c9e.cmta58hzn9se.ap-northeast-2.rds.amazonaws.com:3306/vrink?serverTimeZone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: dbmasteruser
     password: ?0=cf,Ky48%u,)n2V7K1:zIhcP-PyX]G
