@@ -7,13 +7,13 @@
     <title>VRINK</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/><!-- Bootstrap -->
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"/><!-- Icons -->
-    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css"/><!-- Owl Carousal -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"/><!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css"/><!-- Icons -->
+    <link rel="stylesheet" href="/css/owl.carousel.css" type="text/css"/><!-- Owl Carousal -->
 
-    <link rel="stylesheet" href="css/style.css" type="text/css"/><!-- Style -->
-    <link rel="stylesheet" href="css/responsive.css" type="text/css"/><!-- Responsive -->
-    <link rel="stylesheet" href="css/colors/colors.css" type="text/css"/><!-- color -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/><!-- Style -->
+    <link rel="stylesheet" href="/css/responsive.css" type="text/css"/><!-- Responsive -->
+    <link rel="stylesheet" href="/css/colors/colors.css" type="text/css"/><!-- color -->
 
 </head>
 

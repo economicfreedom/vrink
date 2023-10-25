@@ -5219,6 +5219,26 @@ footer.light-footer .bottom-line a {
 	margin-right: 3rem;
 }
 
+.p-1 {
+	padding: .25rem;
+}
+
+.p-2 {
+	padding: .5rem;
+}
+
+.p-3 {
+	padding: 1rem;
+}
+
+.p-4 {
+	padding: 1.5rem;
+}
+
+.p-5 {
+	padding: 3rem;
+}
+
 p {
 	word-wrap: break-word;
 }
