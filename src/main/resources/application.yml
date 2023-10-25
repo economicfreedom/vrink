@@ -1,0 +1,45 @@
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://16ce926b4e8e583903503d8632969b8b80e72c9e.cmta58hzn9se.ap-northeast-2.rds.amazonaws.com/vrink?serverTimeZone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: dbmasteruser
+    password: ?0=cf,Ky48%u,)n2V7K1:zIhcP-PyX]G
+
+  servlet:
+    multipart:
+      enabled: true
+      location: /var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/static
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/**/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+org:
+  zerock:
+    upload:
+      path: /var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/static
