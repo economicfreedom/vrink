@@ -34,7 +34,7 @@
                 success: function (res) {
 
                     alert("작가 신청이 완료되었습니다.")
-                    location.href = "/"
+                    location.href = "../../.."
 
                 },
                 error: function (res) {
