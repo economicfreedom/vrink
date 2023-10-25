@@ -29,7 +29,9 @@ public class EditorRestController {
 
 //      session.getAttribute("asdf");
 
+
         testDTO.setUserId(1);
+
         Integer res =  editorService.requestApproval(testDTO);
 
 

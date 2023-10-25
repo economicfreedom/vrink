@@ -4,7 +4,11 @@
 
 
     <select id="requestApproval" resultType="java.lang.Integer">
+
+
         insert into apply(user_id, name, number)
             value (#{userId},#{accountName},#{accountNumber})
+
+
     </select>
 </mapper>

@@ -16,17 +16,16 @@
                 alert('한글만 입력입력해주세요.')
                 return;
             }
-            if (!numberReg.test(accountNumber)) {
-                alert('숫자만 입력해주세요')
-                return;
-            }
+            // if (!numberReg.test(accountNumber)) {
+            //     alert('숫자만 입력해주세요')
+            //     return;
+            // }
 
 
             $.ajax({
-                url: "/test2",
+                url: "/editor/apply-request",
                 type: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/json",
                 data: JSON.stringify({
                     accountName: accountName,
                     accountNumber: accountNumber
@@ -34,10 +33,11 @@
                 success: function (res) {
 
                     alert("작가 신청이 완료되었습니다.")
-                    location.href = "../../.."
+                    location.href = "/";
 
                 },
                 error: function (res) {
+                    console.log(res);
                     alert("알러트")
                 }
 
