@@ -47,8 +47,6 @@
 <%--	                                </div> --%>
 <%--	                            </div> --%>
 
-
-
 <h3 class="mt-4">사용자 정보</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">User & Maker Total Count</li>
@@ -167,3 +165,4 @@
 </script>
 
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp" %>
+

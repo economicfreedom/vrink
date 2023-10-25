@@ -8,8 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/editor")
 public class EditorController {
 
-	@GetMapping("/editor-detail")
-	public String editorDetail() {
-		return "files_mushi/editorDetail";
-	}
+    @GetMapping("/editor-detail")
+    public String editorDetail() {
+        return "files_mushi/editorDetail";
+    }
+
+    @GetMapping("/apply-form")
+    public String applyPage() {
+
+
+
+        return "user/applyForm";
+    }
 }
