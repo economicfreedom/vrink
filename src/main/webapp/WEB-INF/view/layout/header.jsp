@@ -16,7 +16,6 @@
 <link rel="stylesheet" href="/css/colors/colors.css" type="text/css" /><!-- color -->
 
 </head>
-<body>
 
 <div class="theme-layout">
 
@@ -220,4 +219,6 @@
 			</div>
 		</div>
 	</header>
-	
+</div>
+	<body>
+	<section style="min-height: calc(100vh - 204px);">
