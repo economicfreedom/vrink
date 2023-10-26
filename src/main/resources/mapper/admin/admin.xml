@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.admin.repository.interfaces.AdminRepository">
+
+    <select id="getAllAdminApplyList" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+        SELECT apply.*, user.nickname
+        FROM apply
+        INNER JOIN user ON apply.user_id = user.user_id
+    </select>
+
+    <select id="getAllAdminApplyListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+        SELECT apply.*, user.nickname
+        FROM apply
+        INNER JOIN user ON apply.user_id = user.user_id
+        ORDER BY apply.apply_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllAdminApplyListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+        SELECT apply.*, user.nickname
+        FROM apply
+        INNER JOIN user ON apply.user_id = user.user_id
+        WHERE apply.accepted = #{classification}
+        ORDER BY apply.apply_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllAdminApplyListByType" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+        SELECT apply.*, user.nickname
+        FROM apply
+        INNER JOIN user ON apply.user_id = user.user_id
+        WHERE apply.accepted = #{classification}
+        ORDER BY apply.apply_id DESC
+    </select>
+
+    <select id="countAllAdminApply" resultType="integer">
+        SELECT count(*)
+        FROM apply
+    </select>
+
+    <select id="countAdminApplyByType" resultType="integer">
+        SELECT count(*)
+        FROM apply
+        WHERE accepted = #{classification}
+    </select>
+
+</mapper>
