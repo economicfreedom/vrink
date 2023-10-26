@@ -89,24 +89,31 @@ $('.summernote').summernote({
             onImageUpload : function(files, editor, welEditable) {
         // 파일 업로드(다중업로드를 위해 반복문 사용)
             for (var i = files.length - 1; i >= 0; i--) {
-                    uploadSummernoteImageFile(files[i],
+                    sendFile(files[i],
                     this);
                     }
             }
         }//end callbacks
 });
 
-function uploadSummernoteImageFile(file, editor) {
-    data = new FormData();
-    data.append("file", file);
+function sendFile(file, editor) {
+    var data = new FormData();
+    data.append("uploadFiles", file);
+    data.append("w", 100);
+    data.append("h", 100);
+	console.log(data);
+    
     $.ajax({
         url : "/upload-img",
         data : data,
         type : "POST",
         dataType : 'JSON',
-        contentType : false,
-        processData : false,
-        success : function(data) {
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        success : function(url) {
+        	console.log('헬로')
             //항상 업로드된 파일의 url이 있어야 한다.
             $(editor).summernote('insertImage', contextPath+data.url);
         }
