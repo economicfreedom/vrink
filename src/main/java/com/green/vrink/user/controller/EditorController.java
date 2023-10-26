@@ -2,6 +2,7 @@ package com.green.vrink.user.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -16,6 +17,11 @@ public class EditorController {
     
     @GetMapping("/editor-write")
     public String editorWrite() {
+    	return "files_mushi/editorWrite";
+    }
+    
+    @PostMapping("/editor-write")
+    public String editorWriteProc() {
     	return "files_mushi/editorWrite";
     }
     

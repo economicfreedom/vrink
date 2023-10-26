@@ -53,10 +53,10 @@
 		<div class="col-sm-3">
 			<div class="t-center" style="border: 1px solid #343434;">
 				<div class="p-2 d-flex j-around" style="gap: 10rem;">
-					<div style="font-size:25px">
+					<div style="font-size:25px; cursor: pointer">
 						&#128680;
 					</div>
-					<div style="font-size:25px">
+					<div style="font-size:25px; cursor: pointer"">
 						&#128151;
 					</div>
 				</div>
