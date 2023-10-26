@@ -1,11 +1,11 @@
-package com.green.vrink.reply.repository.model;
+package com.green.vrink.review.repository.model;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Reply {
+public class Review {
 
 
 

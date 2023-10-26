@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
@@ -30,16 +31,16 @@
 
         })
 
-        $("#reply-submit").click(function () {
+        $("#review-submit").click(function () {
 
-            let content = $("#reply-content").val();
+            let content = $("#review-content").val();
 
             let star = $("#star-val").val();
 
             console.log(star);
 
 
-            fetch('/reply/save', {
+            fetch('/review/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,7 +55,7 @@
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert("이미 요청된 신고입니다.")
+                        location.reload();
                     } else {
                         alert("")
                     }
@@ -160,7 +161,7 @@
 	            <span class="star">
 	                ★★★★★
 	                <span id="placeScore" style="width : 60%;">★★★★★</span>
-	                <input type="range" name="placeScore" id="star-val" oninput="drawStar(this)" value="6" step="1"
+	                <input type="range" name="placeScore" id="star-val" oninput="drawStar(this)" value="6" step="2"
                            min="0" max="10">
 	            </span>
             </div>
@@ -173,11 +174,11 @@
         <div class="col-sm-2" style="height: 48px; line-height: 58px"><strong>별점을 선택해주세요</strong></div>
         <div class="col-sm-11">
             <textarea rows="3" cols="" style="width: 100%; resize: none;" placeholder="리뷰를 입력해주세요."
-                      id="reply-content"></textarea>
+                      id="review-content"></textarea>
         </div>
         <div class="col-sm-1">
             <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px;cursor: pointer"
-                 id="reply-submit">
+                 id="review-submit">
                 작성
             </div>
         </div>
@@ -204,43 +205,23 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <c:forEach items="${reviewList}" var="review">
                     <tr class="list-tr">
 
-                        <td>★★★★★</td>
-                        <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
-                        <td>
-                            <button>버튼</button>
-                            <button>버튼</button>
-                        </td>
-                        <td>**비밀</td>
-                        <td>23-10-25</td>
-                    </tr>
-                    <tr class="list-tr">
-                        <td>★★★★★</td>
+                        <td style="color: gold">${review.star}</td>
                         <td class="t-left"><textarea rows="3" cols="" style="
                         width: 100%; resize: none; border: none; outline:none; cursor: default" readonly
-                                                     placeholder="리뷰를 입력해주세요."></textarea>
-                        </td>
-                        <td>
-                            <button>버튼</button>
-                            <button>버튼</button>
-                        </td>
-                        <td>**비밀</td>
-                        <td>23-10-25</td>
-                    </tr>
-                    <tr class="list-tr">
-
-                        <td>★★★★★</td>
-                        <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
+                                                     placeholder="리뷰를 입력해주세요.">${review.content}</textarea></td>
                         <td>
                             <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
                                 <button type="button" class="btn btn-default">수정</button>
                                 <button type="button" class="btn btn-danger">삭제</button>
                             </div>
                         </td>
-                        <td>**비밀</td>
-                        <td>23-10-25</td>
+                        <td>${review.nickname}</td>
+                        <td>${review.createdAt}</td>
                     </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
