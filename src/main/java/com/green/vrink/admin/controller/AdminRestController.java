@@ -7,6 +7,8 @@ import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -156,6 +158,18 @@ public class AdminRestController {
 
             return adminApplyClassificationDto;
         }
+    }
+
+    @PostMapping("/changeApply")
+    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted) {
+
+        log.info("승인 상태 변경 컨트롤러 실행");
+
+        if(accepted == 1) accepted = 0;
+        else accepted = 1;
+
+        adminService.changeApply(applyId, accepted);
+        return ResponseEntity.status(HttpStatus.OK).body(200);
     }
 
 }
