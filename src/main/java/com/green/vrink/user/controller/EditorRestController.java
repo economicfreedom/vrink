@@ -32,8 +32,8 @@ public class EditorRestController {
 
         approvalDTO.setUserId(1);
 
-        Integer res =  editorService.requestApproval(approvalDTO);
 
+        Integer res =  editorService.requestApproval(approvalDTO);
 
 
         log.info("Test Dto {}", approvalDTO);

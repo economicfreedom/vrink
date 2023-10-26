@@ -7,4 +7,16 @@
             VALUE (#{userId},#{reportUserId},#{boardId},#{editorId})
 
     </insert>
+    <select id="checkReport" resultType="java.lang.Integer">
+
+        SELECT 1 FROM report
+
+        <if test="boardId == null">
+            WHERE user_id = #{userId} AND editor_id = #{editorId}
+        </if>
+        <if test="editorId == null">
+            WHERE user_id = #{userId} AND board_id = #{boardId}
+        </if>
+
+    </select>
 </mapper>

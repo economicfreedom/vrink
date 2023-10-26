@@ -3,7 +3,9 @@ package com.green.vrink.report.service;
 import com.green.vrink.report.dto.ReportDTO;
 import com.green.vrink.report.repository.model.Report;
 import com.green.vrink.util.Converter;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReportConverter implements Converter<ReportDTO, Report> {
 
 

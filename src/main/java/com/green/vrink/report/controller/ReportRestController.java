@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/report")
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class ReportRestController {
@@ -20,6 +22,15 @@ public class ReportRestController {
 
     @PostMapping("/report-board")
     public ResponseEntity<?> reportBoard(@RequestBody ReportDTO reportDTO) {
+        log.info("report dto {}",reportDTO);
+
+
+
+        Integer checkRes = reportService.checkReport(reportDTO);
+
+        if (checkRes != null){
+            return ResponseEntity.badRequest().build();
+        }
 
         Integer res = reportService.saveReportBoard(reportDTO);
         if (res == 1){
