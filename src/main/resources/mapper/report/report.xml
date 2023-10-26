@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.report.repository.interfaces.ReportRepository">
+    <insert id="saveReport">
+
+        INSERT INTO report(user_id, r_user_id, board_id, editor_id)
+            VALUE (#{userId},#{reportUserId},#{boardId},#{editorId})
+
+    </insert>
+    <select id="checkReport" resultType="java.lang.Integer">
+
+        SELECT 1 FROM report
+
+        <if test="boardId == null">
+            WHERE user_id = #{userId} AND editor_id = #{editorId}
+        </if>
+        <if test="editorId == null">
+            WHERE user_id = #{userId} AND board_id = #{boardId}
+        </if>
+
+    </select>
+</mapper>
