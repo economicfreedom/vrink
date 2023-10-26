@@ -30,6 +30,39 @@
 
         })
 
+        $("#reply-submit").click(function () {
+
+            let content = $("#reply-content").val();
+
+            let star = $("#star-val").val();
+
+            console.log(star);
+
+
+            fetch('/reply/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    editorId:1,
+                    userId:1,
+                    content:content,
+                    count:star
+
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        alert("이미 요청된 신고입니다.")
+                    } else {
+                        alert("")
+                    }
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+
+        })
 
     })
 </script>
@@ -127,7 +160,7 @@
 	            <span class="star">
 	                ★★★★★
 	                <span id="placeScore" style="width : 60%;">★★★★★</span>
-	                <input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="6" step="1"
+	                <input type="range" name="placeScore" id="star-val" oninput="drawStar(this)" value="6" step="1"
                            min="0" max="10">
 	            </span>
             </div>
@@ -143,7 +176,8 @@
                       id="reply-content"></textarea>
         </div>
         <div class="col-sm-1">
-            <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px">
+            <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px;cursor: pointer"
+                 id="reply-submit">
                 작성
             </div>
         </div>
@@ -199,11 +233,10 @@
                         <td>★★★★★</td>
                         <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
                         <td>
-                            <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%;
-">
-                            <button>버튼</button>
-                            <button>버튼</button>
-                                </div>
+                            <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
+                                <button type="button" class="btn btn-default">수정</button>
+                                <button type="button" class="btn btn-danger">삭제</button>
+                            </div>
                         </td>
                         <td>**비밀</td>
                         <td>23-10-25</td>

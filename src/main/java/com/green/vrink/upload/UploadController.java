@@ -33,8 +33,9 @@ import java.util.UUID;
 @RestController
 @Slf4j
 public class UploadController {
-    @Value("${org.zerock.upload.path}")
-    private String uploadPath;
+//    @Value("${org.zerock.upload.path}")
+    private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
+
 
 
     /**
@@ -131,10 +132,10 @@ public class UploadController {
 
         UploadResponseDTO uploadResponseDTO = null;
         for (MultipartFile uploadFile : uploadFiles) {
-//            if (!uploadFile.getContentType().startsWith("image")) {
-//                log.warn("this file is not image type");
-//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//            }
+            if (!uploadFile.getContentType().startsWith("image")) {
+                log.warn("this file is not image type");
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
 
             // 실제 파일 이름 IE나 Edge는 전체 경로가 들어오므로
             String originalName = uploadFile.getOriginalFilename();

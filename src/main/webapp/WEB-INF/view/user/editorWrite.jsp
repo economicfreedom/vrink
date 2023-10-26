@@ -101,7 +101,7 @@ function sendFile(file, editor) {
     data.append("uploadFiles", file);
     data.append("w", 100);
     data.append("h", 100);
-	data.append("type",file.type)
+	data.append("type","user")
     
     $.ajax({
         url : "/upload-img",
@@ -110,11 +110,12 @@ function sendFile(file, editor) {
         dataType : 'JSON',
         cache: false,
         contentType: false,
-        enctype: 'multipart/form-data',
+        // enctype: 'multipart/form-data',
         processData: false,
         success : function(data) {
         	
             //항상 업로드된 파일의 url이 있어야 한다.
+			console.log(data.originalURL)
         	$(editor).summernote('insertImage', data.originalURL);
         }
     });
