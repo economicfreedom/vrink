@@ -12,17 +12,17 @@ public class EditorController {
 
     @GetMapping("/editor-detail")
     public String editorDetail() {
-        return "files_mushi/editorDetail";
+        return "user/editorDetail";
     }
     
     @GetMapping("/editor-write")
     public String editorWrite() {
-    	return "files_mushi/editorWrite";
+    	return "user/editorWrite";
     }
     
     @PostMapping("/editor-write")
     public String editorWriteProc() {
-    	return "files_mushi/editorWrite";
+    	return "user/editorWrite";
     }
     
     @GetMapping("/login")
