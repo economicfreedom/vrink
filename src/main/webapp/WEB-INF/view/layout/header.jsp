@@ -32,10 +32,9 @@
                                     <strong>승철이</strong>
                                 </a>
                             </div><!-- LOGO -->
-                            <p>Create an Account it takes less than a minute. If you have already account please
-                                LOGIN </p>
+                            <p>WELCOME TO 승철 WOULD</p>
                             <form>
-                                <h4>Login Form</h4>
+                                <h4>로그인</h4>
                                 <div class="field">
                                     <input type="text" placeholder="Username"/>
                                 </div>
@@ -43,10 +42,10 @@
                                     <input type="password" placeholder="Password"/>
                                 </div>
                                 <div class="field">
-                                    <input type="submit" value="SEND NOW" class="flat-btn"/>
+                                    <input type="submit" value="로그인" class="flat-btn"/>
                                 </div>
                             </form>
-                            <i>OR</i>
+                            <i>또는</i>
                             <span>LOGIN WITH</span>
                             <ul class="social-btns">
                                 <li><a href="#" title=""><i class="fa fa-facebook"></i></a></li>
@@ -57,32 +56,30 @@
                     </div>
                     <div class="col-md-6">
                         <div class="registration-sec">
-                            <h3>SIGNUP Form</h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum.</p>
+                            <h3>VRINK</h3>
+                            <p>WELCOME TO 승철 WOULD.</p>
                             <form>
                                 <div class="field">
-                                    <input type="text" placeholder="Your Name"/>
+                                    <input type="text" placeholder="이메일"/>
+                                    <input type="button" value="이메일 인증" class="flat-btn"/>
                                 </div>
                                 <div class="field">
-                                    <input type="text" placeholder="Your Email"/>
+                                    <input type="password" placeholder="비밀번호"/>
                                 </div>
                                 <div class="field">
-                                    <input type="password" placeholder="Type Password"/>
+                                    <input type="password" placeholder="비밀번호 확인"/>
                                 </div>
                                 <div class="field">
-                                    <input type="password" placeholder="Retype Password"/>
+                                    <input type="text" placeholder="이름"/>
                                 </div>
                                 <div class="field">
-                                    <label><input type="checkbox"/> Male</label>
-                                    <label><input type="checkbox"/> Female</label>
+                                    <input type="text" placeholder="닉네임"/>
                                 </div>
-                                <label>
-                                    <input type="checkbox"/> By Clicking on this You are agree with our <a href="#"
-                                                                                                           title="">Terms
-                                    & Condition</a>
-                                </label>
-                                <input type="submit" value="Singup Now" class="flat-btn"/>
+                                <div class="field">
+                                    <input type="text" placeholder="휴대폰번호"/>
+                                </div>
+                                
+                                <input type="submit" value="회원가입" class="flat-btn"/>
                             </form>
                         </div><!-- Registration sec -->
                     </div>
