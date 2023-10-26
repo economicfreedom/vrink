@@ -1,6 +1,6 @@
 package com.green.vrink.user;
 
-import com.green.vrink.user.dto.TestDTO;
+import com.green.vrink.user.dto.ApprovalDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,9 @@ public class TestController {
     }
     @PostMapping("/test2")
     @ResponseBody
-    public ResponseEntity<?> test2(@RequestBody TestDTO testDTO){
+    public ResponseEntity<?> test2(@RequestBody ApprovalDTO approvalDTO){
 
-        log.info("Test Dto {}",testDTO);
+        log.info("Test Dto {}", approvalDTO);
 
 
         return ResponseEntity.ok().build();
