@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ include file="/WEB-INF/view/layout/editor_header.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
@@ -101,7 +101,7 @@ function sendFile(file, editor) {
     data.append("uploadFiles", file);
     data.append("w", 100);
     data.append("h", 100);
-	console.log(data);
+	data.append("type",file.type)
     
     $.ajax({
         url : "/upload-img",
@@ -112,12 +112,12 @@ function sendFile(file, editor) {
         contentType: false,
         enctype: 'multipart/form-data',
         processData: false,
-        success : function(url) {
-        	console.log('헬로')
+        success : function(data) {
+        	
             //항상 업로드된 파일의 url이 있어야 한다.
-            $(editor).summernote('insertImage', contextPath+data.url);
+        	$(editor).summernote('insertImage', data.originalURL);
         }
     });
 } 
 </script>
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+<%@ include file="/WEB-INF/view/layout/editor_footer.jsp" %>
