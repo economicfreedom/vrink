@@ -4,11 +4,17 @@
 
 
     <select id="requestApproval" resultType="java.lang.Integer">
-
-
         insert into apply(user_id, name, number)
             value (#{userId},#{accountName},#{accountNumber})
-
-
+    </select>
+    
+    <insert id="signUp">
+    	INSERT INTO user 
+		(email, password, name, nickname, phone, created_at) 
+		VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
+    </insert>
+    
+    <select id="checkEmail">
+    	SELECT * FROM user WHERE email = #{email};
     </select>
 </mapper>

@@ -60,8 +60,10 @@
                             <p>WELCOME TO 승철 WOULD.</p>
                             <form>
                                 <div class="field">
-                                    <input type="text" placeholder="이메일"/>
-                                    <input type="button" value="이메일 인증" class="flat-btn"/>
+	                                <div class="email-check-div">
+	                                    <input type="text" placeholder="이메일" class="email-input"/>
+	                                    <input type="button" value="이메일 인증" class="email-check-btn"/>
+	                                </div>
                                 </div>
                                 <div class="field">
                                     <input type="password" placeholder="비밀번호"/>
