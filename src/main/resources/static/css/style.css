@@ -5119,3 +5119,150 @@ footer.light-footer .bottom-line a {
     border-radius: 50%;
 }
 
+.m-1 {
+	margin: .25rem;
+}
+
+.m-2 {
+	margin: .5rem;
+}
+
+.m-3 {
+	margin: 1rem;
+}
+
+.m-4 {
+	margin: 1.5rem;
+}
+
+.m-5 {
+	margin: 3rem;
+}
+
+.mt-1 {
+	margin-top: .25rem;
+}
+
+.mt-2 {
+	margin-top: .5rem;
+}
+
+.mt-3 {
+	margin-top: 1rem;
+}
+
+.mt-4 {
+	margin-top: 1.5rem;
+}
+
+.mt-5 {
+	margin-top: 3rem;
+}
+
+.mb-1 {
+	margin-bottom: .25rem;
+}
+
+.mb-2 {
+	margin-bottom: .5rem;
+}
+
+.mb-3 {
+	margin-bottom: 1rem;
+}
+
+.mb-4 {
+	margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+	margin-bottom: 3rem;
+}
+
+.ml-1 {
+	margin-left: .25rem;
+}
+
+.ml-2 {
+	margin-left: .5rem;
+}
+
+.ml-3 {
+	margin-left: 1rem;
+}
+
+.ml-4 {
+	margin-left: 1.5rem;
+}
+
+.ml-5 {
+	margin-left: 3rem;
+}
+
+.mr-1 {
+	margin-right: .25rem;
+}
+
+.mr-2 {
+	margin-right: .5rem;
+}
+
+.mr-3 {
+	margin-right: 1rem;
+}
+
+.mr-4 {
+	margin-right: 1.5rem;
+}
+
+.mr-5 {
+	margin-right: 3rem;
+}
+
+.p-1 {
+	padding: .25rem;
+}
+
+.p-2 {
+	padding: .5rem;
+}
+
+.p-3 {
+	padding: 1rem;
+}
+
+.p-4 {
+	padding: 1.5rem;
+}
+
+.p-5 {
+	padding: 3rem;
+}
+
+p {
+	word-wrap: break-word;
+}
+
+/* psg start */
+.list-th {
+	height: 30px;
+	background: #343434;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+}
+
+.list-tr {
+	border-bottom: 1px solid #b3b3b3;
+	height: 80px;
+	text-align: center;
+}
+
+.tleft {
+	text-align: left;
+}
+
+.tcenter {
+	text-align: center;
+}
+/* psg end */
