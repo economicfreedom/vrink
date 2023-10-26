@@ -1578,6 +1578,34 @@ blockquote p {
     border-radius: 3px;
 
 }
+.email-check-div {
+	display: flex;
+}
+.email-input {
+	/*display: inline;
+	box-sizing: border-box;*/
+}
+.email-check-btn {
+	margin-top: 16px;
+	height: 58px;
+    border: 1px solid transparent;
+    color: #000;
+    float: left;
+    font-family: Nunito;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 10px;
+    
+    /*display: inline;*/
+    
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+
+}
+
 .flat-btn:hover{
     background: none;
 }

@@ -12,16 +12,16 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    reportUserId:1,
-                    userId:1,
-                    boardId:1,
-                    editorId:null
+                    reportUserId: 1,
+                    userId: 1,
+                    boardId: 1,
+                    editorId: null
                 })
             })
-                .then(response =>{
-                    if (!response.ok){
+                .then(response => {
+                    if (!response.ok) {
                         alert("이미 요청된 신고입니다.")
-                    }else {
+                    } else {
                         alert("정상적으로 신고 되었습니다.")
                     }
                 })
@@ -29,6 +29,7 @@
                 .catch(error => console.error('Error:', error));
 
         })
+
 
     })
 </script>
@@ -138,7 +139,8 @@
         </div>
         <div class="col-sm-2" style="height: 48px; line-height: 58px"><strong>별점을 선택해주세요</strong></div>
         <div class="col-sm-11">
-            <textarea rows="3" cols="" style="width: 100%; resize: none;" placeholder="리뷰를 입력해주세요."></textarea>
+            <textarea rows="3" cols="" style="width: 100%; resize: none;" placeholder="리뷰를 입력해주세요."
+                      id="reply-content"></textarea>
         </div>
         <div class="col-sm-1">
             <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px">
@@ -151,40 +153,58 @@
             <div>
                 <table class="w-full">
                     <colgroup>
-                        <col width="5%">
+
                         <col width="15%">
                         <col width="50%">
                         <col width="15%">
-                        <col width="15%">
+                        <col width="10%">
                     </colgroup>
                     <thead>
                     <tr>
-                        <th class="list-th">번호</th>
+
                         <th class="list-th">별점</th>
                         <th class="list-th tleft">내용</th>
+                        <th class="list-th"></th>
                         <th class="list-th">작성자</th>
                         <th class="list-th">작성일</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr class="list-tr">
-                        <td>3</td>
+
                         <td>★★★★★</td>
                         <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
+                        <td>
+                            <button>버튼</button>
+                            <button>버튼</button>
+                        </td>
                         <td>**비밀</td>
                         <td>23-10-25</td>
                     </tr>
                     <tr class="list-tr">
-                        <td>2</td>
                         <td>★★★★★</td>
-                        <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
+                        <td class="t-left"><textarea rows="3" cols="" style="
+                        width: 100%; resize: none; border: none; outline:none; cursor: default" readonly
+                                                     placeholder="리뷰를 입력해주세요."></textarea>
+                        </td>
+                        <td>
+                            <button>버튼</button>
+                            <button>버튼</button>
+                        </td>
                         <td>**비밀</td>
                         <td>23-10-25</td>
                     </tr>
                     <tr class="list-tr">
-                        <td>1</td>
+
                         <td>★★★★★</td>
                         <td class="t-left">작가님도 너무 친절하시구 그림도 빠르게 주셔서 너무 좋았습니다:) 예쁜 그림 받아서 너무 기분 좋아요~~!또 올게요 작가님~~~</td>
+                        <td>
+                            <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%;
+">
+                            <button>버튼</button>
+                            <button>버튼</button>
+                                </div>
+                        </td>
                         <td>**비밀</td>
                         <td>23-10-25</td>
                     </tr>

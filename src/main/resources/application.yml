@@ -12,7 +12,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: /var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/static
+      location: C:\\upload
 
   mail:
     host: smtp.gmail.com
@@ -42,4 +42,4 @@ mybatis:
 org:
   zerock:
     upload:
-      path: /var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/static
+      path: \src\main\resources\static
