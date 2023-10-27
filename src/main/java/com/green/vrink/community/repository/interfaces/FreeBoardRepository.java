@@ -15,4 +15,5 @@ public interface FreeBoardRepository {
     FreeBoard findById(Integer communityId);
 
 
+    void update(FreeBoard entity);
 }

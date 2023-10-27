@@ -11,4 +11,6 @@ public interface FreeBoardService {
     void delete(Integer communityId);
 
     FreeBoardDTO read(Integer communityId);
+
+    void update(FreeBoardDTO freeBoardDTO);
 }

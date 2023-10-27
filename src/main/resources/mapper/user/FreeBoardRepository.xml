@@ -5,6 +5,14 @@
     <insert id="save">
         INSERT INTO community(user_id, title, content) value(#{userId},#{title},#{content})
     </insert>
+    <update id="update">
+        UPDATE community SET
+                             title = #{title},
+                             content = #{content},
+                             created_at = now()
+        WHERE community_id = #{communityId}
+
+    </update>
     <delete id="delete">
         DELETE
         FROM community

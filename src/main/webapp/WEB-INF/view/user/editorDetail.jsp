@@ -75,6 +75,7 @@
             method: 'DELETE',
 
         })
+
             .then(response => {
                 if (!response.ok) {
                     alert("")

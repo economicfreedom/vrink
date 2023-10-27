@@ -35,5 +35,13 @@ public class FreeBoardRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> update(
+            @RequestBody FreeBoardDTO freeBoardDTO){
+        log.info("update freeBoardDTO",freeBoardDTO);
+        freeBoardService.update(freeBoardDTO);
+
+        return null;
+    }
 
 }

@@ -5,7 +5,7 @@ import com.green.vrink.community.repository.model.FreeBoard;
 import com.green.vrink.util.Converter;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("freeBoardConverter")
 public class FreeBoardConverter implements Converter<FreeBoardDTO, FreeBoard> {
 
     @Override

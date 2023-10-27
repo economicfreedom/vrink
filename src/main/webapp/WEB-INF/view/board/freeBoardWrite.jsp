@@ -52,17 +52,8 @@
         fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
         placeholder: "글 내용을 작성해주세요.",
         height: 300,
-        lang: "ko-KR",
-        callbacks: {
-            //onImageUpload = 이미지 업로드시 작동하는 콜백함수
-            onImageUpload: function (files, editor, welEditable) {
-                // 파일 업로드(다중업로드를 위해 반복문 사용)
-                for (var i = files.length - 1; i >= 0; i--) {
-                    sendFile(files[i],
-                        this);
-                }
-            }
-        }//end callbacks
+        lang: "ko-KR"
+
     });
 
     $(document).ready(function () {
@@ -101,3 +92,4 @@
     })
 
 </script>
+<%@ include file="/WEB-INF/view/layout/editor_footer.jsp" %>
