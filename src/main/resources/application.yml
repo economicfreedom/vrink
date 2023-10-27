@@ -15,16 +15,17 @@ spring:
       location: C:\\upload
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username:
-    password:
+    host: smtp.gmail.com # 1
+    port: 587 # 2
+    username: vrinkteam # 3
+    password: hnzi dqwy pxbb kztp # 4
     properties:
       mail:
         smtp:
+          auth: true # 5
+          timeout: 5000 # 6
           starttls:
-            enable: true
-          auth: true
+            enable: true # 7
 
 server:
   port: 80

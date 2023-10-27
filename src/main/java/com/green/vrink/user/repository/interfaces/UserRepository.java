@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserRepository {
 	public Integer signUp(SignUpDto signUpDto);
-	public Integer checkEmail(String email);
+	public String checkEmail(String email);
     public Integer requestApproval(ApprovalDTO approvalDTO);
 
 //    public Integer saveApply();

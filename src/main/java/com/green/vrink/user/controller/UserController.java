@@ -25,13 +25,13 @@ public class UserController {
 	@GetMapping("/sign-in")
 	public String signIn() {
 		// 로그인
-		return "editor/apply-form";
+		return "user/applyForm";
 	}
 
 	@GetMapping("/sign-up")
 	public String goToSignUp() {
 		// 회원가입
-		return "editor/apply-form";
+		return "user/applyForm";
 	}
 
 	

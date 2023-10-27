@@ -2,7 +2,10 @@ package com.green.vrink.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +25,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping("/sign-up")
-	public String signUp(@RequestBody SignUpDto signUpDto) {
+	public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
 
 	
 		if(signUpDto.getEmail() == null || signUpDto.getEmail().isEmpty()) { 
@@ -45,17 +50,23 @@ public class UserRestController {
 		if(signUpDto.getPhone() == null || signUpDto.getPhone().isEmpty()) { 
 			throw new CustomRestfulException("휴대폰 번호를 입력해주세요", HttpStatus.BAD_REQUEST); 
 		}
-		 
-		log.info("test {} ", signUpDto);
+		
+		String rawPassword = signUpDto.getPassword();
+		String hashPassword = passwordEncoder.encode(rawPassword);
+		signUpDto.setPassword(hashPassword);
+		
 		userService.signUp(signUpDto);
 
-		return "http://localhost/editor/apply-form";
+		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/check-email")
-	public int checkEmail(String email) {
-		int result = userRepository.checkEmail(email);
+	@GetMapping("/check-email/{email}")
+	public int checkEmail(@PathVariable String email) {
+		String result = userRepository.checkEmail(email);
+		if (result == null) {
+			return 0;
+		}
 		
-		return result;
+		return 1;
 	}
 }
