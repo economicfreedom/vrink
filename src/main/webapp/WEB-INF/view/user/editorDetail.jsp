@@ -46,18 +46,18 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    editorId:1,
-                    userId:1,
-                    content:content,
-                    count:star
+                    editorId: 1,
+                    userId: 1,
+                    content: content,
+                    count: star
 
                 })
             })
                 .then(response => {
                     if (!response.ok) {
-                        location.reload();
-                    } else {
                         alert("")
+                    } else {
+                        location.reload();
                     }
                 })
                 .then(data => console.log(data))
@@ -65,7 +65,28 @@
 
         })
 
+
     })
+
+    function deleteReview(reviewId) {
+
+
+        fetch('/review/del/'+reviewId, {
+            method: 'DELETE',
+
+        })
+            .then(response => {
+                if (!response.ok) {
+                    alert("")
+                } else {
+                    location.reload();
+                }
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+
+
+    }
 </script>
 <style>
     .star {
@@ -206,22 +227,23 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${reviewList}" var="review">
-                    <tr class="list-tr">
+                        <tr class="list-tr">
 
-                        <td style="color: gold">${review.star}</td>
-                        <td class="t-left"><textarea rows="3" cols="" style="
+                            <td style="color: gold">${review.star}</td>
+                            <td class="t-left"><textarea rows="3" cols="" style="
                         width: 100%; resize: none; border: none; outline:none; cursor: default" readonly
-                                                     placeholder="리뷰를 입력해주세요.">${review.content}</textarea></td>
-                        <td>
-                            <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
-                                <button type="button" class="btn btn-default">수정</button>
-                                <button type="button" class="btn btn-danger">삭제</button>
-                            </div>
-                        </td>
-                        <td>${review.nickname}</td>
-                        <td>${review.createdAt}</td>
-                    </tr>
-                        </c:forEach>
+                                                         placeholder="리뷰를 입력해주세요.">${review.content}</textarea></td>
+                            <td>
+                                <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
+                                    <button type="button" class="btn btn-danger" onclick="deleteReview(${review.reviewId})"
+                                            id="review-del">삭제
+                                    </button>
+                                </div>
+                            </td>
+                            <td>${review.nickname}</td>
+                            <td>${review.createdAt}</td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

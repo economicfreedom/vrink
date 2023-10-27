@@ -13,6 +13,8 @@ spring:
     multipart:
       enabled: true
       location: C:\\upload
+      max-file-size: 50MB
+      max-request-size: 50MB
 
   mail:
     host: smtp.gmail.com # 1
@@ -43,5 +45,5 @@ mybatis:
 org:
   zerock:
     upload:
-      path: \src\main\resources\static
+      path: c:\\upload
 

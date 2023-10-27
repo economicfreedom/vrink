@@ -295,20 +295,23 @@
 
 <script>
 
-    function changeApply(applyId, accepted) {
+    function changeApply(applyId, accepted ,number) {
 
         $.ajax({
             type : "POST",
             url : "/admin/changeApply",
             data : {
                 "applyId" : applyId,
-                "accepted" : accepted
+                "accepted" : accepted,
+                "number" : number
             },
             success : function(data){
                 if (data === 200) {
-                    location.reload();
+                    window.location.href = "/admin/applyAccept";
+                } else if(data === 400) {
+                    alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
                 } else {
-                    alert('에러 입니다.');
+                    alert('에러 읍니다.');
                 }
             }
             ,error: function(){
@@ -393,6 +396,7 @@
                         var pagination = data.pagination;
                         var adminApplyListHTML = '<tr>'
                             + '<td><h4>신청상태</h4></td>'
+                            + '<td><h4>사기이력</h4></td>'
                             + '<td><h4>은행이름</h4></td>'
                             + '<td><h4>계좌번호</h4></td>'
                             + '<td><h4>유저이름</h4></td>'
@@ -410,11 +414,16 @@
                                 adminApply.accepted = '승인됨';
                                 acct = 1;
                             }
-                            var regDate = formatDate(adminApply.createdAt); // 날짜 포맷 변환
+                            let regData = adminApply.createdAt.substring(0,10);
+                            let cheating;
+
+                            if(adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
+                            else cheating = '<th style="color: red">' + adminApply.cheater + '</th>'
                             adminApplyListHTML += '<tr>'
                                 + '<td><p class="classification" style="min-width: 100px">'
                                 + adminApply.accepted
-                                + '</p> <button class="btn btn-dark btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ')">변경</button></td>'
+                                + '</p> <button class="btn btn-dark btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
+                                + cheating
                                 + '<td>'
                                 + adminApply.name
                                 + '</td>'
@@ -425,7 +434,7 @@
                                 + adminApply.nickname
                                 + '</td>'
                                 + '<td>'
-                                + regDate
+                                + regData
                                 + '</td>'
                                 + '</tr>';
                         }
@@ -458,8 +467,6 @@
                 });
             }
 
-
-
             $('#pagination').on('click', 'a', function (e) {
                 e.preventDefault();
                 console.log($(this));
@@ -470,11 +477,6 @@
             });
         }
     );
-
-    function formatDate(timestamp) {
-        const date = new Date(timestamp);
-        return date.toLocaleDateString();
-    }
 
     function selectItem(selectedItem) {
         let dropdownButton = document.querySelector('.dropdown-btn');

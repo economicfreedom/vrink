@@ -155,3 +155,24 @@ select * from review;
 select * from editor_detail;
 insert into editor_detail(user_id, image, content, vrm)
 value (1,'tt','tt','tt');
+
+select * from review;
+
+        SELECT r.review_id,
+               r.editor_id,
+               r.user_id,
+               r.content,
+               r.count,
+               CASE
+                   WHEN count = 2 THEN '★'
+                   WHEN count = 4 THEN '★★'
+                   WHEN count = 6 THEN '★★★'
+                   WHEN count = 8 THEN '★★★★'
+                   WHEN count = 10 THEN '★★★★★'
+                   ELSE ''
+                   END AS star,
+                u.nickname,
+                r.created_at
+        FROM review r
+        LEFT JOIN user u ON r.user_id = u.user_id
+        WHERE editor_id = 1;

@@ -8,6 +8,12 @@
         WHERE apply_id = #{applyId}
     </update>
 
+    <update id="changeCheater">
+        UPDATE apply
+        SET cheater = #{content}
+        WHERE apply_id = #{applyId}
+    </update>
+
     <select id="getAllAdminApplyList" resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply

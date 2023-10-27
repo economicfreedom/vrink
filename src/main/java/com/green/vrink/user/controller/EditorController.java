@@ -25,7 +25,7 @@ public class EditorController {
 
     @GetMapping("/editor-detail")
     public String editorDetail(HttpSession session, Model model) {
-        List<ReviewDTO> reviewDTOS = reviewService.findByIdAll(0);
+        List<ReviewDTO> reviewDTOS = reviewService.findByIdAll(1);
         model.addAttribute("reviewList",reviewDTOS);
         log.info("reviewList {}", reviewDTOS);
 

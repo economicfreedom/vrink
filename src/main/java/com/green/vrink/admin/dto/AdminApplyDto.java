@@ -2,8 +2,6 @@ package com.green.vrink.admin.dto;
 
 import lombok.*;
 
-import java.sql.Timestamp;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +13,9 @@ public class AdminApplyDto {
     private String userId;
     private String name;
     private String number;
-    private Timestamp createdAt;
+    private String createdAt;
     private Integer accepted;
     private String nickname;
+    private String cheater;
 
 }
