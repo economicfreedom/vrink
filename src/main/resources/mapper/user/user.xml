@@ -14,7 +14,7 @@
 		VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
     </insert>
     
-    <select id="checkEmail">
-    	SELECT * FROM user WHERE email = #{email};
+    <select id="checkEmail" resultType="String">
+    	SELECT email FROM user WHERE email = #{email};
     </select>
 </mapper>

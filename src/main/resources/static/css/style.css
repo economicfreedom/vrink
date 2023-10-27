@@ -1581,15 +1581,19 @@ blockquote p {
 .email-check-div {
 	display: flex;
 }
+ #auth-email-div {
+	display: flex;
+ }
 .email-input {
 	/*display: inline;
 	box-sizing: border-box;*/
 }
-.email-check-btn {
+#email-btn {
+	background-color: #ff2929;
 	margin-top: 16px;
 	height: 58px;
     border: 1px solid transparent;
-    color: #000;
+    color: #fff;
     float: left;
     font-family: Nunito;
     font-size: 12px;
@@ -1597,6 +1601,23 @@ blockquote p {
     padding: 10px 10px;
     
     /*display: inline;*/
+    
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+
+}
+
+.signUp-btn {
+	border: 1px solid transparent;
+    color: #fff;
+    float: left;
+    font-family: Nunito;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 13px 29px;
     
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.green.vrink.handle.CustomRestfulException;
+//import com.green.vrink.handle.CustomRestfulException;
 import com.green.vrink.user.dto.SignUpDto;
 import com.green.vrink.user.service.UserService;
 
@@ -25,13 +25,13 @@ public class UserController {
 	@GetMapping("/sign-in")
 	public String signIn() {
 		// 로그인
-		return "editor/apply-form";
+		return "user/applyForm";
 	}
 
 	@GetMapping("/sign-up")
 	public String goToSignUp() {
 		// 회원가입
-		return "editor/apply-form";
+		return "user/applyForm";
 	}
 
 	
