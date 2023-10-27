@@ -34,13 +34,18 @@ public class ReviewServiceImpl implements ReviewService {
                 .count(reviewDTO.getCount())
                 .build();
 
-
-        return replyRepository.reviewDuplicCheck(entity);
+//        replyRepository.reviewDuplicCheck(entity);
+        return null;
     }
 
     @Override
     public List<ReviewDTO> findByIdAll(Integer id) {
 
         return replyRepository.findByIdAll(id);
+    }
+
+    @Override
+    public void delete(Integer reviewId) {
+        replyRepository.deleteById(reviewId);
     }
 }

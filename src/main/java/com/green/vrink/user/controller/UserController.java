@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.green.vrink.handle.CustomRestfulException;
+//import com.green.vrink.handle.CustomRestfulException;
 import com.green.vrink.user.dto.SignUpDto;
 import com.green.vrink.user.service.UserService;
 

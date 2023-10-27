@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.green.vrink.handle.CustomRestfulException;
+//import com.green.vrink.handle.CustomRestfulException;
 import com.green.vrink.user.dto.SignUpDto;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.service.UserService;
@@ -31,19 +31,19 @@ public class UserRestController {
 
 	
 		if(signUpDto.getEmail() == null || signUpDto.getEmail().isEmpty()) { 
-			throw new CustomRestfulException("아이디를 입력해주세요", HttpStatus.BAD_REQUEST); 
+//			throw new CustomRestfulException("아이디를 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
 		if(signUpDto.getPassword() == null || signUpDto.getPassword().isEmpty()) {
-			throw new CustomRestfulException("비밀번호를 입력해주세요", HttpStatus.BAD_REQUEST); 
+//			throw new CustomRestfulException("비밀번호를 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
 		if(signUpDto.getName() == null || signUpDto.getName().isEmpty()) { 
-			throw new CustomRestfulException("이름을 입력해주세요", HttpStatus.BAD_REQUEST); 
+//			throw new CustomRestfulException("이름을 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
 		if(signUpDto.getNickname() == null || signUpDto.getNickname().isEmpty()) {
-			throw new CustomRestfulException("닉네임을 입력해주세요", HttpStatus.BAD_REQUEST); 
+//			throw new CustomRestfulException("닉네임을 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
 		if(signUpDto.getPhone() == null || signUpDto.getPhone().isEmpty()) { 
-			throw new CustomRestfulException("휴대폰 번호를 입력해주세요", HttpStatus.BAD_REQUEST); 
+//			throw new CustomRestfulException("휴대폰 번호를 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
 		 
 		log.info("test {} ", signUpDto);
