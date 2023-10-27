@@ -1,17 +1,16 @@
 package com.green.vrink.admin.controller;
 
-import com.green.vrink.admin.dto.AdminApplyClassificationDto;
-import com.green.vrink.admin.dto.AdminApplyDto;
-import com.green.vrink.admin.dto.Pagination;
-import com.green.vrink.admin.dto.PagingDto;
+import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class AdminRestController {
             required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
             required = false, defaultValue="")String keyword) {
 
-        log.info("판매자 신청 목록 컨트롤러 호출");
+        log.info("판매자 신청 목록 레스트 컨트롤러 호출");
 
         paging.setPage(page);
         paging.setClassification(classification);
@@ -50,9 +49,13 @@ public class AdminRestController {
         //분류가 전체일 떄
         if(classification.equals("전체")) {
 
+            log.info("판매자 신청 목록 카테고리 & 검색어 레스트 컨트롤러 호출");
+            
             List<AdminApplyDto> adminApplyDtoList = adminService.getAllAdminApplyListByPaging(paging);
 
             if(!keyword.equals("")) {
+
+                log.info("키워드 : 전체");
 
                 List<AdminApplyDto> lastAdminApplyDtoList = new ArrayList<>();
                 List<AdminApplyDto> finalAdminApplyDtoList = new ArrayList<>();
@@ -109,6 +112,8 @@ public class AdminRestController {
 
             if(!keyword.equals("")) {
 
+                log.info("키워드 : " + keyword);
+
                 List<AdminApplyDto> lastAdminApplyDtoList = new ArrayList<>();
                 List<AdminApplyDto> finalAdminApplyDtoList = new ArrayList<>();
 
@@ -160,16 +165,39 @@ public class AdminRestController {
         }
     }
 
+    @Transactional
     @PostMapping("/changeApply")
-    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted) {
+    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number) throws IOException {
 
         log.info("승인 상태 변경 컨트롤러 실행");
 
-        if(accepted == 1) accepted = 0;
-        else accepted = 1;
+        if(accepted == 1) {
 
-        adminService.changeApply(applyId, accepted);
-        return ResponseEntity.status(HttpStatus.OK).body(200);
+            //승인에서 비승인으로 바꿀 때
+            log.info("승인 상태이므로 비승인 상태로 변경");
+
+            accepted = 0;
+            adminService.changeApply(applyId, accepted);
+            adminService.changeCheater(applyId, "이력 없음");
+            return ResponseEntity.status(HttpStatus.OK).body(200);
+        }
+        else {
+
+            //비승인에서 승인으로 바꿀 때
+
+            log.info("비승인 상태이므로 승인 상태로 변경");
+
+            if(!adminService.getCheatCheckList(number)) {
+                log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼 아님");
+                accepted = 1;
+                adminService.changeApply(applyId, accepted);
+                adminService.changeCheater(applyId, "이력 없음");
+                return ResponseEntity.status(HttpStatus.OK).body(200);
+            } else {
+                log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼임");
+                adminService.changeCheater(applyId, "사기 이력");
+                return ResponseEntity.status(HttpStatus.OK).body(400);
+            }
+        }
     }
-
 }

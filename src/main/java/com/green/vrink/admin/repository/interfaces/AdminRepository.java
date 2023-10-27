@@ -16,5 +16,6 @@ public interface AdminRepository {
     Integer countAllAdminApply();
     Integer countAdminApplyByType(PagingDto paging);
     int changeApply(@Param("applyId") Integer applyId, @Param("accepted") Integer accepted);
+    int changeCheater(@Param("applyId") Integer applyId, @Param("content") String content);
 
 }

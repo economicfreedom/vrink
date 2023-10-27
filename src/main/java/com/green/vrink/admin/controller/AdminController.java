@@ -27,6 +27,7 @@ public class AdminController {
 
     @GetMapping("/main")
     public String main(){
+        log.info("관리자 페이지 메인 컨트롤러 실행");
         return "/admin/main";
     }
 
@@ -37,6 +38,8 @@ public class AdminController {
             required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
             required = false, defaultValue="")String keyword, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model){
+
+        log.info("판매자 신청 목록 컨트롤러 호출");
 
         if(reset.equals("1")) {
             session.removeAttribute("uClassification");
