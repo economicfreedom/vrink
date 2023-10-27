@@ -1,6 +1,7 @@
 package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.ApprovalDTO;
+import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,5 +23,9 @@ public class EditorService {
 
         return userRepository.requestApproval(approvalDTO);
     }
-
+    
+    @Transactional
+    public Integer requestEditorWrite(EditorWriteDTO editorWriteDTO) {
+    	return userRepository.editorWrite(editorWriteDTO);
+    }
 }

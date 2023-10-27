@@ -23,4 +23,9 @@
         WHERE user_id = #{userId}
 
     </select>
+    
+    <insert id="editorWrite">
+    	INSERT INTO editor_detail(user_id, introduce, image, content, vrm)
+    	VALUES (#{userId}, #{introduce}, #{image}, #{content}, #{vrm})
+    </insert>
 </mapper>

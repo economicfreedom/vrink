@@ -153,7 +153,7 @@
 
 
                 </div>
-                <div style="margin: 0 auto; width: 100px; height: 100px">
+                <div class="circle-profile-area">
                     <img class="circle-profile" alt=""
                          src="https://artmug.kr/image/goods_img1/1/17101B.jpg?ver=1678017207">
                 </div>

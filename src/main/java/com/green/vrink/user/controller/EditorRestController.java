@@ -2,6 +2,7 @@ package com.green.vrink.user.controller;
 
 
 import com.green.vrink.user.dto.ApprovalDTO;
+import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.service.EditorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,12 @@ public class EditorRestController {
         return ResponseEntity.ok().build();
 
     }
-
-
+    
+    @PostMapping("/editor-write")
+    public Integer editorWriteProc(EditorWriteDTO editorWriteDTO) {
+    	editorWriteDTO.setUserId(2);
+    	Integer res = editorService.requestEditorWrite(editorWriteDTO);
+    	log.info("EditorWriteDTO {}",editorWriteDTO);
+    	return res;
+    }
 }
