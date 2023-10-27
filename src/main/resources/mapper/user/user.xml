@@ -17,4 +17,10 @@
     <select id="checkEmail">
     	SELECT * FROM user WHERE email = #{email};
     </select>
+    <select id="findUserNicknameById" resultType="java.lang.String">
+        SELECT nickname
+        FROM user
+        WHERE user_id = #{userId}
+
+    </select>
 </mapper>

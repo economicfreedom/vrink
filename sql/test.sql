@@ -176,3 +176,16 @@ select * from review;
         FROM review r
         LEFT JOIN user u ON r.user_id = u.user_id
         WHERE editor_id = 1;
+
+INSERT INTO community(user_id, title, content) value()
+
+SELECT * FROM community;
+
+      SELECT
+            community_id,
+            user_id,
+            title,
+            content,
+            created_at
+        FROM community
+        WHERE community_id = 2;

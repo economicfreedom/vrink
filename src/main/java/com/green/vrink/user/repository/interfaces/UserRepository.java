@@ -11,6 +11,7 @@ public interface UserRepository {
 	public Integer checkEmail(String email);
     public Integer requestApproval(ApprovalDTO approvalDTO);
 
+	String findUserNicknameById(Integer userId);
 //    public Integer saveApply();
 
 
