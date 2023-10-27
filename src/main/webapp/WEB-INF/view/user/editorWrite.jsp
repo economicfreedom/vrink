@@ -4,6 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
 <div class="container">
 	<div class="row p-block">
 		<div class="col-sm-8 col-center">
@@ -12,7 +13,7 @@
 				<span>소개를 작성해보세요</span>
 			</div>
 			<div class="contact-form">
-				<form method="post" action="/editor/editor-write" name="writerform" id="writerform" autocomplete="off" enctype="multipart/form-data">
+				<div class="editor-div">
 					<div class="row">
 						<div class="col-md-12">
 							<i class="fa fa-user"></i>
@@ -23,7 +24,10 @@
 							<textarea name="introduce" id="introduce" class="input-style" placeholder="소개 내용을 입력해주세요.(50자 이내)"></textarea>
 						</div>
 						<div class="col-md-12">
-							<input name="thumbnail" type="file" id="thumbnail" class="input-style" placeholder="썸네일을 등록해주세요.">
+							<input name="thumbnail" type="file" id="thumbnail" class="input-style thumbnail-input-file">
+						</div>
+						<div class="col-md-12">
+							<input name="vrm" type="file" id="vrm" class="input-style vrm-input-file"> <button id="vrm-button">업로드</button>
 						</div>
 						<div class="col-md-12">
 							<i class="fa fa-pencil"></i>
@@ -33,14 +37,35 @@
 							<input type=button class="flat-btn" id="submit" value="작성">
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
 
-
+$('#vrm-button').on('click',function(){
+	var uploadFiles = $('#vrm')[0]
+	var data = new FormData();
+	data.append("uploadFiles", uploadFiles.files[0]);
+	data.append("w", 100);
+	data.append("h", 100);
+	data.append("type", "user");
+	
+	$.ajax({
+        url : "/upload-vrm",
+        data : data,
+        type : "POST",
+        dataType : 'JSON',
+        cache: false,
+        contentType: false,
+        // enctype: 'multipart/form-data',
+        processData: false,
+        success : function(data) {
+        	console.log('굿')
+        } 
+    });
+})
 
 $('#submit').on('click',function() {
 	let introduce = $('#introduce');
@@ -117,7 +142,7 @@ function sendFile(file, editor) {
             //항상 업로드된 파일의 url이 있어야 한다.
 			console.log(data.originalURL)
         	$(editor).summernote('insertImage', data.originalURL);
-        }
+        } 
     });
 } 
 </script>

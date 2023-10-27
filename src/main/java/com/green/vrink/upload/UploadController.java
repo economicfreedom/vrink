@@ -33,8 +33,9 @@ import java.util.UUID;
 @RestController
 @Slf4j
 public class UploadController {
-//    @Value("${org.zerock.upload.path}")
-    private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
+//	private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
+    @Value("${org.zerock.upload.path}")
+    private String uploadPath;
 
 
 
@@ -132,7 +133,7 @@ public class UploadController {
 
         UploadResponseDTO uploadResponseDTO = null;
         for (MultipartFile uploadFile : uploadFiles) {
-            if (!uploadFile.getContentType().startsWith("image")) {
+            if (!uploadFile.getContentType().startsWith("application")) {
                 log.warn("this file is not image type");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
