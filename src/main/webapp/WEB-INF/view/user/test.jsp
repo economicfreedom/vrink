@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 
 <html>
@@ -78,7 +80,7 @@
 			loader.load(
 
 				// URL of the VRM you want to load
-				'/static/vrm/testk.vrm',
+				'/static/user/2023/10/27/490a524a-d4b8-457a-84c7-05af5813e84a_test.vrm',
 
 				// called when the resource is loaded
 				( gltf ) => {

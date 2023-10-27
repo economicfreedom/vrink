@@ -38,11 +38,6 @@ public class EditorController {
         return "user/editorWrite";
     }
 
-    @PostMapping("/editor-write")
-    public String editorWriteProc() {
-        return "user/editorWrite";
-    }
-
     @GetMapping("/login")
     public String login() {
         return "layout/header";

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.community.repository.interfaces.FreeBoardRepository">
+
+    <insert id="save">
+        INSERT INTO community(user_id, title, content) value(#{userId},#{title},#{content})
+    </insert>
+    <update id="update">
+        UPDATE community SET
+                             title = #{title},
+                             content = #{content},
+                             created_at = now()
+        WHERE community_id = #{communityId}
+
+    </update>
+    <delete id="delete">
+        DELETE
+        FROM community
+
+
+    </delete>
+    <select id="findById" resultType="com.green.vrink.community.repository.model.FreeBoard">
+        SELECT
+            community_id,
+            user_id,
+            title,
+            content,
+            DATE_FORMAT(created_at, "%Y-%m-%d") AS created_at
+        FROM community
+        WHERE community_id = #{communityId}
+
+    </select>
+    <select id="findUserNicknameById" resultType="java.lang.String">
+
+    </select>
+</mapper>

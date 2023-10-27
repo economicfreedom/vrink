@@ -80,6 +80,12 @@ public class AdminRestController {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         }
                     }
+                } else if(searchType.equals("사기이력")) {
+                    for (AdminApplyDto adminApplyDto : adminApplyDtoList) {
+                        if(adminApplyDto.getCheater().contains(keyword)) {
+                            lastAdminApplyDtoList.add(adminApplyDto);
+                        }
+                    }
                 } else {
                     for (AdminApplyDto adminApplyDto : adminApplyDtoList) {
                         if(adminApplyDto.getName().contains(keyword)) {
@@ -87,6 +93,8 @@ public class AdminRestController {
                         } else if(adminApplyDto.getNumber().contains(keyword)) {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         } else if(adminApplyDto.getNickname().contains(keyword)) {
+                            lastAdminApplyDtoList.add(adminApplyDto);
+                        } else if(adminApplyDto.getCheater().contains(keyword)) {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         }
                     }
@@ -137,6 +145,12 @@ public class AdminRestController {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         }
                     }
+                } else if(searchType.equals("사기이력")) {
+                    for (AdminApplyDto adminApplyDto : adminApplyDtoList) {
+                        if(adminApplyDto.getCheater().contains(keyword)) {
+                            lastAdminApplyDtoList.add(adminApplyDto);
+                        }
+                    }
                 } else {
                     for (AdminApplyDto adminApplyDto : adminApplyDtoList) {
                         if(adminApplyDto.getName().contains(keyword)) {
@@ -144,6 +158,8 @@ public class AdminRestController {
                         } else if(adminApplyDto.getNumber().contains(keyword)) {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         } else if(adminApplyDto.getNickname().contains(keyword)) {
+                            lastAdminApplyDtoList.add(adminApplyDto);
+                        } else if(adminApplyDto.getCheater().contains(keyword)) {
                             lastAdminApplyDtoList.add(adminApplyDto);
                         }
                     }
@@ -174,6 +190,7 @@ public class AdminRestController {
         if(accepted == 1) {
 
             //승인에서 비승인으로 바꿀 때
+
             log.info("승인 상태이므로 비승인 상태로 변경");
 
             accepted = 0;

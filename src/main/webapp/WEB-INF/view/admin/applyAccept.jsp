@@ -221,26 +221,37 @@
     <div class="mt-2 mx-4">
         <select name="searchType" id="searchType">
             <c:choose>
+                <c:when test="${uSearchType == '사기이력'}">
+                    <option value="전체">전체</option>
+                    <option value="사기이력" selected>사기이력</option>
+                    <option value="은행이름">은행이름</option>
+                    <option value="계좌번호">계좌번호</option>
+                    <option value="닉네임">닉네임</option>
+                </c:when>
                 <c:when test="${uSearchType == '은행이름'}">
                     <option value="전체">전체</option>
+                    <option value="사기이력">사기이력</option>
                     <option value="은행이름" selected>은행이름</option>
                     <option value="계좌번호">계좌번호</option>
                     <option value="닉네임">닉네임</option>
                 </c:when>
                 <c:when test="${uSearchType == '계좌번호'}">
                     <option value="전체">전체</option>
+                    <option value="사기이력">사기이력</option>
                     <option value="은행이름">은행이름</option>
                     <option value="계좌번호" selected>계좌번호</option>
                     <option value="닉네임">닉네임</option>
                 </c:when>
                 <c:when test="${uSearchType == '닉네임'}">
                     <option value="전체">전체</option>
+                    <option value="사기이력">사기이력</option>
                     <option value="은행이름">은행이름</option>
                     <option value="계좌번호">계좌번호</option>
                     <option value="닉네임" selected>닉네임</option>
                 </c:when>
                 <c:otherwise>
                     <option value="전체" selected>전체</option>
+                    <option value="사기이력">사기이력</option>
                     <option value="은행이름">은행이름</option>
                     <option value="계좌번호">계좌번호</option>
                     <option value="닉네임">닉네임</option>
@@ -418,7 +429,7 @@
                             let cheating;
 
                             if(adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
-                            else cheating = '<th style="color: red">' + adminApply.cheater + '</th>'
+                            else cheating = '<th><a target="_blank" style="text-decoration: none; color: red;" href="https://web.joongna.com/fraud/result?inputValue=' + adminApply.number + '&type=account_number">' + adminApply.cheater + '</a></th>'
                             adminApplyListHTML += '<tr>'
                                 + '<td><p class="classification" style="min-width: 100px">'
                                 + adminApply.accepted

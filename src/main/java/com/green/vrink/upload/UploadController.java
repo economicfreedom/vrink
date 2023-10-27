@@ -33,9 +33,9 @@ import java.util.UUID;
 @RestController
 @Slf4j
 public class UploadController {
-//	private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
     @Value("${org.zerock.upload.path}")
-    private String uploadPath;
+	private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
+//    private String uploadPath;
 
 
 
