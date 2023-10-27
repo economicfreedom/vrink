@@ -24,15 +24,12 @@ public class UserService {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
 	public void checkEmail(String email) {
-		int result = userRepository.checkEmail(email);
+		String result = userRepository.checkEmail(email);
 		
-		if (result == 1) {
+		if (result == null) {
 //			throw new CustomRestfulException("이미 존재하는 아이디입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
->>>>>>> 74434d819113836805ef43c16b8462ebe6a4184c
 	
 }
