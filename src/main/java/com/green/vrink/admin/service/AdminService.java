@@ -12,4 +12,5 @@ public interface AdminService {
     List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging);
     Integer countAllAdminApply();
     Integer countAdminApplyByType(PagingDto paging);
+    void changeApply(Integer applyId, Integer accepted);
 }

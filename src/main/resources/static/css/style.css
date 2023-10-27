@@ -5320,4 +5320,77 @@ p {
 .d-flex.j-around {
 	justify-content: space-around;
 }
+
+.contact-form > form {
+    float: left;
+    width: 100%;
+}
+.contact-form > .editor-div .row > div {
+    margin-bottom: 10px;
+    position: relative;
+}
+.contact-form > .editor-div .row > div > input[type="text"], .contact-form > .editor-div .row > div > textarea {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: medium none;
+    float: left;
+    font-family: Nunito;
+    font-size: 15px;
+    height: 68px;
+    padding: 18px 80px;
+    width: 100%;
+}
+.contact-form > .editor-div .row > div > i {
+    color: #b5b5b5;
+    font-size: 15px;
+    left: 58px;
+    line-height: 16px;
+    margin-top: -7px;
+    position: absolute;
+    top: 34px;
+}
+.contact-form > form .row > .editor-div > textarea {
+    min-height: 170px;
+    padding-top: 25px;
+}
+
+.thumbnail-input-file::file-selector-button {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.thumbnail-input-file::file-selector-button:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+ }
+.vrm-input-file::file-selector-button {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.vrm-input-file::file-selector-button:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+}
+ 
+.note-image-input.form-control-file.note-form-control.note-input::file-selector-button {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.note-image-input.form-control-file.note-form-control.note-input::file-selector-button:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+ } 
 /* psg end */

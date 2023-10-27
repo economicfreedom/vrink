@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.review.repository.interfaces.ReviewRepository">
+    <select id="reviewSave" resultType="java.lang.Integer">
+
+        INSERT INTO review(editor_id, user_id, content, count) VALUE (#{editorId},#{userId},#{content},#{count})
+
+    </select>
+    <select id="reviewDuplicCheck" resultType="java.lang.Integer">
+        SELECT 1 FROM review
+        WHERE editor_id = #{editorId} AND user_id = #{userId}
+    </select>
+    <select id="findByIdAll" resultType="com.green.vrink.review.dto.ReviewDTO">
+        SELECT r.editor_id,
+               r.user_id,
+               r.content,
+               r.count,
+               CASE
+                   WHEN count = 2 THEN '★'
+                   WHEN count = 4 THEN '★★'
+                   WHEN count = 6 THEN '★★★'
+                   WHEN count = 8 THEN '★★★★'
+                   WHEN count = 10 THEN '★★★★★'
+                   ELSE ''
+                   END AS star,
+                u.nickname,
+                r.created_at
+        FROM review r
+        LEFT JOIN user u ON r.user_id = u.user_id
+        WHERE editor_id = #{id}
+    </select>
+</mapper>

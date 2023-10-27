@@ -217,7 +217,7 @@
     </c:choose>
 </ul>
 
-<form style="width: 90%;" action="<c:url value='/admin/applyAccept'/>" name="pageForm">
+<form style="width: 90%;" action="#" name="pageForm">
     <div class="mt-2 mx-4">
         <select name="searchType" id="searchType">
             <c:choose>
@@ -294,6 +294,30 @@
 
 
 <script>
+
+    function changeApply(applyId, accepted) {
+
+        $.ajax({
+            type : "POST",
+            url : "/admin/changeApply",
+            data : {
+                "applyId" : applyId,
+                "accepted" : accepted
+            },
+            success : function(data){
+                if (data === 200) {
+                    location.reload();
+                } else {
+                    alert('에러 입니다.');
+                }
+            }
+            ,error: function(){
+                alert('서버 에러입니다.');
+            }
+        });
+
+    }
+
     $(document).ready(function () {
 
             setupPaginationEventHandlers();
@@ -307,13 +331,26 @@
             $('#searchButton').on(
                 'click',
                 function () {
-
                     console.log(classification2);
                     loadadminApplys(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
-
                 });
+
+            $('input[type="text"]').keydown(function(key) {
+                if (key.keyCode === 13) {
+                    key.preventDefault();
+                };
+            });
+
+            $("#keyword").on("keyup",function(key){
+                if(key.keyCode==13) {
+                    console.log(classification2);
+                    loadadminApplys(classification2, undefined, $(
+                        '#searchType').val(), $('#keyword')
+                        .val());
+                }
+            });
 
             $('.tab--adminApply li').click(
                 function () {
@@ -338,6 +375,8 @@
                     });
             }
 
+
+
             function loadadminApplys(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
@@ -349,6 +388,7 @@
                         keyword       : keyword
                     }, // 페이지 번호와 카테고리 정보를 전달합니다.
                     success: function (data) {
+
                         var adminApplyList = data.adminApplyList;
                         var pagination = data.pagination;
                         var adminApplyListHTML = '<tr>'
@@ -360,43 +400,33 @@
                             + '</tr>';
                         for (var i = 0; i < adminApplyList.length; i++) {
                             var adminApply = adminApplyList[i];
-                            if (adminApply.accepted === 0)
+                            let acct = 0;
+
+                            if (adminApply.accepted === 0) {
                                 adminApply.accepted = '승인 대기';
-                            else
+                                acct = 0;
+                            }
+                            else {
                                 adminApply.accepted = '승인됨';
+                                acct = 1;
+                            }
                             var regDate = formatDate(adminApply.createdAt); // 날짜 포맷 변환
                             adminApplyListHTML += '<tr>'
-                                + '<td><p class="classification">'
+                                + '<td><p class="classification" style="min-width: 100px">'
                                 + adminApply.accepted
-                                + '</p></td>'
-                                + '<td><a href="/admin/adminApply/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminApply.userId
-                                + '">'
+                                + '</p> <button class="btn btn-dark btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ')">변경</button></td>'
+                                + '<td>'
                                 + adminApply.name
-                                + '</a></td>'
-                                + '<td><a href="/admin/adminApply/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminApply.userId
-                                + '">'
+                                + '</td>'
+                                + '<td>'
                                 + adminApply.number
-                                + '</a></td>'
-                                + '<td><a href="/admin/adminApply/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminApply.userId
-                                + '">'
+                                + '</td>'
+                                + '<td>'
                                 + adminApply.nickname
-                                + '</a></td>'
-                                + '<td><a href="/admin/adminApply/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminApply.userId
-                                + '">'
+                                + '</td>'
+                                + '<td>'
                                 + regDate
-                                + '</a></td>'
+                                + '</td>'
                                 + '</tr>';
                         }
                         var paginationHTML = '';
@@ -427,6 +457,8 @@
                     }
                 });
             }
+
+
 
             $('#pagination').on('click', 'a', function (e) {
                 e.preventDefault();

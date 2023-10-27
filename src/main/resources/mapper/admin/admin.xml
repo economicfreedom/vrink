@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.green.vrink.admin.repository.interfaces.AdminRepository">
 
+    <update id="changeApply">
+        UPDATE apply
+        SET accepted = #{accepted}
+        WHERE apply_id = #{applyId}
+    </update>
+
     <select id="getAllAdminApplyList" resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
