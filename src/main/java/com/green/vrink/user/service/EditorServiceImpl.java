@@ -49,4 +49,9 @@ public class EditorServiceImpl implements EditorService{
     	
     	return userRepository.updateByEditorId(editorDTO);
     }
+
+    @Override
+    public String getVrm(Integer editorId) {
+        return userRepository.findVrmById(editorId);
+    }
 }

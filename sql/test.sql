@@ -193,3 +193,4 @@ SELECT * FROM community;
 use vrink;
 SELECT * FROM community_reply;
 select * from user;
+SELECT * FROM editor_detail;

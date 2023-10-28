@@ -154,6 +154,7 @@
                 <h4>박카스 작가</h4>
                 <h5>${editorDetail.introduce}</h5>
                 <h5>잘부탁드립니다</h5>
+                <span><a href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM 보러가기</a></span>
                 <div>
 	                <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top:1px solid black; font-weight: bold; cursor: pointer ">
 	                    수정하기
