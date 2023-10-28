@@ -5,7 +5,10 @@ import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.dto.SignUpDto;
 
+import com.green.vrink.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserRepository {
@@ -19,6 +22,7 @@ public interface UserRepository {
 	public EditorDTO findByEditorId(Integer editorId);
 	public Integer updateByEditorId(EditorDTO editorDTO);
 
-
     String findVrmById(Integer editorId);
+
+	List<EditorDTO> findEditorList(Criteria cri);
 }

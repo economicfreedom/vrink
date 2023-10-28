@@ -7,15 +7,17 @@
         insert into apply(user_id, name, number)
             value (#{userId},#{accountName},#{accountNumber})
     </select>
-    
+
     <insert id="signUp">
-    	INSERT INTO user 
-		(email, password, name, nickname, phone, created_at) 
-		VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
+        INSERT INTO user
+            (email, password, name, nickname, phone, created_at)
+        VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
     </insert>
-    
+
     <select id="checkEmail" resultType="String">
-    	SELECT email FROM user WHERE email = #{email};
+        SELECT email
+        FROM user
+        WHERE email = #{email};
     </select>
     <select id="findUserNicknameById" resultType="java.lang.String">
         SELECT nickname
@@ -23,24 +25,44 @@
         WHERE user_id = #{userId}
 
     </select>
-    
+
     <insert id="editorWrite">
-    	INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
-    	VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
+        INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
+        VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
     </insert>
-    
+
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
-        SELECT * FROM editor_detail
+        SELECT *
+        FROM editor_detail
         WHERE editor_id = #{editorId}
     </select>
     <select id="findVrmById" resultType="java.lang.String">
-        SELECT vrm FROM editor_detail
+        SELECT vrm
+        FROM editor_detail
         WHERE editor_id = #{editorId}
+    </select>
+    <select id="findEditorList" resultType="com.green.vrink.user.dto.EditorDTO">
+        SELECT r.editor_id
+             , profile_image
+             , introduce
+             , nickname
+             , COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count
+        FROM editor_detail e
+            LEFT JOIN user u
+        ON e.user_id = u.user_id
+            LEFT JOIN review r ON e.editor_id = r.editor_id
+        GROUP BY r.editor_id, profile_image, introduce, nickname
+            LIMIT #{offset},#{countPerPage}
+
     </select>
 
     <update id="updateByEditorId">
-        UPDATE editor_detail SET 
-        profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
+        UPDATE editor_detail
+        SET profile_image=#{profileImage},
+            introduce=#{introduce},
+            image=#{image},
+            content=#{content},
+            vrm=#{vrm}
         WHERE editor_id = #{editorId}
     </update>
 </mapper>

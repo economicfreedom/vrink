@@ -1,5 +1,6 @@
 package com.green.vrink.user.service;
 
+import com.green.vrink.util.Criteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,8 @@ import com.green.vrink.user.repository.interfaces.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +56,10 @@ public class EditorServiceImpl implements EditorService{
     @Override
     public String getVrm(Integer editorId) {
         return userRepository.findVrmById(editorId);
+    }
+
+    @Override
+    public List<EditorDTO> getList(Criteria cri) {
+        return userRepository.findEditorList(cri);
     }
 }

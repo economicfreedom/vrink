@@ -194,3 +194,10 @@ use vrink;
 SELECT * FROM community_reply;
 select * from user;
 SELECT * FROM editor_detail;
+
+SELECT r.editor_id,profile_image,introduce,nickname
+     ,COALESCE(ROUND(avg(r.count/2),1), 0.0) as count FROM editor_detail e
+LEFT JOIN user u ON e.user_id = u.user_id
+LEFT JOIN review r ON e.editor_id = r.editor_id
+GROUP BY r.editor_id, profile_image, introduce, nickname
+LIMIT ;
