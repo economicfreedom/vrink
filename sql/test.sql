@@ -189,3 +189,7 @@ SELECT * FROM community;
             created_at
         FROM community
         WHERE community_id = 2;
+
+use vrink;
+SELECT * FROM community_reply;
+select * from user;

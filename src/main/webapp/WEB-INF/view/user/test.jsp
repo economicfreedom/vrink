@@ -34,6 +34,7 @@
 					"@pixiv/three-vrm": "/static/js/three-vrm.module.js"
 				}
 			}
+
 		</script>
 
 		<script type="module">
