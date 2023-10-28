@@ -123,7 +123,7 @@
 <div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-sm-4">
-            <h3>박카스작가 일러스트</h3>
+            <h3>${editorDetail.nickname}작가 일러스트</h3>
         </div>
     </div>
     <div class="row mb-5">
@@ -151,9 +151,10 @@
                     <img class="circle-profile" alt=""
                          src="${editorDetail.profileImage}">
                 </div>
-                <h4>박카스 작가</h4>
+                <h4>${editorDetail.nickname} 작가</h4>
                 <h5>${editorDetail.introduce}</h5>
                 <h5>잘부탁드립니다</h5>
+
                 <span><a href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM 보러가기</a></span>
                 <div>
 	                <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top:1px solid black; font-weight: bold; cursor: pointer ">
@@ -162,11 +163,9 @@
 	                <div style="background-color: red; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
 	                    삭제하기
 	                </div>
-                </div>
                 <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
                     작가에게 의뢰하기
                 </div>
-                
             </div>
         </div>
     </div>
@@ -216,7 +215,6 @@
                     </colgroup>
                     <thead>
                     <tr>
-
                         <th class="list-th">별점</th>
                         <th class="list-th tleft">내용</th>
                         <th class="list-th"></th>

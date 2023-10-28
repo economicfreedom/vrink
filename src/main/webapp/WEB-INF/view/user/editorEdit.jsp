@@ -172,6 +172,8 @@ $('#submit').on('click',async function() {
 	let thumbnailInput = $('#thumbnail')[0];
 	let vrmInput = $('#vrm')[0];
 	let editordata = $('.summernote').val();
+	
+	// 기존 프로필, 썸네일, vrm url
 	let profileURL = $('#profileURL').val();
 	let thumbnailURL = $('#thumbnailURL').val();
 	let vrmURL = $('#vrmURL').val();
