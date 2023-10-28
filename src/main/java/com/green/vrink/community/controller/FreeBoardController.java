@@ -79,5 +79,9 @@ public class FreeBoardController {
         return "board/freeBoardUpdateForm";
     }
 
+    @GetMapping("/borad-list") 
+    public String list(){
+    	return "/borad/boardList";
+    }
 
 }

@@ -123,7 +123,7 @@
 <div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-sm-4">
-            <h3>박카스작가 일러스트</h3>
+            <h3>${editorDetail.nickname}작가 일러스트</h3>
         </div>
     </div>
     <div class="row mb-5">
