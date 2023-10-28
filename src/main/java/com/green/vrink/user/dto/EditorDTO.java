@@ -11,4 +11,5 @@ public class EditorDTO {
 	private String image;
 	private String content;
 	private String vrm; 
+	private String nickname;
 }
