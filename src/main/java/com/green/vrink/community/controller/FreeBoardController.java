@@ -1,8 +1,12 @@
 package com.green.vrink.community.controller;
 
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.repository.model.FreeBoard;
+import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.util.Criteria;
+import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequestMapping("/board")
 @Slf4j
@@ -20,7 +25,7 @@ import javax.servlet.http.HttpSession;
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
-
+    private final FreeBoardReplyService freeBoardReplyService;
     @GetMapping("/write-form")
     public String read(Model model) {
 
@@ -39,7 +44,25 @@ public class FreeBoardController {
         if (dto == null) {
             return "redirect:/";
         }
+        Criteria cri = new Criteria();
+        Integer total = freeBoardReplyService.replyTotal(communityId);
+        cri.setPageNum(1);
+        cri.setCountPerPage(7);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(total);
+
+        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(communityId,cri);
+        log.info(pageDTO.toString());
+        log.info("total : {}",total);
+
+        boolean next = pageDTO.getEndPage() > 1;
+
+
+        model.addAttribute("list",freeBoardReplyDTOS);
         model.addAttribute("dto", dto);
+        model.addAttribute("next",next);
+        model.addAttribute("total",total);
 
         return "board/freeBoardReadForm";
     }

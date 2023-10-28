@@ -21,8 +21,8 @@ public class PageDTO {
 	private boolean prev;
 	private boolean next;
 	
-	private final int buttonNum = 5;
-	
+	private final static int buttonNum = 5;
+
 	
 	private void calcDataOfPage() {
 		
