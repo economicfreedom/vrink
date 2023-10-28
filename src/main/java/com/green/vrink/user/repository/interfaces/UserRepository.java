@@ -1,6 +1,7 @@
 package com.green.vrink.user.repository.interfaces;
 
 import com.green.vrink.user.dto.ApprovalDTO;
+import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.dto.SignUpDto;
 
@@ -15,6 +16,8 @@ public interface UserRepository {
 
 	String findUserNicknameById(Integer userId);
 //    public Integer saveApply();
+	public EditorDTO findByEditorId(Integer editorId);
+	public Integer updateByEditorId(EditorDTO editorDTO);
 
 
 }

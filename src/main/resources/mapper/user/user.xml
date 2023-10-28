@@ -28,4 +28,15 @@
     	INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
     	VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
     </insert>
+    
+    <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
+        SELECT * FROM editor_detail
+        WHERE editor_id = #{editorId}
+    </select>	
+     
+    <update id="updateByEditorId">
+        UPDATE editor_detail SET 
+        profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
+        WHERE editor_id = #{editorId}
+    </update>
 </mapper>
