@@ -30,10 +30,18 @@
     </insert>
     
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
-        SELECT * FROM editor_detail
+        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, ed.vrm, u.nickname
+		from editor_detail ed
+		left join user u
+		on u.user_id = ed.user_id
+		where ed.editor_id = #{editorId};
+    </select>
+    
+    <select id="findVrmById" resultType="java.lang.String">
+        SELECT vrm FROM editor_detail
         WHERE editor_id = #{editorId}
-    </select>	
-     
+    </select>
+
     <update id="updateByEditorId">
         UPDATE editor_detail SET 
         profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}

@@ -16,4 +16,5 @@ public interface FreeBoardRepository {
 
 
     void update(FreeBoard entity);
+
 }

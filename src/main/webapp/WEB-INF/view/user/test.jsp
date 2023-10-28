@@ -31,7 +31,7 @@
 				"imports": {
 					"three": "https://unpkg.com/three@0.154.0/build/three.module.js",
 					"three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/",
-					"@pixiv/three-vrm": "/static/js/three-vrm.module.js"
+					"@pixiv/three-vrm": "/js/three-vrm.module.js"
 				}
 			}
 		</script>
@@ -80,7 +80,7 @@
 			loader.load(
 
 				// URL of the VRM you want to load
-				'/static/user/2023/10/27/490a524a-d4b8-457a-84c7-05af5813e84a_test.vrm',
+				`${vrm}`,
 
 				// called when the resource is loaded
 				( gltf ) => {

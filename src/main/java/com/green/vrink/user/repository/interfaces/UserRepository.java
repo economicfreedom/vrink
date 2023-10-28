@@ -20,4 +20,5 @@ public interface UserRepository {
 	public Integer updateByEditorId(EditorDTO editorDTO);
 
 
+    String findVrmById(Integer editorId);
 }

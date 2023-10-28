@@ -10,4 +10,6 @@ public interface EditorService {
 	EditorDTO responseEditorDeatil(Integer editorId);
 	EditorDTO responseEditorEdit(Integer editorId);
 	Integer requestEditorEdit(EditorDTO editorDTO);
+
+    String getVrm(Integer editorId);
 }

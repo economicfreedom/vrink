@@ -9,13 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +25,10 @@ public class EditorController {
     private final EditorServiceImpl editorServiceImpl;
 
     @GetMapping("/editor-detail/{editorId}")
-    public String editorDetail(@PathVariable("editorId") Integer editorId, HttpSession session, Model model) {
+    public String editorDetail(@PathVariable("editorId") Integer editorId
+            , HttpSession session
+            , Model model
+    ){
         List<ReviewDTO> reviewDTOS = reviewService.findByIdAll(1); 
         model.addAttribute("reviewList",reviewDTOS);
         log.info("reviewList {}", reviewDTOS);
@@ -64,5 +63,18 @@ public class EditorController {
 
 
         return "user/applyForm";
+    }
+
+    @GetMapping("/vrm")
+    public String showVrmModel(
+            @RequestParam(name = "editor-id")
+            Integer editorId
+            , Model model
+    ){
+        String vrm  = editorServiceImpl.getVrm(editorId);
+        vrm =vrm.replace("\\","/");
+        model.addAttribute("vrm",vrm);
+        log.info("vrm 경로 {}",vrm);
+        return "user/test";
     }
 }
