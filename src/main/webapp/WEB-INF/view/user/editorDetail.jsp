@@ -161,7 +161,7 @@
                 <h5>작가 소개입니다</h5>
                 <h5>잘부탁드립니다</h5>
                 <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
-                    작가에게 문의하기
+                    작가에게 의뢰하기
                 </div>
             </div>
         </div>

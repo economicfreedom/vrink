@@ -3,7 +3,8 @@ package com.green.vrink.user.controller;
 
 import com.green.vrink.user.dto.ApprovalDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
-import com.green.vrink.user.service.EditorService;
+import com.green.vrink.user.service.EditorServiceImpl;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,9 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/editor")
 @Slf4j
-
 @RequiredArgsConstructor
 public class EditorRestController {
-    private final EditorService editorService;
+    private final EditorServiceImpl editorServiceImpl;
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -34,7 +34,7 @@ public class EditorRestController {
         approvalDTO.setUserId(1);
 
 
-        Integer res =  editorService.requestApproval(approvalDTO);
+        Integer res =  editorServiceImpl.requestApproval(approvalDTO);
 
 
         log.info("Test Dto {}", approvalDTO);
@@ -47,7 +47,7 @@ public class EditorRestController {
     @PostMapping("/editor-write")
     public Integer editorWriteProc(EditorWriteDTO editorWriteDTO) {
     	editorWriteDTO.setUserId(2);
-    	Integer res = editorService.requestEditorWrite(editorWriteDTO);
+    	Integer res = editorServiceImpl.requestEditorWrite(editorWriteDTO);
     	log.info("EditorWriteDTO {}",editorWriteDTO);
     	return res;
     }
