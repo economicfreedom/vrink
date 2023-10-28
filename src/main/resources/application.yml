@@ -35,6 +35,9 @@ server:
     encoding:
       charset: utf-8
       force: true
+  tomcat:
+    max-http-form-post-size: 52428800
+    max-swallow-size: 52428800
 
 mybatis:
   mapper-locations:

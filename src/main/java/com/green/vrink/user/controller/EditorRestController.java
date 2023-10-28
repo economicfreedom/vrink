@@ -2,6 +2,7 @@ package com.green.vrink.user.controller;
 
 
 import com.green.vrink.user.dto.ApprovalDTO;
+import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.service.EditorServiceImpl;
 
@@ -49,6 +50,12 @@ public class EditorRestController {
     	editorWriteDTO.setUserId(2);
     	Integer res = editorServiceImpl.requestEditorWrite(editorWriteDTO);
     	log.info("EditorWriteDTO {}",editorWriteDTO);
+    	return res;
+    }
+    
+    @PostMapping("/editor-edit")
+    public Integer editorEidtProc(EditorDTO editorDTO) {
+    	Integer res = editorServiceImpl.requestEditorEdit(editorDTO);
     	return res;
     }
 }

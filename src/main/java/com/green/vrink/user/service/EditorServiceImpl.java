@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.green.vrink.user.dto.ApprovalDTO;
+import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 
@@ -29,5 +30,23 @@ public class EditorServiceImpl implements EditorService{
     @Transactional
     public Integer requestEditorWrite(EditorWriteDTO editorWriteDTO) {
     	return userRepository.editorWrite(editorWriteDTO);
+    }
+    
+    @Override
+    public EditorDTO responseEditorDeatil(Integer editorId) {
+    	
+    	return userRepository.findByEditorId(editorId);
+    }
+    
+    @Override
+    public EditorDTO responseEditorEdit(Integer editorId) {
+    	
+    	return userRepository.findByEditorId(editorId);
+    }
+    
+    @Override
+    public Integer requestEditorEdit(EditorDTO editorDTO) {
+    	
+    	return userRepository.updateByEditorId(editorDTO);
     }
 }

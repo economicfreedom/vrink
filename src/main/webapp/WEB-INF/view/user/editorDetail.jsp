@@ -129,13 +129,7 @@
     <div class="row mb-5">
         <div class="col-sm-9">
             <div class="mb-3">
-                <img class="w-full" alt="" src="https://artmug.kr/image/goods_img1/1/17101.jpg?ver=1678017207">
-            </div>
-            <div class="mb-3">
-                <img class="w-full" alt="" src="https://artmug.kr/image/goods_img1/1/17101B.jpg?ver=1678017207">
-            </div>
-            <div class="mb-3">
-                <img class="w-full" alt="" src="https://artmug.kr/image/goods_img1/1/17101C.jpg?ver=1678017207">
+                <img class="w-full" alt="" src="${editorDetail.image}">
             </div>
         </div>
         <div class="col-sm-3">
@@ -155,26 +149,29 @@
                 </div>
                 <div class="circle-profile-area">
                     <img class="circle-profile" alt=""
-                         src="https://artmug.kr/image/goods_img1/1/17101B.jpg?ver=1678017207">
+                         src="${editorDetail.profileImage}">
                 </div>
                 <h4>박카스 작가</h4>
-                <h5>작가 소개입니다</h5>
+                <h5>${editorDetail.introduce}</h5>
                 <h5>잘부탁드립니다</h5>
+                <div>
+	                <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top:1px solid black; font-weight: bold; cursor: pointer ">
+	                    수정하기
+	                </div>
+	                <div style="background-color: red; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
+	                    삭제하기
+	                </div>
+                </div>
                 <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
                     작가에게 의뢰하기
                 </div>
+                
             </div>
         </div>
     </div>
     <div class="row mb-5">
-        <div class="col-sm-12 tcenter">
-            <h1>내용내용내용내용</h1>
-        </div>
-        <div class="col-sm-12 mb-5">
-            <img class="w-full" alt="" src="https://artmug.kr/image/goods_img1/1/17101B.jpg?ver=1678017207">
-        </div>
-        <div class="col-sm-12 mb-5">
-            <img width="full" alt="" src="http://artmug.kr/image/up_img/detail/1/goods_17101/16270480690_Re.jpg">
+        <div class="col-sm-12 t-center">
+            ${editorDetail.content}
         </div>
     </div>
     <div class="row mb-5">
@@ -251,4 +248,5 @@
         </div>
     </div>
 </div>
+
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
