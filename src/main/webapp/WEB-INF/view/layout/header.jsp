@@ -119,7 +119,7 @@
                     <ul >
 
                         <li class="menu-item-has-children mega">
-                            <a href="#" title="">PAGES</a>
+                            <a href="/editor/list" title="">EDITORS</a>
                             <ul>
                                 <li><a href="about.html" title="">About Us</a></li>
                                 <li><a href="branch.html" title="">Branch 3 Col</a></li>
@@ -154,7 +154,7 @@
                         </li>
 
                         <li class="menu-item-has-children">
-                            <a href="#" title="">BLOG</a>
+                            <a href="#" title="">의뢰 하기</a>
                             <ul>
                                 <li><a href="blog.html" title="">Blog</a></li>
                                 <li><a href="blog-sidebar.html" title="">Blog Sidebar</a></li>
@@ -164,7 +164,7 @@
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#" title="">PORTFOLIO</a>
+                            <a href="#" title="">자유게시판</a>
                             <ul>
                                 <li><a href="portfolio.html" title="">Portfolio</a></li>
                                 <li><a href="portfolio2.html" title="">Portfolio 2</a></li>
@@ -175,7 +175,7 @@
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#" title="">EVENTS</a>
+                            <a href="#" title="">문의 하기</a>
                             <ul>
                                 <li><a href="event.html" title="">Event</a></li>
                                 <li><a href="event2.html" title="">Event 2</a></li>
@@ -185,7 +185,7 @@
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.html" title="">CONTACT</a></li>
+                        <li><a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a></li>
                     </ul>
                 </nav>
 
