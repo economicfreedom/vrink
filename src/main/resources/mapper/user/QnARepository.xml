@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.qna.repository.interfaces.QnARepository">
+    <insert id="save">
+
+        INSERT INTO qna(user_id, content, type, email,title)
+
+            VALUE (
+            #{userId}
+            ,#{content}
+            ,#{type}
+            ,(SELECT email FROM user WHERE user_id =#{userId})
+            ,#{title}
+
+            )
+
+    </insert>
+    <insert id="saveQuestion">
+        insert into question(qna_id, user_id, content)
+            value (#{qnaId},#{userId},#{content});
+    </insert>
+    <update id="updateStatus">
+        UPDATE qna SET
+                       status = 1
+        WHERE qna_id = #{qnaId}
+    </update>
+    <delete id="deleteById"></delete>
+    <select id="findById" resultType="com.green.vrink.qna.dto.QnADTO">
+        SELECT * FROM qna
+        WHERE qna_id = #{qnaId}
+    </select>
+    <select id="findTotalById" resultType="java.lang.Integer">
+        SELECT COUNT(qna_id) FROM qna
+        WHERE user_id = #{userId}
+    </select>
+    <select id="findAllById" resultType="com.green.vrink.qna.dto.QnADTO">
+        SELECT qna_id
+             , user_id
+             , content
+             , DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
+             , type
+             , title
+
+             , email
+             , status
+        FROM qna
+        WHERE user_id = #{userId} LIMIT #{cri.offset}
+            , #{cri.countPerPage}
+
+    </select>
+    <select id="findByQuestionByQnAId" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT * FROM question
+        WHERE qna_id = #{qnaId}
+    </select>
+
+</mapper>

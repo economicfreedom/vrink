@@ -33,4 +33,45 @@
     <select id="findUserNicknameById" resultType="java.lang.String">
 
     </select>
+    <select id="findAllByCri" resultType="com.green.vrink.community.dto.FreeBoardDTO">
+        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+
+        ORDER BY created_at DESC
+        LIMIT #{offset},#{countPerPage}
+
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(community_id) FROM community
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
 </mapper>
