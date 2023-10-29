@@ -263,17 +263,50 @@ insert into editor_detail(user_id, profile_image, introduce, image, content, vrm
 use vrink;
 SELECT community_id, title, nickname, c.created_at
 FROM community c
-LEFT JOIN user u on c.user_id = u.user_id
+         LEFT JOIN user u on c.user_id = u.user_id
 WHERE
 
-select * from community;
+select *
+from community;
 
 
 
-insert into community(user_id,title,content)
-value (1,'ㅅㄷㄴㅅ','ㅅㄷㄴㅅ');
+insert into community(user_id, title, content)
+    value (1, 'ㅅㄷㄴㅅ', 'ㅅㄷㄴㅅ');
+use vrink;
+SELECT qna_id
+     , user_id
+     , title
+     , type
+     , status
+     , DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
+FROM qna
+WHERE user_id = #{userId}
+
+
+select *
+from  qna;
+
+CREATE TABLE `question` (
+	`q_id`	VARCHAR(255)	NOT NULL,
+	`qna_id`	int	NOT NULL,
+	`user_id`	int	NOT NULL,
+	`content`	longtext	NOT NULL,
+	`created_at`	timestamp	NOT NULL	DEFAULT now()
+);
+
+ALTER TABLE `question` ADD CONSTRAINT `PK_QUESTION` PRIMARY KEY (
+	`q_id`
+);
+
+ALTER TABLE question MODIFY q_id INT NOT NULL;
+ALTER TABLE question MODIFY q_id INT NOT NULL AUTO_INCREMENT;
+
+desc question;
+
+insert into question(qna_id,user_id,content,title)
+value (1,1,'test','test');
 
 
 
-
-
+select * from qna;

@@ -62,14 +62,14 @@
                             <p>WELCOME TO 승철 WOULD.</p>
                             <form>
                                 <div class="field">
-	                                <div class="email-check-div">
-	                                    <input type="text" placeholder="이메일" class="email-input"/>
-	                                    <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
-	                                    <input type="hidden" class="email-check-result"/>
-	                                </div>
+                                    <div class="email-check-div">
+                                        <input type="text" placeholder="이메일" class="email-input"/>
+                                        <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
+                                        <input type="hidden" class="email-check-result"/>
+                                    </div>
                                 </div>
                                 <div class="field" id="auth-email-div">
-                                
+
                                 </div>
                                 <div class="field">
                                     <input type="password" placeholder="비밀번호" class="password-input"/>
@@ -90,7 +90,7 @@
                                     <input type="text" placeholder="휴대폰번호" class="phone-input"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
-                                
+
                                 <input type="button" value="회원가입" id="sign-up-btn" class="flat-btn"/>
                             </form>
                         </div><!-- Registration sec -->
@@ -116,7 +116,7 @@
                 </div>
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
                 <nav style="float: none; margin: 0 auto;">
-                    <ul >
+                    <ul>
 
                         <li class="menu-item-has-children mega">
                             <a href="/editor/list" title="">EDITORS</a>
@@ -185,7 +185,16 @@
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a></li>
+                        <li class="menu-item-has-children"><a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a>
+                            <ul>
+                                <li><a href="event.html" title="">Event</a></li>
+                                <li><a href="/qna/list" title="">내 문의 내용</a></li>
+                                <li><a href="event3.html" title="">Event 3</a></li>
+                                <li><a href="event4.html" title="">Event 4</a></li>
+                                <li><a href="event-single.html" title="">Event Single</a></li>
+                                <li><a href="event-single2.html" title="">Event Single 2</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
 
@@ -193,49 +202,49 @@
         </div>
     </header>
     <div class="top-bar">
-            <div class="container">
+        <div class="container">
 
-                <ul class="contact-item">
-                    <li><i class="fa fa-envelope-o"></i>yourcompnay@email.com</li>
-                    <li><i class="fa fa-mobile"></i>+7 998 71 150 / +7 998 30 20</li>
-                </ul>
+            <ul class="contact-item">
+                <li><i class="fa fa-envelope-o"></i>yourcompnay@email.com</li>
+                <li><i class="fa fa-mobile"></i>+7 998 71 150 / +7 998 30 20</li>
+            </ul>
 
-                <div class="choose-language">
-                    <a href="#" title="">FR</a>
-                    <a href="#" title="">PO</a>
-                    <a href="#" title="">DE</a>
-                    <a href="#" title="">EN</a>
-                </div>
+            <div class="choose-language">
+                <a href="#" title="">FR</a>
+                <a href="#" title="">PO</a>
+                <a href="#" title="">DE</a>
+                <a href="#" title="">EN</a>
             </div>
-        </div><!-- Top bar -->
+        </div>
+    </div><!-- Top bar -->
 </div>
 <script type="text/javascript">
-	let authEmailNumber = null; // 함수 밖의 변수
+    let authEmailNumber = null; // 함수 밖의 변수
 
 
-	$('.email-check-btn').on('click',function() {
-		let email = $('.email-input').val();
-		emailCheck(email);
-	});
-	
+    $('.email-check-btn').on('click', function () {
+        let email = $('.email-input').val();
+        emailCheck(email);
+    });
+
     async function emailCheck(email) {
         try {
             let result = await fetch("http://localhost/user/check-email/" + email);
             let todo = await result.json();
-            
-            if(todo === 0) {
-            	alert('메일로 인증번호가 발송되었습니다.');
-            	authEmailNumber = sendEmail(email);
-            	console.log(authEmailNumber);
-            	$('.email-input').attr('readonly', true);
-            	$('.email-check-btn').attr('disabled', true);
-            	$('.email-check-btn').css('background-color', "grey");
-            	$('#auth-email-div').append('<input type="text" placeholder="인증번호" class="auth-email-input"/>');
-            	$('#auth-email-div').append('<input type="button" value="인증확인" class="auth-email-check-btn" id="email-btn"/>');
-            	checkNum();
+
+            if (todo === 0) {
+                alert('메일로 인증번호가 발송되었습니다.');
+                authEmailNumber = sendEmail(email);
+                console.log(authEmailNumber);
+                $('.email-input').attr('readonly', true);
+                $('.email-check-btn').attr('disabled', true);
+                $('.email-check-btn').css('background-color', "grey");
+                $('#auth-email-div').append('<input type="text" placeholder="인증번호" class="auth-email-input"/>');
+                $('#auth-email-div').append('<input type="button" value="인증확인" class="auth-email-check-btn" id="email-btn"/>');
+                checkNum();
             } else {
-            	alert('이미 존재하는 아이디입니다.');
-            	$('.email-check-result').val('1');
+                alert('이미 존재하는 아이디입니다.');
+                $('.email-check-result').val('1');
             }
         } catch (error) {
             console.log(error);
@@ -263,81 +272,80 @@
 
         console.log("External Data:", authEmailNumber);
     }
-    
+
     function checkNum() {
-    	$('.auth-email-check-btn').on('click',function() {
-    		console.log('check');
-    		if(authEmailNumber != $('.auth-email-input').val()) {
-    			alert('인증번호가 다릅니다.');
-    			return;
-    		}
-    		alert('인증이 완료되었습니다.');
-    		$('.auth-email-input').attr('readonly', true);
-        	$('.auth-email-check-btn').attr('disabled', true);
-        	$('.auth-email-check-btn').css('background-color', "grey");
-        	$('.email-check-result').val('0');
-    	});
-	
+        $('.auth-email-check-btn').on('click', function () {
+            console.log('check');
+            if (authEmailNumber != $('.auth-email-input').val()) {
+                alert('인증번호가 다릅니다.');
+                return;
+            }
+            alert('인증이 완료되었습니다.');
+            $('.auth-email-input').attr('readonly', true);
+            $('.auth-email-check-btn').attr('disabled', true);
+            $('.auth-email-check-btn').css('background-color', "grey");
+            $('.email-check-result').val('0');
+        });
+
     }
-	
-    $('.password-input').change(function() {
-    	console.log($('.password-input').val());
-    	$('.password-check-flag').val('1');
+
+    $('.password-input').change(function () {
+        console.log($('.password-input').val());
+        $('.password-check-flag').val('1');
     });
-    $('.password-check-input').change(function() {
-    	console.log($('.password-check-input').val());
-    	if($('.password-input').val() != $('.password-check-input').val()) {
-    		alert('비밀번호가 서로 다릅니다.');
-	    	$('.password-check-flag').val('1');
-    		return;
-    	}
-    	$('.password-check-flag').val('0');
+    $('.password-check-input').change(function () {
+        console.log($('.password-check-input').val());
+        if ($('.password-input').val() != $('.password-check-input').val()) {
+            alert('비밀번호가 서로 다릅니다.');
+            $('.password-check-flag').val('1');
+            return;
+        }
+        $('.password-check-flag').val('0');
     });
-    
-    $('#sign-up-btn').on('click', function() {
-    	if($('.email-input').val().trim() == ''|| $('.password-input').val().trim() == '' || $('.name-input').val().trim() == ''
-    			|| $('.nickname-input').val().trim() == '' || $('.phone-input').val().trim() == '') {
-    		alert('모든 값을 입력해주세요.');
-    		return;
-    	}
-    	if($('.email-check-result').val() != '0') {
-    		alert('이메일 중복체크를 진행해주세요.');
-    		return;
-    	}
-    	if($('.password-check-flag').val() != '0') {
-    		alert('비밀번호가 서로 다릅니다.');
-    		return;
-    	}
-    		
-    	fetch('http://localhost/user/sign-up', {
-    		  method: 'POST',
-    		  headers: {
-    		    'Content-Type': 'application/json'
-    		  },
-    		  body: JSON.stringify({
-    		    email: $('.email-input').val(),
-    		    password: $('.password-input').val(),
-    		    name: $('.name-input').val(),
-    		    nickname: $('.nickname-input').val(),
-    		    phone: $('.phone-input').val()
-    		  })
-    		})
-    		.then(response =>{ 
-    		if(response.ok){
-    			alert("회원가입이 완료되었습니다.");
-    			location.reload();
-    		}else{
-    			alert("회원가입 실패");
-    			location.reload();
-    		}
-    		})
-    		.then(data => 
-    		console.log(data)
-    		
-    		)
-    		.catch(error => console.error('Error:', error));
+
+    $('#sign-up-btn').on('click', function () {
+        if ($('.email-input').val().trim() == '' || $('.password-input').val().trim() == '' || $('.name-input').val().trim() == ''
+            || $('.nickname-input').val().trim() == '' || $('.phone-input').val().trim() == '') {
+            alert('모든 값을 입력해주세요.');
+            return;
+        }
+        if ($('.email-check-result').val() != '0') {
+            alert('이메일 중복체크를 진행해주세요.');
+            return;
+        }
+        if ($('.password-check-flag').val() != '0') {
+            alert('비밀번호가 서로 다릅니다.');
+            return;
+        }
+
+        fetch('http://localhost/user/sign-up', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: $('.email-input').val(),
+                password: $('.password-input').val(),
+                name: $('.name-input').val(),
+                nickname: $('.nickname-input').val(),
+                phone: $('.phone-input').val()
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("회원가입이 완료되었습니다.");
+                    location.reload();
+                } else {
+                    alert("회원가입 실패");
+                    location.reload();
+                }
+            })
+            .then(data =>
+                console.log(data)
+            )
+            .catch(error => console.error('Error:', error));
     });
-    
+
 </script>
 <body>
 <section style="min-height: calc(100vh - 204px);">

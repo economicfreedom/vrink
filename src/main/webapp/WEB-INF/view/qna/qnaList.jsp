@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<script>
+    function href(){
+        location.href="/qna/write"
+    }
+</script>
 <style>
     .board-list-th {
         border-top: 1px solid #f2f2f2;
@@ -14,85 +19,68 @@
         color: #5f5f5f
     }
 </style>
-<script>
-    $(document).ready(function () {
-        $("#search").click(function () {
-
-            let type = $("#type").val();
-            let keyword = $("#keyword").val();
-            alert(type)
-            alert(keyword)
-            location.href = "/board/board-list?keyword=" + keyword + "&type=" + type;
-
-        });
-        $('#pagination').on('click', 'a', function (e) {
-            e.preventDefault();
-            const value = $(this).data('page-num');
-            console.log(value);
-
-            document["page-form"]["page-num"].value = value;
-            document["page-form"].type.value = $("select[name='type']").val();
-            document["page-form"].keyword.value = $("#keyword").val();
-            // document["page-form"]["order-by"].value = $("input[name=optradio]:checked").val();
-            document["page-form"].submit();
-        }); // end of #pagination
-    })
-</script>
-
 <div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-sm-9 col-center">
             <div class="d-flex mb-3" style="justify-content: space-between;">
-                <div>
-                    <c:if test="${pageDTO.cri.keyword != ''}">
-                        <span>${pageDTO.cri.keyword}(${total})</span>
-                    </c:if>
+                <div class="d-flex mb-3 justify-content-between align-items-center">
+                    <h2 class="mb-0">문의</h2>
 
-                    <c:if test="${pageDTO.cri.keyword == ''}">
-                        <span>자유 게시판</span>
-                    </c:if>
                 </div>
                 <div>
-                    <select style="height:26px" name="type" id="type">
-                        <option value="title"  ${pageDTO.cri.type == 'title' ? 'selected' : ''}>제목</option>
-                        <option value="content"  ${pageDTO.cri.type == 'content' ? 'selected' : ''}>내용</option>
-                        <option value="tc" ${pageDTO.cri.type == 'tc' ? 'selected' : ''}>게시글+내용</option>
-                        <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
-                    </select>
-                    <input type="text" size="15" id="keyword" value="${pageDTO.cri.keyword != '' ? pageDTO.cri.keyword :''}">
-                    <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
-                         id="search">
-
+                    <button class="flat-btn" style="font-size: 12px;" onclick="href()">문의 하기</button>
                 </div>
             </div>
             <table class="w-full t-center">
                 <colgroup>
                     <col width="10%">
-                    <col width="40%">
+                    <col width="10%">
                     <col width="25%">
                     <col width="25%">
                 </colgroup>
                 <thead>
                 <tr class="board-list-th">
-                    <th class="t-center">번호</th>
+                    <th class="t-center">문의 유형</th>
+                    <th class="t-center">답변 상태</th>
                     <th>제목</th>
-                    <th class="t-center">닉네임</th>
                     <th class="t-center">날짜</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${list}" var="board">
                     <tr class="board-list-tr">
-                        <td>${board.communityId}</td>
-                        <td class="t-left">
-                            <a href="/board/read/${board.communityId}"
-                            style="text-decoration: none; color: black">
-                                    ${board.title}</a></td>
 
-                        <td>${board.nickname}</td>
+
+                        <td>
+                            <c:choose>
+                                <c:when test="${board.type eq 'answer'}"> 문의 </c:when>
+                                <c:when test="${board.type eq 'report'}"> 신고 </c:when>
+                                <c:otherwise> 기타 </c:otherwise>
+                            </c:choose>
+                        </td>
+
+
+                        <c:choose>
+                            <c:when test="${board.status == 0}">
+                                <td style="color: grey"> [답변 대기]</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="color: red"> [답변 완료]</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td class="t-left"><a
+                                href="/qna/read-q/${board.qnaId}"
+                                style="text-decoration: none; color: black">
+                                ${board.title}
+
+                        </a></td>
+
+
                         <td>${board.createdAt}</td>
                     </tr>
+
                 </c:forEach>
+
                 </tbody>
             </table>
         </div>

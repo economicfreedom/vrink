@@ -13,10 +13,10 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    reportUserId: 1,
+                    reportUserId: ${editorDetail.userId},
                     userId: 1,
-                    boardId: 1,
-                    editorId: null
+                    boardId: null,
+                    editorId: ${editorDetail.editorId}
                 })
             })
                 .then(response => {
@@ -46,7 +46,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    editorId: 1,
+                    editorId: ${editorDetail.editorId},
                     userId: 1,
                     content: content,
                     count: star
@@ -88,6 +88,7 @@
 
 
     }
+
 </script>
 <style>
     .star {
