@@ -1,5 +1,6 @@
 package com.green.vrink.community.repository.interfaces;
 
+import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.repository.model.FreeBoardReply;
 import com.green.vrink.util.Criteria;
@@ -24,4 +25,6 @@ public interface FreeBoardReplyRepository {
     );
 
     Integer replyTotal(Integer commuId);
+
+
 }

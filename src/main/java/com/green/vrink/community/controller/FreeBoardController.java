@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -80,8 +81,30 @@ public class FreeBoardController {
     }
 
     @GetMapping("/board-list") 
-    public String list(){
-    	return "board/freeBoardList";
+    public String list(
+            @RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
+            ,@RequestParam(name = "keyword",defaultValue = "") String keyword
+            ,@RequestParam(name = "type" ,defaultValue = "") String type
+            ,Model model
+    ){
+
+
+        Criteria cri = new Criteria();
+        cri.setType(type);
+        cri.setKeyword(keyword);
+        cri.setCountPerPage(10);
+        cri.setPageNum(pageNum);
+        log.info(cri.toString());
+        Integer total = freeBoardService.getTotal(cri);
+        List<FreeBoardDTO> list = freeBoardService.pageList(cri);
+
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(total);
+        model.addAttribute("pageDTO",pageDTO);
+        model.addAttribute("list",list);
+        model.addAttribute("total",total);
+        return "board/freeBoardList";
     }
 
 }

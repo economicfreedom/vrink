@@ -257,9 +257,21 @@ select *
 from editor_detail;
 
 insert into editor_detail(user_id, profile_image, introduce, image, content, vrm)
-value (1,null,'ㅎㅇ','ㅎㅇ','ㅎㅇ',null);
+    value (1, null, 'ㅎㅇ', 'ㅎㅇ', 'ㅎㅇ', null);
 
 
+use vrink;
+SELECT community_id, title, nickname, c.created_at
+FROM community c
+LEFT JOIN user u on c.user_id = u.user_id
+WHERE
+
+select * from community;
+
+
+
+insert into community(user_id,title,content)
+value (1,'ㅅㄷㄴㅅ','ㅅㄷㄴㅅ');
 
 
 

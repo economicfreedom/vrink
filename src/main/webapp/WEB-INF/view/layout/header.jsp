@@ -166,7 +166,7 @@
                         <li class="menu-item-has-children">
                             <a href="#" title="">자유게시판</a>
                             <ul>
-                                <li><a href="portfolio.html" title="">Portfolio</a></li>
+                                <li><a href="/board/board-list" title="">보러가기</a></li>
                                 <li><a href="portfolio2.html" title="">Portfolio 2</a></li>
                                 <li><a href="portfolio3.html" title="">Portfolio 3</a></li>
                                 <li><a href="portfolio4.html" title="">Portfolio 4</a></li>

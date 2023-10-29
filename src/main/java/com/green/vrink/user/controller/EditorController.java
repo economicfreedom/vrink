@@ -78,7 +78,7 @@ public class EditorController {
         vrm =vrm.replace("\\","/");
         model.addAttribute("vrm",vrm);
         log.info("vrm 경로 {}",vrm);
-        return "user/shoVrm";
+        return "user/showVrm";
     }
 
     @GetMapping("/list")

@@ -1,5 +1,6 @@
 package com.green.vrink.community.service;
 
+import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.repository.interfaces.FreeBoardReplyRepository;
 import com.green.vrink.community.repository.model.FreeBoardReply;
@@ -46,4 +47,6 @@ public class FreeBoardReplyServiceImpl implements FreeBoardReplyService {
     public Integer replyTotal(Integer commuId) {
         return freeBoardReplyRepository.replyTotal(commuId);
     }
+
+
 }

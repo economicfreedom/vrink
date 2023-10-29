@@ -36,4 +36,7 @@
         FROM community_reply
         WHERE community_id = #{commuId}
     </select>
+
+
+
 </mapper>
