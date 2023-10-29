@@ -25,4 +25,6 @@ public interface UserRepository {
     String findVrmById(Integer editorId);
 
 	List<EditorDTO> findEditorList(Criteria cri);
+
+	Integer getTotal();
 }

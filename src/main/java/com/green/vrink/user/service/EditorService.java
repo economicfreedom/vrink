@@ -16,4 +16,6 @@ public interface EditorService {
 
     String getVrm(Integer editorId);
 	List<EditorDTO> getList(Criteria cri);
+
+	Integer getTotal();
 }

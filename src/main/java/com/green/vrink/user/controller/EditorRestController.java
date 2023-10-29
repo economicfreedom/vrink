@@ -6,15 +6,16 @@ import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.service.EditorServiceImpl;
 
+import com.green.vrink.util.AsyncPageDTO;
+import com.green.vrink.util.Criteria;
+import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/editor")
@@ -57,5 +58,23 @@ public class EditorRestController {
     public Integer editorEidtProc(EditorDTO editorDTO) {
     	Integer res = editorServiceImpl.requestEditorEdit(editorDTO);
     	return res;
+    }
+
+    @GetMapping("/list-more")
+    public ResponseEntity<?> listMore(
+            @RequestParam(name = "page-num") Integer pageNum
+    ){
+                Criteria cri = new Criteria();
+        cri.setPageNum(pageNum);
+        cri.setCountPerPage(6);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        Integer total = editorServiceImpl.getTotal();
+        pageDTO.setArticleTotalCount(total);
+        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setPageDTOs(editorDTO);
+        asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
+        return ResponseEntity.ok(asyncPageDTO);
     }
 }

@@ -5,6 +5,7 @@ import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.service.EditorServiceImpl;
 
+import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
@@ -86,10 +87,15 @@ public class EditorController {
         cri.setPageNum(1);
         cri.setCountPerPage(6);
         PageDTO pageDTO = new PageDTO();
-        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
-        model.addAttribute("list",editorDTO);
         pageDTO.setCri(cri);
-
+        Integer total = editorServiceImpl.getTotal();
+        pageDTO.setArticleTotalCount(total);
+        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setPageDTOs(editorDTO);
+        asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
+        model.addAttribute("list",editorDTO);
+        model.addAttribute("next",asyncPageDTO.isHasNext());
         return "user/editorList";
     }
 }

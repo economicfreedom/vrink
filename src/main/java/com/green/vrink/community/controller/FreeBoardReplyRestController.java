@@ -2,7 +2,7 @@ package com.green.vrink.community.controller;
 
 
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
-import com.green.vrink.community.dto.ReplyPageDTO;
+import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
@@ -73,10 +73,10 @@ public class FreeBoardReplyRestController {
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         pageDTO.setArticleTotalCount(total);
-        ReplyPageDTO replyPageDTO = new ReplyPageDTO();
-        replyPageDTO.setHasNext(pageNum,pageDTO.getEndPage());
-        replyPageDTO.setFreeBoardReplyDTOS(freeBoardReplyDTOS);
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setHasNext(pageNum,pageDTO.getEndPage());
+        asyncPageDTO.setPageDTOs(freeBoardReplyDTOS);
 
-        return ResponseEntity.ok().body(replyPageDTO);
+        return ResponseEntity.ok().body(asyncPageDTO);
     }
 }

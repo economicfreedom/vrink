@@ -62,4 +62,9 @@ public class EditorServiceImpl implements EditorService{
     public List<EditorDTO> getList(Criteria cri) {
         return userRepository.findEditorList(cri);
     }
+
+    @Override
+    public Integer getTotal() {
+        return userRepository.getTotal();
+    }
 }

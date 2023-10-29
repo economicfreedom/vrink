@@ -71,7 +71,7 @@
     function deleteReview(reviewId) {
 
 
-        fetch('/review/del/'+reviewId, {
+        fetch('/review/del/' + reviewId, {
             method: 'DELETE',
 
         })
@@ -154,98 +154,101 @@
                 <h4>${editorDetail.nickname} 작가</h4>
                 <h5>${editorDetail.introduce}</h5>
                 <h5>잘부탁드립니다</h5>
-
-                <span><a href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM 보러가기</a></span>
+                <c:if test="${editorDetail.vrm != null}">
+                    <span><a href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM 보러가기</a></span>
+                </c:if>
                 <div>
-	                <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top:1px solid black; font-weight: bold; cursor: pointer ">
-	                    수정하기
-	                </div>
-	                <div style="background-color: red; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
-	                    삭제하기
-	                </div>
-                <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
-                    작가에게 의뢰하기
+                    <div id="edit"
+                         style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top:1px solid black; font-weight: bold; cursor: pointer ">
+                        수정하기
+                    </div>
+                    <div style="background-color: red; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
+                        삭제하기
+                    </div>
+                    <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer ">
+                        작가에게 의뢰하기
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row mb-5">
-        <div class="col-sm-12 t-center">
-            ${editorDetail.content}
+        <div class="row mb-5">
+            <div class="col-sm-12 t-center">
+                ${editorDetail.content}
+            </div>
         </div>
-    </div>
-    <div class="row mb-5">
-        <div class="col-sm-2">
-            <div style="display: inline-block; vertical-align: middle;">
+        <div class="row mb-5">
+            <div class="col-sm-2">
+                <div style="display: inline-block; vertical-align: middle;">
 	            <span class="star">
 	                ★★★★★
 	                <span id="placeScore" style="width : 60%;">★★★★★</span>
 	                <input type="range" name="placeScore" id="star-val" oninput="drawStar(this)" value="6" step="2"
                            min="0" max="10">
 	            </span>
+                </div>
+                <script>
+                    function drawStar(target) {
+                        document.querySelector('#placeScore').style.width = (target.value * 10) + '%';
+                    }
+                </script>
             </div>
-            <script>
-                function drawStar(target) {
-                    document.querySelector('#placeScore').style.width = (target.value * 10) + '%';
-                }
-            </script>
-        </div>
-        <div class="col-sm-2" style="height: 48px; line-height: 58px"><strong>별점을 선택해주세요</strong></div>
-        <div class="col-sm-11">
+            <div class="col-sm-2" style="height: 48px; line-height: 58px"><strong>별점을 선택해주세요</strong></div>
+            <div class="col-sm-11">
             <textarea rows="3" cols="" style="width: 100%; resize: none;" placeholder="리뷰를 입력해주세요."
                       id="review-content"></textarea>
-        </div>
-        <div class="col-sm-1">
-            <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px;cursor: pointer"
-                 id="review-submit">
-                작성
+            </div>
+            <div class="col-sm-1">
+                <div style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px;cursor: pointer"
+                     id="review-submit">
+                    작성
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row mb-5">
-        <div class="col-sm-12">
-            <div>
-                <table class="w-full">
-                    <colgroup>
+        <div class="row mb-5">
+            <div class="col-sm-12">
+                <div>
+                    <table class="w-full">
+                        <colgroup>
 
-                        <col width="15%">
-                        <col width="50%">
-                        <col width="15%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th class="list-th">별점</th>
-                        <th class="list-th tleft">내용</th>
-                        <th class="list-th"></th>
-                        <th class="list-th">작성자</th>
-                        <th class="list-th">작성일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${reviewList}" var="review">
-                        <tr class="list-tr">
-
-                            <td style="color: gold">${review.star}</td>
-                            <td class="t-left"><textarea rows="3" cols="" style="
-                        width: 100%; resize: none; border: none; outline:none; cursor: default" readonly
-                                                         placeholder="리뷰를 입력해주세요.">${review.content}</textarea></td>
-                            <td>
-                                <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
-                                    <button type="button" class="btn btn-danger" onclick="deleteReview(${review.reviewId})"
-                                            id="review-del">삭제
-                                    </button>
-                                </div>
-                            </td>
-                            <td>${review.nickname}</td>
-                            <td>${review.createdAt}</td>
+                            <col width="15%">
+                            <col width="50%">
+                            <col width="15%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="list-th">별점</th>
+                            <th class="list-th tleft">내용</th>
+                            <th class="list-th"></th>
+                            <th class="list-th">작성자</th>
+                            <th class="list-th">작성일</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${reviewList}" var="review">
+                            <tr class="list-tr">
+
+                                <td style="color: gold">${review.star}</td>
+                                <td class="t-left"><textarea rows="3" cols="" style="
+                        width: 100%; resize: none; border: none; outline:none; cursor: default" readonly
+                                                             placeholder="리뷰를 입력해주세요.">${review.content}</textarea></td>
+                                <td>
+                                    <div style="display: flex;flex-direction: column ;gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
+                                        <button type="button" class="btn btn-danger"
+                                                onclick="deleteReview(${review.reviewId})"
+                                                id="review-del">삭제
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>${review.nickname}</td>
+                                <td>${review.createdAt}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+    <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
