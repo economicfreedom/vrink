@@ -39,6 +39,9 @@ public class FreeBoardReplyRestController {
             @PathVariable(name = "commu-id")
             Integer commuId
     ) {
+        if (commuId == null){
+            return ResponseEntity.badRequest().build();
+        }
         freeBoardReplyService.delete(commuId);
         return ResponseEntity.ok().build();
     }

@@ -9,6 +9,7 @@ import com.green.vrink.util.Criteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,13 +19,14 @@ import java.util.List;
 public class FreeBoardReplyServiceImpl implements FreeBoardReplyService {
     private final Converter<FreeBoardReplyDTO, FreeBoardReply> converter;
     private final FreeBoardReplyRepository freeBoardReplyRepository;
+    @Transactional
     @Override
     public Integer create(FreeBoardReplyDTO freeBoardReply) {
         FreeBoardReply entity = converter.toEntity(freeBoardReply);
 
         return freeBoardReplyRepository.save(entity);
     }
-
+    @Transactional
     @Override
     public void update(FreeBoardReplyDTO freeBoardReply) {
         FreeBoardReply entity = converter.toEntity(freeBoardReply);
@@ -32,12 +34,12 @@ public class FreeBoardReplyServiceImpl implements FreeBoardReplyService {
 
 
     }
-
+    @Transactional
     @Override
     public void delete(Integer replyId) {
         freeBoardReplyRepository.deleteById(replyId);
     }
-
+    @Transactional
     @Override
     public List<FreeBoardReplyDTO> readList(Integer communityId, Criteria cri) {
         return freeBoardReplyRepository.findAllById(communityId,cri);

@@ -34,35 +34,37 @@ public class EditorServiceImpl implements EditorService{
     public Integer requestEditorWrite(EditorWriteDTO editorWriteDTO) {
     	return userRepository.editorWrite(editorWriteDTO);
     }
-    
+    @Transactional
     @Override
     public EditorDTO responseEditorDeatil(Integer editorId) {
     	
     	return userRepository.findByEditorId(editorId);
     }
-    
+    @Transactional
     @Override
     public EditorDTO responseEditorEdit(Integer editorId) {
     	
     	return userRepository.findByEditorId(editorId);
     }
-    
+    @Transactional
     @Override
     public Integer requestEditorEdit(EditorDTO editorDTO) {
     	
     	return userRepository.updateByEditorId(editorDTO);
     }
-
+    @Transactional
     @Override
     public String getVrm(Integer editorId) {
         return userRepository.findVrmById(editorId);
     }
 
+    @Transactional
     @Override
     public List<EditorDTO> getList(Criteria cri) {
         return userRepository.findEditorList(cri);
     }
 
+    @Transactional
     @Override
     public Integer getTotal() {
         return userRepository.getTotal();

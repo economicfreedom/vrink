@@ -40,7 +40,9 @@ public class FreeBoardController {
             HttpSession httpSession,
             Model model
     ) {
-
+        if (communityId == null) {
+            return "redirect:/";
+        }
         FreeBoardDTO dto = freeBoardService.read(communityId);
         if (dto == null) {
             return "redirect:/";
