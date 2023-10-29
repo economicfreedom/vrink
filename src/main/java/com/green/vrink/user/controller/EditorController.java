@@ -109,4 +109,9 @@ if (editorId == null) {
         model.addAttribute("next", asyncPageDTO.isHasNext());
         return "user/editorList";
     }
+    
+    @GetMapping("/editor-price") 
+    public String editorPrice() {
+    	return "user/editorPrice";
+    }
 }

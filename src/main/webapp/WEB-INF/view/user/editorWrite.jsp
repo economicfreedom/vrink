@@ -196,6 +196,11 @@ $('#submit').on('click',async function() {
 		return
 	}
 	
+	if(vrmInput.files.length === 0) {
+		alert('vrm 파일을 등록해주세요.');
+		return
+	}
+	
     // 이미지 업로드 함수
     async function uploadImage(fileInput, url, type) {
         if (fileInput.files.length === 0) {

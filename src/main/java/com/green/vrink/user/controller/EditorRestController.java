@@ -3,6 +3,7 @@ package com.green.vrink.user.controller;
 
 import com.green.vrink.user.dto.ApprovalDTO;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.dto.EditorPriceDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.service.EditorServiceImpl;
 
@@ -77,4 +78,11 @@ public class EditorRestController {
         asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
         return ResponseEntity.ok(asyncPageDTO);
     }
+    
+    @PostMapping("/editor-price") 
+    public ResponseEntity<?> EditorPrice(EditorPriceDTO editorPriceDTO) {
+    	log.info("priceDTO {} ", editorPriceDTO);
+    	return ResponseEntity.ok().build();
+    }
+    
 }

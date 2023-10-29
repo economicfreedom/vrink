@@ -5356,7 +5356,7 @@ p {
     margin-bottom: 10px;
     position: relative;
 }
-.contact-form > .editor-div .row > div > input[type="text"], .contact-form > .editor-div .row > div > textarea {
+.contact-form > .editor-div .row  div  input[type="text"], .contact-form > .editor-div .row > div > textarea {
     background: #f9f9f9 none repeat scroll 0 0;
     border: medium none;
     float: left;
@@ -5366,7 +5366,7 @@ p {
     padding: 18px 80px;
     width: 100%;
 }
-.contact-form > .editor-div .row > div > i {
+.contact-form > .editor-div .row > div  i {
     color: #b5b5b5;
     font-size: 15px;
     left: 58px;
