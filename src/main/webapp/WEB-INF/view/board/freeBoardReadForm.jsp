@@ -74,7 +74,7 @@
                 if (!response.ok) {
                     alert("");
                 } else {
-                    $("#reply-"+id).empty();
+                    $("#reply-" + id).empty();
                 }
             })
             .then(data => console.log(data))
@@ -135,7 +135,7 @@
     function more() {
         pageNum++;
         const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
-        let html ='';
+        let html = '';
 
 // fetch를 사용한 요청
         fetch(url, {
@@ -158,7 +158,7 @@
                     $("#more").css("display", "none")
                 }
                 // 예시: FreeBoardReplyDTO 리스트 출력
-                data.freeBoardReplyDTOS.forEach(reply => {
+                data.pageDTOs.forEach(reply => {
 
                     html += '<ul class="list-group custom-list-group" style="margin-top:5%">';
                     html += '<li class="list-group-item custom-list-item">';
@@ -201,7 +201,7 @@
 
                 });
                 // 다른 필요한 처리를 여기에 추가하세요.
-                    $("#reply-container").append(html);
+                $("#reply-container").append(html);
             })
             .catch(error => {
                 console.error('Error:', error);

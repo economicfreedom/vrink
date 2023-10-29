@@ -12,4 +12,5 @@ public class EditorDTO {
 	private String content;
 	private String vrm; 
 	private String nickname;
+	private Double count;
 }

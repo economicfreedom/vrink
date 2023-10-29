@@ -1,13 +1,12 @@
-package com.green.vrink.community.dto;
+package com.green.vrink.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ReplyPageDTO {
-    private List<FreeBoardReplyDTO> freeBoardReplyDTOS;
+public class AsyncPageDTO {
+    private List<?> pageDTOs;
     private boolean hasNext;
 
     public void setHasNext(Integer nowPage, Integer endPage) {

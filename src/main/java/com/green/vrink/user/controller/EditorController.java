@@ -5,6 +5,9 @@ import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.service.EditorServiceImpl;
 
+import com.green.vrink.util.AsyncPageDTO;
+import com.green.vrink.util.Criteria;
+import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -75,6 +78,24 @@ public class EditorController {
         vrm =vrm.replace("\\","/");
         model.addAttribute("vrm",vrm);
         log.info("vrm 경로 {}",vrm);
-        return "user/test";
+        return "user/shoVrm";
+    }
+
+    @GetMapping("/list")
+    public String editorList(Model model){
+        Criteria cri = new Criteria();
+        cri.setPageNum(1);
+        cri.setCountPerPage(6);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        Integer total = editorServiceImpl.getTotal();
+        pageDTO.setArticleTotalCount(total);
+        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setPageDTOs(editorDTO);
+        asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
+        model.addAttribute("list",editorDTO);
+        model.addAttribute("next",asyncPageDTO.isHasNext());
+        return "user/editorList";
     }
 }

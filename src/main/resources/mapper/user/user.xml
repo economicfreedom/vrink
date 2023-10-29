@@ -7,13 +7,13 @@
         insert into apply(user_id, name, number)
             value (#{userId},#{accountName},#{accountNumber})
     </select>
-    
+
     <insert id="signUp">
-    	INSERT INTO user 
-		(email, password, name, nickname, phone, created_at) 
+    	INSERT INTO user
+		(email, password, name, nickname, phone, created_at)
 		VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
     </insert>
-    
+
     <select id="checkEmail" resultType="String">
     	SELECT email FROM user WHERE email = #{email};
     </select>
@@ -23,12 +23,12 @@
         WHERE user_id = #{userId}
 
     </select>
-    
+
     <insert id="editorWrite">
     	INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
     	VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
     </insert>
-    
+
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
         select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, ed.vrm, u.nickname
 		from editor_detail ed
@@ -36,14 +36,34 @@
 		on u.user_id = ed.user_id
 		where ed.editor_id = #{editorId};
     </select>
-    
+
     <select id="findVrmById" resultType="java.lang.String">
         SELECT vrm FROM editor_detail
         WHERE editor_id = #{editorId}
     </select>
+      <select id="findEditorList" resultType="com.green.vrink.user.dto.EditorDTO">
+          SELECT e.editor_id,
+                 profile_image,
+                 introduce,
+                 nickname,
+                 COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count,
+                 e.image
+          FROM editor_detail e
+              LEFT JOIN user u
+          ON e.user_id = u.user_id
+              LEFT JOIN review r ON e.editor_id = r.editor_id
+          GROUP BY e.editor_id, profile_image, introduce, nickname
+          LIMIT #{offset},#{countPerPage}
+
+      </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(editor_id)
+        FROM editor_detail
+    </select>
+
 
     <update id="updateByEditorId">
-        UPDATE editor_detail SET 
+        UPDATE editor_detail SET
         profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
         WHERE editor_id = #{editorId}
     </update>
