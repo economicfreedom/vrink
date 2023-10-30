@@ -2,6 +2,8 @@ package com.green.vrink.user.repository.interfaces;
 
 import com.green.vrink.user.dto.ApprovalDTO;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.dto.EditorPriceDTO;
+import com.green.vrink.user.dto.EditorPriceListDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.dto.SignUpDto;
 import com.green.vrink.user.dto.UpdateNicknameDto;
@@ -39,4 +41,5 @@ public interface UserRepository {
 	public Integer updatePassword(@Param("userId") String userId, @Param("password") String password);
 	
 	public Integer deleteByUserId(String userId);
+	public Integer insertPrice(EditorPriceDTO editorPriceDTO);
 }

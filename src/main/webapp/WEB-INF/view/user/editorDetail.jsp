@@ -164,6 +164,7 @@
                     <span><a
                             href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM
 				보러가기</a></span>
+
                     <div>
                         <div id="edit"
                              style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer">
@@ -200,6 +201,7 @@
                                                                                             oninput="drawStar(this)"
                                                                                             value="6"
                                                                                             step="2" min="0" max="10">
+
 					</span>
                     </div>
                     <script>

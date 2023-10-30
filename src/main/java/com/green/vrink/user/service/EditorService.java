@@ -2,6 +2,7 @@ package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.ApprovalDTO;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.dto.EditorPriceListDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.util.Criteria;
 
@@ -18,4 +19,6 @@ public interface EditorService {
 	List<EditorDTO> getList(Criteria cri);
 
 	Integer getTotal();
+	
+	Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO);
 }

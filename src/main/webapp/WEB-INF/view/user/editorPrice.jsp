@@ -10,23 +10,23 @@
 				<h2>작품 가격 설정</h2>
 				<span>소개를 작성해보세요</span>
 			</div>
-			<form class="contact-form" action="/editor/editor-price" method="post">
+			<form class="price-form" action="/editor/editor-price" method="post">
 				<div class="editor-div">
 					<div class="row">
 						<div class="price-area">
 							<div class="price-item col-sm-12 mb-3">
 								<div class="col-md-5">
 									<i class="fa fa-at"></i>
-									<input class="input-style option" name="option" type="text" placeholder="옵션이름">
+									<input class="input-style option" name="options" type="text" placeholder="옵션이름">
 								</div>
 								<div class="col-md-5">
 									<i class="fa fa-at"></i>
-									<input class="input-style price" name="price" type="text" placeholder="가격">
+									<input class="input-style price" name="prices" type="text" placeholder="가격">
 								</div>
-								<div class="col-md-1"">
+								<div class="col-md-1">
 									<input type="button" value="+" class="flat-btn add-button" style="height: 67px;">
 								</div>
-								<div class="col-md-1"">
+								<div class="col-md-1">
 									<input type="button" value="-" class="flat-btn remove-button" style="height: 67px;">
 								</div>
 							</div>
