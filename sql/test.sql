@@ -285,28 +285,43 @@ WHERE user_id = #{userId}
 
 
 select *
-from  qna;
+from qna;
 
-CREATE TABLE `question` (
-	`q_id`	VARCHAR(255)	NOT NULL,
-	`qna_id`	int	NOT NULL,
-	`user_id`	int	NOT NULL,
-	`content`	longtext	NOT NULL,
-	`created_at`	timestamp	NOT NULL	DEFAULT now()
+CREATE TABLE `question`
+(
+    `q_id`       VARCHAR(255) NOT NULL,
+    `qna_id`     int          NOT NULL,
+    `user_id`    int          NOT NULL,
+    `content`    longtext     NOT NULL,
+    `created_at` timestamp    NOT NULL DEFAULT now()
 );
 
-ALTER TABLE `question` ADD CONSTRAINT `PK_QUESTION` PRIMARY KEY (
-	`q_id`
-);
+ALTER TABLE `question`
+    ADD CONSTRAINT `PK_QUESTION` PRIMARY KEY (
+                                              `q_id`
+        );
 
-ALTER TABLE question MODIFY q_id INT NOT NULL;
-ALTER TABLE question MODIFY q_id INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE question
+    MODIFY q_id INT NOT NULL;
+ALTER TABLE question
+    MODIFY q_id INT NOT NULL AUTO_INCREMENT;
 
 desc question;
 
-insert into question(qna_id,user_id,content,title)
-value (1,1,'test','test');
+insert into question(qna_id, user_id, content, title)
+    value (1, 1, 'test', 'test');
 
 
 
-select * from qna;
+select *
+from qna;
+use vrink;
+
+
+SELECT content
+FROM analyzing_review
+WHERE editor_id = 1
+  AND ar_id = (SELECT max(ar_id) FROM analyzing_review WHERE editor_id = 1)
+
+
+SELECT *
