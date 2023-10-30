@@ -67,4 +67,33 @@
         profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
         WHERE editor_id = #{editorId}
     </update>
+
+    <select id="findByEmail" resultType="com.green.vrink.user.repository.model.User">
+    	SELECT *
+		FROM user AS u 
+		WHERE u.email = #{email}
+    </select>	
+    
+    <update id="updateNickname">
+    	UPDATE user 
+    	SET user.nickname = #{nickname} 
+    	WHERE user_id = #{userId}
+    </update>
+
+    <update id="updatePassword">
+    	UPDATE user 
+    	SET user.password = #{password} 
+    	WHERE user_id = #{userId}
+    </update>
+    
+    <select id="findByUserId" resultType="com.green.vrink.user.repository.model.User">
+    	SELECT *
+		FROM user AS u 
+		WHERE u.email = #{userId}
+    </select>
+    
+    <delete id="deleteByUserId">
+    	DELETE FROM user WHERE user_id = #{userId};
+    </delete>
+    
 </mapper>

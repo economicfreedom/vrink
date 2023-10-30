@@ -35,35 +35,35 @@
                                 </a>
                             </div><!-- LOGO -->
                             <p>WELCOME TO 승철 WOULD</p>
-                            <form>
+                            <div>
                                 <h4>로그인</h4>
                                 <div class="field">
-                                    <input type="text" placeholder="Username"/>
+                                    <input type="text" class="sign-in-email" placeholder="Username"/>
                                 </div>
                                 <div class="field">
-                                    <input type="password" placeholder="Password"/>
+                                    <input type="password" class="sign-in-password" placeholder="Password"/>
                                 </div>
                                 <div class="field">
-                                    <input type="submit" value="로그인" class="flat-btn"/>
+                                    <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
                                 </div>
-                            </form>
+                            </div>
                             <i>또는</i>
                             <span>LOGIN WITH</span>
-                            <ul class="social-btns">
-                                <li><a href="#" title=""><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" title=""><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#" title=""><i class="fa fa-twitter"></i></a></li>
-                            </ul>
+                            <div class="kakao-login-div">
+	                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
+	                            	<img alt="카카오 로그인" src="/images/kakao_login_small.png">
+	                            </a>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="registration-sec">
                             <h3>VRINK</h3>
                             <p>WELCOME TO 승철 WOULD.</p>
-                            <form>
+                            <div class="common-sign-up">
                                 <div class="field">
                                     <div class="email-check-div">
-                                        <input type="text" placeholder="이메일" class="email-input"/>
+                                        <input type="text" placeholder="이메일" class="email-input" />
                                         <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
                                         <input type="hidden" class="email-check-result"/>
                                     </div>
@@ -90,9 +90,10 @@
                                     <input type="text" placeholder="휴대폰번호" class="phone-input"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
-
-                                <input type="button" value="회원가입" id="sign-up-btn" class="flat-btn"/>
-                            </form>
+                                <div class="field">
+		                            <input type="button" value="회원가입"class="flat-btn" id="sign-up-btn" />
+                                </div>
+                            </div>
                         </div><!-- Registration sec -->
                     </div>
                 </div>
@@ -112,7 +113,9 @@
                     </a>
                 </div><!-- LOGO -->
                 <div class="popup-client">
-                    <span><i class="fa fa-user"></i> /  Signup</span>
+                	<input type=hidden class="sign-in-user-flag" value="${USER.email }">
+                    <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
+                    <span class="log-out-btn" style="display: none">로그아웃</span>
                 </div>
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
                 <nav style="float: none; margin: 0 auto;">
@@ -185,7 +188,8 @@
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children"><a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a>
+                        <li id="my-info-list" class="menu-item-has-children">
+                        	<a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a>
                             <ul>
                                 <li><a href="event.html" title="">Event</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
@@ -220,7 +224,14 @@
 </div>
 <script type="text/javascript">
     let authEmailNumber = null; // 함수 밖의 변수
-
+    
+    $('.sign-in-user-flag').val() == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
+    if($('.sign-in-user-flag').val() !== '') {
+    	$('.log-in-btn').css("display", "none");
+    } 
+    if($('.sign-in-user-flag').val() !== '') {
+    	$('.log-out-btn').css("display", "block");
+    } 
 
     $('.email-check-btn').on('click', function () {
         let email = $('.email-input').val();
@@ -338,6 +349,36 @@
                 } else {
                     alert("회원가입 실패");
                     location.reload();
+                }
+            })
+            .then(data =>
+                console.log(data)
+            )
+            .catch(error => console.error('Error:', error));
+    });
+    
+    $('#sign-in-btn').on('click', function() {
+    	if($('.sign-in-email').val().trim() == '' || $('.sign-in-password').val().trim() == '') {
+    		alert('아이디 또는 비밀번호를 입력해주세요');
+    		return;
+    	}
+    	
+    	fetch('http://localhost/user/sign-in', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: $('.sign-in-email').val(),
+                password: $('.sign-in-password').val()
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert("로그인 실패");
+                    return;
                 }
             })
             .then(data =>
