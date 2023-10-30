@@ -1,5 +1,6 @@
 package com.green.vrink.user.controller;
 
+import com.green.vrink.morph.service.MorphService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
@@ -28,7 +29,7 @@ public class EditorController {
 
     private final ReviewService reviewService;
     private final EditorServiceImpl editorServiceImpl;
-
+    private final MorphService morphService;
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
             , HttpSession session
@@ -37,13 +38,19 @@ public class EditorController {
         if (editorId == null) {
             return "redirect:/";
         }
-        List<ReviewDTO> reviewDTOS = reviewService.findByIdAll(1);
+        List<ReviewDTO> reviewDTOS = reviewService.findByIdAll(editorId);
+        String morph = morphService.getMorph(editorId);
+
+
         model.addAttribute("reviewList", reviewDTOS);
         log.info("reviewList {}", reviewDTOS);
 
         EditorDTO editorDTO = editorServiceImpl.responseEditorDeatil(editorId);
         model.addAttribute("editorDetail", editorDTO);
         log.info("editorDetail{}", editorDTO);
+        log.info("morph : {}",morph);
+        model.addAttribute("morph",morph);
+
 
         return "user/editorDetail";
     }

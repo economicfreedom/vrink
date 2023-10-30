@@ -1578,6 +1578,11 @@ blockquote p {
     border-radius: 3px;
 
 }
+.btn-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .email-check-div {
 	display: flex;
 }
