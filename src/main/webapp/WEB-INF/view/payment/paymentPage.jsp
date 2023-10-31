@@ -91,8 +91,7 @@
 </div>
 <script>
 let cPrice = [];
-let editorId = '${priceDTOs[0].price}';
-console.log(editorId);
+
 <c:forEach items="${priceDTOs}" var="priceDTO">
 	cPrice.push(${priceDTO.price});
 </c:forEach>
@@ -118,28 +117,30 @@ $('.manual-adjust').change(function(e){
 
 });
 
-$('#test').on('click',function({
+$('#test').on('click',function(){
 	let formData = new FormData();
-	let editorId = '${priceDTOs[0].price}'
+	let editorId = '${priceDTOs[0].editorId}';
 	formData.append("editorId",editorId);
 	let quantity = $('.manual-adjust');
 		for(i=0; i<quantity.length; i++) {
-			formData.append(quantity[i]);
+			formData.append('quantity',$(quantity[i]).val());
 	}	
-	$.ajax({
-		type:'POST',
-		url:'/payment/validation',
-		data:formData,
-		success:function(res) {
-			console.log('헬로');
-		},
-		error : function(e) {
-			console.log(e);
-		}
-
-		
-	})
-}))
+    try {
+        let response = fetch('/payment/validation', {
+            method: 'POST',
+            body: formData,
+        });
+        // 응답 처리
+        if (response) {
+        	console.log(response)
+            
+        } else {
+            console.error('Failed to submit data');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})
 	
 
 
