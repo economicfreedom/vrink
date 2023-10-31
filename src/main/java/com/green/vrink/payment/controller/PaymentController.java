@@ -25,9 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentController {
 	
 	private final PaymentServiceImpl paymentServiceImpl;
-	
-	
-	
+
 	@GetMapping("/payment-page/{editorId}")
 	public String Payment(@PathVariable("editorId") Integer editorId, Model model) {
 		List<PriceDTO> priceDTOs = paymentServiceImpl.responsePrice(editorId);
