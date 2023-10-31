@@ -33,14 +33,14 @@
                 ${dto.content}
             </span>
         </div>
-        <c:if test="${question != null}">
+        <c:if test="${answer != null}">
             <hr style="background-color: black;height: 2px">
         </c:if>
 
     </div>
     <h1>
         <c:choose>
-        <c:when test="${question == null}">
+        <c:when test="${answer == null}">
         <hr>
 
         <div class="container">
@@ -74,13 +74,13 @@
         <div class="row">
             <div class="title">
                 답변 내용
-                <small>${question.createdAt}</small>
+                <small>${answer.createdAt}</small>
             </div>
 
             <hr>
             <div class="content">
           <span>
-                  ${question.content}
+                  ${answer.content}
           </span>
             </div>
 
@@ -90,7 +90,7 @@
 
 
 </div>
-<c:if test="${question == null}">
+<c:if test="${answer == null}">
     <script>
         $('.summernote').summernote({
             toolbar: [
@@ -123,10 +123,10 @@
                 let json = JSON.stringify({
                     userId: 1, // 관리자 아이디 적기
                     content: content,
-                    qnaId: ${dto.qnaId}
+                    questionId: ${dto.questionId}
                 });
 
-                fetch('/qna/save-question', {
+                fetch('/qna/save-answer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

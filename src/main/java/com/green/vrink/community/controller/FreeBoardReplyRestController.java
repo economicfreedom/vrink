@@ -40,6 +40,7 @@ public class FreeBoardReplyRestController {
     ) {
         if (bindingResult.hasErrors()){
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            log.error("badrequest message {} ",defaultMessage);
             return ResponseEntity.badRequest().body(defaultMessage);
         }
 
@@ -99,8 +100,8 @@ public class FreeBoardReplyRestController {
 
         }
 
-        Integer _userId = freeBoardReplyDTO.getUserId();
-        Integer userId = freeBoardReplyService.getUserId(replyId);
+        int _userId = freeBoardReplyDTO.getUserId();
+        int userId = freeBoardReplyService.getUserId(replyId);
 
         if (_userId != userId) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");

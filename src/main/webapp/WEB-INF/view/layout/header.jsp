@@ -213,7 +213,7 @@
                             <ul>
                                 <li><a href="/user/my-page" title="">내 정보</a></li>
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
-                                <li><a href="/qna/list" title="">내 문의 내용</a></li>
+                                <li><a href="/qna/list/${USER.userId}" title="">내 문의 내용</a></li>
                                 <li id="only-editor"><a href="/editor/calculate/point" title="">정산</a></li>
                                 <li><a href="event-single.html" title="">Event Single</a></li>
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>

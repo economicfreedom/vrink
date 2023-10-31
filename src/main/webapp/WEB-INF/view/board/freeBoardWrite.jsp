@@ -84,7 +84,9 @@
                 body: JSON.stringify({
                     userId: `${USER.userId}`,
                     title: title,
-                    content: content
+                    content: content,
+                    nickname: `${USER.nickname}`
+
 
                 })
             })

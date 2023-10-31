@@ -8,7 +8,8 @@ public  class  Check {
 
 
     public static boolean isNull(Object object){
-        if (object == null){
+        if (object == null ){
+
             return true;
         }
         return false;

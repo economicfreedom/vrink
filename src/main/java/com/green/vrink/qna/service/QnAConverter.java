@@ -1,32 +1,32 @@
 package com.green.vrink.qna.service;
 
-import com.green.vrink.qna.dto.QnADTO;
-import com.green.vrink.qna.repository.model.QnA;
+import com.green.vrink.qna.dto.QuestionDTO;
+import com.green.vrink.qna.repository.model.Question;
 import com.green.vrink.util.Converter;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QnAConverter implements Converter<QnADTO, QnA> {
+public class QnAConverter implements Converter<QuestionDTO, Question> {
 
     @Override
-    public QnADTO toDTO(QnA qnA) {
-        return QnADTO.builder()
-                .qnaId(qnA.getQnaId())
-                .userId(qnA.getUserId())
-                .content(qnA.getContent())
-                .createdAt(qnA.getCreatedAt())
-                .type(qnA.getType())
-                .title(qnA.getTitle())
-                .email(qnA.getEmail())
+    public QuestionDTO toDTO(Question question) {
+        return QuestionDTO.builder()
+                .questionId(question.getQuestionId())
+                .userId(question.getUserId())
+                .content(question.getContent())
+                .createdAt(question.getCreatedAt())
+                .type(question.getType())
+                .title(question.getTitle())
+                .email(question.getEmail())
                 .build();
 
 
     }
 
     @Override
-    public QnA toEntity(QnADTO qnADTO) {
-        return QnA.builder()
-                .qnaId(qnADTO.getQnaId())
+    public Question toEntity(QuestionDTO qnADTO) {
+        return Question.builder()
+                .questionId(qnADTO.getQuestionId())
                 .userId(qnADTO.getUserId())
                 .email(qnADTO.getEmail())
                 .title(qnADTO.getTitle())
@@ -35,4 +35,6 @@ public class QnAConverter implements Converter<QnADTO, QnA> {
                 .createdAt(qnADTO.getCreatedAt())
                 .build();
     }
+
 }
+

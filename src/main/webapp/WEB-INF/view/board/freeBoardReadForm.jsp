@@ -24,8 +24,9 @@
                 },
                 body: JSON.stringify({
                     userId: `${USER.userId}`,
-                    communityId: ${dto.communityId},
-                    content: content
+                    communityId: `${dto.communityId}`,
+                    content: content,
+                    nickname:`${USER.nickname}`
 
                 })
             })
@@ -57,7 +58,7 @@
                 if (!response.ok) {
                     alert("");
                 } else {
-                    location.href = "/";
+                    location.href = "/board/board-list";
                 }
             })
             .then(data => console.log(data))
@@ -86,7 +87,7 @@
     }
 
     function updateReply(id) {
-        let replyArea = $("#reply-" + id);
+        let replyArea = $("#reply-content-" + id);
         replyArea.attr("readonly", false).css("border", "1px solid black");
         $("#cancel-" + id).css("display", "inline-block");
         $("#done-" + id).css("display", "inline-block");
@@ -96,7 +97,8 @@
     }
 
     function updateCancel(id, content) {
-        let replyArea = $("#reply-" + id);
+
+        let replyArea = $("#reply-content-" + id);
         replyArea.val(content);
         replyArea.attr("readonly", true).css("border", "none");
         $("#cancel-" + id).css("display", "none");
@@ -106,12 +108,12 @@
     }
 
     function updateDone(id) {
-        let reply = $("#reply-" + id);
-        let content = reply.val();
+let replyArea = $("#reply-content-" + id);
+let content = replyArea.val();
 
         if (content.length === 0) {
             alert("댓글을 입력해주세요.")
-            reply.focus();
+            replyArea.focus();
             return;
         }
         fetch('/free-reply/update', {
@@ -120,8 +122,11 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                userId:`${USER.userId}`,
+                communityId: ${dto.communityId},
                 replyId: id,
-                content: content
+                content: content,
+                nickname:`${USER.nickname}`
 
             })
         })
@@ -170,7 +175,7 @@
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
-                    html += '<textarea class="form-control custom-textarea"';
+                    html += '<textarea class="form-control custom-textarea" id="reply-content-'+reply.replyId+'"';
                     html += ' rows="2"';
                     html += ' readonly ';
                     html += '>' + reply.content + '</textarea>';
@@ -259,7 +264,7 @@
                 </div>
                 <div class="panel-body">
                     <!-- 댓글 입력 부분 -->
-                    <form class="mb-20">
+                    <div class="mb-20">
                         <div class="form-group">
                             <textarea class="form-control" rows="3" placeholder="댓글을 작성해주세요"
                                       id="reply-content"></textarea>
@@ -269,7 +274,7 @@
                                 등록
                             </button>
                         </div>
-                    </form>
+                    </div>
 
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
@@ -282,7 +287,7 @@
                                     </div>
                                     <textarea class="form-control custom-textarea"
                                               rows="2"
-
+                                              id="reply-content-${reply.replyId}"
                                               readonly
                                               >${reply.content}</textarea>
                                     <div class="comment-buttons">
