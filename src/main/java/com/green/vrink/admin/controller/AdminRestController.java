@@ -1,8 +1,15 @@
 package com.green.vrink.admin.controller;
 
-import com.green.vrink.admin.dto.*;
+import com.green.vrink.admin.dto.AdminApplyDto;
+import com.green.vrink.admin.dto.ClassificationDto;
+import com.green.vrink.admin.dto.Pagination;
+import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.community.service.FreeBoardReplyService;
+import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.user.repository.model.User;
+import com.green.vrink.util.LoginCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +30,8 @@ public class AdminRestController {
 
     private final HttpSession session;
     private final AdminService adminService;
+    private final FreeBoardReplyService freeBoardReplyService;
+    private final FreeBoardService freeBoardService;
     @GetMapping("/apply-accept/classification")
     @ResponseBody
     public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
@@ -51,10 +60,10 @@ public class AdminRestController {
         if(classification.equals("전체")) {
 
             log.info("판매자 신청 목록 카테고리 & 검색어 레스트 컨트롤러 호출");
-            
+
             List<AdminApplyDto> adminApplyDtoList = adminService.getAllAdminApplyListByPaging(paging);
 
-            if(!keyword.equals("")) {
+            if(!keyword.isEmpty()) {
 
                 log.info("키워드 : 전체");
 
@@ -119,7 +128,7 @@ public class AdminRestController {
             List<AdminApplyDto> adminApplyDtoList = adminService.getAllAdminApplyListByTypePaging(paging);
             pagination.setArticleTotalCount(adminService.countAdminApplyByType(paging));
 
-            if(!keyword.equals("")) {
+            if(!keyword.isEmpty()) {
 
                 log.info("키워드 : " + keyword);
 
@@ -205,45 +214,43 @@ public class AdminRestController {
 
             log.info("자유게시판 검색어 레스트 컨트롤러 호출");
 
-            List<FreeBoardDTO> freeBoradDto = adminService.getAllFreeboardListByPaging(paging);
+            List<FreeBoardDTO> freeBoradDtoList = adminService.getAllFreeboardListByPaging(paging);
 
-            if(!keyword.equals("")) {
-
-                log.info("키워드 : 전체");
+            if(!keyword.isEmpty()) {
 
                 List<FreeBoardDTO> lastFreeBoardDTOList = new ArrayList<>();
                 List<FreeBoardDTO> finalFreeBoardDTOList = new ArrayList<>();
 
-                freeBoradDto = adminService.getAllFreeboardList();
+                freeBoradDtoList = adminService.getAllFreeboardList();
 
                 if(searchType.equals("아이디")) {
-                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
-                        if(adminApplyDto.getNickname().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
+                    for (FreeBoardDTO freeBoradDto : freeBoradDtoList) {
+                        if(freeBoradDto.getNickname().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
                         }
                     }
                 } else if(searchType.equals("제목")) {
-                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
-                        if(adminApplyDto.getTitle().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
+                    for (FreeBoardDTO freeBoradDto : freeBoradDtoList) {
+                        if(freeBoradDto.getTitle().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
                         }
                     }
                 } else if(searchType.equals("내용")) {
-                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
-                        if(adminApplyDto.getContent().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
+                    for (FreeBoardDTO freeBoradDto : freeBoradDtoList) {
+                        if(freeBoradDto.getContent().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
                         }
                     }
                 } else {
-                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
-                        if(adminApplyDto.getNickname().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
-                        } else if(adminApplyDto.getTitle().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
-                        } else if(adminApplyDto.getContent().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
-                        } else if(adminApplyDto.getCreatedAt().contains(keyword)) {
-                            lastFreeBoardDTOList.add(adminApplyDto);
+                    for (FreeBoardDTO freeBoradDto : freeBoradDtoList) {
+                        if(freeBoradDto.getNickname().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
+                        } else if(freeBoradDto.getTitle().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
+                        } else if(freeBoradDto.getContent().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
+                        } else if(freeBoradDto.getCreatedAt().contains(keyword)) {
+                            lastFreeBoardDTOList.add(freeBoradDto);
                         }
                     }
                 }
@@ -252,14 +259,267 @@ public class AdminRestController {
                 for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastFreeBoardDTOList.size()); i++) {
                     finalFreeBoardDTOList.add(lastFreeBoardDTOList.get(i));
                 }
-                freeBoradDto = finalFreeBoardDTOList;
+                freeBoradDtoList = finalFreeBoardDTOList;
+
             }
 
-            classificationDto.setFreeboardList(freeBoradDto);
+            for (FreeBoardDTO freeBoradDto : freeBoradDtoList) {
+                if(freeBoradDto.getContent().contains("<img")) {
+                    freeBoradDto.setContent("이미지 파일 포함");
+                } else {
+                    freeBoradDto.setContent(freeBoradDto.getContent().replaceAll("<br>", " "));
+                }
+            }
+
+            classificationDto.setFreeboardList(freeBoradDtoList);
             classificationDto.setPagination(pagination);
 
             return classificationDto;
         }
+
+    @DeleteMapping("/free-replay/del/{reply-id}")
+    @LoginCheck
+    public ResponseEntity<?> del(
+            @PathVariable(name = "reply-id")
+            Integer replyId
+    ) {
+        if (replyId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = (User) session.getAttribute("USER");
+        int sessionUserId = user.getUserId();
+        log.info("sessionId" + sessionUserId);
+
+        if (sessionUserId == 1) {
+            freeBoardReplyService.delete(replyId);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/del/{community-id}")
+    @LoginCheck
+    public ResponseEntity<?> delete(
+            @PathVariable("community-id")
+            Integer communityId
+    ) {
+        User user = (User) session.getAttribute("USER");
+        int sessionUserId = user.getUserId();
+        if (sessionUserId != 1) {
+            return ResponseEntity.badRequest().build();
+        }
+        freeBoardService.delete(communityId);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/user/classification")
+    @ResponseBody
+    public ClassificationDto userClassification(@ModelAttribute("paging") PagingDto paging,
+            @RequestParam(value="page", required = false, defaultValue="1")int page,
+            @RequestParam(value="classification", required = false, defaultValue="전체")String classification,
+            @RequestParam(value="classification2", required = false, defaultValue="전체")String classification2,
+            @RequestParam(value="classification3", required = false, defaultValue="전체")String classification3,
+            @RequestParam(value="searchType", required = false, defaultValue="전체")String searchType,
+            @RequestParam(value="keyword", required = false, defaultValue="")String keyword) {
+
+        log.info("관리자 유저 목록 레스트 컨트롤러 호출");
+
+        paging.setPage(page);
+        paging.setClassification(classification);
+        paging.setClassification2(classification2);
+        paging.setClassification3(classification3);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uClassification", classification);
+        session.setAttribute("uClassification2", classification2);
+        session.setAttribute("uClassification3", classification3);
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.userTotalCount());
+        //분류가 전체일 떄
+        if(classification.equals("전체")) {
+
+            List<User> userList = adminService.getAllUserPaging(paging);
+
+            if(!keyword.isEmpty()) {
+
+                List<User> lastUserList = new ArrayList<>();
+                List<User> finalUserList = new ArrayList<>();
+
+                userList = adminService.getAllUser();
+                if(searchType.equals("이메일")) {
+                    for (User userDto : userList) {
+                        if(userDto.getEmail().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("아이디")) {
+                    for (User userDto : userList) {
+                        if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("이름")) {
+                    for (User userDto : userList) {
+                        if(userDto.getName().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("닉네임")) {
+                    for (User userDto : userList) {
+                        if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("전화번호")) {
+                    for (User userDto : userList) {
+                        if(userDto.getPhone().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("은행이름")) {
+                    for (User userDto : userList) {
+                        if(userDto.getAccount().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("포인트")) {
+                    for (User userDto : userList) {
+                        if(userDto.getPoint().toString().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else {
+                    for (User userDto : userList) {
+                        if(userDto.getEmail().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getName().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getPhone().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getAccount().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getPoint().toString().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastUserList.size());
+                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastUserList.size()); i++) {
+                    finalUserList.add(lastUserList.get(i));
+                }
+                userList = finalUserList;
+            }
+
+            classificationDto.setUserList(userList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+        //분류값이 있을 때
+        else {
+
+            List<User> userList = adminService.getAllUserByTypePaging(paging);
+            pagination.setArticleTotalCount(adminService.userTotalCountClassification(paging));
+
+            if(!keyword.isEmpty()) {
+
+                List<User> lastUserList = new ArrayList<>();
+                List<User> finalUserList = new ArrayList<>();
+
+                userList = adminService.getAllUserByType(classification);
+
+                if(searchType.equals("이메일")) {
+                    for (User userDto : userList) {
+                        if(userDto.getEmail().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("아이디")) {
+                    for (User userDto : userList) {
+                        if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("이름")) {
+                    for (User userDto : userList) {
+                        if(userDto.getName().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("닉네임")) {
+                    for (User userDto : userList) {
+                        if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("전화번호")) {
+                    for (User userDto : userList) {
+                        if(userDto.getPhone().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("은행이름")) {
+                    for (User userDto : userList) {
+                        if(userDto.getAccount().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else if(searchType.equals("포인트")) {
+                    for (User userDto : userList) {
+                        if(userDto.getPoint().toString().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                } else {
+                    for (User userDto : userList) {
+                        if(userDto.getEmail().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getName().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getNickname().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getPhone().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getAccount().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        } else if(userDto.getPoint().toString().contains(keyword)) {
+                            lastUserList.add(userDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastUserList.size());
+                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastUserList.size()); i++) {
+                    finalUserList.add(lastUserList.get(i));
+                }
+                userList = finalUserList;
+
+            }
+
+            paging.setClassification(classification);
+            classificationDto.setUserList(userList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+    }
+
 
     @Transactional
     @PostMapping("/change-apply")

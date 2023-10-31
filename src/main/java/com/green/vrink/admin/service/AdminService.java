@@ -3,6 +3,7 @@ package com.green.vrink.admin.service;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.user.repository.model.User;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +15,12 @@ public interface AdminService {
     List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging);
     List<FreeBoardDTO> getAllFreeboardList();
     List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging);
+    List<User> getAllUser();
+    List<User> getAllUserByType(String classification);
+    List<User> getAllUserPaging(PagingDto paging);
+    List<User> getAllUserByTypePaging(PagingDto paging);
+    Integer userTotalCount();
+    Integer userTotalCountClassification(PagingDto paging);
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
     Integer countAllAdminApply();

@@ -3,6 +3,7 @@ package com.green.vrink.admin.repository.interfaces;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.user.repository.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,12 @@ public interface AdminRepository {
     List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging);
     List<FreeBoardDTO> getAllFreeboardList();
     List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging);
+    List<User> getAllUser();
+    List<User> getAllUserByType(String classification);
+    List<User> getAllUserPaging(PagingDto paging);
+    List<User> getAllUserByTypePaging(PagingDto paging);
+    Integer userTotalCount();
+    Integer userTotalCountClassification(PagingDto paging);
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
     Integer countAllAdminApply();

@@ -5,6 +5,7 @@ import com.green.vrink.admin.dto.CheatCheckDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.user.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -53,6 +54,36 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging) {
         return adminRepository.getAllFreeboardListByPaging(paging);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return adminRepository.getAllUser();
+    }
+
+    @Override
+    public List<User> getAllUserByType(String classification) {
+        return adminRepository.getAllUserByType(classification);
+    }
+
+    @Override
+    public List<User> getAllUserPaging(PagingDto paging) {
+        return adminRepository.getAllUserPaging(paging);
+    }
+
+    @Override
+    public List<User> getAllUserByTypePaging(PagingDto paging) {
+        return adminRepository.getAllUserByTypePaging(paging);
+    }
+
+    @Override
+    public Integer userTotalCount() {
+        return adminRepository.userTotalCount();
+    }
+
+    @Override
+    public Integer userTotalCountClassification(PagingDto paging) {
+        return adminRepository.userTotalCountClassification(paging);
     }
 
     @Override

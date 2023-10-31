@@ -327,6 +327,7 @@
                         var freeboardList = data.freeboardList;
                         var pagination = data.pagination;
                         var freeboardListHTML = '<tr>'
+                            + '<td><h4>글번호</h4></td>'
                             + '<td><h4>아이디</h4></td>'
                             + '<td><h4>제목</h4></td>'
                             + '<td><h4>내용</h4></td>'
@@ -344,9 +345,17 @@
                                 + '&id='
                                 + freeboard.communityId
                                 + '">'
+                                + freeboard.communityId
+                                + '</a></td>'
+                                + '<td>'
+                                + '<a href="/admin/freeboard-detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + freeboard.communityId
+                                + '">'
                                 + freeboard.nickname
                                 + '</a></td>'
-                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 200px; height: 200px">'
+                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 200px; max-height: 20px">'
                                 + '<a href="/admin/freeboard-detail?page='
                                 + pagination.paging.page
                                 + '&id='
@@ -354,7 +363,7 @@
                                 + '">'
                                 + freeboard.title
                                 + '</a></div></td>'
-                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 800px; height: 200px">'
+                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 800px; max-height: 20px">'
                                 + '<a href="/admin/freeboard-detail?page='
                                 + pagination.paging.page
                                 + '&id='

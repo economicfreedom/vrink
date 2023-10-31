@@ -84,4 +84,61 @@
         LIMIT #{offset}, #{recordSize}
     </select>
 
+
+<!--    <if test="type == 'nickname'">-->
+<!--        WHERE nickname LIKE CONCAT('%',#{keyword},'%')-->
+<!--    </if>-->
+
+
+    <select id="getAllUser" resultType="com.green.vrink.user.repository.model.User">
+        select * from user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="getAllUserPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllUserByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllUserByType" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY id DESC
+    </select>
+
+    <select id="userTotalCount" resultType="int">
+        SELECT count(*) FROM user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="userTotalCountClassification" resultType="int">
+        SELECT count(*) FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="getUserById" resultType="com.green.vrink.user.repository.model.User">
+        select * from user where id = #{id}
+    </select>
+
 </mapper>

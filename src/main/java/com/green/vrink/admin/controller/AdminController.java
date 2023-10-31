@@ -96,6 +96,14 @@ public class AdminController {
 
         List<FreeBoardDTO> freeBoardDTOList = adminService.getAllFreeboardListByPaging(paging);
 
+        for (FreeBoardDTO freeBoradDto : freeBoardDTOList) {
+            if(freeBoradDto.getContent().contains("<img")) {
+                freeBoradDto.setContent("이미지 파일 포함");
+            } else {
+                freeBoradDto.setContent(freeBoradDto.getContent().replaceAll("<br>", ""));
+            }
+        }
+
         model.addAttribute("freeboardList", freeBoardDTOList);
         model.addAttribute("pagination", pagination);
 
@@ -126,6 +134,39 @@ public class AdminController {
         model.addAttribute("total",total);
 
         return "admin/freeboardDetail";
+    }
+
+    @GetMapping("/user")
+    public String userAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+            required = false, defaultValue="1")int page, @RequestParam(value="classification",
+            required = false, defaultValue="전체")String classification,
+            @RequestParam(value="classification2", required = false, defaultValue="전체")String classification2,
+            @RequestParam(value="classification3", required = false, defaultValue="전체")String classification3, @RequestParam(value="searchType",
+            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
+            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="2")String reset, Model model) {
+
+        log.info("유저 관리 페이지 컨트롤러 호출");
+
+        if(reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uClassification2");
+            session.removeAttribute("uClassification3");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+        }
+
+        paging.setPage(page);
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.userTotalCount();
+        pagination.setArticleTotalCount(count);
+
+        model.addAttribute("userList", adminService.getAllUserPaging(paging));
+        model.addAttribute("pagination", pagination);
+
+        return "admin/userListAdmin";
     }
 
 }

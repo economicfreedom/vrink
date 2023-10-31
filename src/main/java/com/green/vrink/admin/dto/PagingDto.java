@@ -10,7 +10,9 @@ public class PagingDto {
     private String searchType;    // 검색 유형
     private Integer userId;
     private String classification;
-    
+    private String classification2;
+    private String classification3;
+
     public int getOffset() {
         return (page - 1) * recordSize;
     }
