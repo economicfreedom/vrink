@@ -11,7 +11,7 @@ public interface ReviewService {
     Integer duplicationCheck(ReviewDTO reviewDTO);
 
     List<ReviewDTO> findByIdAll(Integer id);
-
+    Integer getReviewUserId(Integer reviewId);
     void delete(Integer reviewId);
 
 }

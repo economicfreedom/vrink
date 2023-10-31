@@ -26,5 +26,6 @@ public interface FreeBoardReplyRepository {
 
     Integer replyTotal(Integer commuId);
 
+    Integer findUserIdByReplyId(Integer replyId);
 
 }

@@ -11,6 +11,7 @@
             let reply = $("#reply-content");
             let content = reply.val();
 
+
             if (content.length === 0) {
                 alert("댓글을 입력해주세요.")
                 reply.focus();
@@ -22,6 +23,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    userId: `${USER.userId}`,
                     communityId: ${dto.communityId},
                     content: content
 
@@ -29,7 +31,7 @@
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert("")
+                        alert("로그인후 작성 가능합니다.")
                     } else {
                         location.reload()
                     }
@@ -72,9 +74,10 @@
 
             .then(response => {
                 if (!response.ok) {
-                    alert("");
+
                 } else {
-                    $("#reply-" + id).empty();
+                    alert("댓글이 삭제 되었습니다.");
+                    $("#reply-" + id).remove();
                 }
             })
             .then(data => console.log(data))
@@ -160,7 +163,7 @@
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
 
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId +'">';
                     html += '<li class="list-group-item custom-list-item">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
@@ -170,29 +173,31 @@
                     html += '<textarea class="form-control custom-textarea"';
                     html += ' rows="2"';
                     html += ' readonly ';
-                    html += 'id="reply-' + reply.replyId + '">' + reply.content + '</textarea>';
+                    html += '>' + reply.content + '</textarea>';
                     html += '<div class="comment-buttons">';
+                    if (reply.userId == `${USER.userId}`) {
 
-                    html += '<button class="btn btn-xs btn-default" onclick="updateReply(' + reply.replyId + ')"';
-                    html += ' id="update-' + reply.replyId + '">수정';
-                    html += '</button>';
+                        html += '<button class="btn btn-xs btn-default" onclick="updateReply(' + reply.replyId + ')"';
+                        html += ' id="update-' + reply.replyId + '">수정';
+                        html += '</button>';
 
-                    html += '<button class="btn btn-xs btn-primary" style="display: none; "';
-                    html += 'onclick="updateDone(' + reply.replyId + ')"';
-                    html += ' id="done-' + reply.replyId + '">완료';
+                        html += '<button class="btn btn-xs btn-primary" style="display: none; "';
+                        html += 'onclick="updateDone(' + reply.replyId + ')"';
+                        html += ' id="done-' + reply.replyId + '">완료';
 
-                    html += '</button>';
-                    html += '<button class="btn btn-xs btn-default" style="display: none;"';
-                    html += ' onclick="updateCancel(' + reply.replyId + ', \'';
-                    html += reply.content.replace(/'/g, "\\'") + '\' )"';
-                    html += ' id="cancel-' + reply.replyId + '">취소';
-                    html += '</button>';
+                        html += '</button>';
+                        html += '<button class="btn btn-xs btn-default" style="display: none;"';
+                        html += ' onclick="updateCancel(' + reply.replyId + ', \'';
+                        html += reply.content.replace(/'/g, "\\'") + '\' )"';
+                        html += ' id="cancel-' + reply.replyId + '">취소';
+                        html += '</button>';
 
-                    html += '<button class="btn btn-xs btn-danger"';
-                    html += ' onclick="deleteReply(' + reply.replyId + ')"';
-                    html += ' id="reply-del-' + reply.replyId + '"';
-                    html += '>삭제';
-                    html += '</button>';
+                        html += '<button class="btn btn-xs btn-danger"';
+                        html += ' onclick="deleteReply(' + reply.replyId + ')"';
+                        html += ' id="reply-del-' + reply.replyId + '"';
+                        html += '>삭제';
+                        html += '</button>';
+                    }
 
                     html += '</div>';
                     html += '</li>';
@@ -221,14 +226,16 @@
             <small>${dto.createdAt}</small>
 
             <%--            <c:if test="${dto.userId ==3}">--%>
+            <c:if test="${USER.userId == dto.userId}">
+                <button type="button" style="float: right;margin-left: 10px " class="btn btn-default"
+                        onclick="update(${dto.communityId})">
+                    수정
+                </button>
 
-            <button type="button" style="float: right;margin-left: 10px " class="btn btn-default"
-                    onclick="update(${dto.communityId})">
-                수정
-            </button>
-            <button type="button" style="float: right;margin-left: 20px " class="btn btn-danger"
-                    onclick="deleteBoard(${dto.communityId})">삭제
-            </button>
+                <button type="button" style="float: right;margin-left: 20px " class="btn btn-danger"
+                        onclick="deleteBoard(${dto.communityId})">삭제
+                </button>
+            </c:if>
             <%--            </c:if>--%>
 
             <hr>
@@ -267,8 +274,8 @@
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%">
-                                <li class="list-group-item custom-list-item">
+                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
+                                <li class="list-group-item custom-list-item" >
                                     <div class="comment-header">
                                         <strong class="comment-nickname">${reply.nickname}</strong>
                                         <span class="comment-date">${reply.createdAt}</span>
@@ -277,29 +284,31 @@
                                               rows="2"
 
                                               readonly
-                                              id="reply-${reply.replyId}">${reply.content}</textarea>
+                                              >${reply.content}</textarea>
                                     <div class="comment-buttons">
-                                        <button class="btn btn-xs btn-default"
-                                                onclick="updateReply(${reply.replyId})"
-                                                id="update-${reply.replyId}">수정
-                                        </button>
-                                        <button class="btn btn-xs btn-primary" style="display: none"
-                                                onclick="updateDone(${reply.replyId})"
-                                                id="done-${reply.replyId}">완료
+                                        <c:if test="${reply.userId == USER.userId}">
+                                            <button class="btn btn-xs btn-default"
+                                                    onclick="updateReply(${reply.replyId})"
+                                                    id="update-${reply.replyId}">수정
+                                            </button>
+                                            <button class="btn btn-xs btn-primary" style="display: none"
+                                                    onclick="updateDone(${reply.replyId})"
+                                                    id="done-${reply.replyId}">완료
 
 
-                                        </button>
-                                        <button class="btn btn-xs btn-default" style="display: none"
-                                                onclick="updateCancel( ${reply.replyId}, '${reply.content}' )"
-                                                id="cancel-${reply.replyId}"
-                                        >취소
-                                        </button>
-                                        <button class="btn btn-xs btn-danger"
-                                                onclick="deleteReply(${reply.replyId})"
-                                                id="reply-del-${reply.replyId}"
+                                            </button>
+                                            <button class="btn btn-xs btn-default" style="display: none"
+                                                    onclick="updateCancel( ${reply.replyId}, '${reply.content}' )"
+                                                    id="cancel-${reply.replyId}"
+                                            >취소
+                                            </button>
+                                            <button class="btn btn-xs btn-danger"
+                                                    onclick="deleteReply(${reply.replyId})"
+                                                    id="reply-del-${reply.replyId}"
 
-                                        >삭제
-                                        </button>
+                                            >삭제
+                                            </button>
+                                        </c:if>
                                     </div>
                                 </li>
                             </ul>

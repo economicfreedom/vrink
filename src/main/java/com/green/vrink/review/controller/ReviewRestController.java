@@ -2,10 +2,17 @@ package com.green.vrink.review.controller;
 
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
+import com.green.vrink.user.repository.model.User;
+import com.green.vrink.util.LoginCheck;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/review")
@@ -14,10 +21,13 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewRestController {
 
     private final ReviewService reviewService;
-
+    private final HttpSession httpSession;
 
     @PostMapping("/save")
-    public ResponseEntity<?> replySave(@RequestBody ReviewDTO reviewDTO){
+    @LoginCheck
+    public ResponseEntity<?> replySave(@RequestBody ReviewDTO reviewDTO) {
+
+
 
         Integer check = reviewService.duplicationCheck(reviewDTO);
 
@@ -28,7 +38,7 @@ public class ReviewRestController {
 
         Integer save = reviewService.save(reviewDTO);
 
-        log.info("reply save start {}",save);
+        log.info("reply save start {}", save);
 //        if (save != null){
 //            log.info("세이브됨");
 //
@@ -38,11 +48,31 @@ public class ReviewRestController {
     }
 
     @DeleteMapping("/del/{review-id}")
-    public ResponseEntity<?> replyDelete(@PathVariable(name = "review-id") Integer reviewId){
-        log.info("review id {}",reviewId);
+    @LoginCheck
+    public ResponseEntity<?> replyDelete(@PathVariable(name = "review-id") Integer reviewId) {
+        User user = (User) httpSession.getAttribute("USER");
+
+
+        int userId = user.getUserId();
+
+        int reviewUserId = reviewService.getReviewUserId(reviewId);
+        log.info("userId : {}",userId);
+        log.info("reviewUser Id : {}",reviewUserId);
+        if (userId != reviewUserId) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        log.info("review id {}", reviewId);
         reviewService.delete(reviewId);
 
         return ResponseEntity.ok().build();
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class CustomMessage {
+        private String message;
     }
 
 }

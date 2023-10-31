@@ -2,10 +2,11 @@ package com.green.vrink.community.controller;
 
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
-import com.green.vrink.community.repository.model.FreeBoard;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.LoginCheck;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +28,30 @@ public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
     private final FreeBoardReplyService freeBoardReplyService;
+    private final HttpSession httpSession;
+
+
+
+    @GetMapping("/123")
+    @LoginCheck
+    public String test(){
+        return "board/test";
+    }
+
+
     @GetMapping("/write-form")
+    @LoginCheck
     public String read(Model model) {
+
+
 
         return "board/freeBoardWrite";
     }
 
+
     @GetMapping("/read/{community-id}")
+
+
     public String read(
             @PathVariable("community-id")
             Integer communityId,
@@ -47,6 +65,7 @@ public class FreeBoardController {
         if (dto == null) {
             return "redirect:/";
         }
+
         Criteria cri = new Criteria();
         Integer total = freeBoardReplyService.replyTotal(communityId);
         cri.setPageNum(1);
@@ -71,6 +90,7 @@ public class FreeBoardController {
     }
 
     @GetMapping("/update-form/{community-id}")
+    @LoginCheck
     public String update(
             @PathVariable("community-id")
             Integer communityId
@@ -78,6 +98,13 @@ public class FreeBoardController {
             , HttpSession httpSession) {
         FreeBoardDTO dto = freeBoardService.read(communityId);
         model.addAttribute("dto",dto);
+        User user = (User) httpSession.getAttribute("USER");
+        Integer userId = freeBoardService.getUserId(communityId);
+
+        if (user == null || userId != dto.getUserId() ){
+            return "redirect:/";
+        }
+
 
         return "board/freeBoardUpdateForm";
     }

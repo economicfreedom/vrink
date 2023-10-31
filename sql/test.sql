@@ -324,4 +324,8 @@ WHERE editor_id = 1
   AND ar_id = (SELECT max(ar_id) FROM analyzing_review WHERE editor_id = 1)
 
 
-SELECT *
+SELECT * from community_reply;
+delete from community_reply
+where 1=1;
+
+select * from community_reply;

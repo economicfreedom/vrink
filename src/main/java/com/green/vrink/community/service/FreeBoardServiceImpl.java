@@ -71,4 +71,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     public List<FreeBoardDTO> pageList(Criteria cri) {
         return freeBoardRepository.findAllByCri(cri);
     }
+
+    @Override
+    public Integer getUserId(Integer commuId) {
+        return freeBoardRepository.findUserIdByCommunityId(commuId);
+    }
 }

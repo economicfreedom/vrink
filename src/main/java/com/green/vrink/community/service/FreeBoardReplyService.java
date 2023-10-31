@@ -14,6 +14,7 @@ public interface FreeBoardReplyService {
     List<FreeBoardReplyDTO> readList(Integer communityId, Criteria cri);
     Integer replyTotal(Integer commuId);
 
+    Integer getUserId(Integer replyId);
 
 
 }
