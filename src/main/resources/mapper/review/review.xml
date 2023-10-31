@@ -34,4 +34,9 @@
         LEFT JOIN user u ON r.user_id = u.user_id
         WHERE editor_id = #{id}
     </select>
+    <select id="findUserIdByReviewId" resultType="java.lang.Integer">
+        SELECT user_id FROM review
+        WHERE review_id = #{reviewId}
+
+    </select>
 </mapper>

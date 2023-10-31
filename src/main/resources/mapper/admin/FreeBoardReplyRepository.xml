@@ -36,7 +36,10 @@
         FROM community_reply
         WHERE community_id = #{commuId}
     </select>
-
+    <select id="findUserIdByReplyId" resultType="java.lang.Integer">
+        SELECT user_id FROM community_reply
+        WHERE reply_id  =#{replyId}
+    </select>
 
 
 </mapper>

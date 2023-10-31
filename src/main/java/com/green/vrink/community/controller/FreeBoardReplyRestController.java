@@ -2,9 +2,11 @@ package com.green.vrink.community.controller;
 
 
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.LoginCheck;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,39 +22,68 @@ import java.util.List;
 @Slf4j
 public class FreeBoardReplyRestController {
     private final FreeBoardReplyService freeBoardReplyService;
+    private final HttpSession httpSession;
 
     @PostMapping("/add")
+    @LoginCheck
     public ResponseEntity<?> write(
             @RequestBody
             FreeBoardReplyDTO freeBoardReplyDTO
-            , HttpSession httpSession
+
 
     ) {
-        freeBoardReplyDTO.setUserId(60);
+
+
+        log.info("freeBoardReplyDTO {}", freeBoardReplyDTO);
         freeBoardReplyService.create(freeBoardReplyDTO);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/del/{commu-id}")
+    @DeleteMapping("/del/{reply-id}")
+    @LoginCheck
     public ResponseEntity<?> del(
-            @PathVariable(name = "commu-id")
-            Integer commuId
+            @PathVariable(name = "reply-id")
+            Integer replyId
     ) {
-        if (commuId == null){
+        if (replyId == null) {
             return ResponseEntity.badRequest().build();
         }
-        freeBoardReplyService.delete(commuId);
+
+        User user = (User) httpSession.getAttribute("USER");
+        int sessionUserId = user.getUserId();
+
+        if (sessionUserId == 0) {
+            freeBoardReplyService.delete(replyId);
+            return ResponseEntity.ok().build();
+        }
+
+        int userId = freeBoardReplyService.getUserId(replyId);
+
+        if (userId != sessionUserId) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        freeBoardReplyService.delete(replyId);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update")
+    @LoginCheck
     public ResponseEntity<?> update(
             @RequestBody
             FreeBoardReplyDTO freeBoardReplyDTO
             , HttpSession httpSession
     ) {
-        freeBoardReplyDTO.setUserId(1);
+        int replyId = freeBoardReplyDTO.getReplyId();
+        Integer communityId = freeBoardReplyDTO.getCommunityId();
+
+        Integer _userId = freeBoardReplyDTO.getUserId();
+        Integer userId = freeBoardReplyService.getUserId(replyId);
+
+        if (communityId == null || _userId == null || _userId != userId) {
+            return ResponseEntity.badRequest().build();
+        }
 
         freeBoardReplyService.update(freeBoardReplyDTO);
 
@@ -61,23 +92,23 @@ public class FreeBoardReplyRestController {
 
     @GetMapping("/more-reply")
     public ResponseEntity<?> more(@RequestParam(name = "commu-id")
-                                  Integer commuId
-                                , @RequestParam(name = "page-num")
+                                  Integer replyId
+            , @RequestParam(name = "page-num")
                                   Integer pageNum
-                                , @RequestParam
+            , @RequestParam
                                   Integer total
-    ){
+    ) {
         log.info("동작함 ");
         Criteria cri = new Criteria();
         cri.setPageNum(pageNum);
         cri.setCountPerPage(7);
-        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(commuId, cri);
+        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(replyId, cri);
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         pageDTO.setArticleTotalCount(total);
         AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
-        asyncPageDTO.setHasNext(pageNum,pageDTO.getEndPage());
+        asyncPageDTO.setHasNext(pageNum, pageDTO.getEndPage());
         asyncPageDTO.setPageDTOs(freeBoardReplyDTOS);
 
         return ResponseEntity.ok().body(asyncPageDTO);

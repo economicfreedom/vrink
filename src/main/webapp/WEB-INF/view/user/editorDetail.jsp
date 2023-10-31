@@ -7,17 +7,16 @@
     $(document).ready(function () {
 
         $("#report").click(function () {
-
             fetch('/report/report-board', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    reportUserId: ${editorDetail.userId},
+                    reportUserId: `${editorDetail.userId}`,
                     userId: 1,
                     boardId: null,
-                    editorId: ${editorDetail.editorId}
+                    editorId: `${editorDetail.editorId}`
                 })
             })
                 .then(response => {
@@ -29,26 +28,37 @@
                 })
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
-
         })
 
         $("#review-submit").click(function () {
+            let currentURL = window.location.href
 
+            let strings = currentURL.split("/");
+            let editorId = strings[5];
+
+
+            console.log(currentURL);
             let content = $("#review-content").val();
 
             let star = $("#star-val").val();
+
+            if (content.length <=0 ){
+                alert("리뷰를 입력해주세요.");
+                return;
+            }
 
             console.log(star);
 
 
             fetch('/review/save', {
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    editorId: ${editorDetail.editorId},
-                    userId: 1,
+                    editorId: editorId,
+                    userId: `${USER.userId}`,
                     content: content,
                     count: star
 
@@ -56,12 +66,16 @@
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert("")
+
+                        alert("로그인 이후 사용가능합니다.")
+                        $(".log-in-btn").click()
                     } else {
+
                         location.reload();
+
                     }
                 })
-                .then(data => console.log(data))
+                .then((data) => console.log(data))
                 .catch(error => console.error('Error:', error));
 
         })
@@ -164,6 +178,7 @@
                     <span><a
                             href="/editor/vrm?editor-id=${editorDetail.editorId}">작가의 VRM
 				보러가기</a></span>
+
                     <div>
                         <div id="edit"
                              style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer">
@@ -182,7 +197,7 @@
                 <div class="col-sm-11 t-center mt-5" style="float: left">${editorDetail.content}
                     <c:choose>
                         <c:when test="${morph != null}">
-                        <div style="border: 1px solid black"><h5>${morph}</h5></div>
+                            <div style="border: 1px solid black"><h5>${morph}</h5></div>
                         </c:when>
                         <c:otherwise>
                             <div style="border: 1px solid black"><h5>아직 리뷰가 없어요..</h5></div>
@@ -200,6 +215,7 @@
                                                                                             oninput="drawStar(this)"
                                                                                             value="6"
                                                                                             step="2" min="0" max="10">
+
 					</span>
                     </div>
                     <script>
@@ -255,9 +271,11 @@
                                     <td>
                                         <div
                                                 style="display: flex; flex-direction: column; gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
+                                            <c:if test="${review.userId == USER.userId}">
                                             <button type="button" class="btn btn-danger"
                                                     onclick="deleteReview(${review.reviewId})" id="review-del">삭제
                                             </button>
+                                            </c:if>
                                         </div>
                                     </td>
                                     <td>${review.nickname}</td>

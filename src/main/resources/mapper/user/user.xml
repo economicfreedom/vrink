@@ -96,4 +96,9 @@
     	DELETE FROM user WHERE user_id = #{userId};
     </delete>
     
+    <insert id="insertPrice">
+    	INSERT INTO test_price (editor_id, options, price)
+    	VALUES (#{editorId}, #{option}, #{price})
+    </insert>
+
 </mapper>

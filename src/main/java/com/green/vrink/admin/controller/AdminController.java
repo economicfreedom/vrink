@@ -4,6 +4,7 @@ import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.Pagination;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.service.AdminService;
+import com.green.vrink.message.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class AdminController {
 
     private final HttpSession session;
     private final AdminService adminService;
+
+    private final MessageService messageService;
 
     @GetMapping("/main")
     public String main(){

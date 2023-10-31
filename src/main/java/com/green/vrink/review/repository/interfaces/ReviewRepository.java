@@ -16,4 +16,6 @@ public interface ReviewRepository {
     List<ReviewDTO> findByIdAll(Integer id);
 
     void deleteById(Integer reviewId);
+
+    Integer findUserIdByReviewId(Integer reviewId);
 }

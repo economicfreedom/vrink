@@ -48,4 +48,9 @@ public class ReviewServiceImpl implements ReviewService {
     public void delete(Integer reviewId) {
         replyRepository.deleteById(reviewId);
     }
+
+    @Override
+    public Integer getReviewUserId(Integer reviewId) {
+        return replyRepository.findUserIdByReviewId(reviewId);
+    }
 }

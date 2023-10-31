@@ -74,4 +74,8 @@
             title LIKE CONCAT('%',#{keyword},'%')
         </if>
     </select>
+    <select id="findUserIdByCommunityId" resultType="java.lang.Integer">
+        SELECT user_id FROM community
+        WHERE community_id = #{commuId}
+    </select>
 </mapper>

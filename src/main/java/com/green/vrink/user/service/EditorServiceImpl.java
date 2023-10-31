@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.green.vrink.user.dto.ApprovalDTO;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.dto.EditorPriceDTO;
+import com.green.vrink.user.dto.EditorPriceListDTO;
 import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 
@@ -68,5 +70,22 @@ public class EditorServiceImpl implements EditorService{
     @Override
     public Integer getTotal() {
         return userRepository.getTotal();
+    }
+    
+    @Transactional
+    @Override
+    public Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO) {
+    	for (int i = 0; i < editorPriceListDTO.getOptions().size(); i++) {
+            String option = editorPriceListDTO.getOptions().get(i);
+            Integer price = editorPriceListDTO.getPrices().get(i);
+
+            EditorPriceDTO priceDTO = new EditorPriceDTO();
+            priceDTO.setEditorId(editorPriceListDTO.getEditorId());
+            priceDTO.setOption(option);
+            priceDTO.setPrice(price);
+
+            userRepository.insertPrice(priceDTO);
+        }
+    	return 0;
     }
 }

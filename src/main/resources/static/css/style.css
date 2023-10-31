@@ -520,6 +520,84 @@ iframe{
     margin-right: 4px;
 }
 
+.popup-alarm {
+    float: right;
+    margin: 0 0 0 10px;
+}
+.popup-alarm > span {
+    background-color: #ff2929;
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+
+    color: #ffffff;
+    float: left;
+    font-family: Nunito;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+    margin: 39px 0;
+    padding: 13px 30px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.popup-alarm > span:hover{
+    color: red;
+    background: #ffffff;
+}
+.popup-alarm > span:hover ~ div {
+    color: red;
+    background: #ffffff;
+}
+.simple-header.for-sticky.sticky > .menu .popup-alarm > span {
+    margin: 25px 0;
+}
+.simple-header.for-sticky.sticky > .menu .popup-alarm > div {
+    top: -15px;
+}
+.popup-alarm > span i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+.dropdown-alarm {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-alarm-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.dropdown-alarm.active .dropdown-alarm-content {
+    display: inline-block;
+    margin: 90px 0 0 -500px;
+    border-radius: 20px;
+    min-width: 500px;
+    z-index: 10;
+}
+
+.notification-badge {
+    background-color: #ff2929;
+    margin: 24px -13px 0px 0px;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+}
+
 /*=============== Inner Head ===================*/
 .inner-head {
     float: left;
@@ -3938,6 +4016,10 @@ header.white .popup-client > span:hover {
     background: #333333;
     color: #ffffff !important;
 }
+header.white .popup-alarm > span:hover {
+    background: #333333;
+    color: #ffffff !important;
+}
 header.white .menu-item-has-children > ul > li {
     background: #f4f4f4 none repeat scroll 0 0;
     border-color: #dfdfdf;
@@ -5130,6 +5212,8 @@ footer.light-footer .bottom-line a {
 .gallery-detail > a,
 .close-popup,
 .popup-client > span,
+.popup-alarm > span,
+.popup-alarm > div,
 .square-services::before,
 .top-bar,
 .menu,
@@ -5361,7 +5445,7 @@ p {
     margin-bottom: 10px;
     position: relative;
 }
-.contact-form > .editor-div .row  div  input[type="text"], .contact-form > .editor-div .row > div > textarea {
+.contact-form > .editor-div .row  div  input[type="text"], .contact-form > .editor-div > .row > div > textarea {
     background: #f9f9f9 none repeat scroll 0 0;
     border: medium none;
     float: left;
@@ -5371,7 +5455,7 @@ p {
     padding: 18px 80px;
     width: 100%;
 }
-.contact-form > .editor-div .row > div  i {
+.contact-form > .editor-div .row > div > i {
     color: #b5b5b5;
     font-size: 15px;
     left: 58px;
@@ -5380,7 +5464,39 @@ p {
     position: absolute;
     top: 34px;
 }
-.contact-form > form .row > .editor-div > textarea {
+.price-form > form .row > .editor-div > textarea {
+    min-height: 170px;
+    padding-top: 25px;
+}
+
+.price-form > form {
+    float: left;
+    width: 100%;
+}
+.price-form > .editor-div .row > div {
+    margin-bottom: 10px;
+    position: relative;
+}
+.price-form > .editor-div .row  div  input[type="text"], .contact-form > .editor-div > .row > div > textarea {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: medium none;
+    float: left;
+    font-family: Nunito;
+    font-size: 15px;
+    height: 68px;
+    padding: 18px 80px;
+    width: 100%;
+}
+.price-form > .editor-div .row > div  i {
+    color: #b5b5b5;
+    font-size: 15px;
+    left: 58px;
+    line-height: 16px;
+    margin-top: -7px;
+    position: absolute;
+    top: 34px;
+}
+.price-form > form .row > .editor-div > textarea {
     min-height: 170px;
     padding-top: 25px;
 }

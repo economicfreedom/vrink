@@ -20,4 +20,6 @@ public interface FreeBoardService {
     Integer getTotal(Criteria cri);
 
     List<FreeBoardDTO> pageList(Criteria cri);
+
+    Integer getUserId(Integer commuId);
 }

@@ -23,4 +23,6 @@ public interface FreeBoardRepository {
     List<FreeBoardDTO> findAllByCri(Criteria cri);
 
     Integer getTotal(Criteria cri);
+
+    Integer findUserIdByCommunityId(Integer commuId);
 }

@@ -4,6 +4,7 @@ package com.green.vrink.upload;
 import com.green.vrink.upload.dto.UploadRequestDTO;
 import com.green.vrink.upload.dto.UploadResponseDTO;
 import com.green.vrink.upload.dto.UploadResultDTO;
+import com.green.vrink.util.LoginCheck;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,7 @@ public class UploadController {
     // 추가 - 최규하
     // 내용 - 회원 가입된 사용자만 접근 가능하게 추가
     @PostMapping("/upload-img")
+    @LoginCheck
     public ResponseEntity<?> uploadImgFile(
             @RequestParam("uploadFiles") MultipartFile[] uploadFiles
             , @RequestParam("w") Integer w

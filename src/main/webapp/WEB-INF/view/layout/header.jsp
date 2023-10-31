@@ -112,6 +112,26 @@
                         <strong>승철이</strong>
                     </a>
                 </div><!-- LOGO -->
+
+                <c:if test="${userTestId == 1}">
+                    <div class="dropdown-alarm popup-alarm list-group" id="dropdown-alarm">
+                        <span style="padding: 13px;"><i class="fa fa-bell"></i> </span>
+                        <div class="dropdown-alarm-content" style="overflow: auto; max-height: 200px">
+                            <!-- 여기에 알림 목록을 표시하는 코드를 넣으세요. -->
+                            <c:if test="${empty messageList}">
+                                <h4>알림이 없습니다.</h4>
+                            </c:if>
+                            <c:forEach items="${messageList}" var="message" varStatus="varstat">
+                                <a href="#" class="list-group-item" onclick="checkAlarm(${message.messageId}, '${message.url}')"><span style="float:left; font-weight: bold; margin-right: 5px">${varstat.count}.</span> ${message.content} <span style="float: right">${message.createdAt}</span></a>
+                            </c:forEach>
+                        </div>
+                        <!-- 알림 개수를 표시할 배지 -->
+                        <c:if test="${not empty messageList}">
+                            <div class="notification-badge" id="notification-badge">${messageList.size()}</div>
+                        </c:if>
+                    </div>
+                </c:if>
+
                 <div class="popup-client">
                 	<input type=hidden class="sign-in-user-flag" value="${USER.email }">
                     <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
@@ -387,6 +407,40 @@
             .catch(error => console.error('Error:', error));
     });
 
+    function checkAlarm(messageId, URL) {
+        fetch('http://localhost/message/check-message', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'messageId': messageId
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.replace(URL);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    $(document).ready(function () {
+        var dropdown = document.getElementById("dropdown-alarm");
+        dropdown.addEventListener("click", function() {
+            dropdown.classList.toggle("active");
+            if (dropdown.classList.contains("active")) {
+                // 알림 팝업이 열릴 때, 알림 개수를 초기화
+                // $("#notification-badge").css("display", "none");
+            }
+        });
+
+        var body = document.getElementById("main-body");
+        body.addEventListener("click", function() {
+            if (dropdown.classList.contains("active")) {
+                dropdown.classList.toggle("active");
+            }
+        });
+    })
+
 </script>
 <body>
-<section style="min-height: calc(100vh - 204px);">
+<section id="main-body" style="min-height: calc(100vh - 204px);">

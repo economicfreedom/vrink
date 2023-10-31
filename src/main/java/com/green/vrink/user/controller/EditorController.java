@@ -30,11 +30,14 @@ public class EditorController {
     private final ReviewService reviewService;
     private final EditorServiceImpl editorServiceImpl;
     private final MorphService morphService;
+
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
             , HttpSession session
             , Model model
     ) {
+
+
         if (editorId == null) {
             return "redirect:/";
         }
@@ -48,8 +51,10 @@ public class EditorController {
         EditorDTO editorDTO = editorServiceImpl.responseEditorDeatil(editorId);
         model.addAttribute("editorDetail", editorDTO);
         log.info("editorDetail{}", editorDTO);
-        log.info("morph : {}",morph);
-        model.addAttribute("morph",morph);
+        log.info("morph : {}", morph);
+        log.info("editor dto === > : {}", editorDTO);
+
+        model.addAttribute("morph", morph);
 
 
         return "user/editorDetail";
@@ -89,10 +94,13 @@ public class EditorController {
             Integer editorId
             , Model model
     ) {
-if (editorId == null) {
+        if (editorId == null) {
             return "redirect:/";
         }
         String vrm = editorServiceImpl.getVrm(editorId);
+        if (vrm == null) {
+            return "redirect:/";
+        }
         vrm = vrm.replace("\\", "/");
         model.addAttribute("vrm", vrm);
         log.info("vrm 경로 {}", vrm);
@@ -116,9 +124,10 @@ if (editorId == null) {
         model.addAttribute("next", asyncPageDTO.isHasNext());
         return "user/editorList";
     }
-    
-    @GetMapping("/editor-price") 
-    public String editorPrice() {
-    	return "user/editorPrice";
+
+    @GetMapping("/editor-price/{editorId}")
+    public String editorPrice(@PathVariable("editorId") Integer editorId) {
+
+        return "user/editorPrice";
     }
 }

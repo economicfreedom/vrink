@@ -50,5 +50,8 @@ public class FreeBoardReplyServiceImpl implements FreeBoardReplyService {
         return freeBoardReplyRepository.replyTotal(commuId);
     }
 
-
+    @Override
+    public Integer getUserId(Integer replyId) {
+        return freeBoardReplyRepository.findUserIdByReplyId(replyId);
+    }
 }
