@@ -1,13 +1,6 @@
 package com.green.vrink.user.repository.interfaces;
 
-import com.green.vrink.user.dto.ApprovalDTO;
-import com.green.vrink.user.dto.EditorDTO;
-import com.green.vrink.user.dto.EditorPriceDTO;
-import com.green.vrink.user.dto.EditorPriceListDTO;
-import com.green.vrink.user.dto.EditorWriteDTO;
-import com.green.vrink.user.dto.SignUpDto;
-import com.green.vrink.user.dto.UpdateNicknameDto;
-import com.green.vrink.user.dto.UpdatePasswordDto;
+import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,7 +27,7 @@ public interface UserRepository {
 	Integer getTotal();
 	
 	public User findByEmail(String email);
-	public User findByUserId(String userId);
+	public User findByUserId(Integer userId);
 	
 	//@Param("applyId") Integer applyId, @Param("content") String content
 	public Integer updateNickname(@Param("userId") String userId, @Param("nickname") String nickname);
@@ -42,4 +35,8 @@ public interface UserRepository {
 	
 	public Integer deleteByUserId(String userId);
 	public Integer insertPrice(EditorPriceDTO editorPriceDTO);
+
+	public Integer findEditorIdByUserId(Integer userId);
+	public Integer calculatePoint(CalculatePointDto calculatePointDto);
+	public Integer updatePoint(@Param("userId") Integer userId, @Param("point") Integer point);
 }

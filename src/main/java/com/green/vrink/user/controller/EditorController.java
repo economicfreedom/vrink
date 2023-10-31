@@ -4,9 +4,12 @@ import com.green.vrink.morph.service.MorphService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.Define;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -30,6 +34,8 @@ public class EditorController {
     private final ReviewService reviewService;
     private final EditorServiceImpl editorServiceImpl;
     private final MorphService morphService;
+    private final HttpSession session;
+    private final UserRepository userRepository;
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
             , HttpSession session
@@ -121,5 +127,21 @@ if (editorId == null) {
     public String editorPrice(@PathVariable("editorId") Integer editorId) {
     	
     	return "user/editorPrice";
+    }
+
+    @GetMapping("/calculate/point")
+    public String calculatePoint(Model model) {
+        User user = (User) session.getAttribute(Define.USER);
+        if (user == null) {
+            return "user/applyForm";
+        }
+        if (Objects.equals(user.getEditor(), "editor")) {
+            User newUser = userRepository.findByUserId(user.getUserId());
+            System.out.println(newUser);
+            model.addAttribute("newUser", newUser);
+            return "user/calculatePoint";
+        }
+
+        return "user/applyForm";
     }
 }

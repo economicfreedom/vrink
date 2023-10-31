@@ -2,19 +2,13 @@ package com.green.vrink.user.controller;
 
 import javax.servlet.http.HttpSession;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.green.vrink.user.dto.PasswordDto;
 import com.green.vrink.user.dto.SignInDto;
@@ -29,19 +23,18 @@ import com.green.vrink.util.Define;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@RequiredArgsConstructor
 public class UserRestController {
 	
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private HttpSession session;
+	private final UserService userService;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final HttpSession session;
 	
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
@@ -85,31 +78,43 @@ public class UserRestController {
 	@PostMapping("/sign-in")
 	public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
 		User user = userService.signIn(signInDto.getEmail());
-		
+
 		 if(!passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) { 
-			 System.out.println("이메일 또는 비밀번호가 일치하지않습니다."); 
-			 return null; 
+			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		 }
+
+		if(user.getEnabledCheck() != 0) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
+
+
+
 		 session.setAttribute(Define.USER, user);
 		 return ResponseEntity.ok().build();
 	}
 	
 	// 닉네임 변경
 	@PutMapping("/update/nickname/{userId}")
-	public int updateNickname(@PathVariable String userId, @RequestBody String nickname) {
+	public int updateNickname(@PathVariable String userId, @RequestBody Map<String,String> map, Model model) {
+		String nickname = map.get("nickname");
 		int result = userService.updateNickname(userId, nickname);
-		
+
+
 		if (result != 1) {
 			System.out.println("닉네임 변경 실패");
 			return 0;
 		}
-		
+
+//		User user = (User) session.getAttribute("USER");
+//		user.setNickname(nickname);
+//		session.removeAttribute("USER");
+//		session.setAttribute(Define.USER,user);
 		return 1;
 	}
 	
 	// 비밀번호 확인
 	@PostMapping("/find/password")
-	public int getPasswordByUserId( @RequestBody PasswordDto passwordDto) {
+	public int getPasswordByUserId(@RequestBody PasswordDto passwordDto) {
 		if(!passwordEncoder.matches(passwordDto.getInsertPassword(), passwordDto.getEncodedPassword())) {
 			return 0;
 		}
@@ -119,14 +124,16 @@ public class UserRestController {
 	
 	// 비밀번호 변경
 	@PutMapping("/update/password/{userId}")
-	public int updatePassword(@PathVariable String userId, @RequestBody String password) {
-		int result = userService.updatePassword(userId, password);
+	public int updatePassword(@PathVariable String userId, @RequestBody Map<String, String> map) {
+		String password = map.get("password");
+
+		int result = userService.updatePassword(userId, passwordEncoder.encode(password));
 		
 		if (result != 1) {
 			System.out.println("비밀번호 변경 실패");
 			return 0;
 		}
-		
+		session.removeAttribute(Define.USER);
 		return 1;
 	}
 	
@@ -138,5 +145,13 @@ public class UserRestController {
 //		
 //	}
 	
-	// 회원 탈퇴 
+	// 회원 탈퇴
+	@DeleteMapping("/delete/{userId}")
+	public int deleteUser(@PathVariable String userId) {
+		int result = userService.deleteByUserId(userId);
+		System.out.println(result);
+		return 1;
+	}
+
+
 }

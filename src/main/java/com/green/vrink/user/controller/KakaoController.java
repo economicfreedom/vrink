@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,16 +31,14 @@ import com.green.vrink.util.Define;
 
 @Controller
 @RequestMapping("/kakao")
+@RequiredArgsConstructor
 public class KakaoController {
 	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code
 	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827
 	
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private HttpSession session;
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final HttpSession session;
 	
 	@GetMapping("/sign-in")
 	public String getKakaoUserInfo(String code, Model model) throws ParseException {
