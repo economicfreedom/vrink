@@ -2,6 +2,7 @@ package com.green.vrink.report.controller;
 
 import com.green.vrink.report.dto.ReportDTO;
 import com.green.vrink.report.service.ReportService;
+import com.green.vrink.util.Check;
 import com.green.vrink.util.LoginCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import static com.green.vrink.util.Check.isNull;
 
 @RequestMapping("/report")
 @RestController
@@ -25,7 +29,7 @@ public class ReportRestController {
 
     @PostMapping("/report-board")
     @LoginCheck
-    public ResponseEntity<?> reportBoard(@RequestBody ReportDTO reportDTO) {
+    public ResponseEntity<?> reportBoard(@Valid @RequestBody  ReportDTO reportDTO) {
         log.info("report dto {}",reportDTO);
 
 //        httpSession.getAttribute()
@@ -34,7 +38,7 @@ public class ReportRestController {
 
         Integer checkRes = reportService.checkReport(reportDTO);
 
-        if (checkRes != null){
+        if (!isNull(checkRes)){
             return ResponseEntity.badRequest().build();
         }
 
