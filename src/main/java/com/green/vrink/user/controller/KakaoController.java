@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,18 +31,15 @@ import com.green.vrink.util.Define;
 
 @Controller
 @RequestMapping("/kakao")
+@RequiredArgsConstructor
 public class KakaoController {
 	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code
 	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827
-
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private HttpSession session;
-
-
+	
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final HttpSession session;
+	
 	@GetMapping("/sign-in")
 	public String getKakaoUserInfo(String code, Model model) throws ParseException {
 	    System.out.println("OAuth Code : "+code);
@@ -79,10 +77,10 @@ public class KakaoController {
 	                br.close();
 	        }
 	        System.out.println("result : " + result);
-
+	        
 	        ObjectMapper mapper = new ObjectMapper();
 	        String access_token = mapper.readValue(result, KakaoSignInDto.class).getAccess_token();
-
+	        
 	        url = new URL("https://kapi.kakao.com/v2/user/me");
 	        conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("POST");
@@ -103,37 +101,37 @@ public class KakaoController {
 	                br.close();
 	        }
 	        System.out.println("result user : " + result);
-
+	        
 	        JSONParser jsonParser = new JSONParser();
 	        Object object = jsonParser.parse(result);
 	        JSONObject jsonObject = (JSONObject)object;
-
+	        
 	        object = jsonParser.parse(jsonObject.get("kakao_account").toString());
 	        jsonObject = (JSONObject)object;
-
+	        
 	        String email = jsonObject.get("email").toString();
-
+	        
 	        if (userRepository.checkEmail(email) == null) {
 	        	object = jsonParser.parse(jsonObject.get("profile").toString());
 	        	jsonObject = (JSONObject)object;
-
+	        	
 	        	String nickname = jsonObject.get("nickname").toString();
 	        	String profileImage = jsonObject.get("profile_image_url").toString();
-
+	        	
 	        	System.out.println(email);
 	        	System.out.println(nickname);
 	        	System.out.println(profileImage);
-
+	        	
 	        	model.addAttribute("email", email);
 	        	model.addAttribute("profileImage", profileImage);
 	        	model.addAttribute("nickname", nickname);
 
 	        	return "/user/kakaoSignup";
 			}
-
+	        
 	        User user = userService.signIn(email);
 	        session.setAttribute(Define.USER, user);
-
+	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }

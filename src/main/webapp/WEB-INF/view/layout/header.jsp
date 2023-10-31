@@ -38,7 +38,7 @@
                             <div>
                                 <h4>로그인</h4>
                                 <div class="field">
-                                    <input type="text" class="sign-in-email" placeholder="Username"/>
+                                    <input type="text" class="sign-in-email" placeholder="Username" value="vrinkteam@gmail.com"/>
                                 </div>
                                 <div class="field">
                                     <input type="password" class="sign-in-password" placeholder="Password"/>
@@ -63,7 +63,7 @@
                             <div class="common-sign-up">
                                 <div class="field">
                                     <div class="email-check-div">
-                                        <input type="text" placeholder="이메일" class="email-input" />
+                                        <input type="text" placeholder="이메일" class="email-input"/>
                                         <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
                                         <input type="hidden" class="email-check-result"/>
                                     </div>
@@ -133,6 +133,7 @@
 
                 <div class="popup-client">
                 	<input type=hidden class="sign-in-user-flag" value="${USER.email }">
+                    <input type=hidden class="standard-or-edit" value="${USER.editor }">
                     <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
                     <span class="log-out-btn" style="display: none">로그아웃</span>
                 </div>
@@ -208,12 +209,12 @@
                             </ul>
                         </li>
                         <li id="my-info-list" class="menu-item-has-children">
-                        	<a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a>
+                        	<a href="contact.html" title="">MY PAGE</a>
                             <ul>
-                                <li><a href="event.html" title="">Event</a></li>
+                                <li><a href="/user/my-page" title="">내 정보</a></li>
+                                <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
-                                <li><a href="event3.html" title="">Event 3</a></li>
-                                <li><a href="event4.html" title="">Event 4</a></li>
+                                <li id="only-editor"><a href="/editor/calculate/point" title="">정산</a></li>
                                 <li><a href="event-single.html" title="">Event Single</a></li>
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
@@ -243,6 +244,10 @@
 </div>
 <script type="text/javascript">
     let authEmailNumber = null; // 함수 밖의 변수
+
+    if($('.standard-or-edit').val() == 'standard') {
+        $('#only-editor').css("display", "none");
+    }
     
     $('.sign-in-user-flag').val() == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
     if($('.sign-in-user-flag').val() !== '') {
@@ -395,10 +400,15 @@
             .then(response => {
                 if (response.ok) {
                     location.reload();
+                }else if (response.status.valueOf() === 401) {
+                    alert("아이디 또는 비밀번호가 틀립니다.");
+                    return;
                 } else {
-                    alert("로그인 실패");
+                    alert("비활성화된 회원입니다.");
                     return;
                 }
+
+
             })
             .then(data =>
                 console.log(data)
@@ -440,6 +450,20 @@
         });
     })
 
+    $('.log-out-btn').on('click', function () {
+        logout();
+    });
+
+    async function logout() {
+        try {
+            alert('로그아웃 되었습니다.');
+            await fetch("http://localhost/user/log-out");
+            location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 </script>
 <body>
-<section id="main-body" style="min-height: calc(100vh - 204px);">
+<section id="main-body" style="min-height: calc(100vh - 204px);"/>

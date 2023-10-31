@@ -1,14 +1,10 @@
 package com.green.vrink.user.service;
 
+import com.green.vrink.user.dto.*;
 import com.green.vrink.util.Criteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.green.vrink.user.dto.ApprovalDTO;
-import com.green.vrink.user.dto.EditorDTO;
-import com.green.vrink.user.dto.EditorPriceDTO;
-import com.green.vrink.user.dto.EditorPriceListDTO;
-import com.green.vrink.user.dto.EditorWriteDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +17,7 @@ import java.util.List;
 @Slf4j
 public class EditorServiceImpl implements EditorService{
 	private final UserRepository userRepository;
+
 
 
     @Transactional
@@ -87,5 +84,20 @@ public class EditorServiceImpl implements EditorService{
             userRepository.insertPrice(priceDTO);
         }
     	return 0;
+    }
+
+    @Override
+    public Integer findEditorId(Integer userId) {
+        return userRepository.findEditorIdByUserId(userId);
+    }
+
+    @Override
+    public Integer calculatePoint(CalculatePointDto calculatePointDto) {
+        return userRepository.calculatePoint(calculatePointDto);
+    }
+
+    @Override
+    public Integer updatePoint(Integer userId, Integer point) {
+        return userRepository.updatePoint(userId, point);
     }
 }

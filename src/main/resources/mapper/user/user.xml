@@ -89,16 +89,34 @@
     <select id="findByUserId" resultType="com.green.vrink.user.repository.model.User">
     	SELECT *
 		FROM user AS u 
-		WHERE u.email = #{userId}
+		WHERE user_id = #{userId}
     </select>
-    
-    <delete id="deleteByUserId">
-    	DELETE FROM user WHERE user_id = #{userId};
-    </delete>
-    
+
+    <select id="findEditorIdByUserId" resultType="java.lang.Integer">
+        select editor_detail.editor_id
+        from editor_detail
+        where user_id = #{userId};
+    </select>
+
+    <update id="deleteByUserId">
+        UPDATE user
+        SET enabled_check = 1
+        WHERE user_id = #{userId};
+    </update>
+    <update id="updatePoint">
+        UPDATE user
+        SET user.point = #{point}
+        WHERE user_id = #{userId}
+    </update>
+
+
     <insert id="insertPrice">
     	INSERT INTO test_price (editor_id, options, price)
     	VALUES (#{editorId}, #{option}, #{price})
+    </insert>
+
+    <insert id="calculatePoint">
+        INSERT INTO calculator (editor_id, cal_price, created_at) VALUES (#{userId}, #{point}, now());
     </insert>
 
 </mapper>

@@ -1,10 +1,9 @@
 package com.green.vrink.user.controller;
 
 
-import com.green.vrink.user.dto.ApprovalDTO;
-import com.green.vrink.user.dto.EditorDTO;
-import com.green.vrink.user.dto.EditorPriceListDTO;
-import com.green.vrink.user.dto.EditorWriteDTO;
+import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
 
 import com.green.vrink.util.AsyncPageDTO;
@@ -24,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EditorRestController {
     private final EditorServiceImpl editorServiceImpl;
+    private final UserRepository userRepository;
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -86,6 +86,31 @@ public class EditorRestController {
     	editorServiceImpl.requestEditorPrice(editorPriceDTO);
     	log.info("priceDTO {} ", editorPriceDTO);
     	return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/calculate/point")
+    public ResponseEntity<?> calculatePoint(@RequestBody CalculatePointDto calculatePointDto) {
+        User user = userRepository.findByUserId(calculatePointDto.getUserId());
+        System.out.println("userId: " + user.getUserId());
+        int editorId = editorServiceImpl.findEditorId(calculatePointDto.getUserId());
+        System.out.println("editId: " + editorId);
+        calculatePointDto.setUserId(editorId);
+
+        int result = editorServiceImpl.calculatePoint(calculatePointDto);
+        System.out.println("result: " + 0);
+        if (result != 1) {
+            return ResponseEntity.badRequest().build();
+        }
+        int balancePoint =  user.getPoint() - calculatePointDto.getPoint();
+        System.out.println("balancePoint: " + balancePoint);
+        int saveChangePoint = editorServiceImpl.updatePoint(user.getUserId(), balancePoint);
+        System.out.println("saveChangePoint: " + saveChangePoint);
+
+        if (saveChangePoint != 1) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
     }
     
 }
