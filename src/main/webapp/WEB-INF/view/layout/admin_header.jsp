@@ -95,7 +95,7 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="showList">회원 목록</a>
 <%--                            <a class="nav-link" data-bs-toggle="modal" href="#myModal">판매자 신청 목록</a>--%>
-                            <a class="nav-link" href="applyAccept?reset=1">판매자 신청 목록</a>
+                            <a class="nav-link" href="apply-accept?reset=1">판매자 신청 목록</a>
                             <a class="nav-link" href="rentalList">신고 내역 목록</a>
                             <a class="nav-link" href="bookList">결제 목록</a>
                         </nav>
@@ -116,7 +116,7 @@
                          aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="http://localhost/admin/announcement">자유게시판 관리</a>
+                            <a class="nav-link" href="freeboard?reset=1">자유게시판 관리</a>
                             <a class="nav-link" href="http://localhost/admin/inquiry/main">의뢰게시판 관리</a>
                         </nav>
                     </div> <!-- end of 게시판  -->

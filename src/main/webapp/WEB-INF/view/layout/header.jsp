@@ -112,8 +112,7 @@
                         <strong>승철이</strong>
                     </a>
                 </div><!-- LOGO -->
-
-                <c:if test="${userTestId == 1}">
+                <c:if test="${not empty USER}">
                     <div class="dropdown-alarm popup-alarm list-group" id="dropdown-alarm">
                         <span style="padding: 13px;"><i class="fa fa-bell"></i> </span>
                         <div class="dropdown-alarm-content" style="overflow: auto; max-height: 200px">

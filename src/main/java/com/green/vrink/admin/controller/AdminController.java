@@ -4,7 +4,12 @@ import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.Pagination;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.service.AdminService;
+import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.community.dto.FreeBoardReplyDTO;
+import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.message.service.MessageService;
+import com.green.vrink.util.Criteria;
+import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,6 +30,7 @@ public class AdminController {
 
     private final HttpSession session;
     private final AdminService adminService;
+    private final FreeBoardReplyService freeBoardReplyService;
 
     private final MessageService messageService;
 
@@ -34,7 +40,7 @@ public class AdminController {
         return "/admin/main";
     }
 
-    @GetMapping("/applyAccept")
+    @GetMapping("/apply-accept")
     public String applyAccept(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
             required = false, defaultValue="1")int page, @RequestParam(value="classification",
             required = false, defaultValue="전체")String classification, @RequestParam(value="searchType",
@@ -64,6 +70,62 @@ public class AdminController {
         model.addAttribute("pagination", pagination);
 
         return "/admin/applyAccept";
+    }
+
+    @GetMapping("/freeboard")
+    public String freeBoard(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+            required = false, defaultValue="1")int page, @RequestParam(value="searchType",
+            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
+            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="2")String reset, Model model){
+
+        log.info("자유게시판 목록 컨트롤러 호출");
+
+        if(reset.equals("1")) {
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllAdminApply();
+        pagination.setArticleTotalCount(count);
+
+        List<FreeBoardDTO> freeBoardDTOList = adminService.getAllFreeboardListByPaging(paging);
+
+        model.addAttribute("freeboardList", freeBoardDTOList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/freeboardAdmin";
+    }
+
+    @GetMapping("/freeboard-detail")
+    public String userDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
+
+        FreeBoardDTO freeBoardDTO = adminService.getFreeboardById(id);
+
+        Criteria cri = new Criteria();
+        Integer total = freeBoardReplyService.replyTotal(freeBoardDTO.getCommunityId());
+        cri.setPageNum(1);
+        cri.setCountPerPage(7);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(total);
+
+        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(freeBoardDTO.getCommunityId(),cri);
+        log.info(pageDTO.toString());
+        log.info("total : {}",total);
+        boolean next = pageDTO.getEndPage() > 1;
+
+        model.addAttribute("list",freeBoardReplyDTOS);
+        model.addAttribute("dto", freeBoardDTO);
+        model.addAttribute("next",next);
+        model.addAttribute("total",total);
+
+        return "admin/freeboardDetail";
     }
 
 }

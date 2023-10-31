@@ -18,6 +18,9 @@
 .popup-client {
     margin-left: 25px;
 }
+.popup-alarm {
+    top: -15px;
+}
 .simple-header.for-sticky {
     float: left;
     position: relative !important;
@@ -242,6 +245,9 @@
     color: white;
 }
 header.for-sticky .popup-client > span:hover {
+    color: transparent !important;
+}
+header.for-sticky .popup-alarm > span:hover {
     color: transparent !important;
 }
 .contact-item > li {

@@ -2,6 +2,7 @@ package com.green.vrink.admin.controller;
 
 import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.service.AdminService;
+import com.green.vrink.community.dto.FreeBoardDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,9 @@ public class AdminRestController {
 
     private final HttpSession session;
     private final AdminService adminService;
-    @GetMapping("/classification")
+    @GetMapping("/apply-accept/classification")
     @ResponseBody
-    public AdminApplyClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+    public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
             required = false, defaultValue="1")int page, @RequestParam(value="classification",
             required = false, defaultValue="전체")String classification, @RequestParam(value="searchType",
             required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
@@ -43,7 +44,7 @@ public class AdminRestController {
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
-        AdminApplyClassificationDto adminApplyClassificationDto = new AdminApplyClassificationDto();
+        ClassificationDto classificationDto = new ClassificationDto();
         pagination.setArticleTotalCount(adminService.countAllAdminApply());
 
         //분류가 전체일 떄
@@ -107,10 +108,10 @@ public class AdminRestController {
                 adminApplyDtoList = finalAdminApplyDtoList;
             }
 
-            adminApplyClassificationDto.setAdminApplyList(adminApplyDtoList);
-            adminApplyClassificationDto.setPagination(pagination);
+            classificationDto.setAdminApplyList(adminApplyDtoList);
+            classificationDto.setPagination(pagination);
 
-            return adminApplyClassificationDto;
+            return classificationDto;
         }
         //분류값이 있을 때
         else {
@@ -174,15 +175,94 @@ public class AdminRestController {
             }
 
             paging.setClassification(classification);
-            adminApplyClassificationDto.setAdminApplyList(adminApplyDtoList);
-            adminApplyClassificationDto.setPagination(pagination);
+            classificationDto.setAdminApplyList(adminApplyDtoList);
+            classificationDto.setPagination(pagination);
 
-            return adminApplyClassificationDto;
+            return classificationDto;
         }
     }
 
+    @GetMapping("/freeboard/classification")
+    @ResponseBody
+    public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+            required = false, defaultValue="1")int page, @RequestParam(value="searchType",
+            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
+            required = false, defaultValue="")String keyword) {
+
+        log.info("자유게시판 관리 목록 레스트 컨트롤러 호출");
+
+        paging.setPage(page);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.countAllFreeboard());
+
+            log.info("자유게시판 검색어 레스트 컨트롤러 호출");
+
+            List<FreeBoardDTO> freeBoradDto = adminService.getAllFreeboardListByPaging(paging);
+
+            if(!keyword.equals("")) {
+
+                log.info("키워드 : 전체");
+
+                List<FreeBoardDTO> lastFreeBoardDTOList = new ArrayList<>();
+                List<FreeBoardDTO> finalFreeBoardDTOList = new ArrayList<>();
+
+                freeBoradDto = adminService.getAllFreeboardList();
+
+                if(searchType.equals("아이디")) {
+                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
+                        if(adminApplyDto.getNickname().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        }
+                    }
+                } else if(searchType.equals("제목")) {
+                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
+                        if(adminApplyDto.getTitle().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        }
+                    }
+                } else if(searchType.equals("내용")) {
+                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
+                        if(adminApplyDto.getContent().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        }
+                    }
+                } else {
+                    for (FreeBoardDTO adminApplyDto : freeBoradDto) {
+                        if(adminApplyDto.getNickname().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        } else if(adminApplyDto.getTitle().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        } else if(adminApplyDto.getContent().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        } else if(adminApplyDto.getCreatedAt().contains(keyword)) {
+                            lastFreeBoardDTOList.add(adminApplyDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastFreeBoardDTOList.size());
+                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastFreeBoardDTOList.size()); i++) {
+                    finalFreeBoardDTOList.add(lastFreeBoardDTOList.get(i));
+                }
+                freeBoradDto = finalFreeBoardDTOList;
+            }
+
+            classificationDto.setFreeboardList(freeBoradDto);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+
     @Transactional
-    @PostMapping("/changeApply")
+    @PostMapping("/change-apply")
     public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number) throws IOException {
 
         log.info("승인 상태 변경 컨트롤러 실행");
