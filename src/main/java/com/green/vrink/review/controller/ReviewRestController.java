@@ -3,6 +3,7 @@ package com.green.vrink.review.controller;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.util.Check;
 import com.green.vrink.util.LoginCheck;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import static com.green.vrink.util.Check.isNull;
 
 @RestController
 @RequestMapping("/review")
@@ -25,7 +30,13 @@ public class ReviewRestController {
 
     @PostMapping("/save")
     @LoginCheck
-    public ResponseEntity<?> replySave(@RequestBody ReviewDTO reviewDTO) {
+    public ResponseEntity<?> replySave(@Valid @RequestBody ReviewDTO reviewDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+
+            return ResponseEntity.badRequest().body(defaultMessage);
+        }
 
 
 
@@ -39,11 +50,7 @@ public class ReviewRestController {
         Integer save = reviewService.save(reviewDTO);
 
         log.info("reply save start {}", save);
-//        if (save != null){
-//            log.info("세이브됨");
-//
-//        }
-//        log.info("세이브 안 됨");
+
         return ResponseEntity.ok().build();
     }
 
@@ -52,6 +59,9 @@ public class ReviewRestController {
     public ResponseEntity<?> replyDelete(@PathVariable(name = "review-id") Integer reviewId) {
         User user = (User) httpSession.getAttribute("USER");
 
+        if (isNull(reviewId)){
+            return ResponseEntity.badRequest().build();
+        }
 
         int userId = user.getUserId();
 
