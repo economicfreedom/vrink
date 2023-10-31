@@ -63,6 +63,17 @@
             let title = $("#title").val();
             let content = $("#editordata").val();
 
+            if (content.length <= 0){
+                alert("내용을 입력해주세요.")
+                return ;
+            }
+            ;
+
+            if (title.length <= 0|| title.trim()===""){
+                alert("제목을 입력해주세요.")
+                return;
+            }
+
 
 
             fetch('/board/write', {
@@ -71,7 +82,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userId: 1,
+                    userId: `${USER.userId}`,
                     title: title,
                     content: content
 
@@ -81,7 +92,7 @@
                     if (!response.ok) {
                         alert("")
                     } else {
-                        location.reload();
+                        location.href="/board/board-list"
                     }
                 })
                 .then(data => console.log(data))
