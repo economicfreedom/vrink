@@ -329,3 +329,22 @@ delete from community_reply
 where 1=1;
 
 select * from community_reply;
+
+SELECT * FROM community;
+  SELECT user_id FROM community
+        WHERE community_id  = 122;
+
+
+ALTER TABLE community_reply DROP FOREIGN KEY FK_community_TO_community_reply_1;
+ALTER TABLE community_reply
+ADD CONSTRAINT FK_community_TO_community_reply_1
+FOREIGN KEY (community_id)
+REFERENCES community (community_id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE community_reply
+ADD CONSTRAINT FK_community_TO_community_reply_1
+FOREIGN KEY (community_id)
+REFERENCES community (community_id)
+ON DELETE SET NULL;

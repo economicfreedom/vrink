@@ -51,9 +51,9 @@ public class FreeBoardRestController {
             @PathVariable("community-id")
             Integer communityId
     ) {
-        Integer userId = freeBoardService.getUserId(communityId);
+        int userId = freeBoardService.getUserId(communityId);
         User user = (User) httpSession.getAttribute("USER");
-        Integer sessionUserId = user.getUserId();
+        int sessionUserId = user.getUserId();
         if (userId != sessionUserId) {
             return ResponseEntity.badRequest().build();
         }
