@@ -87,11 +87,13 @@
                 body: json
             })
                 .then(response => {
+
                     if (!response.ok) {
                         alert("")
                     } else {
                         location.href = "/qna/list/"+Number(`${USER.userId}`);
                     }
+
                 })
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));

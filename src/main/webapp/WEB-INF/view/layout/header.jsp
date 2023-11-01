@@ -141,36 +141,14 @@
                 <nav style="float: none; margin: 0 auto;">
                     <ul>
 
-                        <li class="menu-item-has-children mega">
-                            <a href="/editor/list" title="">EDITORS</a>
+                        <li class="menu-item-has-children">
+                            <a href="/editor/list" title="">작가</a>
                             <ul>
-                                <li><a href="about.html" title="">About Us</a></li>
-                                <li><a href="branch.html" title="">Branch 3 Col</a></li>
+                                <li><a href="/editor/list" title="">둘러보기</a></li>
+                                <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
                                 <li><a href="branch2.html" title="">Branch 2 Col</a></li>
                                 <li><a href="branch3.html" title="">Branch Sidebar</a></li>
                                 <li><a href="branch4.html" title="">Branch Wide</a></li>
-                                <li><a href="comming-soon.html" title="">Coming Soon Dark</a></li>
-                                <li><a href="comming-soon2.html" title="">Coming Soon Light</a></li>
-                                <li><a href="gallery.html" title="">Gallery Fancy 1</a></li>
-                                <li><a href="gallery2.html" title="">Gallery Fancy 2</a></li>
-                                <li><a href="gallery3.html" title="">Gallery Fancy 3</a></li>
-                                <li><a href="gallery4.html" title="">Simple Gallery 1</a></li>
-                                <li><a href="gallery5.html" title="">Simple Gallery 2</a></li>
-                                <li><a href="gallery6.html" title="">Simple Gallery 3</a></li>
-                                <li><a href="contact.html" title="">Contact Us</a></li>
-                                <li><a href="error.html" title="">404 Error v1</a></li>
-                                <li><a href="error2.html" title="">404 Error v2</a></li>
-                                <li><a href="faq.html" title="">FAQ</a></li>
-                                <li><a href="price-table.html" title="">Price Table</a></li>
-                                <li><a href="search.html" title="">Search Result</a></li>
-                                <li><a href="team.html" title="">Team 3 Col</a></li>
-                                <li><a href="team2.html" title="">Team Sidebar </a></li>
-                                <li><a href="team3.html" title="">Team 2 Col</a></li>
-                                <li><a href="header-dark.html" title="">Header Dark</a></li>
-                                <li><a href="header-light.html" title="">Header Light</a></li>
-                                <li><a href="footer-light.html" title="">Footer Light</a></li>
-                                <li><a href="footer-dark.html" title="">Footer Dark</a></li>
-                                <li>
                                     <a href="http://themeforest.net/item/VRINK-the-multipurpose-responsive-html5-template/14915795?ref=themenum"
                                        title="">Buy VRINK Now</a></li>
                             </ul>

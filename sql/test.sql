@@ -324,27 +324,53 @@ WHERE editor_id = 1
   AND ar_id = (SELECT max(ar_id) FROM analyzing_review WHERE editor_id = 1)
 
 
-SELECT * from community_reply;
-delete from community_reply
-where 1=1;
+SELECT *
+from community_reply;
+delete
+from community_reply
+where 1 = 1;
 
-select * from community_reply;
+select *
+from community_reply;
 
-SELECT * FROM community;
-  SELECT user_id FROM community
-        WHERE community_id  = 122;
+SELECT *
+FROM community;
+SELECT user_id
+FROM community
+WHERE community_id = 122;
 
-
-ALTER TABLE community_reply DROP FOREIGN KEY FK_community_TO_community_reply_1;
-ALTER TABLE community_reply
-ADD CONSTRAINT FK_community_TO_community_reply_1
-FOREIGN KEY (community_id)
-REFERENCES community (community_id)
-ON DELETE CASCADE
-ON UPDATE CASCADE;
 
 ALTER TABLE community_reply
-ADD CONSTRAINT FK_community_TO_community_reply_1
-FOREIGN KEY (community_id)
-REFERENCES community (community_id)
-ON DELETE SET NULL;
+    DROP FOREIGN KEY FK_community_TO_community_reply_1;
+ALTER TABLE community_reply
+    ADD CONSTRAINT FK_community_TO_community_reply_1
+        FOREIGN KEY (community_id)
+            REFERENCES community (community_id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE community_reply
+    ADD CONSTRAINT FK_community_TO_community_reply_1
+        FOREIGN KEY (community_id)
+            REFERENCES community (community_id)
+            ON DELETE SET NULL;
+
+select *
+from payment;
+
+SELECT *
+FROM payment_state;
+
+INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point)
+    VALUE (1, 0, 0, 1235);
+
+
+# 구매 목록 조인
+
+SELECT point, editor_recognize, customer_recognize, payment_state_id, ps.created_at
+FROM payment_state ps
+         LEFT JOIN payment p ON ps.payment_id = p.payment_id
+where p.user_id = 136 and customer_recognize = 0;
+
+
+
