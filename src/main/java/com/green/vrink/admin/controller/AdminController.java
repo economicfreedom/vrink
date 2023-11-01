@@ -177,4 +177,36 @@ public class AdminController {
         return "admin/userDetailAdmin";
     }
 
+    @GetMapping("/question")
+    public String questionAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+            required = false, defaultValue="1")int page, @RequestParam(value="classification",
+            required = false, defaultValue="전체")String classification, @RequestParam(value="classification2",
+            required = false, defaultValue="전체")String classification2, @RequestParam(value="searchType",
+            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
+            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="2")String reset, Model model) {
+
+        log.info("유저 관리 페이지 컨트롤러 호출");
+
+        if(reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uClassification2");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+        }
+
+        paging.setPage(page);
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.questionTotalCount(paging);
+        pagination.setArticleTotalCount(count);
+
+        model.addAttribute("userList", adminService.getAllQuestionPaging(paging));
+        model.addAttribute("pagination", pagination);
+
+        return "admin/userListAdmin";
+    }
+
+
 }

@@ -84,14 +84,70 @@
         LIMIT #{offset}, #{recordSize}
     </select>
 
-
 <!--    <if test="type == 'nickname'">-->
 <!--        WHERE nickname LIKE CONCAT('%',#{keyword},'%')-->
 <!--    </if>-->
 
 
+    <select id="getAllQuestion" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        FROM question q
+        LEFT JOIN user u ON q.user_id = u.user_id
+        WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+    </select>
+
+    <select id="getAllQuestionPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        FROM question q
+        LEFT JOIN user u ON q.user_id = u.user_id
+        WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+        ORDER BY q_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllQuestionByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        FROM question q
+        LEFT JOIN user u ON q.user_id = u.user_id
+        WHERE (type = #{classification})
+        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+        ORDER BY q_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllQuestionByType" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        FROM question q
+        LEFT JOIN user u ON q.user_id = u.user_id
+        WHERE (type = #{classification})
+        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+        ORDER BY q_id DESC
+    </select>
+
+    <select id="questionTotalCount" resultType="int">
+        SELECT count(*)
+        FROM question
+        WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+    </select>
+
+    <select id="questionTotalCountClassification" resultType="int">
+        SELECT count(*)
+        FROM question
+        WHERE (type = #{classification})
+        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+    </select>
+
+    <select id="getQuestionById" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        FROM question q
+        LEFT JOIN user u ON q.user_id = u.user_id
+        WHERE q_id = #{id}
+    </select>
+
+
+
     <select id="getAllUser" resultType="com.green.vrink.user.repository.model.User">
-        select * from user
+        SELECT * FROM user
         WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
         AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
@@ -138,7 +194,20 @@
     </select>
 
     <select id="getUserById" resultType="com.green.vrink.user.repository.model.User">
-        select * from user where user_id = #{id}
+        SELECT * from user
+        WHERE user_id = #{id}
     </select>
+
+    <update id="updateUserLevelById">
+        UPDATE user
+        SET level = #{level}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateUserEnabledCheckById">
+        UPDATE user
+        SET enabled_Check = #{enabledCheck}
+        WHERE user_id = #{userId}
+    </update>
 
 </mapper>

@@ -8,6 +8,7 @@ import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.LoginCheck;
 import lombok.RequiredArgsConstructor;
@@ -474,6 +475,186 @@ public class AdminRestController {
         }
     }
 
+    @Transactional
+    @PostMapping("/user/modify-level")
+    public ResponseEntity<Integer> updateUserLevelById(User user) {
+
+        log.info("관리자 회원정보 권한 수정 레스트 컨트롤러 실행");
+
+        log.info("user : " + user);
+
+        adminService.updateUserLevelById(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+    }
+
+    @Transactional
+    @PostMapping("/user/modify-able")
+    public ResponseEntity<Integer> updateUserEnabledCheckById(User user) {
+
+        log.info("관리자 회원정보 탈퇴처리 수정 레스트 컨트롤러 실행");
+
+        log.info("user : " + user);
+
+        adminService.updateUserEnabledCheckById(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+    }
+
+    @GetMapping("/question/classification")
+    @ResponseBody
+    public ClassificationDto questionClassification(@ModelAttribute("paging") PagingDto paging,
+                                                @RequestParam(value="page", required = false, defaultValue="1")int page,
+                                                @RequestParam(value="classification", required = false, defaultValue="전체")String classification,
+                                                @RequestParam(value="classification2", required = false, defaultValue="전체")String classification2,
+                                                @RequestParam(value="searchType", required = false, defaultValue="전체")String searchType,
+                                                @RequestParam(value="keyword", required = false, defaultValue="")String keyword) {
+
+        log.info("관리자 문의 목록 레스트 컨트롤러 호출");
+
+        paging.setPage(page);
+        paging.setClassification(classification);
+        if(classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uClassification", classification);
+        session.setAttribute("uClassification2", classification2);
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.questionTotalCount(paging));
+        //분류가 전체일 떄
+        if(classification.equals("전체")) {
+
+            List<QuestionDTO> questionList = adminService.getAllQuestionPaging(paging);
+
+            if(!keyword.isEmpty()) {
+
+                List<QuestionDTO> lastQuestionList = new ArrayList<>();
+                List<QuestionDTO> finalQuestionList = new ArrayList<>();
+
+                questionList = adminService.getAllQuestion(paging);
+                if(searchType.equals("아이디")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getNickname().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("이메일")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getEmail().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("제목")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getTitle().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("내용")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getContent().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getNickname().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getEmail().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getTitle().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getContent().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastQuestionList.size());
+                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastQuestionList.size()); i++) {
+                    finalQuestionList.add(lastQuestionList.get(i));
+                }
+                questionList = finalQuestionList;
+            }
+
+            classificationDto.setQuestionList(questionList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+        //분류값이 있을 때
+        else {
+
+            List<QuestionDTO> questionList = adminService.getAllQuestionByTypePaging(paging);
+            pagination.setArticleTotalCount(adminService.questionTotalCountClassification(paging));
+
+            if(!keyword.isEmpty()) {
+
+                List<QuestionDTO> lastQuestionList = new ArrayList<>();
+                List<QuestionDTO> finalQuestionList = new ArrayList<>();
+
+                questionList = adminService.getAllQuestionByType(classification);
+
+                if(searchType.equals("아이디")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getNickname().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("이메일")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getEmail().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("제목")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getTitle().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else if(searchType.equals("내용")) {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getContent().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                } else {
+                    for (QuestionDTO questionDto : questionList) {
+                        if(questionDto.getNickname().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getEmail().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getTitle().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        } else if(questionDto.getContent().contains(keyword)) {
+                            lastQuestionList.add(questionDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastQuestionList.size());
+                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastQuestionList.size()); i++) {
+                    finalQuestionList.add(lastQuestionList.get(i));
+                }
+                questionList = finalQuestionList;
+
+            }
+
+            paging.setClassification(classification);
+            classificationDto.setQuestionList(questionList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+    }
 
     @Transactional
     @PostMapping("/change-apply")

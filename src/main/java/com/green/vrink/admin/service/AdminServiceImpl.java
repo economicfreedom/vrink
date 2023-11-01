@@ -5,6 +5,7 @@ import com.green.vrink.admin.dto.CheatCheckDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.user.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,6 +103,41 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<QuestionDTO> getAllQuestion(PagingDto paging) {
+        return adminRepository.getAllQuestion(paging);
+    }
+
+    @Override
+    public List<QuestionDTO> getAllQuestionByType(String classification) {
+        return adminRepository.getAllQuestionByType(classification);
+    }
+
+    @Override
+    public List<QuestionDTO> getAllQuestionPaging(PagingDto paging) {
+        return adminRepository.getAllQuestionPaging(paging);
+    }
+
+    @Override
+    public List<QuestionDTO> getAllQuestionByTypePaging(PagingDto paging) {
+        return adminRepository.getAllQuestionByTypePaging(paging);
+    }
+
+    @Override
+    public QuestionDTO getQuestionById(Integer id) {
+        return adminRepository.getQuestionById(id);
+    }
+
+    @Override
+    public Integer questionTotalCount(PagingDto paging) {
+        return adminRepository.questionTotalCount(paging);
+    }
+
+    @Override
+    public Integer questionTotalCountClassification(PagingDto paging) {
+        return adminRepository.questionTotalCountClassification(paging);
+    }
+
+    @Override
     public Integer countAllAdminApply() {
         return adminRepository.countAllAdminApply();
     }
@@ -109,6 +145,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Integer countAdminApplyByType(PagingDto paging) {
         return adminRepository.countAdminApplyByType(paging);
+    }
+
+    @Override
+    public void updateUserLevelById(User user) {
+        int result = adminRepository.updateUserLevelById(user);
+    }
+
+    @Override
+    public void updateUserEnabledCheckById(User user) {
+        int result = adminRepository.updateUserEnabledCheckById(user);
     }
 
     @Transactional
