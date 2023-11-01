@@ -5,6 +5,7 @@ import com.green.vrink.payment.dto.AutorizedCodeDTO;
 import com.green.vrink.payment.dto.PriceDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
+import com.green.vrink.payment.repository.model.PaymentState;
 import com.green.vrink.payment.service.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,6 @@ public class PaymentRestController {
             return ResponseEntity.ok().build();
         }
         else {
-            cancel();
             return ResponseEntity.badRequest().build();
         }
     }
@@ -43,16 +43,23 @@ public class PaymentRestController {
         return paymentServiceImpl.responseCode();
     }
 
-    @PostMapping("/cancel")
-    public ResponseEntity<?> cancel() {
-
-        return ResponseEntity.ok().build();
+    @GetMapping("/cancel/{paymentId}")
+    public Payment cancel(@PathVariable("paymentId") Integer payment_id) {
+        System.out.println(payment_id);
+        return paymentServiceImpl.responseCancelData(payment_id);
     }
 
     @PostMapping("/payment-done")
     public ResponseEntity<?> PaymentDone(@RequestBody Payment payment) {
-        log.info("여기기기기 {}", payment);
+        log.info("payment : {} ",payment);
         paymentServiceImpl.insertPayment(payment);
+        int paymentId = paymentServiceImpl.selectPaymentId();
+        PaymentState paymentState = new PaymentState();
+        paymentState.setPaymentId(paymentId);
+        paymentState.setPoint(payment.getPrice());
+
+        paymentServiceImpl.insertPaymentState(paymentState);
+
         return ResponseEntity.ok().build();
     }
 }

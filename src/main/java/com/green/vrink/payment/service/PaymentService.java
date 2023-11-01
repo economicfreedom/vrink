@@ -6,6 +6,7 @@ import com.green.vrink.payment.dto.AutorizedCodeDTO;
 import com.green.vrink.payment.dto.PriceDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
+import com.green.vrink.payment.repository.model.PaymentState;
 import org.apache.el.parser.BooleanNode;
 import org.springframework.http.ResponseEntity;
 
@@ -17,4 +18,10 @@ public interface PaymentService {
 	Integer insertPayment(Payment payment);
 
     List<Payment> responsePayment(Integer userId);
+
+    Integer insertPaymentState(PaymentState paymentState);
+
+	Payment responseCancelData(Integer paymentId);
+
+	int selectPaymentId();
 }

@@ -2,7 +2,8 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
-function refund(refundNum) {
+function refund(impUid, price) {
+
     fetch('/payment/authorizedCode',{
         method:'POST'
     }).then(response=>response.json())
@@ -27,10 +28,11 @@ function refund(refundNum) {
                         },
                         body:JSON.stringify({  // 보낼 데이터 (Object , String, Array)
                             reason : '환불', // 가맹점 클라이언트로부터 받은 환불사유
-                            imp_uid : '', // imp_uid를 환불 `unique key`로 입력
-                            amount: '' // 가맹점 클라이언트로부터 받은 환불금액
+                            imp_uid : impUid, // imp_uid를 환불 `unique key`로 입력
+                            amount: price // 가맹점 클라이언트로부터 받은 환불금액
                         })
-                    }).then(response=>response)
+                    }).then(response=>response.json())
+                        .then(data => console.log(data))
                 })
     })
 }
@@ -49,26 +51,22 @@ function refund(refundNum) {
                     <ul>
                         <li><h3>상품명</h3> <span>${paymentList.name}</span></li>
                         <li><h3>가격</h3> <span>${paymentList.price}</span></li>
-                        <li><span><input type="button" class="flat-btn refund" value="환불하기"></span></li>
+                        <li><span><input type="button" class="flat-btn refund" value="환불하기" onclick="getPayment('${paymentList.paymentId}')"></span></li>
                     </ul>
                 </div>
                 </c:forEach>
-            </div>
-            <div class="cart-total-box mb-5">
-                <h2 class="cart-head-title">ddd</h2>
-                <ul>
-                    <li><h3>상품명</h3> <span>ddd</span></li>
-                    <li><h3>가격</h3> <span>ddd</span></li>
-                    <li><span><input type="button" class="flat-btn refund" value="환불하기"></span></li>
-                </ul>
             </div>
         </div>
     </div>
 </section>
 <script>
-$('.refund').on('click', function(){
-    let list = [1,2,3,4,5]
-    let refundNum = $('.refund').index(this);
-})
+    function getPayment(paymentId) {
+        fetch('/payment/cancel/'+paymentId,{
+            method:'GET',
+        }).then(response=>response.json())
+            .then(data=>{
+                refund(data.impUid,data.price)
+            })
+    }
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

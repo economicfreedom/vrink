@@ -44,6 +44,7 @@
 								'Content-Type': 'application/json'
 							},
 							body: JSON.stringify({
+								editorId: '${priceDTOs[0].editorId}',
 								userId : '${user.userId}',
 								name : rsp.name,
 								impUid: rsp.imp_uid,

@@ -8,6 +8,7 @@ import com.green.vrink.user.service.EditorServiceImpl;
 
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.Define;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import java.util.List;
 public class EditorRestController {
     private final EditorServiceImpl editorServiceImpl;
     private final UserRepository userRepository;
+    private final HttpSession session;
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -49,7 +51,10 @@ public class EditorRestController {
     
     @PostMapping("/editor-write")
     public Integer editorWriteProc(EditorWriteDTO editorWriteDTO) {
-    	editorWriteDTO.setUserId(2);
+
+        User user = (User)session.getAttribute(Define.USER);
+        editorWriteDTO.setUserId(user.getUserId());
+        log.info("{}", editorWriteDTO);
     	Integer res = editorServiceImpl.requestEditorWrite(editorWriteDTO);
     	log.info("EditorWriteDTO {}",editorWriteDTO);
     	return res;
@@ -81,8 +86,9 @@ public class EditorRestController {
     
     @PostMapping("/editor-price") 
     public ResponseEntity<?> EditorPrice(EditorPriceListDTO editorPriceDTO) {
-    	
-    	editorPriceDTO.setEditorId(10);
+        User user = (User)session.getAttribute(Define.USER);
+        int editorId = userRepository.findEditorIdByUserId(user.getUserId());
+        editorPriceDTO.setEditorId(editorId);
     	editorServiceImpl.requestEditorPrice(editorPriceDTO);
     	log.info("priceDTO {} ", editorPriceDTO);
     	return ResponseEntity.ok().build();

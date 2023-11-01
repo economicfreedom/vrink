@@ -7,12 +7,25 @@
 	</select>
 
     <insert id="insertByPayment">
-		INSERT INTO payment (user_id, name, imp_uid, merchant_uid, price)
-		VALUES (#{userId}, #{name}, #{impUid}, #{merchantUid}, #{price})
+		INSERT INTO payment (user_id, editor_id, name, imp_uid, merchant_uid, price)
+		VALUES (#{userId}, #{editorId}, #{name}, #{impUid}, #{merchantUid}, #{price})
 	</insert>
 
-	<select id="findByUserId" resultType="com.green.vrink.payment.repository.model.Payment">
-		SELECT payment_id, user_id, name, imp_uid, merchant_uid, price, date_format(created_at,'%y-%m-%d %h:%m') as created_at
-		FROM payment WHERE user_id = #{userId};
+    <select id="findByUserId" resultType="com.green.vrink.payment.repository.model.Payment">
+		SELECT payment_id, user_id, name, imp_uid, merchant_uid, price, date_format(created_at,'%y-%m-%d %h:%i') as created_at
+		FROM payment WHERE user_id = #{userId} ORDER BY payment_id DESC;
+	</select>
+
+	<insert id="insertByPaymentState">
+		INSERT INTO payment_state (payment_id, point)
+		values (#{paymentId}, #{point})
+	</insert>
+
+	<select id="findByCancelData" resultType="com.green.vrink.payment.repository.model.Payment">
+		SELECT * FROM payment WHERE payment_id = #{paymentId}
+	</select>
+
+	<select id="findByPaymentId" resultType="java.lang.Integer">
+		SELECT * FROM payment ORDER BY payment_id DESC LIMIT 1;
 	</select>
 </mapper>

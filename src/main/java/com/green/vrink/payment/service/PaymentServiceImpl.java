@@ -6,6 +6,7 @@ import com.green.vrink.payment.dto.AutorizedCodeDTO;
 import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
+import com.green.vrink.payment.repository.model.PaymentState;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.Define;
@@ -56,13 +57,26 @@ public class PaymentServiceImpl implements PaymentService{
 
 	@Override
 	public Integer insertPayment(Payment payment) {
-		User user = (User)session.getAttribute(Define.USER);
-		payment.setUserId(user.getUserId());
 		return paymentRepository.insertByPayment(payment);
 	}
 
 	@Override
 	public List<Payment> responsePayment(Integer userId) {
 		return paymentRepository.findByUserId(userId);
+	}
+
+	@Override
+	public Integer insertPaymentState(PaymentState paymentState) {
+		return paymentRepository.insertByPaymentState(paymentState);
+	}
+
+	@Override
+	public Payment responseCancelData(Integer paymentId) {
+		return paymentRepository.findByCancelData(paymentId);
+	}
+
+	@Override
+	public int selectPaymentId() {
+		return paymentRepository.findByPaymentId();
 	}
 }

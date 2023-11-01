@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class Payment {
     private Integer paymentId;
     private Integer userId;
+    private Integer editorId;
     private String name;
     private String impUid;
     private String merchantUid;
