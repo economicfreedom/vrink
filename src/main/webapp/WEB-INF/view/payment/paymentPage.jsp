@@ -13,11 +13,11 @@
             merchant_uid: "merchant_"+new Date().getTime(),
             name: $($('.options')[0]).text() + ' 외 '+($('.options').length-1) +'건',
             amount: paymentPrice,
-            buyer_email: "Iamport@chai.finance",
-            buyer_name: "포트원 기술지원팀",
-            buyer_tel: "010-1234-5678",
-            buyer_addr: "서울특별시 강남구 삼성동",
-            buyer_postcode: "123-456",
+            buyer_email: '${user.email}',
+            buyer_name: '${user.name}',
+            buyer_tel: '${user.phone}',
+            buyer_addr: "",
+            buyer_postcode: "",
           },
           function (rsp) {
             if(rsp.success) {
@@ -36,33 +36,55 @@
 				})
 				.then(response => {
 					if (response.ok) {
-						console.log('통과');
+
+						// DB입력
+						fetch('/payment/payment-done',{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								userId : '${user.userId}',
+								name : rsp.name,
+								impUid: rsp.imp_uid,
+								merchantUid: rsp.merchant_uid,
+								price: rsp.paid_amount
+							})
+						}).then(response=>console.log(response))
 					} else {
 						alert("결제 금액이 잘못되었습니다.");
-						let authCode='';
-
-						$.ajax({
-							type : 'post',           // 타입 (get, post, put 등등)
-							url : 'https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel',           // 요청할 서버url
-							async : true,            // 비동기화 여부 (default : true)
-							headers : {              // Http header
-								"Content-Type" : 'application/json',
-								"Authorization": authCode
-							},
-							dataType : 'json',       // 데이터 타입 (html, xml, json, text 등등)
-							data : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-								reason : '환불', // 가맹점 클라이언트로부터 받은 환불사유
-								imp_uid : rsp.imp_uid, // imp_uid를 환불 `unique key`로 입력
-								amount: rsp.paid_amount, // 가맹점 클라이언트로부터 받은 환불금액
-							}),
-							success : function(result) { // 결과 성공 콜백함수
-								console.log(result);
-							},
-							error : function(request, status, error) { // 결과 에러 콜백함수
-								console.log(error)
-							}
-						})
-						return;
+						// 인증코드 발행
+						fetch('/payment/authorizedCode',{
+							method:'POST'
+						}).then(response=>response.json())
+								.then(data =>{
+									fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken',{
+										method:'POST',
+										headers : {              // Http header
+											"Content-Type" : 'application/json',
+										},
+										body : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+											imp_key : data.apiKey,
+											imp_secret: data.apiSecret
+										})
+									}).then(response=>response.json())
+											.then(data => {
+												// 결제 취소
+												fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel',{
+													method:'POST',
+													headers : {              // Http header
+														"Content-Type" : 'application/json',
+														"Authorization": data.response.access_token
+													},
+													body:JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+														reason : '환불', // 가맹점 클라이언트로부터 받은 환불사유
+														imp_uid : rsp.imp_uid, // imp_uid를 환불 `unique key`로 입력
+														amount: rsp.paid_amount // 가맹점 클라이언트로부터 받은 환불금액
+													})
+												}).then(response=>response)
+											})
+								})
+						location.reload();
 					}
 				})
             } else {
@@ -122,9 +144,9 @@
 						<input type="button" value="주문하기" class="flat-btn" onclick="requestPay()">
 					</div><!-- Cart  -->
 				</div>
-				<input type="button" value="테스트" id="test">
 			</div>
 		</div>
+		<button id="test">테스트</button>
 	</section>
 </div>
 <script>
@@ -145,41 +167,7 @@ $('.manual-adjust').change(function(e){
 
 	totalPrice.text(sum);
 	paymentPrice = Number(totalPrice.text());
-
-
 });
-
-$('#test').on('click',function(){
-	fetch('/payment/authorizedCode',{
-		method:'POST'
-	}).then(response=>response.json())
-			.then(data=> {
-				$.ajax({
-					type : 'post',           // 타입 (get, post, put 등등)
-					url : 'https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken',
-					async : true,            // 비동기화 여부 (default : true)
-					headers : {              // Http header
-						"Content-Type" : 'application/json',
-					},
-					dataType : 'json',       // 데이터 타입 (html, xml, json, text 등등)
-					data : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-						imp_key : data.apiKey, // imp_uid를 환불 `unique key`로 입력
-						imp_secret: data.apiSecret, // 가맹점 클라이언트로부터 받은 환불금액
-					}),
-					success : function(result) { // 결과 성공 콜백함수
-						console.log(result.response.access_token);
-					},
-					error : function(request, status, error) { // 결과 에러 콜백함수
-						console.log(error)
-					}
-				})
-			})
-})
-
-
-
-
-
 
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

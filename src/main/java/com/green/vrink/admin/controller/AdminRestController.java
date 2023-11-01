@@ -329,8 +329,10 @@ public class AdminRestController {
 
         paging.setPage(page);
         paging.setClassification(classification);
-        paging.setClassification2(classification2);
-        paging.setClassification3(classification3);
+        if(classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
+        if(classification3.equals("전체")) paging.setClassification3("3");
+        else paging.setClassification3(classification3);
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
 
@@ -343,7 +345,7 @@ public class AdminRestController {
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
         ClassificationDto classificationDto = new ClassificationDto();
-        pagination.setArticleTotalCount(adminService.userTotalCount());
+        pagination.setArticleTotalCount(adminService.userTotalCount(paging));
         //분류가 전체일 떄
         if(classification.equals("전체")) {
 
@@ -354,7 +356,7 @@ public class AdminRestController {
                 List<User> lastUserList = new ArrayList<>();
                 List<User> finalUserList = new ArrayList<>();
 
-                userList = adminService.getAllUser();
+                userList = adminService.getAllUser(paging);
                 if(searchType.equals("이메일")) {
                     for (User userDto : userList) {
                         if(userDto.getEmail().contains(keyword)) {
@@ -373,27 +375,9 @@ public class AdminRestController {
                             lastUserList.add(userDto);
                         }
                     }
-                } else if(searchType.equals("닉네임")) {
-                    for (User userDto : userList) {
-                        if(userDto.getNickname().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
                 } else if(searchType.equals("전화번호")) {
                     for (User userDto : userList) {
                         if(userDto.getPhone().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
-                } else if(searchType.equals("은행이름")) {
-                    for (User userDto : userList) {
-                        if(userDto.getAccount().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
-                } else if(searchType.equals("포인트")) {
-                    for (User userDto : userList) {
-                        if(userDto.getPoint().toString().contains(keyword)) {
                             lastUserList.add(userDto);
                         }
                     }
@@ -405,13 +389,7 @@ public class AdminRestController {
                             lastUserList.add(userDto);
                         } else if(userDto.getName().contains(keyword)) {
                             lastUserList.add(userDto);
-                        } else if(userDto.getNickname().contains(keyword)) {
-                            lastUserList.add(userDto);
                         } else if(userDto.getPhone().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        } else if(userDto.getAccount().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        } else if(userDto.getPoint().toString().contains(keyword)) {
                             lastUserList.add(userDto);
                         }
                     }
@@ -460,27 +438,9 @@ public class AdminRestController {
                             lastUserList.add(userDto);
                         }
                     }
-                } else if(searchType.equals("닉네임")) {
-                    for (User userDto : userList) {
-                        if(userDto.getNickname().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
                 } else if(searchType.equals("전화번호")) {
                     for (User userDto : userList) {
                         if(userDto.getPhone().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
-                } else if(searchType.equals("은행이름")) {
-                    for (User userDto : userList) {
-                        if(userDto.getAccount().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        }
-                    }
-                } else if(searchType.equals("포인트")) {
-                    for (User userDto : userList) {
-                        if(userDto.getPoint().toString().contains(keyword)) {
                             lastUserList.add(userDto);
                         }
                     }
@@ -492,13 +452,7 @@ public class AdminRestController {
                             lastUserList.add(userDto);
                         } else if(userDto.getName().contains(keyword)) {
                             lastUserList.add(userDto);
-                        } else if(userDto.getNickname().contains(keyword)) {
-                            lastUserList.add(userDto);
                         } else if(userDto.getPhone().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        } else if(userDto.getAccount().contains(keyword)) {
-                            lastUserList.add(userDto);
-                        } else if(userDto.getPoint().toString().contains(keyword)) {
                             lastUserList.add(userDto);
                         }
                     }

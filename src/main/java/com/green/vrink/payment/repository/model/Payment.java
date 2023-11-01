@@ -1,12 +1,16 @@
-package com.green.vrink.payment.dto;
+package com.green.vrink.payment.repository.model;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
-public class PaymentDTO {
+public class Payment {
+    private Integer paymentId;
     private Integer userId;
     private String name;
     private String impUid;
     private String merchantUid;
     private Integer price;
+    private String createdAt;
 }

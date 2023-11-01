@@ -4,6 +4,7 @@ package com.green.vrink.payment.controller;
 import com.green.vrink.payment.dto.AutorizedCodeDTO;
 import com.green.vrink.payment.dto.PriceDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
+import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.service.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +40,19 @@ public class PaymentRestController {
 
     @PostMapping("/authorizedCode")
     public AutorizedCodeDTO AuthorizedCode() {
-        AutorizedCodeDTO autorizedCodeDTO = paymentServiceImpl.responseCode();
-        return autorizedCodeDTO;
+        return paymentServiceImpl.responseCode();
     }
 
     @PostMapping("/cancel")
     public ResponseEntity<?> cancel() {
-        log.info("여기 ", "여기야");
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/payment-done")
+    public ResponseEntity<?> PaymentDone(@RequestBody Payment payment) {
+        log.info("여기기기기 {}", payment);
+        paymentServiceImpl.insertPayment(payment);
         return ResponseEntity.ok().build();
     }
 }

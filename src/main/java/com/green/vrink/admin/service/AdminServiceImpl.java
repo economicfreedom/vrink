@@ -57,8 +57,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<User> getAllUser() {
-        return adminRepository.getAllUser();
+    public List<User> getAllUser(PagingDto paging) {
+        return adminRepository.getAllUser(paging);
     }
 
     @Override
@@ -77,8 +77,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer userTotalCount() {
-        return adminRepository.userTotalCount();
+    public User getUserById(Integer id) {
+        return adminRepository.getUserById(id);
+    }
+
+    @Override
+    public Integer userTotalCount(PagingDto paging) {
+        return adminRepository.userTotalCount(paging);
     }
 
     @Override
