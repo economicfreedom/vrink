@@ -8,6 +8,7 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.message.service.MessageService;
+import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class AdminController {
     private final MessageService messageService;
 
     @GetMapping("/main")
+    @AdminCheck
     public String main(){
         log.info("관리자 페이지 메인 컨트롤러 실행");
         return "/admin/main";

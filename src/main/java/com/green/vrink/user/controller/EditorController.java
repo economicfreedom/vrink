@@ -7,10 +7,7 @@ import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
-import com.green.vrink.util.AsyncPageDTO;
-import com.green.vrink.util.Criteria;
-import com.green.vrink.util.Define;
-import com.green.vrink.util.PageDTO;
+import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -83,6 +80,7 @@ public class EditorController {
     }
 
     @GetMapping("/apply-form")
+    @StandardCheck
     public String applyPage() {
 
 
