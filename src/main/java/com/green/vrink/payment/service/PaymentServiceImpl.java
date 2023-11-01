@@ -24,11 +24,12 @@ import static com.green.vrink.util.Check.isNull;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PaymentServiceImpl implements PaymentService{
+public class PaymentServiceImpl implements PaymentService {
 	private final PaymentRepository paymentRepository;
 	private final HttpSession session;
 	private static final String API_KEY = "5245526256803155";
 	private static final String API_SECRET = "9nDFaQDdNkSAvkhRmplND7KeQJxWTzvKxZZQZVwF1TLQC8ly851e69UOO3pfysh6bliEX4KofE97Y5Cd";
+
 	@Override
 	public List<PriceDTO> responsePrice(Integer editorId) {
 
@@ -39,7 +40,7 @@ public class PaymentServiceImpl implements PaymentService{
 	public Boolean validationPrice(ValidationDTO validationDTO) {
 		List<PriceDTO> priceDTOs = responsePrice(validationDTO.getEditorId());
 		int sum = 0;
-		for(int i = 0; i<validationDTO.getQuantity().length; i++) {
+		for (int i = 0; i < validationDTO.getQuantity().length; i++) {
 			sum += validationDTO.getQuantity()[i] * priceDTOs.get(i).getPrice();
 		}
 		return validationDTO.getPaidAmount() == sum;
@@ -77,9 +78,10 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public int selectPaymentId() {
 		return paymentRepository.findByPaymentId();
-
-	public List<BuyDTO> buyList(Integer userId, Criteria cri) {
-		return paymentRepository.findBuyListByUserId(userId,cri);
+	}
+	public List<BuyDTO> buyList (Integer userId, Criteria cri){
+		return paymentRepository.findBuyListByUserId(userId, cri);
 
 	}
+
 }

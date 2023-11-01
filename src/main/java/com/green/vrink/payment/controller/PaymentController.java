@@ -11,13 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.vrink.payment.dto.PriceDTO;
 import com.green.vrink.payment.service.PaymentServiceImpl;
-import com.green.vrink.review.service.ReviewService;
-import com.green.vrink.user.controller.EditorController;
-import com.green.vrink.user.service.EditorServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
