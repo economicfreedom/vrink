@@ -18,30 +18,24 @@
         padding: 1px;
     }
 
-    td:nth-child(3) {
-        width: 20%;
-    }
-
-    td:nth-child(4) {
-        width: 15%;
-    }
-
     td:last-child {
         text-align: right;
     }
 
     td {
         vertical-align: middle;
+        min-width: 100px;
+        font-size: 15px;
     }
 
     td a {
         color: black;
         text-decoration: none !important;
-        margin-left: 15px;
     }
 
     h4 {
         padding-left: 8px;
+        font-size: 17px;
     }
 
     .classification {
@@ -67,7 +61,7 @@
     .tab--user {
         margin-left: 30px;
         padding: 0 0 1px 1px;
-        margin-bottom: 30px;
+        margin-bottom: 5px;
         overflow: hidden;
     }
 
@@ -192,7 +186,7 @@
 
 
 <h1 class="title--user">유저 목록</h1>
-<ul class="tab--user">
+<ul class="tab--user cl1">
     <c:choose>
         <c:when test="${uClassification == '전체' or empty uClassification}">
             <li class="active" data-classification="전체"><a href="#">전체</a></li>
@@ -253,57 +247,44 @@
     </c:choose>
 </ul>
 
-<form style="width: 90%;" action="<c:url value='/admin/user'/>" name="pageForm">
+<form style="width: 90%;" name="pageForm">
     <div class="mt-2 mx-4">
         <select name="searchType" id="searchType">
             <c:choose>
-                <c:when test="${uSearchType == '아이디'}">
-                    <option value="전체">전체</option>
-                    <option value="아이디" selected>아이디</option>
-                    <option value="이메일">이메일</option>
-                    <option value="전화번호">전화번호</option>
-                    <option value="생년월일">생년월일</option>
-                    <option value="가입일">가입일</option>
-                </c:when>
                 <c:when test="${uSearchType == '이메일'}">
                     <option value="전체">전체</option>
-                    <option value="아이디">아이디</option>
                     <option value="이메일" selected>이메일</option>
+                    <option value="이름">이름</option>
+                    <option value="아이디">아이디</option>
                     <option value="전화번호">전화번호</option>
-                    <option value="생년월일">생년월일</option>
-                    <option value="가입일">가입일</option>
+                </c:when>
+                <c:when test="${uSearchType == '이름'}">
+                    <option value="전체">전체</option>
+                    <option value="이메일">이메일</option>
+                    <option value="이름" selected>이름</option>
+                    <option value="아이디">아이디</option>
+                    <option value="전화번호">전화번호</option>
+                </c:when>
+                <c:when test="${uSearchType == '아이디'}">
+                    <option value="전체">전체</option>
+                    <option value="이메일">이메일</option>
+                    <option value="이름">이름</option>
+                    <option value="아이디" selected>아이디</option>
+                    <option value="전화번호">전화번호</option>
                 </c:when>
                 <c:when test="${uSearchType == '전화번호'}">
                     <option value="전체">전체</option>
-                    <option value="아이디">아이디</option>
                     <option value="이메일">이메일</option>
+                    <option value="이름">이름</option>
+                    <option value="아이디">아이디</option>
                     <option value="전화번호" selected>전화번호</option>
-                    <option value="생년월일">생년월일</option>
-                    <option value="가입일">가입일</option>
-                </c:when>
-                <c:when test="${uSearchType == '생년월일'}">
-                    <option value="전체">전체</option>
-                    <option value="아이디">아이디</option>
-                    <option value="이메일">이메일</option>
-                    <option value="전화번호">전화번호</option>
-                    <option value="생년월일" selected>생년월일</option>
-                    <option value="가입일">가입일</option>
-                </c:when>
-                <c:when test="${uSearchType == '가입일'}">
-                    <option value="전체">전체</option>
-                    <option value="아이디">아이디</option>
-                    <option value="이메일">이메일</option>
-                    <option value="전화번호">전화번호</option>
-                    <option value="생년월일">생년월일</option>
-                    <option value="가입일" selected>가입일</option>
                 </c:when>
                 <c:otherwise>
                     <option value="전체" selected>전체</option>
-                    <option value="아이디">아이디</option>
                     <option value="이메일">이메일</option>
+                    <option value="이름">이름</option>
+                    <option value="아이디">아이디</option>
                     <option value="전화번호">전화번호</option>
-                    <option value="생년월일">생년월일</option>
-                    <option value="가입일">가입일</option>
                 </c:otherwise>
             </c:choose>
 
@@ -375,7 +356,7 @@
                 function () {
                     classifi2 = $(this).data(
                         'classification2');
-                    $('.tab--user li').removeClass('active');
+                    $('.cl2 li').removeClass('active');
                     $(this).addClass('active');
 
                     loadusers(classifi, classifi2, classifi3, undefined, $(
@@ -387,7 +368,7 @@
             function () {
                 classifi3 = $(this).data(
                     'classification3');
-                $('.tab--user li').removeClass('active');
+                $('.cl3 li').removeClass('active');
                 $(this).addClass('active');
 
                 loadusers(classifi, classifi2, classifi3, undefined, $(
@@ -395,11 +376,11 @@
                     .val());
             });
 
-            $('.tab--user li').click(
+            $('.cl1 li').click(
             function () {
                 classifi = $(this).data(
                     'classification');
-                $('.tab--user li').removeClass('active');
+                $('.cl1 li').removeClass('active');
                 $(this).addClass('active');
 
                 loadusers(classifi, classifi2, classifi3, undefined, $(
@@ -436,6 +417,7 @@
                             var userList = data.userList;
                             var pagination = data.pagination;
                             var userListHTML = '<tr>'
+                                + '<td><h4>타입</h4></td>'
                                 + '<td><h4>이메일</h4></td>'
                                 + '<td><h4>이름</h4></td>'
                                 + '<td><h4>아이디</h4></td>'
@@ -444,56 +426,101 @@
                                 + '<td><h4>은행이름</h4></td>'
                                 + '<td><h4>포인트</h4></td>'
                                 + '<td><h4>이미지</h4></td>'
-                                + '<td><h4>타입</h4></td>'
                                 + '<td><h4>탈퇴여부</h4></td>'
                                 + '<td><h4>권한</h4></td>'
+                                + '<td><h4>판매자<br>전환일</h4></td>'
+                                + '<td><h4>가입일</h4></td>'
                                 + '</tr>';
                             for (var i = 0; i < userList.length; i++) {
                                 var user = userList[i];
-                                if (user.role_type_id === 1)
-                                    user.role_type_id = '일반 유저';
-                                else
-                                    user.role_type_id = '관리자'
-                                var birthDate = formatDate(user.birth_date); // 날짜 포맷 변환
-                                if (birthDate === '3000. 1. 1.')
-                                    birthDate = '카카오 회원';
-                                if (user.tel === '99999999999')
-                                    user.tel = '카카오 회원';
-                                var regDate = formatDate(user.reg_date); // 날짜 포맷 변환
+                                if (user.level === 0) user.level = '일반 유저';
+                                else user.level = '관리자'
+                                if (user.editor === 'standard') user.editor = '구매자';
+                                else user.editor = '판매자'
+                                if (user.enabledCheck === 0) user.enabledCheck = '비탈퇴';
+                                else user.enabledCheck = '탈퇴'
+                                let editorData = user.editorCreatedAt.substring(2,10);
+                                let regData = user.createdAt.substring(2,10);
                                 userListHTML += '<tr>'
                                     + '<td><p class="classification">'
-                                    + user.role_type_id
+                                    + user.editor
                                     + '</p></td>'
                                     + '<td><a href="/admin/user/detail?page='
                                     + pagination.paging.page
                                     + '&id='
-                                    + user.id
-                                    + '">'
-                                    + user.username
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.id
+                                    + user.userId
                                     + '">'
                                     + user.email
                                     + '</a></td>'
                                     + '<td><a href="/admin/user/detail?page='
                                     + pagination.paging.page
                                     + '&id='
-                                    + user.id
+                                    + user.userId
                                     + '">'
-                                    + user.tel
+                                    + user.name
                                     + '</a></td>'
                                     + '<td><a href="/admin/user/detail?page='
                                     + pagination.paging.page
                                     + '&id='
-                                    + user.id
+                                    + user.userId
                                     + '">'
-                                    + birthDate
+                                    + user.nickname
                                     + '</a></td>'
+                                    + '<td><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.phone
+                                    + '</a></td>'
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.account
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.accountName
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.point
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.userImage
+                                    + '</a></td>'
+                                    + '<td><p class="classification2"><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.enabledCheck
+                                    + '</a></p></td>'
+                                    + '<td><p class="classification3"><a href="/admin/user/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + user.userId
+                                    + '">'
+                                    + user.level
+                                    + '</a></p></td>'
                                     + '<td><p>'
-                                    + regDate
+                                    + editorData
+                                    + '</p></td>'
+                                    + '<td><p>'
+                                    + regData
                                     + '</p></td>' + '</tr>';
                             }
                             var paginationHTML = '';
@@ -533,6 +560,20 @@
                 document.pageForm.page.value = value;
                 document.pageForm.submit();
             });
+
+            $('input[type="text"]').keydown(function(key) {
+                if (key.keyCode === 13) {
+                    key.preventDefault();
+                }
+            });
+
+            $("#keyword").on("keyup",function(key){
+                if(key.keyCode==13) {
+                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                        '#searchType').val(), $('#keyword')
+                        .val());
+                }
+            });
         }
     );
 
@@ -546,6 +587,10 @@
         dropdownButton.textContent = selectedItem;
         let classification = document.querySelector('#classification');
         classification.value = selectedItem;
+        let classification2 = document.querySelector('#classification2');
+        classification2.value = selectedItem;
+        let classification3 = document.querySelector('#classification3');
+        classification3.value = selectedItem;
     }
 
 </script>

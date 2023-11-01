@@ -5219,8 +5219,8 @@ footer.light-footer .bottom-line a {
 .menu,
 .logo,
 .menu nav > ul > li,
-.menu-item-has-children > ul,
-.menu-item-has-children > ul > li,
+/*.menu-item-has-children > ul,*/
+/*.menu-item-has-children > ul > li,*/
 .menu nav > ul > li > a,
 .account-popup-sec,
 .product-thumb::before,
