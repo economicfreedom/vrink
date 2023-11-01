@@ -361,16 +361,15 @@ from payment;
 SELECT *
 FROM payment_state;
 
-INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point)
-    VALUE (1, 0, 0, 1235);
+INSERT INTO payment_state(payment_id,customer_recognize, point)
+    VALUE (1, 0, 1235);
 
 
 # 구매 목록 조인
 
-SELECT point, editor_recognize, customer_recognize, payment_state_id, ps.created_at
+SELECT ps.point, customer_recognize, payment_state_id, ps.created_at,u.nickname
 FROM payment_state ps
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
-where p.user_id = 136 and customer_recognize = 0;
-
-
-
+         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN user u ON ed.user_id = u.user_id
+     WHERE p.user_id = 136 AND customer_recognize = 0;
