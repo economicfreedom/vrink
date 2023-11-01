@@ -36,7 +36,7 @@
                         <div class="col-md-12">
                             <select style="height:26px" name="type" id="type">
 
-                                <option value="asnwer">문의</option>
+                                <option value="question">문의</option>
                                 <option value="report">신고</option>
                                 <option value="etc">기타</option>
 
@@ -87,11 +87,13 @@
                 body: json
             })
                 .then(response => {
+
                     if (!response.ok) {
                         alert("")
                     } else {
-                        location.reload();
+                        location.href = "/qna/list/"+Number(`${USER.userId}`);
                     }
+
                 })
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));

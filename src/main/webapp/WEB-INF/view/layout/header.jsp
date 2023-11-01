@@ -38,7 +38,7 @@
                             <div>
                                 <h4>로그인</h4>
                                 <div class="field">
-                                    <input type="text" class="sign-in-email" placeholder="Username"/>
+                                    <input type="text" class="sign-in-email" placeholder="Username" value="vrinkteam@gmail.com"/>
                                 </div>
                                 <div class="field">
                                     <input type="password" class="sign-in-password" placeholder="Password"/>
@@ -63,7 +63,7 @@
                             <div class="common-sign-up">
                                 <div class="field">
                                     <div class="email-check-div">
-                                        <input type="text" placeholder="이메일" class="email-input" />
+                                        <input type="text" placeholder="이메일" class="email-input"/>
                                         <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
                                         <input type="hidden" class="email-check-result"/>
                                     </div>
@@ -112,8 +112,7 @@
                         <strong>승철이</strong>
                     </a>
                 </div><!-- LOGO -->
-
-                <c:if test="${userTestId == 1}">
+                <c:if test="${not empty USER}">
                     <div class="dropdown-alarm popup-alarm list-group" id="dropdown-alarm">
                         <span style="padding: 13px;"><i class="fa fa-bell"></i> </span>
                         <div class="dropdown-alarm-content" style="overflow: auto; max-height: 200px">
@@ -134,6 +133,7 @@
 
                 <div class="popup-client">
                 	<input type=hidden class="sign-in-user-flag" value="${USER.email }">
+                    <input type=hidden class="standard-or-edit" value="${USER.editor }">
                     <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
                     <span class="log-out-btn" style="display: none">로그아웃</span>
                 </div>
@@ -141,36 +141,14 @@
                 <nav style="float: none; margin: 0 auto;">
                     <ul>
 
-                        <li class="menu-item-has-children mega">
-                            <a href="/editor/list" title="">EDITORS</a>
+                        <li class="menu-item-has-children">
+                            <a href="/editor/list" title="">작가</a>
                             <ul>
-                                <li><a href="about.html" title="">About Us</a></li>
-                                <li><a href="branch.html" title="">Branch 3 Col</a></li>
+                                <li><a href="/editor/list" title="">둘러보기</a></li>
+                                <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
                                 <li><a href="branch2.html" title="">Branch 2 Col</a></li>
                                 <li><a href="branch3.html" title="">Branch Sidebar</a></li>
                                 <li><a href="branch4.html" title="">Branch Wide</a></li>
-                                <li><a href="comming-soon.html" title="">Coming Soon Dark</a></li>
-                                <li><a href="comming-soon2.html" title="">Coming Soon Light</a></li>
-                                <li><a href="gallery.html" title="">Gallery Fancy 1</a></li>
-                                <li><a href="gallery2.html" title="">Gallery Fancy 2</a></li>
-                                <li><a href="gallery3.html" title="">Gallery Fancy 3</a></li>
-                                <li><a href="gallery4.html" title="">Simple Gallery 1</a></li>
-                                <li><a href="gallery5.html" title="">Simple Gallery 2</a></li>
-                                <li><a href="gallery6.html" title="">Simple Gallery 3</a></li>
-                                <li><a href="contact.html" title="">Contact Us</a></li>
-                                <li><a href="error.html" title="">404 Error v1</a></li>
-                                <li><a href="error2.html" title="">404 Error v2</a></li>
-                                <li><a href="faq.html" title="">FAQ</a></li>
-                                <li><a href="price-table.html" title="">Price Table</a></li>
-                                <li><a href="search.html" title="">Search Result</a></li>
-                                <li><a href="team.html" title="">Team 3 Col</a></li>
-                                <li><a href="team2.html" title="">Team Sidebar </a></li>
-                                <li><a href="team3.html" title="">Team 2 Col</a></li>
-                                <li><a href="header-dark.html" title="">Header Dark</a></li>
-                                <li><a href="header-light.html" title="">Header Light</a></li>
-                                <li><a href="footer-light.html" title="">Footer Light</a></li>
-                                <li><a href="footer-dark.html" title="">Footer Dark</a></li>
-                                <li>
                                     <a href="http://themeforest.net/item/VRINK-the-multipurpose-responsive-html5-template/14915795?ref=themenum"
                                        title="">Buy VRINK Now</a></li>
                             </ul>
@@ -209,12 +187,12 @@
                             </ul>
                         </li>
                         <li id="my-info-list" class="menu-item-has-children">
-                        	<a href="contact.html" title="">내 정보 이건 로그인한 유저일때 보이게 바꾸기</a>
+                        	<a href="contact.html" title="">MY PAGE</a>
                             <ul>
-                                <li><a href="event.html" title="">Event</a></li>
-                                <li><a href="/qna/list" title="">내 문의 내용</a></li>
-                                <li><a href="event3.html" title="">Event 3</a></li>
-                                <li><a href="event4.html" title="">Event 4</a></li>
+                                <li><a href="/user/my-page" title="">내 정보</a></li>
+                                <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
+                                <li><a href="/qna/list/${USER.userId}" title="">내 문의 내용</a></li>
+                                <li id="only-editor"><a href="/editor/calculate/point" title="">정산</a></li>
                                 <li><a href="event-single.html" title="">Event Single</a></li>
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
@@ -244,6 +222,10 @@
 </div>
 <script type="text/javascript">
     let authEmailNumber = null; // 함수 밖의 변수
+
+    if($('.standard-or-edit').val() == 'standard') {
+        $('#only-editor').css("display", "none");
+    }
     
     $('.sign-in-user-flag').val() == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
     if($('.sign-in-user-flag').val() !== '') {
@@ -396,10 +378,15 @@
             .then(response => {
                 if (response.ok) {
                     location.reload();
+                }else if (response.status.valueOf() === 401) {
+                    alert("아이디 또는 비밀번호가 틀립니다.");
+                    return;
                 } else {
-                    alert("로그인 실패");
+                    alert("비활성화된 회원입니다.");
                     return;
                 }
+
+
             })
             .then(data =>
                 console.log(data)
@@ -441,6 +428,20 @@
         });
     })
 
+    $('.log-out-btn').on('click', function () {
+        logout();
+    });
+
+    async function logout() {
+        try {
+            alert('로그아웃 되었습니다.');
+            await fetch("http://localhost/user/log-out");
+            location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 </script>
 <body>
-<section id="main-body" style="min-height: calc(100vh - 204px);">
+<section id="main-body" style="min-height: calc(100vh - 204px);"/>

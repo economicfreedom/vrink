@@ -2,6 +2,7 @@ package com.green.vrink.message.controller;
 
 import com.green.vrink.message.dto.MessageDto;
 import com.green.vrink.message.service.MessageService;
+import com.green.vrink.user.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +19,11 @@ public class MessageControllerAdvice {
 
     @ModelAttribute(name = "messageList")
     public List<MessageDto> getAllMessageList() {
-        session.setAttribute("userTestId", 1);
-        Integer userId = (Integer) session.getAttribute("userTestId");
+        User user = (User) session.getAttribute("USER");
+        if(user == null) {
+            return null;
+        }
+        Integer userId = user.getUserId();
         if(userId == null) {
             return null;
         }

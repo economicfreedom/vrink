@@ -265,7 +265,7 @@
         </button>
         <button class="btn btn-dark btn-block" type="button"
                 id="resetButton"
-                onClick="location.href='/admin/applyAccept?reset=1'">검색초기화
+                onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
         </button>
     </div>
 
@@ -310,7 +310,7 @@
 
         $.ajax({
             type : "POST",
-            url : "/admin/changeApply",
+            url : "/admin/change-apply",
             data : {
                 "applyId" : applyId,
                 "accepted" : accepted,
@@ -318,7 +318,7 @@
             },
             success : function(data){
                 if (data === 200) {
-                    window.location.href = "/admin/applyAccept";
+                    window.location.href = "/admin/apply-accept";
                 } else if(data === 400) {
                     alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
                 } else {
@@ -394,7 +394,7 @@
             function loadadminApplys(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
-                    url    : '/admin/classification',
+                    url    : '/admin/apply-accept/classification',
                     data   : {
                         classification: classification,
                         page          : page,

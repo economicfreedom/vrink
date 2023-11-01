@@ -5,35 +5,18 @@
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
-<script>
-
-</script>
 <div class="container">
     <div class="row p-block">
         <div class="col-sm-8 col-center">
             <div class="heading4">
-                <h2>문의 사항</h2>
+                <h2>의뢰 게시판</h2>
                 <span>규정에 어긋난 게시글을 작성시 예고 없이 삭제될 수 있습니다.</span>
-                <br>
-                <span>문의 내용은 삭제하거나 수정 하실 수 없습니다.</span>
-
             </div>
             <div class="contact-form">
                 <div class="editor-div">
                     <div class="row">
                         <div class="col-md-12">
-                            <select style="height:26px" name="type" id="type">
-
-                                <option value="asnwer">문의</option>
-                                <option value="report">신고</option>
-                                <option value="etc">기타</option>
-
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-
                             <i class="fa fa-user"></i>
-
                             <input name="title" type="text" id="title" class="input-style" placeholder="제목">
                         </div>
 
@@ -52,41 +35,6 @@
 </div>
 
 <script>
-
-    $(document).ready(function () {
-        $("#submit").click(function () {
-
-            let content = $("#editordata").val();
-            let title = $("#title").val();
-            let type = $("#type").val();
-
-            let json = JSON.stringify({
-                userId: 1,
-                content: content,
-                title: title,
-                type: type
-            });
-
-            fetch('/qna/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: json
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("")
-                    } else {
-                        location.href="/qna/list";
-                    }
-                })
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-
-        })
-
-    })
     $('.summernote').summernote({
         toolbar: [
             // [groupName, [list of button]]
@@ -108,6 +56,54 @@
 
     });
 
-</script>
+    $(document).ready(function () {
 
+        $("#submit").click(function () {
+
+            let title = $("#title").val();
+            let content = $("#editordata").val();
+
+            console.log(content);
+
+            if (content.length <= 0){
+                alert("내용을 입력해주세요.")
+                return ;
+            }
+
+            if (title.length <= 0|| title.trim()===""){
+                alert("제목을 입력해주세요.")
+                return;
+            }
+            postSuggest();
+        })
+
+        async function postSuggest() {
+            let title = $("#title").val();
+            let content = $("#editordata").val();
+            let result = await fetch('/suggest/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: `${USER.userId}`,
+                    title: title,
+                    content: content
+                })
+            })
+
+            let resultCode = await result.json();
+            console.log(resultCode);
+            if (resultCode !== 1) {
+                alert('잠시 후 시도해주십시오.');
+            } else {
+                alert('게시물 작성이 완료되었습니다.');
+                location.href = "http://localhost/suggest/list";
+            }
+        }
+
+
+    })
+
+</script>
 <%@ include file="/WEB-INF/view/layout/editor_footer.jsp" %>

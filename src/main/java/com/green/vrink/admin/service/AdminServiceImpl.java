@@ -4,6 +4,8 @@ import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.CheatCheckDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
+import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.user.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -42,6 +44,61 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging) {
         return adminRepository.getAllAdminApplyListByTypePaging(paging);
+    }
+
+    @Override
+    public List<FreeBoardDTO> getAllFreeboardList() {
+        return adminRepository.getAllFreeboardList();
+    }
+
+    @Override
+    public List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging) {
+        return adminRepository.getAllFreeboardListByPaging(paging);
+    }
+
+    @Override
+    public List<User> getAllUser(PagingDto paging) {
+        return adminRepository.getAllUser(paging);
+    }
+
+    @Override
+    public List<User> getAllUserByType(String classification) {
+        return adminRepository.getAllUserByType(classification);
+    }
+
+    @Override
+    public List<User> getAllUserPaging(PagingDto paging) {
+        return adminRepository.getAllUserPaging(paging);
+    }
+
+    @Override
+    public List<User> getAllUserByTypePaging(PagingDto paging) {
+        return adminRepository.getAllUserByTypePaging(paging);
+    }
+
+    @Override
+    public User getUserById(Integer id) {
+        return adminRepository.getUserById(id);
+    }
+
+    @Override
+    public Integer userTotalCount(PagingDto paging) {
+        return adminRepository.userTotalCount(paging);
+    }
+
+    @Override
+    public Integer userTotalCountClassification(PagingDto paging) {
+        return adminRepository.userTotalCountClassification(paging);
+    }
+
+    @Override
+    public FreeBoardDTO getFreeboardById(Integer id) {
+        return adminRepository.getFreeboardById(id);
+    }
+
+    @Override
+    public Integer countAllFreeboard() {
+        return adminRepository.countAllFreeboard();
     }
 
     @Override

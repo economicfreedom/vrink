@@ -3,7 +3,7 @@
 <mapper namespace="com.green.vrink.qna.repository.interfaces.QnARepository">
     <insert id="save">
 
-        INSERT INTO qna(user_id, content, type, email,title)
+        INSERT INTO question(user_id, content, type, email,title)
 
             VALUE (
             #{userId}
@@ -15,26 +15,26 @@
             )
 
     </insert>
-    <insert id="saveQuestion">
-        insert into question(qna_id, user_id, content)
-            value (#{qnaId},#{userId},#{content});
+    <insert id="saveAnswer">
+        INSERT INTO answer(q_id, user_id, content)
+            VALUE (#{questionId},#{userId},#{content});
     </insert>
     <update id="updateStatus">
-        UPDATE qna SET
+        UPDATE question SET
                        status = 1
-        WHERE qna_id = #{qnaId}
+        WHERE q_id = #{questionId}
     </update>
     <delete id="deleteById"></delete>
-    <select id="findById" resultType="com.green.vrink.qna.dto.QnADTO">
-        SELECT * FROM qna
-        WHERE qna_id = #{qnaId}
+    <select id="findById" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT * FROM question
+        WHERE q_id = #{questionId}
     </select>
     <select id="findTotalById" resultType="java.lang.Integer">
-        SELECT COUNT(qna_id) FROM qna
+        SELECT COUNT(q_id) FROM question
         WHERE user_id = #{userId}
     </select>
-    <select id="findAllById" resultType="com.green.vrink.qna.dto.QnADTO">
-        SELECT qna_id
+    <select id="findAllById" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id
              , user_id
              , content
              , DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
@@ -43,14 +43,20 @@
 
              , email
              , status
-        FROM qna
-        WHERE user_id = #{userId} LIMIT #{cri.offset}
+        FROM question
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+            LIMIT #{cri.offset}
             , #{cri.countPerPage}
 
     </select>
-    <select id="findByQuestionByQnAId" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT * FROM question
-        WHERE qna_id = #{qnaId}
+    <select id="findByAnswerByQuestionId" resultType="com.green.vrink.qna.dto.AnswerDTO">
+        SELECT * FROM answer
+        WHERE q_id = #{questionId}
+    </select>
+    <select id="findUserIdByQuestionId" resultType="java.lang.Integer">
+        SELECT user_id FROM question
+        WHERE q_id = #{questionId}
     </select>
 
 </mapper>

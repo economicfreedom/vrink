@@ -56,4 +56,89 @@
         WHERE accepted = #{classification}
     </select>
 
+    <select id="countAllFreeboard" resultType="integer">
+        SELECT count(*)
+        FROM community
+    </select>
+
+    <select id="getFreeboardById" resultType="com.green.vrink.community.dto.FreeBoardDTO">
+        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+        WHERE c.community_id = #{id}
+        ORDER BY community_id DESC
+    </select>
+
+    <select id="getAllFreeboardList" resultType="com.green.vrink.community.dto.FreeBoardDTO">
+        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+        ORDER BY community_id DESC
+    </select>
+
+    <select id="getAllFreeboardListByPaging" resultType="com.green.vrink.community.dto.FreeBoardDTO">
+        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+        ORDER BY community_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+
+<!--    <if test="type == 'nickname'">-->
+<!--        WHERE nickname LIKE CONCAT('%',#{keyword},'%')-->
+<!--    </if>-->
+
+
+    <select id="getAllUser" resultType="com.green.vrink.user.repository.model.User">
+        select * from user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="getAllUserPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY user_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllUserByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY user_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllUserByType" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY user_id DESC
+    </select>
+
+    <select id="userTotalCount" resultType="int">
+        SELECT count(*) FROM user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="userTotalCountClassification" resultType="int">
+        SELECT count(*) FROM user
+        WHERE (editor = #{classification})
+        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+    </select>
+
+    <select id="getUserById" resultType="com.green.vrink.user.repository.model.User">
+        select * from user where user_id = #{id}
+    </select>
+
 </mapper>

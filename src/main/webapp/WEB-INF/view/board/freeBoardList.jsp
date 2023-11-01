@@ -15,6 +15,10 @@
     }
 </style>
 <script>
+    function href() {
+        location.href = "/board/write"
+    }
+
     $(document).ready(function () {
         $("#search").click(function () {
 
@@ -59,7 +63,8 @@
                         <option value="tc" ${pageDTO.cri.type == 'tc' ? 'selected' : ''}>게시글+내용</option>
                         <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
                     </select>
-                    <input type="text" size="15" id="keyword" value="${pageDTO.cri.keyword != '' ? pageDTO.cri.keyword :''}">
+                    <input type="text" size="15" id="keyword"
+                           value="${pageDTO.cri.keyword != '' ? pageDTO.cri.keyword :''}">
                     <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
                          id="search">
 
@@ -86,7 +91,7 @@
                         <td>${board.communityId}</td>
                         <td class="t-left">
                             <a href="/board/read/${board.communityId}"
-                            style="text-decoration: none; color: black">
+                               style="text-decoration: none; color: black">
                                     ${board.title}</a></td>
 
                         <td>${board.nickname}</td>
@@ -104,6 +109,11 @@
     <%--        <li><a href="#" title="">3</a></li>--%>
     <%--        <li><a href="#" title=""><span>PREV</span></a></li>--%>
     <%--    </ul>--%>
+    <c:if test="${USER != null}">
+        <div>
+            <button class="flat-btn" style="font-size: 12px; float: right" onclick="href()">게시글 작성</button>
+        </div>
+    </c:if>
     <form action="/board/board-list" name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 

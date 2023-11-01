@@ -5,6 +5,28 @@
     function href(){
         location.href="/qna/write"
     }
+        $(document).ready(function () {
+        $("#search").click(function () {
+
+            let type = $("#type").val();
+            let keyword = $("#keyword").val();
+            alert(type)
+            alert(keyword)
+            location.href = "/board/board-list?keyword=" + keyword + "&type=" + type;
+
+        });
+        $('#pagination').on('click', 'a', function (e) {
+            e.preventDefault();
+            const value = $(this).data('page-num');
+            console.log(value);
+
+            document["page-form"]["page-num"].value = value;
+            // document["page-form"].type.value = $("select[name='type']").val();
+            // document["page-form"].keyword.value = $("#keyword").val();
+            // document["page-form"]["order-by"].value = $("input[name=optradio]:checked").val();
+            document["page-form"].submit();
+        }); // end of #pagination
+    })
 </script>
 <style>
     .board-list-th {
@@ -53,7 +75,7 @@
 
                         <td>
                             <c:choose>
-                                <c:when test="${board.type eq 'answer'}"> 문의 </c:when>
+                                <c:when test="${board.type eq 'question'}"> 문의 </c:when>
                                 <c:when test="${board.type eq 'report'}"> 신고 </c:when>
                                 <c:otherwise> 기타 </c:otherwise>
                             </c:choose>
@@ -69,7 +91,7 @@
                             </c:otherwise>
                         </c:choose>
                         <td class="t-left"><a
-                                href="/qna/read-q/${board.qnaId}"
+                                href="/qna/read-q/${board.questionId}"
                                 style="text-decoration: none; color: black">
                                 ${board.title}
 
@@ -92,7 +114,7 @@
     <%--        <li><a href="#" title="">3</a></li>--%>
     <%--        <li><a href="#" title=""><span>PREV</span></a></li>--%>
     <%--    </ul>--%>
-    <form action="/board/board-list" name="page-form">
+    <form action="/qna/list/${USER.userId}" name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 
             <c:if test="${pageDTO.prev}">
@@ -122,5 +144,6 @@
         <input type="hidden" name="keyword" value="${pageDTO.cri.keyword}">
         <input type="hidden" name="type" value="${pageDTO.cri.type}">
     </form>
+
 </div>
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>

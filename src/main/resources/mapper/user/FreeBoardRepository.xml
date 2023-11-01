@@ -16,6 +16,7 @@
     <delete id="delete">
         DELETE
         FROM community
+        WHERE community_Id = #{communityId}
 
 
     </delete>

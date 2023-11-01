@@ -3,18 +3,21 @@ package com.green.vrink.community.controller;
 
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.user.repository.model.User;
-import com.green.vrink.util.AsyncPageDTO;
+import com.green.vrink.util.*;
 import com.green.vrink.community.service.FreeBoardReplyService;
-import com.green.vrink.util.Criteria;
-import com.green.vrink.util.LoginCheck;
-import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
+
+import static com.green.vrink.util.Check.isNull;
 
 @RestController
 @RequestMapping("/free-reply")
@@ -23,15 +26,23 @@ import java.util.List;
 public class FreeBoardReplyRestController {
     private final FreeBoardReplyService freeBoardReplyService;
     private final HttpSession httpSession;
+//    private final Check check;
 
     @PostMapping("/add")
     @LoginCheck
     public ResponseEntity<?> write(
+            @Valid
             @RequestBody
             FreeBoardReplyDTO freeBoardReplyDTO
+            ,BindingResult bindingResult
 
 
     ) {
+        if (bindingResult.hasErrors()){
+            String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            log.error("badrequest message {} ",defaultMessage);
+            return ResponseEntity.badRequest().body(defaultMessage);
+        }
 
 
         log.info("freeBoardReplyDTO {}", freeBoardReplyDTO);
@@ -46,7 +57,7 @@ public class FreeBoardReplyRestController {
             @PathVariable(name = "reply-id")
             Integer replyId
     ) {
-        if (replyId == null) {
+        if (isNull(replyId)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -71,18 +82,29 @@ public class FreeBoardReplyRestController {
     @PutMapping("/update")
     @LoginCheck
     public ResponseEntity<?> update(
+            @Valid
             @RequestBody
+
             FreeBoardReplyDTO freeBoardReplyDTO
             , HttpSession httpSession
+            , BindingResult bindingResult
     ) {
         int replyId = freeBoardReplyDTO.getReplyId();
-        Integer communityId = freeBoardReplyDTO.getCommunityId();
 
-        Integer _userId = freeBoardReplyDTO.getUserId();
-        Integer userId = freeBoardReplyService.getUserId(replyId);
+        if (isNull(replyId)){
+            return ResponseEntity.badRequest().body("댓글 번호는 필수 값입니다.");
+        }
+        if (bindingResult.hasErrors()) {
+            String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            return ResponseEntity.badRequest().body(defaultMessage);
 
-        if (communityId == null || _userId == null || _userId != userId) {
-            return ResponseEntity.badRequest().build();
+        }
+
+        int _userId = freeBoardReplyDTO.getUserId();
+        int userId = freeBoardReplyService.getUserId(replyId);
+
+        if (_userId != userId) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
         }
 
         freeBoardReplyService.update(freeBoardReplyDTO);
@@ -113,4 +135,6 @@ public class FreeBoardReplyRestController {
 
         return ResponseEntity.ok().body(asyncPageDTO);
     }
+
+
 }

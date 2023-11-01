@@ -185,7 +185,7 @@
                             <a href="/editor/editor-edit/${editorDetail.editorId}">수정하기</a></div>
                         <div
                                 style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer">
-                            작가에게 의뢰하기
+                            <a href="/payment/payment-page/${editorDetail.editorId}">작가에게 의뢰하기</a></div>
                         </div>
                     </div>
                 </div>

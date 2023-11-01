@@ -1,5 +1,6 @@
 package com.green.vrink.user.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,10 @@ import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 	
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 	@Transactional
 	public void signUp(SignUpDto signUpDto) {
@@ -27,14 +28,6 @@ public class UserService {
 		}
 	}
 	
-//	public void checkEmail(String email) {
-//		String result = userRepository.checkEmail(email);
-//		
-//		if (result == null) {
-////			throw new CustomRestfulException("이미 존재하는 아이디입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-
 	public User signIn(String email) {
 		User user = userRepository.findByEmail(email);
 		return user;

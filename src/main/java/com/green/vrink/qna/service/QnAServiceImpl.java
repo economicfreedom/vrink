@@ -1,9 +1,8 @@
 package com.green.vrink.qna.service;
 
-import com.green.vrink.qna.dto.QnADTO;
 import com.green.vrink.qna.dto.QuestionDTO;
+import com.green.vrink.qna.dto.AnswerDTO;
 import com.green.vrink.qna.repository.interfaces.QnARepository;
-import com.green.vrink.qna.repository.model.QnA;
 import com.green.vrink.qna.repository.model.Question;
 import com.green.vrink.util.Converter;
 import com.green.vrink.util.Criteria;
@@ -19,18 +18,18 @@ import java.util.List;
 
 public class QnAServiceImpl implements QnAService {
 
-    private final Converter<QnADTO, QnA> converter;
+    private final Converter<QuestionDTO, Question> converter;
     private final QnARepository qnARepository;
 
     @Override
-    public Integer save(QnADTO qnADTO) {
-        QnA entity = converter.toEntity(qnADTO);
+    public Integer save(QuestionDTO qnADTO) {
+        Question entity = converter.toEntity(qnADTO);
 
         return qnARepository.save(entity);
     }
 
     @Override
-    public QnADTO findById(Integer qnaId) {
+    public QuestionDTO findById(Integer qnaId) {
 
         return qnARepository.findById(qnaId);
 
@@ -48,23 +47,28 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
-    public List<QnADTO> list(Integer userId, Criteria cri) {
+    public List<QuestionDTO> list(Integer userId, Criteria cri) {
         return qnARepository.findAllById(userId, cri);
     }
 
     @Override
-    public QuestionDTO getQuestion(Integer qnaId) {
-        return qnARepository.findByQuestionByQnAId(qnaId);
+    public AnswerDTO getQuestion(Integer qnaId) {
+        return qnARepository.findByAnswerByQuestionId(qnaId);
     }
 
     @Override
-    public Integer saveQuestion(QuestionDTO questionDTO) {
+    public Integer saveQuestion(AnswerDTO answerDTO) {
 
-        return   qnARepository.saveQuestion(questionDTO);
+        return   qnARepository.saveAnswer(answerDTO);
     }
 
     @Override
     public void updateStatus(Integer qnaId) {
         qnARepository.updateStatus(qnaId);
+    }
+
+    @Override
+    public Integer getUserId(Integer questionId) {
+        return qnARepository.findUserIdByQuestionId(questionId);
     }
 }

@@ -4,10 +4,10 @@ import com.green.vrink.morph.service.MorphService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
-import com.green.vrink.util.AsyncPageDTO;
-import com.green.vrink.util.Criteria;
-import com.green.vrink.util.PageDTO;
+import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -30,14 +31,13 @@ public class EditorController {
     private final ReviewService reviewService;
     private final EditorServiceImpl editorServiceImpl;
     private final MorphService morphService;
-
+    private final HttpSession session;
+    private final UserRepository userRepository;
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
             , HttpSession session
             , Model model
     ) {
-
-
         if (editorId == null) {
             return "redirect:/";
         }
@@ -51,10 +51,8 @@ public class EditorController {
         EditorDTO editorDTO = editorServiceImpl.responseEditorDeatil(editorId);
         model.addAttribute("editorDetail", editorDTO);
         log.info("editorDetail{}", editorDTO);
-        log.info("morph : {}", morph);
-        log.info("editor dto === > : {}", editorDTO);
-
-        model.addAttribute("morph", morph);
+        log.info("morph : {}",morph);
+        model.addAttribute("morph",morph);
 
 
         return "user/editorDetail";
@@ -82,6 +80,7 @@ public class EditorController {
     }
 
     @GetMapping("/apply-form")
+    @StandardCheck
     public String applyPage() {
 
 
@@ -94,13 +93,10 @@ public class EditorController {
             Integer editorId
             , Model model
     ) {
-        if (editorId == null) {
+if (editorId == null) {
             return "redirect:/";
         }
         String vrm = editorServiceImpl.getVrm(editorId);
-        if (vrm == null) {
-            return "redirect:/";
-        }
         vrm = vrm.replace("\\", "/");
         model.addAttribute("vrm", vrm);
         log.info("vrm 경로 {}", vrm);
@@ -124,10 +120,26 @@ public class EditorController {
         model.addAttribute("next", asyncPageDTO.isHasNext());
         return "user/editorList";
     }
-
-    @GetMapping("/editor-price/{editorId}")
+    
+    @GetMapping("/editor-price/{editorId}") 
     public String editorPrice(@PathVariable("editorId") Integer editorId) {
+    	
+    	return "user/editorPrice";
+    }
 
-        return "user/editorPrice";
+    @GetMapping("/calculate/point")
+    public String calculatePoint(Model model) {
+        User user = (User) session.getAttribute(Define.USER);
+        if (user == null) {
+            return "user/applyForm";
+        }
+        if (Objects.equals(user.getEditor(), "editor")) {
+            User newUser = userRepository.findByUserId(user.getUserId());
+            System.out.println(newUser);
+            model.addAttribute("newUser", newUser);
+            return "user/calculatePoint";
+        }
+
+        return "user/applyForm";
     }
 }

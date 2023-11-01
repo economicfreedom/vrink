@@ -73,7 +73,9 @@
                     communityId: ${dto.communityId},
                     userId: ${dto.userId},
                     title: title,
-                    content:content
+                    content:content,
+                    nickname: `${dto.nickname}`
+
 
                 })
             })

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.suggest.repository.interfaces.SuggestRepository">
+
+
+    <insert id="postSuggest">
+        INSERT INTO suggest (user_id, title, content) VALUES (#{userId}, #{title}, #{content})
+    </insert>
+
+    <update id="patchSuggest">
+        UPDATE suggest
+        SET suggest.title = #{title}, suggest.content = #{content}, suggest.created_at = now()
+        WHERE suggest.suggest_id = #{suggestId}
+    </update>
+
+    <delete id="deleteSuggest">
+        DELETE FROM suggest WHERE suggest.suggest_id = #{suggestId}
+    </delete>
+
+    <select id="getSuggest" resultType="com.green.vrink.suggest.repository.model.Suggest">
+        SELECT * FROM suggest WHERE suggest.suggest_id = #{suggestID};
+    </select>
+</mapper>
