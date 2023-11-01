@@ -2,17 +2,15 @@ package com.green.vrink.payment.service;
 
 import java.util.List;
 
-import com.green.vrink.payment.dto.AutorizedCodeDTO;
-import com.green.vrink.payment.dto.PaymentDTO;
-import com.green.vrink.payment.dto.ValidationDTO;
+import com.green.vrink.payment.dto.*;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
+import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.green.vrink.payment.dto.PriceDTO;
 import com.green.vrink.payment.repository.interfaces.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -64,5 +62,10 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public List<Payment> responsePayment(Integer userId) {
 		return paymentRepository.findByUserId(userId);
+	}
+
+	@Override
+	public List<BuyDTO> buyList(Integer userId, Criteria cri) {
+		return paymentRepository.findBuyListByUserId(userId,cri);
 	}
 }

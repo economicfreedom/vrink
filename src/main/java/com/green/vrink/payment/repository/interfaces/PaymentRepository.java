@@ -2,10 +2,13 @@ package com.green.vrink.payment.repository.interfaces;
 
 import java.util.List;
 
+import com.green.vrink.payment.dto.BuyDTO;
 import com.green.vrink.payment.repository.model.Payment;
+import com.green.vrink.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.green.vrink.payment.dto.PriceDTO;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface PaymentRepository {
@@ -13,4 +16,5 @@ public interface PaymentRepository {
 	Integer insertByPayment(Payment payment);
 
     List<Payment> findByUserId(Integer userId);
+	List<BuyDTO> findBuyListByUserId(@Param("userId") Integer userId, @Param("cri") Criteria cri);
 }

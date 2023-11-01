@@ -15,4 +15,11 @@
 		SELECT payment_id, user_id, name, imp_uid, merchant_uid, price, date_format(created_at,'%y-%m-%d %h:%m') as created_at
 		FROM payment WHERE user_id = #{userId};
 	</select>
+    <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyDTO">
+        SELECT point, editor_recognize, customer_recognize, payment_state_id, ps.created_at
+        FROM payment_state ps
+                 LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        where p.user_id = #{userId}
+          and customer_recognize = 0
+    </select>
 </mapper>
