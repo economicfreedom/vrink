@@ -93,7 +93,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="showList">회원 목록</a>
+                            <a class="nav-link" href="user?reset=1">회원 목록</a>
 <%--                            <a class="nav-link" data-bs-toggle="modal" href="#myModal">판매자 신청 목록</a>--%>
                             <a class="nav-link" href="apply-accept?reset=1">판매자 신청 목록</a>
                             <a class="nav-link" href="rentalList">신고 내역 목록</a>

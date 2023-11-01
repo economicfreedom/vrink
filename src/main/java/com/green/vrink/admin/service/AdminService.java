@@ -15,11 +15,12 @@ public interface AdminService {
     List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging);
     List<FreeBoardDTO> getAllFreeboardList();
     List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging);
-    List<User> getAllUser();
+    List<User> getAllUser(PagingDto paging);
     List<User> getAllUserByType(String classification);
     List<User> getAllUserPaging(PagingDto paging);
     List<User> getAllUserByTypePaging(PagingDto paging);
-    Integer userTotalCount();
+    User getUserById(Integer id);
+    Integer userTotalCount(PagingDto paging);
     Integer userTotalCountClassification(PagingDto paging);
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
