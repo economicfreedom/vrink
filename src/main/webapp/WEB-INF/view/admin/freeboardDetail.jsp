@@ -198,7 +198,7 @@
 
 </script>
 
-<div class="container" style="margin: 20px;">
+<div class="container" style="margin: 50px auto;border: 1px solid black;">
     <div class="row">
         <div class="title">
 

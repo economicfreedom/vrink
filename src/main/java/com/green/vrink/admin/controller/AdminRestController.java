@@ -201,6 +201,8 @@ public class AdminRestController {
 
         log.info("자유게시판 관리 목록 레스트 컨트롤러 호출");
 
+        paging.setRecordSize(20);
+
         paging.setPage(page);
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
@@ -257,7 +259,7 @@ public class AdminRestController {
                 }
 
                 pagination.setArticleTotalCount(lastFreeBoardDTOList.size());
-                for (int i = (page-1)*10; i < Math.min((page-1)*10+10, lastFreeBoardDTOList.size()); i++) {
+                for (int i = (page-1)*20; i < Math.min((page-1)*20+20, lastFreeBoardDTOList.size()); i++) {
                     finalFreeBoardDTOList.add(lastFreeBoardDTOList.get(i));
                 }
                 freeBoradDtoList = finalFreeBoardDTOList;

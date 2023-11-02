@@ -4,10 +4,22 @@
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
 <style>
-    table {
+    .table {
         /* 	width: 100%; */
         border-collapse: collapse;
-        margin-left: 30px;
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+    .t-head {
+        background-color: #ececec;
+    }
+    .table td {
+        padding: 1px !important;
+        vertical-align: baseline !important;
+        padding-left: 8px !important;
+    }
+    .card-header {
+        padding-left: 23px;
     }
 
     p {
@@ -28,6 +40,7 @@
 
     td:last-child {
         text-align: right;
+        padding-right: 10px !important;
     }
 
     td {
@@ -41,13 +54,14 @@
     }
 
     h4 {
-        padding-left: 8px;
+        margin-top: 5px;
     }
 
     .classification {
         display: inline-block;
         font-weight: bold;
         padding: 8px 10px;
+        padding-left: 8px !important;
     }
 
     .write-btn {
@@ -65,9 +79,9 @@
     }
 
     .tab--adminApply {
-        margin-left: 30px;
-        padding: 0 0 1px 1px;
-        margin-bottom: 30px;
+        margin-top: 15px;
+        margin-left: 24px;
+        padding: 0;
         overflow: hidden;
     }
 
@@ -193,139 +207,142 @@
 <%--<c:forEach items="${adminApplyList}" var="dto">--%>
 <%--    <h1>${dto.nickname}</h1>--%>
 <%--</c:forEach>--%>
+<div class="card m-4">
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 판매자 신청 목록</h3></div>
+    <ul class="tab--adminApply">
+        <c:choose>
+            <c:when test="${uClassification == '전체' or empty uClassification}">
+                <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="0"><a href="#">승인 대기</a></li>
+                <li data-classification="1"><a href="#">승인됨</a></li>
 
-<h1 class="title--adminApply">판매자 신청 목록</h1>
-<ul class=tab--adminApply>
-    <c:choose>
-        <c:when test="${uClassification == '전체' or empty uClassification}">
-            <li class="active" data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="0"><a href="#">승인 대기</a></li>
-            <li data-classification="1"><a href="#">승인됨</a></li>
+            </c:when>
+            <c:when test="${uClassification == '0'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification="0"><a href="#">승인 대기
+                </a></li>
+                <li data-classification="1"><a href="#">승인됨</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="0"><a href="#">승인 대기</a></li>
+                <li class="active" data-classification="1"><a href="#">승인됨</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 
-        </c:when>
-        <c:when test="${uClassification == '0'}">
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification="0"><a href="#">승인 대기
-            </a></li>
-            <li data-classification="1"><a href="#">승인됨</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="0"><a href="#">승인 대기</a></li>
-            <li class="active" data-classification="1"><a href="#">승인됨</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
+    <form style="width: 95%;" action="#" name="pageForm">
+        <div class="mx-4 mb-2">
+            <select name="searchType"
+                    id="searchType"
+                    class="datatable-selector"
+                    style="padding-left: 1.125rem; padding-right: 2.125rem;">
+                <c:choose>
+                    <c:when test="${uSearchType == '사기이력'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력" selected>사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '은행이름'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름" selected>은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '계좌번호'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호" selected>계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '닉네임'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임" selected>닉네임</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="전체" selected>전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:otherwise>
+                </c:choose>
 
-<form style="width: 90%;" action="#" name="pageForm">
-    <div class="mt-2 mx-4">
-        <select name="searchType" id="searchType">
-            <c:choose>
-                <c:when test="${uSearchType == '사기이력'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력" selected>사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:when>
-                <c:when test="${uSearchType == '은행이름'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름" selected>은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:when>
-                <c:when test="${uSearchType == '계좌번호'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호" selected>계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:when>
-                <c:when test="${uSearchType == '닉네임'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임" selected>닉네임</option>
-                </c:when>
-                <c:otherwise>
-                    <option value="전체" selected>전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:otherwise>
-            </c:choose>
-
-        </select> <input type="text" id="keyword" name="keyword"
-                         value="${uKeyword}">
-        <button class="btn btn-dark btn-block" type="button"
-                id="searchButton">검색
-        </button>
-        <button class="btn btn-dark btn-block" type="button"
-                id="resetButton"
-                onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
-        </button>
-    </div>
-
-    <table class="table">
-        <tbody id="adminApply-list-container">
-        </tbody>
-    </table>
-    <div class="paging">
-        <div class="text-center clearfix">
-            <ul class="pagination" id="pagination--a">
-                <c:if test="${pagination.prev}">
-                    <li class="page-item "><a class="page-list" href="#"
-                                              data-page="${pagination.beginPage-1}">Prev</a></li>
-                </c:if>
-
-                <c:forEach var="num" begin="${pagination.beginPage}"
-                           end="${pagination.endPage}">
-                    <li
-                            class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
-                            class="page-list" href="#" data-page="${num}">${num}</a></li>
-                </c:forEach>
-
-                <c:if test="${pagination.next}">
-                    <li class="page-item"><a class="page-list" href="#"
-                                             data-page="${pagination.endPage+1}">Next</a></li>
-                </c:if>
-            </ul>
-
-            <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-            <input type="hidden" id="page" name="page" value="${pagination.paging.page}"> <input type="hidden"
-                                                                                                 name="recordSize"
-                                                                                                 value="${pagination.paging.recordSize}">
-
+            </select> <input type="text" id="keyword" name="keyword" class="datatable-input"
+                             placeholder="검색어를 입력해주세요" value="${uKeyword}">
+            <button class="btn btn-secondary btn-block" type="button" style="position: relative; top: -1px;"
+                    id="searchButton">검색
+            </button>
+            <button class="btn btn-secondary btn-block" type="button" style="position: relative; top: -1px;"
+                    id="resetButton"
+                    onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
+            </button>
         </div>
-    </div>
-</form>
 
+        <table class="datatable-table table">
+            <tbody id="adminApply-list-container">
+            </tbody>
+        </table>
+        <div class="paging">
+            <div class="text-center clearfix">
+                <ul class="pagination" id="pagination--a">
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item "><a class="page-list" href="#"
+                                                  data-page="${pagination.beginPage-1}">Prev</a></li>
+                    </c:if>
+
+                    <c:forEach var="num" begin="${pagination.beginPage}"
+                               end="${pagination.endPage}">
+                        <li
+                                class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
+                                class="page-list" href="#" data-page="${num}">${num}</a></li>
+                    </c:forEach>
+
+                    <c:if test="${pagination.next}">
+                        <li class="page-item"><a class="page-list" href="#"
+                                                 data-page="${pagination.endPage+1}">Next</a></li>
+                    </c:if>
+                </ul>
+
+                <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+                <input type="hidden" id="page" name="page" value="${pagination.paging.page}"> <input type="hidden"
+                                                                                                     name="recordSize"
+                                                                                                     value="${pagination.paging.recordSize}">
+
+            </div>
+        </div>
+    </form>
+</div>
 
 <script>
 
-    function changeApply(applyId, accepted ,number) {
+    function changeApply(applyId, accepted, number) {
 
         $.ajax({
-            type : "POST",
-            url : "/admin/change-apply",
-            data : {
+            type   : "POST",
+            url    : "/admin/change-apply",
+            data   : {
                 "applyId" : applyId,
-                "accepted" : accepted,
-                "number" : number
+                "accepted": accepted,
+                "number"  : number
             },
-            success : function(data){
+            success: function (data) {
                 if (data === 200) {
                     window.location.href = "/admin/apply-accept";
-                } else if(data === 400) {
+                } else if (data === 400) {
                     alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
                 } else {
                     alert('에러 읍니다.');
                 }
             }
-            ,error: function(){
+            , error: function () {
                 alert('서버 에러입니다.');
             }
         });
@@ -351,14 +368,15 @@
                         .val());
                 });
 
-            $('input[type="text"]').keydown(function(key) {
+            $('input[type="text"]').keydown(function (key) {
                 if (key.keyCode === 13) {
                     key.preventDefault();
-                };
+                }
+                ;
             });
 
-            $("#keyword").on("keyup",function(key){
-                if(key.keyCode==13) {
+            $("#keyword").on("keyup", function (key) {
+                if (key.keyCode == 13) {
                     console.log(classification2);
                     loadadminApplys(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
@@ -390,7 +408,6 @@
             }
 
 
-
             function loadadminApplys(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
@@ -405,7 +422,7 @@
 
                         var adminApplyList = data.adminApplyList;
                         var pagination = data.pagination;
-                        var adminApplyListHTML = '<tr>'
+                        var adminApplyListHTML = '<tr class="t-head">'
                             + '<td><h4>신청상태</h4></td>'
                             + '<td><h4>사기이력</h4></td>'
                             + '<td><h4>은행이름</h4></td>'
@@ -418,22 +435,21 @@
                             let acct = 0;
 
                             if (adminApply.accepted === 0) {
-                                adminApply.accepted = '승인 대기';
+                                adminApply.accepted = '<text style="color: cadetblue">승인 대기</text>';
                                 acct = 0;
-                            }
-                            else {
-                                adminApply.accepted = '승인됨';
+                            } else {
+                                adminApply.accepted = '<text style="color: #173f41">승인됨</text>';
                                 acct = 1;
                             }
-                            let regData = adminApply.createdAt.substring(0,10);
+                            let regData = adminApply.createdAt.substring(0, 10);
                             let cheating;
 
-                            if(adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
+                            if (adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
                             else cheating = '<th><a target="_blank" style="text-decoration: none; color: red;" href="https://web.joongna.com/fraud/result?inputValue=' + adminApply.number + '&type=account_number">' + adminApply.cheater + '</a></th>'
                             adminApplyListHTML += '<tr>'
                                 + '<td><p class="classification" style="min-width: 100px">'
                                 + adminApply.accepted
-                                + '</p> <button class="btn btn-dark btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
+                                + '</p> <button class="btn btn-secondary btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
                                 + cheating
                                 + '<td>'
                                 + adminApply.name
@@ -498,4 +514,4 @@
 
 </script>
 
-<%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>
+<%@ include file="/WEB-INF/view/layout/admin_footer.jsp" %>

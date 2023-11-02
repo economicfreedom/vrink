@@ -35,7 +35,7 @@
         });
     </script>
 </head>
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed" style="width: 97%">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="main">Vrink</a>

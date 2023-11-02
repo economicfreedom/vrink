@@ -4,10 +4,23 @@
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
 <style>
-    table {
+
+    .table {
         /* 	width: 100%; */
         border-collapse: collapse;
-        margin-left: 30px;
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+    .t-head {
+        background-color: #ececec;
+    }
+    .table td {
+        padding: 1px !important;
+        vertical-align: baseline !important;
+        padding-left: 8px !important;
+    }
+    .card-header {
+        padding-left: 23px;
     }
 
     p {
@@ -28,6 +41,7 @@
 
     td:last-child {
         text-align: right;
+        padding-right: 10px !important;
     }
 
     td {
@@ -37,11 +51,10 @@
     td a {
         color: black;
         text-decoration: none !important;
-        margin-left: 15px;
     }
 
     h4 {
-        padding-left: 8px;
+        margin-top: 5px;
     }
 
     .write-btn {
@@ -59,9 +72,9 @@
     }
 
     .tab--freeboard {
-        margin-left: 30px;
-        padding: 0 0 1px 1px;
-        margin-bottom: 30px;
+        margin-top: 15px;
+        margin-left: 24px;
+        padding: 0;
         overflow: hidden;
     }
 
@@ -179,12 +192,16 @@
         color: #fff;
     }
 </style>
+<div class="card m-4">
 
-<h1 class="title--freeboard">자유게시판 관리</h1>
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 자유게시판 관리</h3></div>
 
-<form style="width: 90%;" action="#" name="pageForm">
-    <div class="mt-2 mx-4">
-        <select name="searchType" id="searchType">
+<form style="width: 95%;" action="#" name="pageForm">
+    <div class="mx-4 mb-2 mt-3">
+        <select  name="searchType"
+                 id="searchType"
+                 class="datatable-selector"
+                 style="padding-left: 1.125rem; padding-right: 2.125rem;">
             <c:choose>
                 <c:when test="${uSearchType == '아이디'}">
                     <option value="전체">전체</option>
@@ -212,18 +229,18 @@
                 </c:otherwise>
             </c:choose>
 
-        </select> <input type="text" id="keyword" name="keyword"
+        </select> <input type="text" id="keyword" name="keyword" class="datatable-input" placeholder="검색어를 입력해주세요"
                          value="${uKeyword}">
-        <button class="btn btn-dark btn-block" type="button"
+        <button class="btn btn-secondary btn-block" type="button"
                 id="searchButton">검색
         </button>
-        <button class="btn btn-dark btn-block" type="button"
+        <button class="btn btn-secondary btn-block" type="button"
                 id="resetButton"
                 onClick="location.href='/admin/freeboard?reset=1'">검색초기화
         </button>
     </div>
 
-    <table class="table">
+    <table class="datatable-table table">
         <tbody id="freeboard-list-container">
         </tbody>
     </table>
@@ -256,7 +273,7 @@
         </div>
     </div>
 </form>
-
+</div>
 
 <script>
 
@@ -326,7 +343,7 @@
 
                         var freeboardList = data.freeboardList;
                         var pagination = data.pagination;
-                        var freeboardListHTML = '<tr>'
+                        var freeboardListHTML = '<tr class="t-head">'
                             + '<td><h4>글번호</h4></td>'
                             + '<td><h4>아이디</h4></td>'
                             + '<td><h4>제목</h4></td>'

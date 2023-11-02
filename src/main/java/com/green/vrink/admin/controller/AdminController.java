@@ -8,6 +8,7 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.message.service.MessageService;
+import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
@@ -32,6 +33,7 @@ public class AdminController {
     private final HttpSession session;
     private final AdminService adminService;
     private final FreeBoardReplyService freeBoardReplyService;
+    private final QnAService qnAService;
 
     private final MessageService messageService;
 
@@ -82,6 +84,8 @@ public class AdminController {
             required = false, defaultValue="2")String reset, Model model){
 
         log.info("자유게시판 목록 컨트롤러 호출");
+
+        paging.setRecordSize(20);
 
         if(reset.equals("1")) {
             session.removeAttribute("uSearchType");
@@ -220,6 +224,8 @@ public class AdminController {
     @GetMapping("/question/detail")
     public String questionDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
         model.addAttribute("questionDetail", adminService.getQuestionById(id));
+        model.addAttribute("answer", qnAService.getQuestion(id));
+
         return "admin/questionDetailAdmin";
     }
 
