@@ -21,7 +21,6 @@
 
 <body>
 
-<canvas width="300" height="300" id="canvas"></canvas>
 
 <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
@@ -33,6 +32,7 @@
 					"@pixiv/three-vrm": "/js/three-vrm.module.js"
 				}
 			}
+
 
 
 
@@ -70,12 +70,16 @@
     // scene
     const scene = new THREE.Scene();
 
-    scene.background = new THREE.Color("black")
+    scene.background = new THREE.Color("white")
 
     // light
     const light = new THREE.DirectionalLight(0xffffff);
     light.position.set(1.0, 1.0, 1.0).normalize();
     scene.add(light);
+			// lookat target
+
+    const lookAtTarget = new THREE.Object3D();
+			camera.add( lookAtTarget );
 
 
     // gltf and vrm
@@ -114,7 +118,8 @@
             currentVrm = vrm;
             console.log(vrm);
             scene.add(vrm.scene);
-            prepareAnimation(vrm);
+            // prepareAnimation(vrm);
+            vrm.lookAt.target = lookAtTarget;
 
 
             function animate() {
@@ -131,37 +136,35 @@
 
         // called when loading has errors
         (error) => console.error(error),
+    );
 
-
-            );
-
-    function prepareAnimation(vrm) {
-
-
-        currentMixer = new THREE.AnimationMixer(vrm.scene);
-
-        const quatA = new THREE.Quaternion(0.0, 0.0, 0.0, 1.0);
-        const quatB = new THREE.Quaternion();
-
-        quatB.setFromEuler(new THREE.Euler(0.0, 0.0, Math.PI / 4));
-
-        const armTrack = new THREE.QuaternionKeyframeTrack(
-            vrm.humanoid.getNormalizedBoneNode('leftUpperArm').name + '.quaternion', // name
-            [0.0, 0.5, 1.0], // times
-            [...quatA.toArray(), ...quatA.toArray(), ...quatA.toArray()] // values (모두 동일)
-        );
-
-        const blinkTrack = new THREE.NumberKeyframeTrack(
-            vrm.expressionManager.getExpressionTrackName('blink'), // name
-            [0.0, 0.5, 1.0], // times
-            [0.0, 1.0, 0.0] // values
-        );
-
-        const clip = new THREE.AnimationClip('Animation', 1.0, [armTrack, blinkTrack]);
-        const action = currentMixer.clipAction(clip);
-        action.play();
-
-    }
+    // function prepareAnimation(vrm) {
+    //
+    //
+    //     currentMixer = new THREE.AnimationMixer(vrm.scene);
+    //
+    //     const quatA = new THREE.Quaternion(0.0, 0.0, 0.0, 1.0);
+    //     const quatB = new THREE.Quaternion();
+    //
+    //     quatB.setFromEuler(new THREE.Euler(0.0, 0.0, Math.PI / 4));
+    //
+    //     const armTrack = new THREE.QuaternionKeyframeTrack(
+    //         vrm.humanoid.getNormalizedBoneNode('leftUpperArm').name + '.quaternion', // name
+    //         [0.0, 0.5, 1.0], // times
+    //         [...quatA.toArray(), ...quatA.toArray(), ...quatA.toArray()] // values (모두 동일)
+    //     );
+    //
+    //     const blinkTrack = new THREE.NumberKeyframeTrack(
+    //         vrm.expressionManager.getExpressionTrackName('blink'), // name
+    //         [0.0, 1.0, 2.0], // times
+    //         [0.0, 1.0, 0.0] // values
+    //     );
+    //
+    //     const clip = new THREE.AnimationClip('Animation', 1.0, [armTrack, blinkTrack]);
+    //     const action = currentMixer.clipAction(clip);
+    //     action.play();
+    //
+    // }
 
     // helpers
     const gridHelper = new THREE.GridHelper(10, 10);
@@ -198,6 +201,13 @@
     }
 
     animate();
+
+    		window.addEventListener( 'mousemove', ( event ) => {
+
+				lookAtTarget.position.x = 10.0 * ( ( event.clientX - 0.5 * window.innerWidth ) / window.innerHeight );
+				lookAtTarget.position.y = - 10.0 * ( ( event.clientY - 0.5 * window.innerHeight ) / window.innerHeight );
+
+			} );
 </script>
 </body>
 </html>
