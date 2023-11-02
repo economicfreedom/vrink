@@ -6,12 +6,28 @@
       IMP.init("imp28453842");
 
       function requestPay() {
+		  let options = [];
+		  let prices = [];
+		  let quantities = []
+		  $('li').each(function() {
+
+			  // 각 <li> 요소 내에서 "manual-adjust" 클래스를 가진 input 요소를 선택합니다.
+			  let manualAdjustInput = $(this).find('.manual-adjust');
+
+			  // "manual-adjust" 클래스를 가진 input 요소의 값이 1 이상인 경우에만 처리합니다.
+			  if (parseInt(manualAdjustInput.val()) >= 1) {
+				  // "options"와 "price" 요소를 선택하고 해당 텍스트를 가져옵니다.
+				  options.push($(this).find('.options').text())
+				  prices.push($(this).find('.mul-price').text());
+				  quantities.push($(this).find('.manual-adjust').val());
+			  }
+		  });
         IMP.request_pay(
           {
             pg: "kcp.{TC0ONETIME}",
             pay_method: "card",
             merchant_uid: "merchant_"+new Date().getTime(),
-            name: $($('.options')[0]).text() + ' 외 '+($('.options').length-1) +'건',
+            name: $($('.options')[0]).text() + ' 외 '+(options.length-1) +'건',
             amount: paymentPrice,
             buyer_email: '${user.email}',
             buyer_name: '${user.name}',
@@ -36,7 +52,6 @@
 				})
 				.then(response => {
 					if (response.ok) {
-
 						// DB입력
 						fetch('/payment/payment-done',{
 							method: 'POST',
@@ -49,9 +64,12 @@
 								name : rsp.name,
 								impUid: rsp.imp_uid,
 								merchantUid: rsp.merchant_uid,
-								price: rsp.paid_amount
+								totalPrice: rsp.paid_amount,
+								option: options,
+								price: prices,
+								quantity: quantities
 							})
-						}).then(response=>console.log(response))
+						}).then(location.href="/payment/payment-list")
 					} else {
 						alert("결제 금액이 잘못되었습니다.");
 						// 인증코드 발행
@@ -152,23 +170,29 @@
 </div>
 <script>
 
-var paymentPrice = 0;
-$('.manual-adjust').change(function(e){
-	let price = $(this).closest('li').find('.price-area').text();
-	let money = $(this).closest('li').find('.mul-price');
-	let quantity = $(this).val();
-	money.text(price*quantity);
-	let mulPrice = $('.mul-price');
-	let totalPrice = $('#total-price');
-	let sum = 0;
+	var paymentPrice = 0;
+	let test = [];
 
-	for(i=0; i<mulPrice.length; i++) {
-		sum += Number($(mulPrice[i]).text())
-	}
+	document.querySelectorAll('.manual-adjust').forEach(function (element) {
+		element.addEventListener('change', function (e) {
+			let price = this.closest('li').querySelector('.price-area').textContent;
+			let money = this.closest('li').querySelector('.mul-price');
+			let quantity = this.value;
+			money.textContent = price * quantity;
 
-	totalPrice.text(sum);
-	paymentPrice = Number(totalPrice.text());
-});
+			let mulPrice = document.querySelectorAll('.mul-price');
+			let totalPrice = document.getElementById('total-price');
+			let sum = 0;
+
+			for (let i = 0; i < mulPrice.length; i++) {
+				sum += parseFloat(mulPrice[i].textContent);
+			}
+
+			totalPrice.textContent = sum;
+			paymentPrice = parseFloat(totalPrice.textContent);
+		});
+	});
+
 
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

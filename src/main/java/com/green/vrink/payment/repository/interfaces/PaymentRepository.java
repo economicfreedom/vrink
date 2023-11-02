@@ -3,6 +3,8 @@ package com.green.vrink.payment.repository.interfaces;
 import java.util.List;
 
 import com.green.vrink.payment.dto.BuyDTO;
+import com.green.vrink.payment.dto.PaymentDTO;
+import com.green.vrink.payment.dto.PaymentDetailDTO;
 import com.green.vrink.payment.repository.model.Payment;
 
 import com.green.vrink.payment.repository.model.PaymentState;
@@ -17,16 +19,19 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface PaymentRepository {
 	List<PriceDTO> findByEditorId(Integer editorId);
-	Integer insertByPayment(Payment payment);
+	Integer insertByPayment(PaymentDTO paymentDTO);
 
-    List<Payment> findByUserId(Integer userId);
+    Payment findByPaymentId(Integer paymentId);
 
     Integer insertByPaymentState(PaymentState paymentState);
 
     Payment findByCancelData(Integer paymentId);
 
-    int findByPaymentId();
+    int findByLastPaymentId();
 
 	List<BuyDTO> findBuyListByUserId(@Param("userId") Integer userId, @Param("cri") Criteria cri);
 
+    void insertByPaymentDetail(PaymentDetailDTO paymentDetailDTO);
+
+    List<PaymentDetailDTO> findPaymentDetailByPaymentId(Integer paymentId);
 }

@@ -2,9 +2,9 @@ package com.green.vrink.payment.controller;
 
 
 import com.green.vrink.payment.dto.AutorizedCodeDTO;
+import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
-import com.green.vrink.payment.repository.model.PaymentState;
 import com.green.vrink.payment.service.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,16 +45,9 @@ public class PaymentRestController {
     }
 
     @PostMapping("/payment-done")
-    public ResponseEntity<?> PaymentDone(@RequestBody Payment payment) {
-        log.info("payment : {} ",payment);
-        paymentServiceImpl.insertPayment(payment);
-        int paymentId = paymentServiceImpl.selectPaymentId();
-        PaymentState paymentState = new PaymentState();
-        paymentState.setPaymentId(paymentId);
-        paymentState.setPoint(payment.getPrice());
-
-        paymentServiceImpl.insertPaymentState(paymentState);
-
+    public ResponseEntity<?> PaymentDone(@RequestBody PaymentDTO paymentDTO) {
+        log.info("paymentDTO : {} ",paymentDTO);
+        paymentServiceImpl.insertPayment(paymentDTO);
         return ResponseEntity.ok().build();
     }
 }

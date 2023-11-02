@@ -12,30 +12,30 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @Slf4j
 public class ErrorHandler implements ErrorController {
-    @GetMapping("/error")
+//    @GetMapping("/error")
 
-    public String handleError(HttpServletRequest request) {
+//    public String handleError(HttpServletRequest request) {
 
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-
-        if (status != null) {
-            int statusCode = Integer.valueOf(status.toString());
-            //404에러시 404에러 html페이지를 반환
-            log.error("error code {}", statusCode);
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-
-                return "404";
-            } else if (statusCode==HttpStatus.FORBIDDEN.value()) {
-                return "redirect:/";
-
-            } else {
-            //그외에 에러는 아래와 같이 반환함
-            return "500";
-        }
-    }
-
-        return"500";
+//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//
+//
+//        if (status != null) {
+//            int statusCode = Integer.valueOf(status.toString());
+//            //404에러시 404에러 html페이지를 반환
+//            log.error("error code {}", statusCode);
+//            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+//
+//                return "404";
+//            } else if (statusCode==HttpStatus.FORBIDDEN.value()) {
+//                return "redirect:/";
+//
+//            } else {
+//            //그외에 에러는 아래와 같이 반환함
+//            return "500";
+//        }
+//    }
+//
+//        return"500";
+//}
+//    }
 }
-    }
-

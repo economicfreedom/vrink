@@ -2,8 +2,7 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
-function refund(impUid, price) {
-
+function refund(impUid, totalprice) {
     fetch('/payment/authorizedCode',{
         method:'POST'
     }).then(response=>response.json())
@@ -29,32 +28,41 @@ function refund(impUid, price) {
                         body:JSON.stringify({  // 보낼 데이터 (Object , String, Array)
                             reason : '환불', // 가맹점 클라이언트로부터 받은 환불사유
                             imp_uid : impUid, // imp_uid를 환불 `unique key`로 입력
-                            amount: price // 가맹점 클라이언트로부터 받은 환불금액
+                            amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
                         })
                     }).then(response=>response.json())
-                        .then(data => console.log(data))
+                        .then(alert('환불이 완료되었습니다.'))
                 })
     })
 }
 </script>
+<style>
+    .hidden-row {
+        display: none;
+    }
+</style>
 <section class="block">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-center">
                 <div class="heading4 mb-5">
                     <h2>구매 내역</h2>
-                    <span>소개를 작성해보세요</span>
+                    <span></span>
                 </div>
-                <c:forEach var="paymentList" items="${paymentList}">
                 <div class="cart-total-box mb-5">
-                    <h2 class="cart-head-title">${paymentList.createdAt}</h2>
+                    <h2 class="cart-head-title">${payment.createdAt}</h2>
                     <ul>
-                        <li><h3>상품명</h3> <span>${paymentList.name}</span></li>
-                        <li><h3>가격</h3> <span>${paymentList.price}</span></li>
-                        <li><span><input type="button" class="flat-btn refund" value="환불하기" onclick="getPayment('${paymentList.paymentId}')"></span></li>
+                        <li><h3>상품명</h3> <span>${payment.name}</span></li>
+                        <li><h3>가격</h3> <span>${payment.totalPrice}원</span></li>
+                        <li><span id="showButton">구매내역 상세보기</span></li>
+                        <c:forEach items="${paymentDetail}" var="paymentDetail">
+                        <li class="hidden-row"><h3>상품이름</h3><span>${paymentDetail.options}</span></li>
+                        <li class="hidden-row"><h3>개수</h3><span>${paymentDetail.quantity}개</span></li>
+                        <li class="hidden-row"><h3>가격</h3><span>${paymentDetail.price}원</span></li>
+                        </c:forEach>
+                        <li class="hidden-row"><span><input type="button" class="flat-btn refund" value="환불하기" onclick="getPayment('${payment.paymentId}')"></span></li>
                     </ul>
                 </div>
-                </c:forEach>
             </div>
         </div>
     </div>
@@ -65,8 +73,12 @@ function refund(impUid, price) {
             method:'GET',
         }).then(response=>response.json())
             .then(data=>{
-                refund(data.impUid,data.price)
+                refund(data.impUid,data.totalPrice)
             })
     }
+
+    $("#showButton").click(function() {
+        $(".hidden-row").slideToggle(500); // Adjust the animation speed
+    });
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

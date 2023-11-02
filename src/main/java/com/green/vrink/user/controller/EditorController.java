@@ -121,9 +121,9 @@ if (editorId == null) {
         return "user/editorList";
     }
     
-    @GetMapping("/editor-price/{editorId}") 
-    public String editorPrice(@PathVariable("editorId") Integer editorId) {
-    	
+    @GetMapping("/editor-price")
+    public String editorPrice(@RequestParam Integer editorId) {
+
     	return "user/editorPrice";
     }
 

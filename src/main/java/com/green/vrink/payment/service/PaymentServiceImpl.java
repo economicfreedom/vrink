@@ -16,6 +16,7 @@ import com.green.vrink.payment.repository.interfaces.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
@@ -54,18 +55,36 @@ public class PaymentServiceImpl implements PaymentService {
 		return autorizedCodeDTO;
 	}
 
+	@Transactional
 	@Override
-	public Integer insertPayment(Payment payment) {
-		return paymentRepository.insertByPayment(payment);
+	public Integer insertPayment(PaymentDTO paymentDTO) {
+		paymentRepository.insertByPayment(paymentDTO);
+		Integer paymentId = selectPaymentId();
+		PaymentState paymentState = new PaymentState();
+		paymentState.setPaymentId(paymentId);
+		paymentState.setPoint(paymentDTO.getTotalPrice());
+		PaymentDetailDTO paymentDetailDTO = new PaymentDetailDTO();
+		for(int i = 0; i<paymentDTO.getOption().length; i++) {
+			String option = paymentDTO.getOption()[i];
+			Integer price = paymentDTO.getPrice()[i];
+			Integer quantity = paymentDTO.getQuantity()[i];
+
+			paymentDetailDTO.setPaymentId(paymentId);
+			paymentDetailDTO.setOptions(option);
+			paymentDetailDTO.setPrice(price);
+			paymentDetailDTO.setQuantity(quantity);
+			log.info("paymentdetail {}",paymentDetailDTO);
+			paymentRepository.insertByPaymentDetail(paymentDetailDTO);
+		}
+		return insertPaymentState(paymentState);
 	}
 
 	@Override
-	public List<Payment> responsePayment(Integer userId) {
-		return paymentRepository.findByUserId(userId);
+	public Payment responsePayment(Integer paymentId) {
+		return paymentRepository.findByPaymentId(paymentId);
 	}
 
 	@Override
-
 	public Integer insertPaymentState(PaymentState paymentState) {
 		return paymentRepository.insertByPaymentState(paymentState);
 	}
@@ -76,12 +95,16 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int selectPaymentId() {
-		return paymentRepository.findByPaymentId();
+	public Integer selectPaymentId() {
+		return paymentRepository.findByLastPaymentId();
 	}
 	public List<BuyDTO> buyList (Integer userId, Criteria cri){
 		return paymentRepository.findBuyListByUserId(userId, cri);
 
 	}
 
+	@Override
+	public List<PaymentDetailDTO> responsePaymentDetail(Integer paymentId) {
+		return paymentRepository.findPaymentDetailByPaymentId(paymentId);
+	}
 }

@@ -182,10 +182,10 @@
                     <div>
                         <div id="edit"
                              style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer">
-                            <a href="/editor/editor-edit/${editorDetail.editorId}">수정하기</a></div>
-                        <div
+                            수정하기</div>
+                        <div id="suggest"
                                 style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer">
-                            <a href="/payment/payment-page/${editorDetail.editorId}">작가에게 의뢰하기</a></div>
+                            작가에게 의뢰하기</div>
                         </div>
                     </div>
                 </div>
@@ -288,6 +288,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

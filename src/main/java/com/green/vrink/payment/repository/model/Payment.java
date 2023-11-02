@@ -12,6 +12,6 @@ public class Payment {
     private String name;
     private String impUid;
     private String merchantUid;
-    private Integer price;
+    private Integer totalPrice;
     private String createdAt;
 }
