@@ -26,9 +26,11 @@
                , r.content
                , DATE_FORMAT(r.created_at, "%Y-%m-%d") AS created_at
                , u.nickname
+               , c.title
         FROM community_reply r
         LEFT JOIN user u ON r.user_id = u.user_id
-        WHERE community_id=#{communityId}
+        LEFT JOIN community c ON r.community_id = c.community_id
+        WHERE r.community_id=#{communityId}
         LIMIT #{cri.offset},#{cri.countPerPage}
     </select>
     <select id="replyTotal" resultType="java.lang.Integer">
