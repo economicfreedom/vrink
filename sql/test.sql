@@ -361,31 +361,65 @@ from payment;
 SELECT *
 FROM payment_state;
 
-INSERT INTO payment_state(payment_id,customer_recognize, point)
+INSERT INTO payment_state(payment_id, customer_recognize, point)
     VALUE (1, 0, 1235);
 
 
 # 구매 목록 조인
 
-SELECT ps.point, customer_recognize, payment_state_id, ps.created_at,u.nickname,p.editor_id,p.user_id
+SELECT ps.point, customer_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id
 FROM payment_state ps
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
          LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
-     WHERE p.user_id = 1 AND  customer_recognize = 0;
+WHERE p.user_id = 1
+  AND customer_recognize = 0;
 
 
-select * FROM user;
+select *
+FROM user;
 
-select nickname from editor_detail ed
-left join user u on u.user_id = ed.user_id;
+select nickname
+from editor_detail ed
+         left join user u on u.user_id = ed.user_id;
 
 
-CREATE TABLE `ad` (
-	`ad_id`	int PRIMARY KEY AUTO_INCREMENT	NOT NULL,
-	`ad_com_name`	varchar(100)	NOT NULL,
-	`imgae`	text	NOT NULL,
-	`price`	int	NOT NULL,
-	`created_at`	timestamp	NOT NULL	DEFAULT now(),
-	`ad_period`	int	NOT NULL
+CREATE TABLE `ad`
+(
+    `ad_id`       int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `ad_com_name` varchar(100)                   NOT NULL,
+    `imgae`       text                           NOT NULL,
+    `price`       int                            NOT NULL,
+    `created_at`  timestamp                      NOT NULL DEFAULT now(),
+    `ad_period`   int                            NOT NULL
 );
+UPDATE user
+SET point = point + 1111
+WHERE user_id = 1;
+
+select *
+from user;
+
+
+select *
+from payment;
+
+SELECT ps.point
+     , customer_recognize
+     , editor_recognize
+     , payment_state_id
+     , ps.created_at
+     , u.nickname
+     , p.editor_id
+     , p.user_id
+     , ed.image
+     , pd.quantity
+     , p.state
+     , p.payment_id
+FROM payment_state ps
+         LEFT JOIN payment p ON ps.payment_id = p.payment_id
+         LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN user u ON ed.user_id = u.user_id
+WHERE p.user_id = 1
+  AND customer_recognize = 0;

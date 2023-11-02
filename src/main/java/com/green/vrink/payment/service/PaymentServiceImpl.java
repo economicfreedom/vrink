@@ -5,11 +5,7 @@ import java.util.List;
 import com.green.vrink.payment.dto.*;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.repository.model.PaymentState;
-import com.green.vrink.user.repository.model.User;
-import com.green.vrink.util.Check;
 import com.green.vrink.util.Criteria;
-import com.green.vrink.util.Define;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.green.vrink.payment.repository.interfaces.PaymentRepository;
@@ -19,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-
-import static com.green.vrink.util.Check.isNull;
 
 @Service
 @RequiredArgsConstructor
@@ -98,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public Integer selectPaymentId() {
 		return paymentRepository.findByLastPaymentId();
 	}
-	public List<BuyDTO> buyList (Integer userId, Criteria cri){
+	public List<BuyResponseDTO> buyList (Integer userId, Criteria cri){
 		return paymentRepository.findBuyListByUserId(userId, cri);
 
 	}
