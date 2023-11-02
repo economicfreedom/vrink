@@ -1,12 +1,15 @@
 package com.green.vrink.suggest.controller;
 
+import com.green.vrink.suggest.dto.SuggestReplyDto;
 import com.green.vrink.suggest.repository.model.Suggest;
+import com.green.vrink.suggest.repository.model.SuggestReply;
 import com.green.vrink.suggest.service.SuggestServiceImpl;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
+import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/suggest")
@@ -28,7 +32,7 @@ public class SuggestController {
     public String postSuggest() {
         User user = (User)session.getAttribute(Define.USER);
         if (user == null) {
-            return "user/applyForm";
+            return "main";
         }
         return "suggest/suggestWrite";
     }
@@ -37,14 +41,26 @@ public class SuggestController {
     public String getSuggest(@PathVariable int suggestId, Model model) {
         Suggest suggest = suggestService.getSuggest(suggestId);
         if (suggest == null) {
-            return "user/applyForm";
+            return "main";
         }
 
         Criteria cri = new Criteria();
-        String writerNickname = userRepository.findUserNicknameById(suggest.getUserId());
+        Integer replyCount = suggestService.getReplyCount(suggestId);
+        cri.setPageNum(1);
+        cri.setCountPerPage(7);
 
-        model.addAttribute("writerNickname", writerNickname);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(replyCount);
+
+        List<SuggestReplyDto> replyList = suggestService.getSuggestReplyList(suggestId, cri);
+
+        boolean next = pageDTO.getEndPage() > 1;
+
         model.addAttribute("suggest", suggest);
+        model.addAttribute("suggestReply", replyList);
+        model.addAttribute("next",next);
+        model.addAttribute("replyCount", replyCount);
 
         return "suggest/suggestDetail";
     }
@@ -54,7 +70,7 @@ public class SuggestController {
         Suggest suggest = suggestService.getSuggest(suggestId);
 
         if (user == null || suggest == null || user.getUserId() != suggest.getUserId()) {
-            return "user/applyForm";
+            return "main";
         }
 
         model.addAttribute("suggest", suggest);

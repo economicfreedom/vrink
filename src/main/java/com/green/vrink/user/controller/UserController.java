@@ -32,13 +32,13 @@ public class UserController {
 	@GetMapping("/sign-in")
 	public String signIn() {
 		// 로그인
-		return "user/applyForm";
+		return "main";
 	}
 
 	@GetMapping("/sign-up")
 	public String goToSignUp() {
 		// 회원가입
-		return "user/applyForm";
+		return "main";
 	}
 
 	@GetMapping("/my-page")

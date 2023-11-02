@@ -1,10 +1,9 @@
 package com.green.vrink.suggest.service;
 
-import com.green.vrink.suggest.dto.PatchSuggestDto;
-import com.green.vrink.suggest.dto.PostSuggestDto;
-import com.green.vrink.suggest.dto.PostSuggestReplyDto;
+import com.green.vrink.suggest.dto.*;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.repository.model.SuggestReply;
+import com.green.vrink.util.Criteria;
 
 import java.util.List;
 
@@ -14,5 +13,8 @@ public interface SuggestService {
     Integer patchSuggest(PatchSuggestDto patchSuggestDto);
     Integer deleteSuggest(Integer suggestId);
     Integer postSuggestReply(PostSuggestReplyDto postSuggestReplyDto);
-    List<SuggestReply> getSuggestReplyList(Integer suggestId);
+    List<SuggestReplyDto> getSuggestReplyList(Integer suggestId, Criteria criteria);
+    Integer getReplyCount(Integer suggestId);
+    Integer patchSuggestReply(PatchSuggestReplyDto patchSuggestReplyDto);
+    Integer deleteSuggestReply(Integer suggestId);
 }

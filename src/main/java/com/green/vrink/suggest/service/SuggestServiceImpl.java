@@ -1,11 +1,10 @@
 package com.green.vrink.suggest.service;
 
-import com.green.vrink.suggest.dto.PatchSuggestDto;
-import com.green.vrink.suggest.dto.PostSuggestDto;
-import com.green.vrink.suggest.dto.PostSuggestReplyDto;
+import com.green.vrink.suggest.dto.*;
 import com.green.vrink.suggest.repository.interfaces.SuggestRepository;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.repository.model.SuggestReply;
+import com.green.vrink.util.Criteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +43,22 @@ public class SuggestServiceImpl implements SuggestService{
     }
 
     @Override
-    public List<SuggestReply> getSuggestReplyList(Integer suggestId) {
-        return suggestRepository.getSuggestReplyListBySuggestId(suggestId);
+    public List<SuggestReplyDto> getSuggestReplyList(Integer suggestId, Criteria criteria) {
+        return suggestRepository.getSuggestReplyListBySuggestId(suggestId, criteria);
+    }
+
+    @Override
+    public Integer getReplyCount(Integer suggestId) {
+        return suggestRepository.getReplyCount(suggestId);
+    }
+
+    @Override
+    public Integer patchSuggestReply(PatchSuggestReplyDto patchSuggestReplyDto) {
+        return suggestRepository.patchSuggestReply(patchSuggestReplyDto);
+    }
+
+    @Override
+    public Integer deleteSuggestReply(Integer suggestId) {
+        return suggestRepository.deleteSuggestReply(suggestId);
     }
 }

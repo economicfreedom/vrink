@@ -17,8 +17,16 @@
         WHERE suggest.suggest_id = #{suggestId}
     </update>
 
+    <update id="patchSuggestReply">
+        UPDATE suggest_reply SET suggest_reply.content = #{content} WHERE suggest_reply.reply_id = #{replyId};
+    </update>
+
     <delete id="deleteSuggest">
         DELETE FROM suggest WHERE suggest.suggest_id = #{suggestId}
+    </delete>
+
+    <delete id="deleteSuggestReply">
+        DELETE FROM suggest_reply WHERE suggest_reply.reply_id = #{suggestId}
     </delete>
 
     <select id="getSuggest" resultType="com.green.vrink.suggest.repository.model.Suggest">
@@ -26,8 +34,18 @@
     </select>
 
     <select id="getSuggestReplyListBySuggestId"
-            resultType="com.green.vrink.suggest.repository.model.SuggestReply">
-        SELECT * FROM suggest_reply WHERE suggest_id = #{suggestId}
+            resultType="com.green.vrink.suggest.dto.SuggestReplyDto">
+        SELECT s.reply_id
+             , s.suggest_id
+             , s.user_id
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , u.nickname
+        FROM suggest_reply s
+                 LEFT JOIN user u ON s.user_id = u.user_id
+        WHERE suggest_id=#{suggestId}
+        ORDER BY s.created_at DESC
+        LIMIT #{criteria.offset}, #{criteria.countPerPage}
     </select>
 
     <select id="getReplyCount" resultType="java.lang.Integer">

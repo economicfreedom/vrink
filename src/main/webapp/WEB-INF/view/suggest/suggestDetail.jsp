@@ -5,45 +5,41 @@
 <script>
     let pageNum = 1;
     $(document).ready(function () {
-
-
         $("#reply-add").click(function () {
-            let reply = $("#reply-content");
-            let content = reply.val();
-
-
-            if (content.length === 0) {
+            if ($("#reply-content").val().trim().length === 0) {
                 alert("댓글을 입력해주세요.")
                 reply.focus();
                 return;
             }
-            fetch('/free-reply/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userId: `${USER.userId}`,
-                    communityId: `${dto.communityId}`,
-                    content: content,
-                    nickname:`${USER.nickname}`
-
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("로그인후 작성 가능합니다.")
-                    } else {
-                        location.reload()
-                    }
-                })
+            addReply();
         });
 
+        async function addReply() {
+            let reply = $("#reply-content");
+            let content = reply.val();
+            let result = await fetch('/suggest/reply/post', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            suggestId: `${suggest.suggestId}`,
+                                            userId:`${USER.userId}`,
+                                            content: content,
+                                        })
+                                    });
+            let resultCode = await result.json();
+            if(resultCode === 1) {
+                location.reload();
+            } else {
+                alert('로그인 후 사용가능합니다.');
+                location.reload();
+            }
+        }
 
     })
 
     function update(id) {
-        alert("?")
         location.href = "/suggest/patch/" + id;
     }
 
@@ -62,24 +58,19 @@
 
     }
 
-    function deleteReply(id) {
+    async function deleteReply(id) {
 
-        fetch('/free-reply/del/' + id, {
-            method: 'DELETE',
-
-        })
-
-            .then(response => {
-                if (!response.ok) {
-
-                } else {
-                    alert("댓글이 삭제 되었습니다.");
-                    $("#reply-" + id).remove();
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
+        let result = await fetch('/suggest/reply/delete/' + id, {
+                            method: 'DELETE',
+                            });
+        let resultCode = await result.json();
+        if (resultCode == 1) {
+            alert('삭제가 완료되었습니다.');
+            location.reload();
+        } else {
+            alert('삭제할 권한이 없습니다.');
+            location.reload();
+        }
     }
 
     function updateReply(id) {
@@ -92,6 +83,7 @@
 
     }
 
+
     function updateCancel(id, content) {
 
         let replyArea = $("#reply-content-" + id);
@@ -103,37 +95,32 @@
         $("#reply-del-" + id).css("display", "inline-block");
     }
 
-    function updateDone(id) {
-let replyArea = $("#reply-content-" + id);
-let content = replyArea.val();
+    async function updateDone(id) {
+        let replyArea = $("#reply-content-" + id);
+        let content = replyArea.val();
 
         if (content.length === 0) {
             alert("댓글을 입력해주세요.")
             replyArea.focus();
             return;
         }
-        fetch('/free-reply/update', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId:`${USER.userId}`,
-                communityId: `${dto.communityId}`,
-                replyId: id,
-                content: content,
-                nickname:`${USER.nickname}`
-
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    alert("")
-                } else {
-                    location.reload()
-                }
-            })
-
+        let result = await fetch('/suggest/reply/patch', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            replyId: id,
+                            content: content,
+                        })
+                    });
+        let resultCode = await result.json();
+        if (resultCode === 1) {
+            alert("댓글 수정을 완료했습니다.");
+            location.reload();
+        } else {
+            alert("댓글 수정 권한이 없습니다.");
+        }
     }
 
     function more() {
@@ -273,38 +260,37 @@ let content = replyArea.val();
 
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
-                        <c:forEach var="reply" items="${suggestReply}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${suggestReply.replyId}">
+                        <c:forEach var="suggestReply" items="${suggestReply}">
+                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-`${suggestReply.replyId}`">
                                 <li class="list-group-item custom-list-item" >
                                     <div class="comment-header">
-                                        <strong class="comment-nickname">${reply.nickname}</strong>
-                                        <span class="comment-date">${reply.createdAt}</span>
+                                        <strong class="comment-nickname">${suggestReply.nickname}</strong>
+                                        <span class="comment-date">${suggestReply.createdAt}</span>
                                     </div>
-                                    <textarea class="form-control custom-textarea"
-                                              rows="2"
-                                              id="reply-content-${reply.replyId}"
+                                    <textarea class="form-control custom-textarea" rows="2"
+                                              id="reply-content-${suggestReply.replyId}"
                                               readonly
-                                              >${reply.content}</textarea>
+                                              >${suggestReply.content}</textarea>
                                     <div class="comment-buttons">
-                                        <c:if test="${reply.userId == USER.userId}">
+                                        <c:if test="${suggestReply.userId == USER.userId}">
                                             <button class="btn btn-xs btn-default"
-                                                    onclick="updateReply(${reply.replyId})"
-                                                    id="update-${reply.replyId}">수정
+                                                    onclick="updateReply(${suggestReply.replyId})"
+                                                    id="update-${suggestReply.replyId}">수정
                                             </button>
                                             <button class="btn btn-xs btn-primary" style="display: none"
-                                                    onclick="updateDone(${reply.replyId})"
-                                                    id="done-${reply.replyId}">완료
+                                                    onclick="updateDone(${suggestReply.replyId})"
+                                                    id="done-${suggestReply.replyId}">완료
 
 
                                             </button>
                                             <button class="btn btn-xs btn-default" style="display: none"
-                                                    onclick="updateCancel( ${reply.replyId}, '${reply.content}' )"
-                                                    id="cancel-${reply.replyId}"
+                                                    onclick="updateCancel( ${suggestReply.replyId}, '${suggestReply.content}' )"
+                                                    id="cancel-${suggestReply.replyId}"
                                             >취소
                                             </button>
                                             <button class="btn btn-xs btn-danger"
-                                                    onclick="deleteReply(${reply.replyId})"
-                                                    id="reply-del-${reply.replyId}"
+                                                    onclick="deleteReply(${suggestReply.replyId})"
+                                                    id="reply-del-${suggestReply.replyId}"
 
                                             >삭제
                                             </button>
