@@ -2,7 +2,8 @@ package com.green.vrink.payment.repository.interfaces;
 
 import java.util.List;
 
-import com.green.vrink.payment.dto.BuyDTO;
+
+import com.green.vrink.payment.dto.BuyResponseDTO;
 import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.PaymentDetailDTO;
 import com.green.vrink.payment.repository.model.Payment;
@@ -29,7 +30,8 @@ public interface PaymentRepository {
 
     int findByLastPaymentId();
 
-	List<BuyDTO> findBuyListByUserId(@Param("userId") Integer userId, @Param("cri") Criteria cri);
+	List<BuyResponseDTO> findBuyListByUserId(@Param("userId") Integer userId, @Param("cri") Criteria cri);
+
 
     void insertByPaymentDetail(PaymentDetailDTO paymentDetailDTO);
 
