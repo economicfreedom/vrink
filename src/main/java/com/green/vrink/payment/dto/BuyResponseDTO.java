@@ -9,15 +9,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BuyDTO {
+public class BuyResponseDTO {
 
     private Integer point;
     private Byte editorRecognize;
-//    private Byte customerRecognize;
     private Integer paymentStateId;
     private String createdAt;
     private String nickname;
     private Integer editorId;
     private Integer userId;
+    private String image;
+    private Integer quantity;
+    private Byte state;
+    private Integer paymentId;
+
 
 }

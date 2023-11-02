@@ -112,6 +112,12 @@
         SET user.point = #{point}
         WHERE user_id = #{userId}
     </update>
+    <update id="updateEditorPoint">
+        UPDATE user SET
+        point = point+#{point}
+        WHERE user_id = #{userId}
+
+    </update>
 
 
     <insert id="insertPrice">
