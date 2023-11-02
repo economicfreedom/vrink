@@ -62,8 +62,10 @@ public class QnARestController {
         Integer userId = qnAService.getUserIdByQuestionId(answerDTO.getQuestionId());
         qnAService.updateStatus(answerDTO.getQuestionId());
 
-//        answerDTO.
-//        messageService.sendMessageAndSaveSpecificPage(userId,);
+        Integer questionId = answerDTO.getQuestionId();;
+        String message ="문의 하신 내용에 답변이 달렸어요";
+        String url = "/qna/read-q/"+questionId;
+        messageService.sendMessageAndSaveSpecificPage(userId,message,url);
         return ResponseEntity.ok().build();
     }
 

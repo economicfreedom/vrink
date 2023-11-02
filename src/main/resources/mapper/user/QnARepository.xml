@@ -26,7 +26,17 @@
     </update>
     <delete id="deleteById"></delete>
     <select id="findById" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT * FROM question
+        SELECT q.q_id                                AS question_id
+             , q.user_id
+             , q.content
+             , DATE_FORMAT(q.created_at, '%Y-%m-%d') AS created_at
+             , q.type
+             ,q.title
+             ,q.email
+             ,u.nickname
+             , q.status
+        FROM question q
+        LEFT JOIN  user u ON q.user_id = u.user_id
         WHERE q_id = #{questionId}
     </select>
     <select id="findTotalById" resultType="java.lang.Integer">
