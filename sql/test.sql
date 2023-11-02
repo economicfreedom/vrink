@@ -423,3 +423,28 @@ FROM payment_state ps
          LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 1
   AND customer_recognize = 0;
+
+       SELECT   r.reply_id
+               , r.community_id
+               , r.user_id
+               , r.content
+               , DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at
+               , u.nickname
+               , c.title
+        FROM community_reply r
+        LEFT JOIN user u ON r.user_id = u.user_id
+        LEFT JOIN community c ON r.community_id = c.community_id
+        WHERE r.community_id=291
+        LIMIT 0,5;
+SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname,count(cr.community_id )AS count
+
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname;
+
+UPDATE user SET
+                email='qwer1234@gamil.com'
+WHERE user_id =1;
+
+SELECT * FROM user;

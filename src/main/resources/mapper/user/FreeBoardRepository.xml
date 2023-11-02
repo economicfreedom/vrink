@@ -35,9 +35,12 @@
 
     </select>
     <select id="findAllByCri" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname,count(cr.community_id )AS count
+
         FROM community c
         LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+
 
         <if test="type == 'title'">
             WHERE title LIKE CONCAT('%',#{keyword},'%')
@@ -53,8 +56,10 @@
             WHERE content LIKE CONCAT('%',#{keyword},'%') AND
             title LIKE CONCAT('%',#{keyword},'%')
         </if>
+                GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
 
         ORDER BY created_at DESC
+
         LIMIT #{offset},#{countPerPage}
 
     </select>

@@ -37,6 +37,7 @@ public class QnARestController {
         Integer save = qnAService.save(qnADTO);
 
         if (save != 1) {
+            System.out.println("너냐?");
             return ResponseEntity.badRequest().build();
         }
 
@@ -52,10 +53,12 @@ public class QnARestController {
             , BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            log.info(defaultMessage);
             return ResponseEntity.badRequest().body(defaultMessage);
         }
-        Integer res = qnAService.saveQuestion(answerDTO);
+        Integer res = qnAService.saveAnswer(answerDTO);
         if (res != 1) {
             return ResponseEntity.badRequest().build();
         }

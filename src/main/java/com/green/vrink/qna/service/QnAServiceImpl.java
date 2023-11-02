@@ -57,7 +57,7 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
-    public Integer saveQuestion(AnswerDTO answerDTO) {
+    public Integer saveAnswer(AnswerDTO answerDTO) {
 
         return   qnARepository.saveAnswer(answerDTO);
     }

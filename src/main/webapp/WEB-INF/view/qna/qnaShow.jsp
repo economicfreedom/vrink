@@ -9,8 +9,9 @@
 <div class="container">
     <div class="row">
         <div class="title">
-
-            <h1><c:choose>
+            <a href="/qna/list/${USER.userId}"><h2 style="color: grey">문의 목록</h2></a>
+            <hr style="border: #ff2929 solid 8px;margin-bottom: 100px">
+            <h3><c:choose>
                 <c:when test="${dto.status == 0}">
                     [답변 대기] ${dto.title}
                 </c:when>
@@ -19,7 +20,7 @@
                 </c:otherwise>
             </c:choose>
 
-            </h1>
+            </h3>
 
             <br>
             <small>${dto.createdAt}</small>
@@ -34,13 +35,13 @@
             </span>
         </div>
         <c:if test="${answer != null}">
-            <hr style="background-color: black;height: 2px">
+
         </c:if>
 
     </div>
     <h1>
         <c:choose>
-        <c:when test="${answer == null}">
+        <c:when test="${answer == null && USER.level == 1}">
         <hr>
 
         <div class="container">
@@ -50,7 +51,7 @@
                     <div class="contact-form">
                         <div class="editor-div">
                             <div class="title ">
-                                <span>답변 작성</span>
+                                <span style="font-size: 2px">답변 작성</span>
                             </div>
                             <div class="row">
 
@@ -67,16 +68,20 @@
                         </div>
                     </div>
                 </div>
+                            <hr style="border: #ff2929 solid 1px;">
+
             </div>
+
         </div>
         </c:when>
         <c:otherwise>
 
         <div class="row">
-            <div class="title">
-                답변 내용
-                <small>${answer.createdAt}</small>
-            </div>
+
+            <span style="font-size: 20px;"> 답변 내용</span>
+            <br>
+            <small style="font-size: 12px">${answer.createdAt}</small>
+
 
             <hr>
             <div class="content">

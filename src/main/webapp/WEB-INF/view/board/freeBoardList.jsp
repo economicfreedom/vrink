@@ -29,6 +29,15 @@
             location.href = "/board/board-list?keyword=" + keyword + "&type=" + type;
 
         });
+        $("#keyword").keypress(function (event) {
+            if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
+                let type = $("#type").val();
+                let keyword = $("#keyword").val();
+
+
+                location.href = "/board/board-list?type=" + type + "&keyword=" + keyword;
+            }
+        });
         $('#pagination').on('click', 'a', function (e) {
             e.preventDefault();
             const value = $(this).data('page-num');
@@ -49,11 +58,11 @@
             <div class="d-flex mb-3" style="justify-content: space-between;">
                 <div>
                     <c:if test="${pageDTO.cri.keyword != ''}">
-                        <span>${pageDTO.cri.keyword}(${total})</span>
+                        <h2 style="color: grey">${pageDTO.cri.keyword}(${total})</h2>
                     </c:if>
 
                     <c:if test="${pageDTO.cri.keyword == ''}">
-                        <span>자유 게시판</span>
+                        <h2 style="color: grey">자유 게시판</h2>
                     </c:if>
                 </div>
                 <div>
@@ -91,8 +100,8 @@
                         <td>${board.communityId}</td>
                         <td class="t-left">
                             <a href="/board/read/${board.communityId}"
-                               style="text-decoration: none; color: black">
-                                    ${board.title}</a></td>
+                               style="text-decoration: none; color: black"><span>
+                                    ${board.title}</span> <span style="color:#ff2929"> [${board.count}] </span></a></td>
 
                         <td>${board.nickname}</td>
                         <td>${board.createdAt}</td>

@@ -24,4 +24,5 @@ public class FreeBoardDTO {
     private String createdAt;
     @NotBlank(message = "유저 닉네임의 값은 필수 입니다.")
     private String nickname;
+    private Integer count;
 }

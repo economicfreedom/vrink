@@ -73,10 +73,12 @@
             let type = $("#type").val();
 
             let json = JSON.stringify({
-                userId: 1,
+                userId: `${USER.userId}`,
                 content: content,
                 title: title,
-                type: type
+                type: type,
+
+                nickname : `${USER.nickname}`
             });
 
             fetch('/qna/save', {
@@ -89,7 +91,8 @@
                 .then(response => {
 
                     if (!response.ok) {
-                        alert("")
+                        console.log(response.json());
+                        alert("실패");
                     } else {
                         location.href = "/qna/list/"+Number(`${USER.userId}`);
                     }
