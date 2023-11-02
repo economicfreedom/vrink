@@ -25,4 +25,6 @@ public interface QnAService {
 
     Integer getUserId(Integer questionId);
 
+    Integer getUserIdByQuestionId(Integer questionId);
+
 }

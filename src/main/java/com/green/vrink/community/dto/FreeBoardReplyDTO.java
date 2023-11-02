@@ -20,6 +20,7 @@ public class FreeBoardReplyDTO {
     private String createdAt;
     @NotBlank
     private String nickname;
+    private String title;
 
 
 }

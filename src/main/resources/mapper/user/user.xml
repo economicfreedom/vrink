@@ -97,6 +97,10 @@
         FROM editor_detail
         WHERE user_id = #{userId};
     </select>
+    <select id="findUserIdByEditorId" resultType="java.lang.Integer">
+        SELECT user_id FROM editor_detail
+        WHERE editor_id = #{editorId}
+    </select>
 
     <update id="deleteByUserId">
         UPDATE user

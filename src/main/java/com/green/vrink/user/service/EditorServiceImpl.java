@@ -100,4 +100,16 @@ public class EditorServiceImpl implements EditorService{
     public Integer updatePoint(Integer userId, Integer point) {
         return userRepository.updatePoint(userId, point);
     }
+
+    @Override
+    public Integer getUserIdByEditorId(Integer editorId) {
+        return userRepository.findUserIdByEditorId(editorId);
+    }
+
+    @Override
+    public String getNicknameByEditorId(Integer editorId) {
+        Integer userId = userRepository.findUserIdByEditorId(editorId);
+
+        return userRepository.findUserNicknameById(userId);
+    }
 }

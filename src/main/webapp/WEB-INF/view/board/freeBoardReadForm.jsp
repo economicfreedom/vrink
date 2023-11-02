@@ -26,7 +26,8 @@
                     userId: `${USER.userId}`,
                     communityId: `${dto.communityId}`,
                     content: content,
-                    nickname:`${USER.nickname}`
+                    nickname:`${USER.nickname}`,
+                    title:$("#title").val()
 
                 })
             })
@@ -60,6 +61,7 @@
                 } else {
                     location.href = "/board/board-list";
                 }
+
             })
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
@@ -127,6 +129,7 @@ let content = replyArea.val();
                 replyId: id,
                 content: content,
                 nickname:`${USER.nickname}`
+
 
             })
         })
@@ -225,7 +228,7 @@ let content = replyArea.val();
     <div class="row">
         <div class="title">
 
-            <h1>${dto.title}</h1>
+            <h1 id="title">${dto.title}</h1>
             <span> ${dto.nickname}</span>
             <br>
             <small>${dto.createdAt}</small>

@@ -34,20 +34,22 @@
         WHERE user_id = #{userId}
     </select>
     <select id="findAllById" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id
-             , user_id
+        SELECT q_id                                AS question_id
+             , q.user_id
              , content
-             , DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
+             , DATE_FORMAT(q.created_at, '%Y-%m-%d') AS created_at
              , type
              , title
-
-             , email
+             , q.email
+             , u.nickname
              , status
-        FROM question
-        WHERE user_id = #{userId}
+        FROM question q
+                 LEFT JOIN user u
+                           ON u.user_id = q.user_id
+        WHERE q.user_id = #{userId}
         ORDER BY created_at DESC
             LIMIT #{cri.offset}
-            , #{cri.countPerPage}
+               , #{cri.countPerPage}
 
     </select>
     <select id="findByAnswerByQuestionId" resultType="com.green.vrink.qna.dto.AnswerDTO">
