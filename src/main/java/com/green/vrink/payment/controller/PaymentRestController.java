@@ -50,4 +50,6 @@ public class PaymentRestController {
         paymentServiceImpl.insertPayment(paymentDTO);
         return ResponseEntity.ok().build();
     }
+
+    
 }

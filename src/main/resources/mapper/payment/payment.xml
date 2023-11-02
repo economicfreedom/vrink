@@ -28,7 +28,7 @@
 	<select id="findByLastPaymentId" resultType="java.lang.Integer">
 		SELECT * FROM payment ORDER BY payment_id DESC LIMIT 1;
 	</select>
-    <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyDTO">
+    <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyResponseDTO">
         SELECT ps.point, customer_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id
         FROM payment_state ps
                  LEFT JOIN payment p ON ps.payment_id = p.payment_id

@@ -50,7 +50,7 @@ public class QnAController {
 
         User user = (User) httpSession.getAttribute(Define.USER);
 
-        log.info("user {}",user);
+        log.info("user {}", user);
         int _userId = user.getUserId();
 
         if (userId != _userId) {
@@ -82,18 +82,24 @@ public class QnAController {
             @PathVariable(name = "question-id") Integer questionId
             , Model model
     ) {
-        if (isNull(questionId)) {
+
+        int userId = qnAService.getUserId(questionId);
+        User user = (User) httpSession.getAttribute("USER");
+        Integer level = user.getLevel();
+        Integer sessionUserId = user.getUserId();
+
+        if (userId == sessionUserId || level == 1) {
+            QuestionDTO qnADTO = qnAService.findById(questionId);
+            AnswerDTO answer = qnAService.getQuestion(questionId);
+
+            model.addAttribute("dto", qnADTO);
+            model.addAttribute("answer", answer);
+            return "qna/qnaShow";
+        }else {
             return "redirect:/";
         }
-        Integer userId = qnAService.getUserId(questionId);
-        QuestionDTO qnADTO = qnAService.findById(questionId);
-        AnswerDTO answer = qnAService.getQuestion(questionId);
-
-        model.addAttribute("dto", qnADTO);
-        model.addAttribute("answer", answer);
 
 
-        return "qna/qnaShow";
     }
 
 

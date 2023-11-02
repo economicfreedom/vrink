@@ -39,6 +39,7 @@ public interface UserRepository {
 	public Integer findEditorIdByUserId(Integer userId);
 	public Integer calculatePoint(CalculatePointDto calculatePointDto);
 	public Integer updatePoint(@Param("userId") Integer userId, @Param("point") Integer point);
-
     Integer findUserIdByEditorId(Integer editorId);
+
+	void updateEditorPoint(@Param("userId")Integer userId,@Param("point") Integer point);
 }
