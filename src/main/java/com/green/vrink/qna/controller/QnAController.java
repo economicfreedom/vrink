@@ -5,10 +5,7 @@ import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.qna.dto.AnswerDTO;
 import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.user.repository.model.User;
-import com.green.vrink.util.Check;
-import com.green.vrink.util.Criteria;
-import com.green.vrink.util.LoginCheck;
-import com.green.vrink.util.PageDTO;
+import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,7 +27,7 @@ import static com.green.vrink.util.Check.isNull;
 public class QnAController {
 
     private final QnAService qnAService;
-
+    private final HttpSession httpSession;
 
     @GetMapping("/write")
     @LoginCheck
@@ -47,12 +44,13 @@ public class QnAController {
             Integer pageNum
 
             , Model model
-            , HttpSession httpSession
+
     ) {
         //세션에 유저 id 토탈에 넣기
 
-        User user = (User) httpSession.getAttribute("USER");
+        User user = (User) httpSession.getAttribute(Define.USER);
 
+        log.info("user {}",user);
         int _userId = user.getUserId();
 
         if (userId != _userId) {

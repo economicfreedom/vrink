@@ -29,10 +29,12 @@
 		SELECT * FROM payment ORDER BY payment_id DESC LIMIT 1;
 	</select>
     <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyDTO">
-        SELECT point, editor_recognize, customer_recognize, payment_state_id, ps.created_at
+        SELECT ps.point, customer_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id
         FROM payment_state ps
                  LEFT JOIN payment p ON ps.payment_id = p.payment_id
-        where p.user_id = #{userId}
-          and customer_recognize = 0
+                 LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+                 LEFT JOIN user u ON ed.user_id = u.user_id
+        WHERE p.user_id = #{userId}
+          AND customer_recognize = 0
     </select>
 </mapper>

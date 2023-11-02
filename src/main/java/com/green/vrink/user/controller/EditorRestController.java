@@ -33,10 +33,11 @@ public class EditorRestController {
     ) {
 
 
-//      session.getAttribute("asdf");
+        User user = (User) session.getAttribute(Define.USER);
 
 
-        approvalDTO.setUserId(1);
+
+        approvalDTO.setUserId(user.getUserId());
 
 
         Integer res =  editorServiceImpl.requestApproval(approvalDTO);

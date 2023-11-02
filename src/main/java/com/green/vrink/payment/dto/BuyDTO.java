@@ -13,8 +13,11 @@ public class BuyDTO {
 
     private Integer point;
     private Byte editorRecognize;
-    private Byte customerRecognize;
+//    private Byte customerRecognize;
     private Integer paymentStateId;
     private String createdAt;
+    private String nickname;
+    private Integer editorId;
+    private Integer userId;
 
 }

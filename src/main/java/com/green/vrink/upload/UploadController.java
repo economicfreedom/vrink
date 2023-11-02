@@ -56,7 +56,7 @@ public class UploadController {
             @RequestParam("uploadFiles") MultipartFile[] uploadFiles
             , @RequestParam("w") Integer w
             , @RequestParam("h") Integer h
-            , @RequestParam("type") String type) {
+            , @RequestParam("type") String type                       ) {
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
         UploadResponseDTO uploadResponseDTO = null;

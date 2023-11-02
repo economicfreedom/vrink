@@ -2,6 +2,7 @@ package com.green.vrink.community.controller;
 
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.LoginCheck;
@@ -25,6 +26,7 @@ public class FreeBoardRestController {
 
     private final FreeBoardService freeBoardService;
     private final HttpSession httpSession;
+    private final MessageService messageService;
 //    private final Check check;
 
     @PostMapping("/write")
