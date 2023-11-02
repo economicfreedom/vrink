@@ -8,7 +8,7 @@
       function requestPay() {
         IMP.request_pay(
           {
-            pg: "kcp.{INIBillTst}",
+            pg: "kcp.{TC0ONETIME}",
             pay_method: "card",
             merchant_uid: "merchant_"+new Date().getTime(),
             name: $($('.options')[0]).text() + ' 외 '+($('.options').length-1) +'건',
