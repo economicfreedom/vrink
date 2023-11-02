@@ -4,10 +4,25 @@
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
 <style>
-    table {
+    .table {
         /* 	width: 100%; */
         border-collapse: collapse;
-        margin-left: 30px;
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+
+    .t-head {
+        background-color: #ececec;
+    }
+
+    .table td {
+        padding: 1px !important;
+        vertical-align: baseline !important;
+        padding-left: 8px !important;
+    }
+
+    .card-header {
+        padding-left: 23px;
     }
 
     p {
@@ -20,6 +35,7 @@
 
     td:last-child {
         text-align: right;
+        padding-right: 10px !important;
     }
 
     td {
@@ -34,14 +50,29 @@
     }
 
     h4 {
-        padding-left: 8px;
         font-size: 17px;
+        margin-top: 5px;
     }
 
     .classification {
         display: inline-block;
         font-weight: bold;
         padding: 8px 10px;
+        padding-left: 8px !important;
+    }
+
+    .classification2 {
+        display: inline-block;
+        font-weight: bold;
+        padding: 8px 10px;
+        padding-left: 8px !important;
+    }
+
+    .classification3 {
+        display: inline-block;
+        font-weight: bold;
+        padding: 8px 10px;
+        padding-left: 8px !important;
     }
 
     .write-btn {
@@ -59,9 +90,10 @@
     }
 
     .tab--user {
-        margin-left: 30px;
-        padding: 0 0 1px 1px;
-        margin-bottom: 5px;
+        margin-top: 15px;
+        margin-left: 24px;
+        /*margin-bottom: 5px;*/
+        padding: 0;
         overflow: hidden;
     }
 
@@ -92,12 +124,12 @@
         padding: 5px 8px;
     }
 
-    .tab--user>li.on::before {
+    .tab--user > li.on::before {
         z-index: 10;
         border: 1px solid #222;
     }
 
-    .tab--user>li::before {
+    .tab--user > li::before {
         position: absolute;
         top: 0;
         left: -1px;
@@ -183,154 +215,156 @@
 <%--		<c:if test="${user.roleTypeId == 2}">--%>
 <%--			<a href="/customerservice/user/write" class="write-btn">글쓰기</a>--%>
 <%--		</c:if>--%>
+<div class="card m-4">
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 유저 목록</h3></div>
+    <ul class="tab--user cl1">
+        <c:choose>
+            <c:when test="${uClassification == '전체' or empty uClassification}">
+                <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="standard"><a href="#">구매자</a></li>
+                <li data-classification="editor"><a href="#">판매자</a></li>
 
+            </c:when>
+            <c:when test="${uClassification == 'standard'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification="standard"><a href="#">구매자</a></li>
+                <li data-classification="editor"><a href="#">판매자</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="standard"><a href="#">구매자</a></li>
+                <li class="active" data-classification="editor"><a href="#">판매자</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+    <ul class="tab--user cl2">
+        <c:choose>
+            <c:when test="${uClassification2 == '전체' or empty uClassification2}">
+                <li class="active" data-classification2="전체"><a href="#">전체</a></li>
+                <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
+                <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
 
-<h1 class="title--user">유저 목록</h1>
-<ul class="tab--user cl1">
-    <c:choose>
-        <c:when test="${uClassification == '전체' or empty uClassification}">
-            <li class="active" data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="standard"><a href="#">구매자</a></li>
-            <li data-classification="editor"><a href="#">판매자</a></li>
+            </c:when>
+            <c:when test="${uClassification2 == '0'}">
+                <li data-classification2="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification2="0"><a href="#">비탈퇴 유저</a></li>
+                <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification2="전체"><a href="#">전체</a></li>
+                <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
+                <li class="active" data-classification2="1"><a href="#">탈퇴 유저</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+    <ul class="tab--user cl3">
+        <c:choose>
+            <c:when test="${uClassification3 == '전체' or empty uClassification3}">
+                <li class="active" data-classification3="전체"><a href="#">전체</a></li>
+                <li data-classification3="0"><a href="#">일반 유저</a></li>
+                <li data-classification3="1"><a href="#">관리자</a></li>
 
-        </c:when>
-        <c:when test="${uClassification == 'standard'}">
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification="standard"><a href="#">구매자</a></li>
-            <li data-classification="editor"><a href="#">판매자</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="standard"><a href="#">구매자</a></li>
-            <li class="active" data-classification="editor"><a href="#">판매자</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-<ul class="tab--user cl2">
-    <c:choose>
-        <c:when test="${uClassification2 == '전체' or empty uClassification2}">
-            <li class="active" data-classification2="전체"><a href="#">전체</a></li>
-            <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
+            </c:when>
+            <c:when test="${uClassification3 == '0'}">
+                <li data-classification3="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification3="0"><a href="#">일반 유저</a></li>
+                <li data-classification3="1"><a href="#">관리자</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification3="전체"><a href="#">전체</a></li>
+                <li data-classification3="0"><a href="#">일반 유저</a></li>
+                <li class="active" data-classification3="1"><a href="#">관리자</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 
-        </c:when>
-        <c:when test="${uClassification2 == '0'}">
-            <li data-classification2="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification2="전체"><a href="#">전체</a></li>
-            <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li class="active" data-classification2="1"><a href="#">탈퇴 유저</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-<ul class="tab--user cl3">
-    <c:choose>
-        <c:when test="${uClassification3 == '전체' or empty uClassification3}">
-            <li class="active" data-classification3="전체"><a href="#">전체</a></li>
-            <li data-classification3="0"><a href="#">일반 유저</a></li>
-            <li data-classification3="1"><a href="#">관리자</a></li>
+    <form style="width: 90%;" name="pageForm">
+        <div class="mt-2 mx-4">
+            <select name="searchType" id="searchType">
+                <c:choose>
+                    <c:when test="${uSearchType == '이메일'}">
+                        <option value="전체">전체</option>
+                        <option value="이메일" selected>이메일</option>
+                        <option value="이름">이름</option>
+                        <option value="아이디">아이디</option>
+                        <option value="전화번호">전화번호</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '이름'}">
+                        <option value="전체">전체</option>
+                        <option value="이메일">이메일</option>
+                        <option value="이름" selected>이름</option>
+                        <option value="아이디">아이디</option>
+                        <option value="전화번호">전화번호</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '아이디'}">
+                        <option value="전체">전체</option>
+                        <option value="이메일">이메일</option>
+                        <option value="이름">이름</option>
+                        <option value="아이디" selected>아이디</option>
+                        <option value="전화번호">전화번호</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '전화번호'}">
+                        <option value="전체">전체</option>
+                        <option value="이메일">이메일</option>
+                        <option value="이름">이름</option>
+                        <option value="아이디">아이디</option>
+                        <option value="전화번호" selected>전화번호</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="전체" selected>전체</option>
+                        <option value="이메일">이메일</option>
+                        <option value="이름">이름</option>
+                        <option value="아이디">아이디</option>
+                        <option value="전화번호">전화번호</option>
+                    </c:otherwise>
+                </c:choose>
 
-        </c:when>
-        <c:when test="${uClassification3 == '0'}">
-            <li data-classification3="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification3="0"><a href="#">일반 유저</a></li>
-            <li data-classification3="1"><a href="#">관리자</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification3="전체"><a href="#">전체</a></li>
-            <li data-classification3="0"><a href="#">일반 유저</a></li>
-            <li class="active" data-classification3="1"><a href="#">관리자</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-
-<form style="width: 90%;" name="pageForm">
-    <div class="mt-2 mx-4">
-        <select name="searchType" id="searchType">
-            <c:choose>
-                <c:when test="${uSearchType == '이메일'}">
-                    <option value="전체">전체</option>
-                    <option value="이메일" selected>이메일</option>
-                    <option value="이름">이름</option>
-                    <option value="아이디">아이디</option>
-                    <option value="전화번호">전화번호</option>
-                </c:when>
-                <c:when test="${uSearchType == '이름'}">
-                    <option value="전체">전체</option>
-                    <option value="이메일">이메일</option>
-                    <option value="이름" selected>이름</option>
-                    <option value="아이디">아이디</option>
-                    <option value="전화번호">전화번호</option>
-                </c:when>
-                <c:when test="${uSearchType == '아이디'}">
-                    <option value="전체">전체</option>
-                    <option value="이메일">이메일</option>
-                    <option value="이름">이름</option>
-                    <option value="아이디" selected>아이디</option>
-                    <option value="전화번호">전화번호</option>
-                </c:when>
-                <c:when test="${uSearchType == '전화번호'}">
-                    <option value="전체">전체</option>
-                    <option value="이메일">이메일</option>
-                    <option value="이름">이름</option>
-                    <option value="아이디">아이디</option>
-                    <option value="전화번호" selected>전화번호</option>
-                </c:when>
-                <c:otherwise>
-                    <option value="전체" selected>전체</option>
-                    <option value="이메일">이메일</option>
-                    <option value="이름">이름</option>
-                    <option value="아이디">아이디</option>
-                    <option value="전화번호">전화번호</option>
-                </c:otherwise>
-            </c:choose>
-
-        </select> <input type="text" id="keyword" name="keyword"
-                         value="${uKeyword}">
-        <button class="btn btn-dark btn-block" type="button"
-                id="searchButton">검색</button>
-        <button class="btn btn-dark btn-block" type="button"
-                id="resetButton"
-                onClick="location.href='/admin/user?reset=1'">검색초기화</button>
-    </div>
-
-    <table class="table">
-        <tbody id="user-list-container">
-        </tbody>
-    </table>
-    <div class="paging">
-        <div class="text-center clearfix">
-            <ul class="pagination" id="pagination--a">
-                <c:if test="${pagination.prev}">
-                    <li class="page-item "><a class="page-list" href="#"
-                                              data-page="${pagination.beginPage-1}">Prev</a></li>
-                </c:if>
-
-                <c:forEach var="num" begin="${pagination.beginPage}"
-                           end="${pagination.endPage}">
-                    <li
-                            class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
-                            class="page-list" href="#" data-page="${num}">${num}</a></li>
-                </c:forEach>
-
-                <c:if test="${pagination.next}">
-                    <li class="page-item"><a class="page-list" href="#"
-                                             data-page="${pagination.endPage+1}">Next</a></li>
-                </c:if>
-            </ul>
-
-            <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-            <input type="hidden" id="page" name="page"
-                   value="${pagination.paging.page}"> <input type="hidden"
-                                                             name="recordSize" value="${pagination.paging.recordSize}">
-
+            </select> <input type="text" id="keyword" name="keyword"
+                             value="${uKeyword}">
+            <button class="btn btn-dark btn-block" type="button"
+                    id="searchButton">검색
+            </button>
+            <button class="btn btn-dark btn-block" type="button"
+                    id="resetButton"
+                    onClick="location.href='/admin/user?reset=1'">검색초기화
+            </button>
         </div>
-    </div>
-</form>
 
+        <table class="table">
+            <tbody id="user-list-container">
+            </tbody>
+        </table>
+        <div class="paging">
+            <div class="text-center clearfix">
+                <ul class="pagination" id="pagination--a">
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item "><a class="page-list" href="#"
+                                                  data-page="${pagination.beginPage-1}">Prev</a></li>
+                    </c:if>
+
+                    <c:forEach var="num" begin="${pagination.beginPage}"
+                               end="${pagination.endPage}">
+                        <li
+                                class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
+                                class="page-list" href="#" data-page="${num}">${num}</a></li>
+                    </c:forEach>
+
+                    <c:if test="${pagination.next}">
+                        <li class="page-item"><a class="page-list" href="#"
+                                                 data-page="${pagination.endPage+1}">Next</a></li>
+                    </c:if>
+                </ul>
+
+                <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+                <input type="hidden" id="page" name="page"
+                       value="${pagination.paging.page}"> <input type="hidden"
+                                                                 name="recordSize"
+                                                                 value="${pagination.paging.recordSize}">
+            </div>
+        </div>
+
+    </form>
+</div>
 <script>
     $(document).ready(function () {
 
@@ -365,28 +399,28 @@
                 });
 
             $('.cl3 li').click(
-            function () {
-                classifi3 = $(this).data(
-                    'classification3');
-                $('.cl3 li').removeClass('active');
-                $(this).addClass('active');
+                function () {
+                    classifi3 = $(this).data(
+                        'classification3');
+                    $('.cl3 li').removeClass('active');
+                    $(this).addClass('active');
 
-                loadusers(classifi, classifi2, classifi3, undefined, $(
-                    '#searchType').val(), $('#keyword')
-                    .val());
-            });
+                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                        '#searchType').val(), $('#keyword')
+                        .val());
+                });
 
             $('.cl1 li').click(
-            function () {
-                classifi = $(this).data(
-                    'classification');
-                $('.cl1 li').removeClass('active');
-                $(this).addClass('active');
+                function () {
+                    classifi = $(this).data(
+                        'classification');
+                    $('.cl1 li').removeClass('active');
+                    $(this).addClass('active');
 
-                loadusers(classifi, classifi2, classifi3, undefined, $(
-                    '#searchType').val(), $('#keyword')
-                    .val());
-            });
+                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                        '#searchType').val(), $('#keyword')
+                        .val());
+                });
 
             function setupPaginationEventHandlers() {
                 $(document).on(
@@ -406,12 +440,12 @@
                         type   : 'GET',
                         url    : '/admin/user/classification',
                         data   : {
-                            classification: classification,
+                            classification : classification,
                             classification2: classification2,
                             classification3: classification3,
-                            page          : page,
-                            searchType    : searchType,
-                            keyword       : keyword
+                            page           : page,
+                            searchType     : searchType,
+                            keyword        : keyword
                         }, // 페이지 번호와 카테고리 정보를 전달합니다.
                         success: function (data) {
                             var userList = data.userList;
@@ -439,8 +473,8 @@
                                 else user.editor = '<text style="color: red">판매자</text>'
                                 if (user.enabledCheck === 0) user.enabledCheck = '비탈퇴';
                                 else user.enabledCheck = '<text style="color: red">탈퇴</text>'
-                                let editorData = user.editorCreatedAt.substring(2,10);
-                                let regData = user.createdAt.substring(2,10);
+                                let editorData = user.editorCreatedAt.substring(2, 10);
+                                let regData = user.createdAt.substring(2, 10);
                                 userListHTML += '<tr>'
                                     + '<td><p class="classification">'
                                     + user.editor
@@ -561,14 +595,14 @@
                 document.pageForm.submit();
             });
 
-            $('input[type="text"]').keydown(function(key) {
+            $('input[type="text"]').keydown(function (key) {
                 if (key.keyCode === 13) {
                     key.preventDefault();
                 }
             });
 
-            $("#keyword").on("keyup",function(key){
-                if(key.keyCode==13) {
+            $("#keyword").on("keyup", function (key) {
+                if (key.keyCode == 13) {
                     loadusers(classifi, classifi2, classifi3, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());

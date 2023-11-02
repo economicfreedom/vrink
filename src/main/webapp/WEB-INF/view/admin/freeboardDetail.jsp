@@ -6,53 +6,11 @@
 
 <script>
     let pageNum = 1;
-    $(document).ready(function () {
-
-
-        $("#reply-add").click(function () {
-            let reply = $("#reply-content");
-            let content = reply.val();
-
-            if (content.length === 0) {
-                alert("댓글을 입력해주세요.")
-                reply.focus();
-                return;
-            }
-            fetch('/free-reply/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    communityId: ${dto.communityId},
-                    content: content
-
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("")
-                    } else {
-                        location.reload()
-                    }
-                })
-        });
-
-
-    })
-
-    function update(id) {
-
-        location.href = "/board/update-form/" + id;
-    }
 
     function deleteBoard(id) {
-
         fetch('/admin/del/' + id, {
             method: 'DELETE',
-
         })
-
             .then(response => {
                 if (!response.ok) {
                     alert("");
@@ -62,16 +20,12 @@
             })
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-
     }
 
     function deleteReply(id) {
-
         fetch('/free-reply/del/' + id, {
             method: 'DELETE',
-
         })
-
             .then(response => {
                 if (!response.ok) {
                 } else {
@@ -81,7 +35,6 @@
             })
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-
     }
 
     function updateReply(id) {
@@ -114,11 +67,11 @@
             return;
         }
         fetch('/free-reply/update', {
-            method: 'PUT',
+            method : 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
+            body   : JSON.stringify({
                 replyId: id,
                 content: content
 
@@ -138,10 +91,9 @@
         pageNum++;
         const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
         let html = '';
-
 // fetch를 사용한 요청
         fetch(url, {
-            method: 'GET',
+            method : 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -153,7 +105,6 @@
                 return response.json();
             })
             .then(data => {
-
                 // 응답 데이터 처리
                 console.log(data); // 전체 응답 데이터 출력
                 if (!data.hasNext) {
@@ -161,8 +112,7 @@
                 }
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
-
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%"> id="reply-' + reply.replyId +'">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:3px;" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
@@ -175,7 +125,7 @@
                     html += 'id="reply-' + reply.replyId + '">' + reply.content + '</textarea>';
                     html += '<div class="comment-buttons">';
 
-                    html += '<button class="btn btn-dark btn-block"';
+                    html += '<button class="btn btn-secondary btn-block d-button" style="float:right;"';
                     html += ' onclick="deleteReply(' + reply.replyId + ')"';
                     html += ' id="reply-del-' + reply.replyId + '"';
                     html += '>삭제';
@@ -184,8 +134,6 @@
                     html += '</div>';
                     html += '</li>';
                     html += '</ul>';
-
-
                 });
                 // 다른 필요한 처리를 여기에 추가하세요.
                 $("#reply-container").append(html);
@@ -198,19 +146,19 @@
 
 </script>
 
-<div class="container" style="margin: 50px auto;border: 1px solid black;">
-    <div class="row">
+<div class="card m-4">
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 자유게시판 상세</h3></div>
+    <%--    <div class="container" style="margin: 50px auto;border: 1px solid black;">--%>
+    <div class="row" style="margin: 10px;">
         <div class="title">
-
-            <h1>${dto.title}</h1>
-            <span> ${dto.nickname}</span>
-            <br>
-            <small>${dto.createdAt}</small>
-
-            <button type="button" style="float: right;margin-left: 20px " class="btn btn-dark btn-block"
-                    onclick="deleteBoard(${dto.communityId})">삭제
-            </button>
-
+            <div>
+                <span>작성자 : ${dto.nickname}</span> <span>작성일 : ${dto.createdAt}</span></div>
+            <div class="my-3">
+                <h2>제목 : ${dto.title}
+                    <button type="button" style="float: right;margin-left: 20px " class="btn btn-secondary btn-block"
+                            onclick="deleteBoard(${dto.communityId})">삭제
+                    </button>
+            </div>
             <hr>
 
 
@@ -219,12 +167,13 @@
             <span>
                 ${dto.content}
             </span>
+            <hr style="margin-bottom: -10px;">
         </div>
         <%--        <hr style="background-color: black;height: 2px">--%>
-        <hr>
+
     </div>
 
-    <div class="row">
+    <div class="row" style="margin: 10px;">
         <div class="col">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -234,8 +183,11 @@
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
-                                <li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">
+                            <ul class="list-group custom-list-group"
+                                style="margin-top:3px;"
+                                id="reply-${reply.replyId}">
+                                <li class="list-group-item custom-list-item"
+                                    style="border: 1px solid #00000075; padding: 5px;">
                                     <div class="comment-header">
                                         <strong class="comment-nickname">${reply.nickname}</strong>
                                         <span class="comment-date">${reply.createdAt}</span>
@@ -245,7 +197,7 @@
                                               readonly
                                               id="reply-${reply.replyId}">${reply.content}</textarea>
                                     <div class="comment-buttons">
-                                        <button class="btn btn-dark btn-block"
+                                        <button class="btn btn-secondary btn-block d-button"
                                                 onclick="deleteReply(${reply.replyId})"
                                                 id="reply-del-${reply.replyId}"
 
@@ -266,10 +218,8 @@
             </div>
         </div>
     </div>
-
-
 </div>
-
+<%--</div>--%>
 <style>
     .custom-list-group {
         border: none;
@@ -313,6 +263,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .d-button {
+        float: right;
+        margin-top: -35px;
+        font-size: 12px;
+        padding: 5px;
     }
 </style>
 
