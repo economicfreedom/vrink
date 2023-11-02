@@ -121,7 +121,7 @@
                         </nav>
                     </div> <!-- end of 게시판  -->
 
-                    <a class="nav-link collapsed" href="http://localhost/admin/user?reset=1">
+                    <a class="nav-link collapsed" href="/admin/question?reset=1">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user-pen"></i></div>
                         고객센터
                     </a>

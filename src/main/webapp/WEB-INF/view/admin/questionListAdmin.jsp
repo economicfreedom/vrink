@@ -35,7 +35,6 @@
 
     h4 {
         padding-left: 8px;
-        font-size: 17px;
     }
 
     .classification {
@@ -48,7 +47,7 @@
         text-align: right;
     }
 
-    .title--user {
+    .title--question {
         position: relative;
         color: #535353;
         font-size: 35px;
@@ -58,18 +57,18 @@
         border-bottom: 1px solid #535353;
     }
 
-    .tab--user {
+    .tab--question {
         margin-left: 30px;
         padding: 0 0 1px 1px;
         margin-bottom: 5px;
         overflow: hidden;
     }
 
-    .tab--user :hover {
+    .tab--question :hover {
         cursor: pointer;
     }
 
-    .tab--user li {
+    .tab--question li {
         float: left;
         display: table;
         width: calc(20% - 2px);
@@ -78,11 +77,11 @@
         margin-right: 0px;
     }
 
-    .tab--user li:last-child {
+    .tab--question li:last-child {
         border-right: none;
     }
 
-    .tab--user li a {
+    .tab--question li a {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
@@ -92,12 +91,12 @@
         padding: 5px 8px;
     }
 
-    .tab--user>li.on::before {
+    .tab--question>li.on::before {
         z-index: 10;
         border: 1px solid #222;
     }
 
-    .tab--user>li::before {
+    .tab--question>li::before {
         position: absolute;
         top: 0;
         left: -1px;
@@ -107,7 +106,7 @@
         content: "";
     }
 
-    .tab--user::after {
+    .tab--question::after {
         content: "";
         display: table;
         clear: both;
@@ -117,12 +116,12 @@
         box-sizing: content-box;
     }
 
-    .tab--user li.active {
+    .tab--question li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
     }
 
-    .tab--user li.active a {
+    .tab--question li.active a {
         font-weight: bold;
         color: black;
     }
@@ -180,69 +179,58 @@
     }
 </style>
 
-<%--		<c:if test="${user.roleTypeId == 2}">--%>
-<%--			<a href="/customerservice/user/write" class="write-btn">글쓰기</a>--%>
+<%--		<c:if test="${question.roleTypeId == 2}">--%>
+<%--			<a href="/customerservice/question/write" class="write-btn">글쓰기</a>--%>
 <%--		</c:if>--%>
 
 
-<h1 class="title--user">유저 목록</h1>
-<ul class="tab--user cl1">
+<h1 class="title--question">문의 목록</h1>
+<ul class="tab--question cl1">
     <c:choose>
         <c:when test="${uClassification == '전체' or empty uClassification}">
             <li class="active" data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="standard"><a href="#">구매자</a></li>
-            <li data-classification="editor"><a href="#">판매자</a></li>
+            <li data-classification="question"><a href="#">문의</a></li>
+            <li data-classification="report"><a href="#">신고</a></li>
+            <li data-classification="etc"><a href="#">기타</a></li>
 
         </c:when>
-        <c:when test="${uClassification == 'standard'}">
+        <c:when test="${uClassification == 'question'}">
             <li data-classification="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification="standard"><a href="#">구매자</a></li>
-            <li data-classification="editor"><a href="#">판매자</a></li>
+            <li class="active" data-classification="question"><a href="#">문의</a></li>
+            <li data-classification="report"><a href="#">신고</a></li>
+            <li data-classification="etc"><a href="#">기타</a></li>
+        </c:when>
+        <c:when test="${uClassification == 'report'}">
+            <li data-classification="전체"><a href="#">전체</a></li>
+            <li data-classification="question"><a href="#">문의</a></li>
+            <li class="active" data-classification="report"><a href="#">신고</a></li>
+            <li data-classification="etc"><a href="#">기타</a></li>
         </c:when>
         <c:otherwise>
             <li data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="standard"><a href="#">구매자</a></li>
-            <li class="active" data-classification="editor"><a href="#">판매자</a></li>
+            <li data-classification="question"><a href="#">문의</a></li>
+            <li data-classification="report"><a href="#">신고</a></li>
+            <li class="active" data-classification="etc"><a href="#">기타</a></li>
         </c:otherwise>
     </c:choose>
 </ul>
-<ul class="tab--user cl2">
+<ul class="tab--question cl2">
     <c:choose>
         <c:when test="${uClassification2 == '전체' or empty uClassification2}">
             <li class="active" data-classification2="전체"><a href="#">전체</a></li>
-            <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
+            <li data-classification2="0"><a href="#">답변 대기</a></li>
+            <li data-classification2="1"><a href="#">답변 완료</a></li>
 
         </c:when>
         <c:when test="${uClassification2 == '0'}">
             <li data-classification2="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li data-classification2="1"><a href="#">탈퇴 유저</a></li>
+            <li class="active" data-classification2="0"><a href="#">답변 대기</a></li>
+            <li data-classification2="1"><a href="#">답변 완료</a></li>
         </c:when>
         <c:otherwise>
             <li data-classification2="전체"><a href="#">전체</a></li>
-            <li data-classification2="0"><a href="#">비탈퇴 유저</a></li>
-            <li class="active" data-classification2="1"><a href="#">탈퇴 유저</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-<ul class="tab--user cl3">
-    <c:choose>
-        <c:when test="${uClassification3 == '전체' or empty uClassification3}">
-            <li class="active" data-classification3="전체"><a href="#">전체</a></li>
-            <li data-classification3="0"><a href="#">일반 유저</a></li>
-            <li data-classification3="1"><a href="#">관리자</a></li>
-
-        </c:when>
-        <c:when test="${uClassification3 == '0'}">
-            <li data-classification3="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification3="0"><a href="#">일반 유저</a></li>
-            <li data-classification3="1"><a href="#">관리자</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification3="전체"><a href="#">전체</a></li>
-            <li data-classification3="0"><a href="#">일반 유저</a></li>
-            <li class="active" data-classification3="1"><a href="#">관리자</a></li>
+            <li data-classification2="0"><a href="#">답변 대기</a></li>
+            <li class="active" data-classification2="1"><a href="#">답변 완료</a></li>
         </c:otherwise>
     </c:choose>
 </ul>
@@ -294,11 +282,11 @@
                 id="searchButton">검색</button>
         <button class="btn btn-dark btn-block" type="button"
                 id="resetButton"
-                onClick="location.href='/admin/user?reset=1'">검색초기화</button>
+                onClick="location.href='/admin/question?reset=1'">검색초기화</button>
     </div>
 
     <table class="table">
-        <tbody id="user-list-container">
+        <tbody id="question-list-container">
         </tbody>
     </table>
     <div class="paging">
@@ -336,18 +324,17 @@
 
             setupPaginationEventHandlers();
 
-            loadusers(`${uClassification}`, `${uClassification2}`, `${uClassification3}`,
+            loadquestions(`${uClassification}`, `${uClassification2}`,
                 `${pagination.paging.page}`, `${uSearchType}`,
                 `${uKeyword}`);
 
             let classifi = `${uClassification}`;
             let classifi2 = `${uClassification2}`;
-            let classifi3 = `${uClassification3}`;
 
             $('#searchButton').on(
                 'click',
                 function () {
-                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                    loadquestions(classifi, classifi2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -359,22 +346,10 @@
                     $('.cl2 li').removeClass('active');
                     $(this).addClass('active');
 
-                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                    loadquestions(classifi, classifi2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
-
-            $('.cl3 li').click(
-            function () {
-                classifi3 = $(this).data(
-                    'classification3');
-                $('.cl3 li').removeClass('active');
-                $(this).addClass('active');
-
-                loadusers(classifi, classifi2, classifi3, undefined, $(
-                    '#searchType').val(), $('#keyword')
-                    .val());
-            });
 
             $('.cl1 li').click(
             function () {
@@ -383,7 +358,7 @@
                 $('.cl1 li').removeClass('active');
                 $(this).addClass('active');
 
-                loadusers(classifi, classifi2, classifi3, undefined, $(
+                loadquestions(classifi, classifi2, undefined, $(
                     '#searchType').val(), $('#keyword')
                     .val());
             });
@@ -396,129 +371,85 @@
                         e.preventDefault();
                         const value = $(this).data('page');
                         // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
-                        loadusers($('.tab--user li.active').data('classification'), $('.cl2 li.active').data('classification2'), $('.cl3 li.active').data('classification3'), value, $('#searchType').val(), $('#keyword').val());
+                        loadquestions($('.tab--question li.active').data('classification'), $('.cl2 li.active').data('classification2'), value, $('#searchType').val(), $('#keyword').val());
                     });
             }
 
-            function loadusers(classification, classification2, classification3, page, searchType, keyword) {
+            function loadquestions(classification, classification2, page, searchType, keyword) {
                 $
                     .ajax({
                         type   : 'GET',
-                        url    : '/admin/user/classification',
+                        url    : '/admin/question/classification',
                         data   : {
                             classification: classification,
                             classification2: classification2,
-                            classification3: classification3,
                             page          : page,
                             searchType    : searchType,
                             keyword       : keyword
                         }, // 페이지 번호와 카테고리 정보를 전달합니다.
                         success: function (data) {
-                            var userList = data.userList;
+                            var questionList = data.questionList;
+
+                            console.log(questionList);
+
                             var pagination = data.pagination;
-                            var userListHTML = '<tr>'
+                            var questionListHTML = '<tr>'
+                                + '<td><h4>답변상태</h4></td>'
                                 + '<td><h4>타입</h4></td>'
-                                + '<td><h4>이메일</h4></td>'
-                                + '<td><h4>이름</h4></td>'
                                 + '<td><h4>아이디</h4></td>'
-                                + '<td><h4>전화번호</h4></td>'
-                                + '<td><h4>계좌번호</h4></td>'
-                                + '<td><h4>은행이름</h4></td>'
-                                + '<td><h4>포인트</h4></td>'
-                                + '<td><h4>이미지</h4></td>'
-                                + '<td><h4>탈퇴여부</h4></td>'
-                                + '<td><h4>권한</h4></td>'
-                                + '<td><h4>판매자<br>전환일</h4></td>'
-                                + '<td><h4>가입일</h4></td>'
+                                + '<td><h4>이메일</h4></td>'
+                                + '<td><h4>제목</h4></td>'
+                                + '<td><h4>내용</h4></td>'
+                                + '<td><h4>문의날짜</h4></td>'
                                 + '</tr>';
-                            for (var i = 0; i < userList.length; i++) {
-                                var user = userList[i];
-                                if (user.level === 0) user.level = '일반 유저';
-                                else user.level = '<text style="font-weight: bold">관리자</text>'
-                                if (user.editor === 'standard') user.editor = '<text style="color: blue">구매자</text>'
-                                else user.editor = '<text style="color: red">판매자</text>'
-                                if (user.enabledCheck === 0) user.enabledCheck = '비탈퇴';
-                                else user.enabledCheck = '<text style="color: red">탈퇴</text>'
-                                let editorData = user.editorCreatedAt.substring(2,10);
-                                let regData = user.createdAt.substring(2,10);
-                                userListHTML += '<tr>'
+                            for (var i = 0; i < questionList.length; i++) {
+                                var question = questionList[i];
+                                if (question.status === 0) question.status = '답변 대기';
+                                else question.status = '<text style="color: red">답변 완료</text>';
+                                if (question.type === 'question') question.type = '문의';
+                                else if(question.type === 'report') question.type = '<text style="color: blue">신고</text>';
+                                else question.type = '<text style="color: green">기타</text>';
+                                let regData = question.createdAt.substring(0,16);
+                                questionListHTML += '<tr>'
                                     + '<td><p class="classification">'
-                                    + user.editor
+                                    + question.status
                                     + '</p></td>'
-                                    + '<td><a href="/admin/user/detail?page='
+                                    + '<td><p class="classification2"><a href="/admin/question/detail?page='
                                     + pagination.paging.page
                                     + '&id='
-                                    + user.userId
+                                    + question.questionId
                                     + '">'
-                                    + user.email
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.name
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.nickname
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.phone
-                                    + '</a></td>'
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.account
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.accountName
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.point
-                                    + '</a></td>'
-                                    + '<td><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.userImage
-                                    + '</a></td>'
-                                    + '<td><p class="classification2"><a href="/admin/user/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + user.userId
-                                    + '">'
-                                    + user.enabledCheck
+                                    + question.type
                                     + '</a></p></td>'
-                                    + '<td><p class="classification3"><a href="/admin/user/detail?page='
+                                    + '<td><a href="/admin/question/detail?page='
                                     + pagination.paging.page
                                     + '&id='
-                                    + user.userId
+                                    + question.questionId
                                     + '">'
-                                    + user.level
-                                    + '</a></p></td>'
-                                    + '<td><p>'
-                                    + editorData
-                                    + '</p></td>'
+                                    + question.nickname
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/question/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + question.questionId
+                                    + '">'
+                                    + question.email
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/question/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + question.questionId
+                                    + '">'
+                                    + question.title
+                                    + '</a></td>'
+                                    + '</a></td>'
+                                    + '<td><a href="/admin/question/detail?page='
+                                    + pagination.paging.page
+                                    + '&id='
+                                    + question.questionId
+                                    + '">'
+                                    + question.content
+                                    + '</a></td>'
                                     + '<td><p>'
                                     + regData
                                     + '</p></td>' + '</tr>';
@@ -541,8 +472,8 @@
                                     + (pagination.endPage + 1)
                                     + '">Next</a></li>';
                             }
-                            $('#user-list-container').html(
-                                userListHTML);
+                            $('#question-list-container').html(
+                                questionListHTML);
                             $('#pagination--a').html(
                                 paginationHTML);
                         },
@@ -568,19 +499,14 @@
             });
 
             $("#keyword").on("keyup",function(key){
-                if(key.keyCode==13) {
-                    loadusers(classifi, classifi2, classifi3, undefined, $(
+                if(key.keyCode === 13) {
+                    loadquestions(classifi, classifi2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 }
             });
         }
     );
-
-    function formatDate(timestamp) {
-        const date = new Date(timestamp);
-        return date.toLocaleDateString();
-    }
 
     function selectItem(selectedItem) {
         let dropdownButton = document.querySelector('.dropdown-btn');
@@ -589,8 +515,6 @@
         classification.value = selectedItem;
         let classification2 = document.querySelector('#classification2');
         classification2.value = selectedItem;
-        let classification3 = document.querySelector('#classification3');
-        classification3.value = selectedItem;
     }
 
 </script>

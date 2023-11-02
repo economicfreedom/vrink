@@ -159,6 +159,11 @@ public class AdminController {
         }
 
         paging.setPage(page);
+        if(classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
+        if(classification3.equals("전체")) paging.setClassification3("3");
+        else paging.setClassification3(classification3);
+
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
 
@@ -186,7 +191,10 @@ public class AdminController {
             required = false, defaultValue="")String keyword, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model) {
 
-        log.info("유저 관리 페이지 컨트롤러 호출");
+        log.info("문의 관리 페이지 컨트롤러 호출");
+
+        if(classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
 
         if(reset.equals("1")) {
             session.removeAttribute("uClassification");
@@ -202,11 +210,17 @@ public class AdminController {
         int count = adminService.questionTotalCount(paging);
         pagination.setArticleTotalCount(count);
 
-        model.addAttribute("userList", adminService.getAllQuestionPaging(paging));
+        model.addAttribute("questionList", adminService.getAllQuestionPaging(paging));
+
         model.addAttribute("pagination", pagination);
 
-        return "admin/userListAdmin";
+        return "admin/questionListAdmin";
     }
 
+    @GetMapping("/question/detail")
+    public String questionDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
+        model.addAttribute("questionDetail", adminService.getQuestionById(id));
+        return "admin/questionDetailAdmin";
+    }
 
 }

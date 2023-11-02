@@ -90,14 +90,14 @@
 
 
     <select id="getAllQuestion" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
         FROM question q
         LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
     </select>
 
     <select id="getAllQuestionPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
         FROM question q
         LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
@@ -106,7 +106,7 @@
     </select>
 
     <select id="getAllQuestionByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
         FROM question q
         LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (type = #{classification})
@@ -116,7 +116,7 @@
     </select>
 
     <select id="getAllQuestionByType" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, q.status, u.nickname
+        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
         FROM question q
         LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (type = #{classification})

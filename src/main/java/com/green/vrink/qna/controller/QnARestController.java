@@ -62,8 +62,8 @@ public class QnARestController {
         Integer userId = qnAService.getUserIdByQuestionId(answerDTO.getQuestionId());
         qnAService.updateStatus(answerDTO.getQuestionId());
 
-        answerDTO.
-        messageService.sendMessageAndSaveSpecificPage(userId,);
+//        answerDTO.
+//        messageService.sendMessageAndSaveSpecificPage(userId,);
         return ResponseEntity.ok().build();
     }
 
