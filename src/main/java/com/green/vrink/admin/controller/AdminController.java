@@ -12,6 +12,7 @@ import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
+import com.green.vrink.util.Test;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class AdminController {
     private final QnAService qnAService;
 
     private final MessageService messageService;
+    private final Test test;
 
     @GetMapping("/main")
     @AdminCheck
@@ -44,6 +46,13 @@ public class AdminController {
         return "/admin/main";
     }
 
+    @GetMapping("/test2")
+    public String test(Model model){
+        String test1 = test.getTest();
+        model.addAttribute("test",test1);
+
+        return "test";
+    }
     @GetMapping("/apply-accept")
     public String applyAccept(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
             required = false, defaultValue="1")int page, @RequestParam(value="classification",
