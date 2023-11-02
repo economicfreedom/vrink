@@ -71,4 +71,9 @@ public class QnAServiceImpl implements QnAService {
     public Integer getUserId(Integer questionId) {
         return qnARepository.findUserIdByQuestionId(questionId);
     }
+
+    @Override
+    public Integer getUserIdByQuestionId(Integer questionId) {
+        return qnARepository.findUserIdByQuestionId(questionId);
+    }
 }

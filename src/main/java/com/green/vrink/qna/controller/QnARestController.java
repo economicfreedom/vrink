@@ -1,5 +1,6 @@
 package com.green.vrink.qna.controller;
 
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.qna.dto.AnswerDTO;
 import com.green.vrink.qna.service.QnAService;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 public class QnARestController {
 
     private final QnAService qnAService;
+    private final MessageService messageService;
 
     @PostMapping("/save")
     public ResponseEntity<?> save(
@@ -57,7 +59,11 @@ public class QnARestController {
         if (res != 1) {
             return ResponseEntity.badRequest().build();
         }
+        Integer userId = qnAService.getUserIdByQuestionId(answerDTO.getQuestionId());
         qnAService.updateStatus(answerDTO.getQuestionId());
+
+        answerDTO.
+        messageService.sendMessageAndSaveSpecificPage(userId,);
         return ResponseEntity.ok().build();
     }
 

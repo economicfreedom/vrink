@@ -16,7 +16,7 @@
 </style>
 <script>
     function href() {
-        location.href = "/board/write"
+        location.href = "/board/write-form"
     }
 
     $(document).ready(function () {

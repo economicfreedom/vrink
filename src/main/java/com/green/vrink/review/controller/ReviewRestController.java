@@ -1,8 +1,11 @@
 package com.green.vrink.review.controller;
 
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorService;
+import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.LoginCheck;
 import lombok.AllArgsConstructor;
@@ -27,7 +30,9 @@ public class ReviewRestController {
 
     private final ReviewService reviewService;
     private final HttpSession httpSession;
-
+    private final MessageService messageService;
+    private final EditorService editorService;
+    private final UserService userService;
     @PostMapping("/save")
     @LoginCheck
     public ResponseEntity<?> replySave(@Valid @RequestBody ReviewDTO reviewDTO, BindingResult bindingResult) {
@@ -51,6 +56,16 @@ public class ReviewRestController {
 
         log.info("reply save start {}", save);
 
+
+        Integer userId = editorService.getUserIdByEditorId(reviewDTO.getEditorId());
+        Integer editorId = reviewDTO.getEditorId();
+
+        String nickname = editorService.getNicknameByEditorId(editorId);
+
+        String message = nickname+"작가님 리뷰가 달렸어요!";
+        String url = "/editor/editor-detail/"+reviewDTO.getEditorId();
+
+        messageService.sendMessageAndSaveSpecificPage(userId,message,url);
         return ResponseEntity.ok().build();
     }
 

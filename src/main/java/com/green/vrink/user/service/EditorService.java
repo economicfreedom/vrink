@@ -21,4 +21,7 @@ public interface EditorService {
 	Integer findEditorId(Integer userId);
 	Integer calculatePoint(CalculatePointDto calculatePointDto);
 	Integer updatePoint(Integer userId, Integer point);
+
+    Integer getUserIdByEditorId(Integer editorId);
+	String getNicknameByEditorId(Integer editorId);
 }

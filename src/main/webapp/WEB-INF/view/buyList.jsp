@@ -19,7 +19,7 @@
 
     th {
         background-color: #ff2911;
-        color: #f2dede;
+        color: #ffffff;
         font-weight: bold;
     }
 
@@ -45,16 +45,18 @@
                 <th>가격</th>
                 <th>액션</th>
             </tr>
-            <tr>
+            <c:forEach items="${list}" var="dto">
+                <tr>
 
-                <td>2023-10-01</td>
-                <td>홍길동</td>
-                <td>작품 A</td>
-                <td>₩10,000</td>
-                <td>
-                    <button type=button class="flat-btn" id="apply" style="border-radius: 40px;">수락</button>
-                </td>
-            </tr>
+                    <td>${dto.createdAt}</td>
+                    <td>${dto.nickname}</td>
+                    <td>미정 </td>
+                    <td>${dto.point}</td>
+                    <td>
+                        <button type=button class="flat-btn" id="apply" style="border-radius: 40px;">수락</button>
+                    </td>
+                </tr>
+            </c:forEach>
 
         </table>
     </div>

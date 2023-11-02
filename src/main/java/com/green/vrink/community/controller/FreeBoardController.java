@@ -4,6 +4,7 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.Criteria;
@@ -32,6 +33,8 @@ public class FreeBoardController {
     private final FreeBoardService freeBoardService;
     private final FreeBoardReplyService freeBoardReplyService;
     private final HttpSession httpSession;
+    private final MessageService messageService;
+
 //    private final Check check;
 
 

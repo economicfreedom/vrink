@@ -28,13 +28,13 @@ public class BuyListController {
 
         Criteria cri = new Criteria();
         User user = (User) httpSession.getAttribute(Define.USER);
-        List<BuyDTO> buyDTOS = paymentService.buyList(user.getUserId(), cri);
+        List<BuyDTO> buyDTOs = paymentService.buyList(user.getUserId(), cri);
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
-        pageDTO.setArticleTotalCount(buyDTOS.size());
+        pageDTO.setArticleTotalCount(buyDTOs.size());
 
-        model.addAttribute("list",buyDTOS);
+        model.addAttribute("list",buyDTOs);
         model.addAttribute("pageDTO",pageDTO);
 
         return "buyList";
