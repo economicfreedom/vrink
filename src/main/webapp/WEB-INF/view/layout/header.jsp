@@ -380,10 +380,8 @@
                     location.reload();
                 }else if (response.status.valueOf() === 401) {
                     alert("아이디 또는 비밀번호가 틀립니다.");
-                    return;
                 } else {
-                    alert("비활성화된 회원입니다.");
-                    return;
+                    alert("존재하지않는 아이디입니다.");
                 }
 
 

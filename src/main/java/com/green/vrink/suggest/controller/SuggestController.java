@@ -5,6 +5,7 @@ import com.green.vrink.suggest.service.SuggestServiceImpl;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.UserService;
+import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,8 @@ public class SuggestController {
         if (suggest == null) {
             return "user/applyForm";
         }
+
+        Criteria cri = new Criteria();
         String writerNickname = userRepository.findUserNicknameById(suggest.getUserId());
 
         model.addAttribute("writerNickname", writerNickname);

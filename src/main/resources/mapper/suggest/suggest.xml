@@ -7,6 +7,10 @@
         INSERT INTO suggest (user_id, title, content) VALUES (#{userId}, #{title}, #{content})
     </insert>
 
+    <insert id="postSuggestReply">
+        INSERT INTO suggest_reply (suggest_id, user_id, content) VALUES (#{suggestId}, #{userId}, #{content})
+    </insert>
+
     <update id="patchSuggest">
         UPDATE suggest
         SET suggest.title = #{title}, suggest.content = #{content}, suggest.created_at = now()
@@ -18,6 +22,15 @@
     </delete>
 
     <select id="getSuggest" resultType="com.green.vrink.suggest.repository.model.Suggest">
-        SELECT * FROM suggest WHERE suggest.suggest_id = #{suggestID};
+        SELECT * FROM suggest WHERE suggest.suggest_id = #{suggestID}
+    </select>
+
+    <select id="getSuggestReplyListBySuggestId"
+            resultType="com.green.vrink.suggest.repository.model.SuggestReply">
+        SELECT * FROM suggest_reply WHERE suggest_id = #{suggestId}
+    </select>
+
+    <select id="getReplyCount" resultType="java.lang.Integer">
+        SELECT count(suggest_id) FROM suggest_reply WHERE suggest_id = #{suggestId}
     </select>
 </mapper>

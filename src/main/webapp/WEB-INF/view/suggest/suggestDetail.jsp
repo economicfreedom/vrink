@@ -273,8 +273,8 @@ let content = replyArea.val();
 
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
-                        <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
+                        <c:forEach var="reply" items="${suggestReply}">
+                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${suggestReply.replyId}">
                                 <li class="list-group-item custom-list-item" >
                                     <div class="comment-header">
                                         <strong class="comment-nickname">${reply.nickname}</strong>
