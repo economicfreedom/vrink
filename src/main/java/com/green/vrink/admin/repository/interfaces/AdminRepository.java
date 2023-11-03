@@ -1,5 +1,6 @@
 package com.green.vrink.admin.repository.interfaces;
 
+import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
@@ -20,6 +21,13 @@ public interface AdminRepository {
     List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging);
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
+
+    List<AdminAdDto> getAllAdList();
+    List<AdminAdDto> getAllAdListByType(String classification);
+    List<AdminAdDto> getAllAdListByPaging(PagingDto paging);
+    List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging);
+    Integer countAllAd();
+    Integer countAdByType(PagingDto paging);
 
     List<QuestionDTO> getAllQuestion(PagingDto paging);
     List<QuestionDTO> getAllQuestionByType(String classification);

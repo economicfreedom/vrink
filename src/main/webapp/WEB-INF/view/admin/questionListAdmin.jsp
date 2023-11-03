@@ -309,10 +309,10 @@
 
             </select> <input type="text" id="keyword" name="keyword" class="datatable-input" placeholder="검색어를 입력해주세요"
                              value="${uKeyword}">
-            <button class="btn btn-secondary btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="searchButton">검색
             </button>
-            <button class="btn btn-secondary btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="resetButton"
                     onClick="location.href='/admin/question?reset=1'">검색초기화
             </button>

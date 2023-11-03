@@ -1,5 +1,6 @@
 package com.green.vrink.admin.service;
 
+import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
@@ -23,6 +24,13 @@ public interface AdminService {
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
 
+    List<AdminAdDto> getAllAdList();
+    List<AdminAdDto> getAllAdListByType(String classification);
+    List<AdminAdDto> getAllAdListByPaging(PagingDto paging);
+    List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging);
+    Integer countAllAd();
+    Integer countAdByType(PagingDto paging);
+
     List<QuestionDTO> getAllQuestion(PagingDto paging);
     List<QuestionDTO> getAllQuestionByType(String classification);
     List<QuestionDTO> getAllQuestionPaging(PagingDto paging);
@@ -30,6 +38,7 @@ public interface AdminService {
     QuestionDTO getQuestionById(Integer id);
     Integer questionTotalCount(PagingDto paging);
     Integer questionTotalCountClassification(PagingDto paging);
+
 
     User getUserById(Integer id);
     Integer userTotalCount(PagingDto paging);

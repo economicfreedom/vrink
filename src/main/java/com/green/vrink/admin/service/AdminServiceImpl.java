@@ -1,5 +1,6 @@
 package com.green.vrink.admin.service;
 
+import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.CheatCheckDto;
 import com.green.vrink.admin.dto.PagingDto;
@@ -100,6 +101,36 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Integer countAllFreeboard() {
         return adminRepository.countAllFreeboard();
+    }
+
+    @Override
+    public List<AdminAdDto> getAllAdList() {
+        return adminRepository.getAllAdList();
+    }
+
+    @Override
+    public List<AdminAdDto> getAllAdListByType(String classification) {
+        return adminRepository.getAllAdListByType(classification);
+    }
+
+    @Override
+    public List<AdminAdDto> getAllAdListByPaging(PagingDto paging) {
+        return adminRepository.getAllAdListByPaging(paging);
+    }
+
+    @Override
+    public List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging) {
+        return adminRepository.getAllAdListByTypePaging(paging);
+    }
+
+    @Override
+    public Integer countAllAd() {
+        return adminRepository.countAllAd();
+    }
+
+    @Override
+    public Integer countAdByType(PagingDto paging) {
+        return null;
     }
 
     @Override

@@ -238,4 +238,37 @@ public class AdminController {
         return "admin/questionDetailAdmin";
     }
 
+    @GetMapping("/ad")
+    public String adAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
+            required = false, defaultValue="1")int page, @RequestParam(value="classification",
+            required = false, defaultValue="전체")String classification, @RequestParam(value="searchType",
+            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
+            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="2")String reset, Model model){
+
+        log.info("판매자 신청 목록 컨트롤러 호출");
+
+        if(reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllAd();
+        pagination.setArticleTotalCount(count);
+
+//        List<AdminAdDto> adminAdList = adminService.getAllAdminApplyListByPaging(paging);
+
+//        model.addAttribute("adminApplyList", adminApplyList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/applyAccept";
+    }
+
+
 }

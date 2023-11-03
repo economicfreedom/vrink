@@ -204,6 +204,44 @@
         WHERE user_id = #{id}
     </select>
 
+    <select id="getAllAdList" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT *
+        FROM apply
+    </select>
+
+    <select id="getAllAdListByType" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT *
+        FROM apply
+        WHERE status = #{classification}
+        ORDER BY ad_id DESC
+    </select>
+
+    <select id="getAllAdListByPaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT *
+        FROM apply
+        ORDER BY ad_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllAdListByTypePaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT *
+        FROM apply
+        WHERE status = #{classification}
+        ORDER BY ad_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="countAllAd" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM ad
+    </select>
+
+    <select id="countAdByType" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM ad
+        WHERE status = #{classification}
+    </select>
+
     <update id="updateUserLevelById">
         UPDATE user
         SET level = #{level}
