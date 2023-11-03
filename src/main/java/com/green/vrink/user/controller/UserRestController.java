@@ -2,6 +2,7 @@ package com.green.vrink.user.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.green.vrink.user.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,12 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.green.vrink.user.dto.PasswordDto;
-import com.green.vrink.user.dto.SignInDto;
 //import com.green.vrink.handle.CustomRestfulException;
-import com.green.vrink.user.dto.SignUpDto;
-import com.green.vrink.user.dto.UpdateNicknameDto;
-import com.green.vrink.user.dto.UpdatePasswordDto;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.UserService;
@@ -77,19 +73,19 @@ public class UserRestController {
 	
 	@PostMapping("/sign-in")
 	public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
-		User user = userService.signIn(signInDto.getEmail());
+		SignInResponseDto signInResponseDto = userService.signIn(signInDto.getEmail());
 
-		 if(!passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) { 
+		 if(!passwordEncoder.matches(signInDto.getPassword(), signInResponseDto.getPassword())) {
 			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		 }
 
-		if(user.getEnabledCheck() != 0) {
+		if(signInResponseDto.getEnabledCheck() != 0) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 
 
 
-		 session.setAttribute(Define.USER, user);
+		 session.setAttribute(Define.USER, signInResponseDto);
 		 return ResponseEntity.ok().build();
 	}
 	
@@ -105,10 +101,6 @@ public class UserRestController {
 			return 0;
 		}
 
-//		User user = (User) session.getAttribute("USER");
-//		user.setNickname(nickname);
-//		session.removeAttribute("USER");
-//		session.setAttribute(Define.USER,user);
 		return 1;
 	}
 	

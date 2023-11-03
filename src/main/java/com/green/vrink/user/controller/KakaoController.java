@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
+import com.green.vrink.user.dto.SignInResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -129,8 +130,8 @@ public class KakaoController {
 	        	return "/user/kakaoSignup";
 			}
 	        
-	        User user = userService.signIn(email);
-	        session.setAttribute(Define.USER, user);
+	        SignInResponseDto signInResponseDto = userService.signIn(email);
+	        session.setAttribute(Define.USER, signInResponseDto);
 	        
 	    } catch (IOException e) {
 	        e.printStackTrace();

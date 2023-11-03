@@ -1,5 +1,6 @@
 package com.green.vrink.user.service;
 
+import com.green.vrink.user.dto.SignInResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,23 +29,21 @@ public class UserService {
 		}
 	}
 	
-	public User signIn(String email) {
-		User user = userRepository.findByEmail(email);
-		return user;
-	}
-	
-	public Integer updateNickname(String userId, String nickname) {
-		int result = userRepository.updateNickname(userId, nickname);
-		return result;
+	public SignInResponseDto signIn(String email) {
+		return userRepository.findByEmail(email);
 	}
 
+	@Transactional
+	public Integer updateNickname(String userId, String nickname) {
+		return userRepository.updateNickname(userId, nickname);
+	}
+
+	@Transactional
 	public Integer updatePassword(String userId, String password) {
-		int result = userRepository.updatePassword(userId, password);
-		return result;
+		return userRepository.updatePassword(userId, password);
 	}
 
 	public Integer deleteByUserId(String userId) {
-		int result = userRepository.deleteByUserId(userId);
-		return result;
+		return userRepository.deleteByUserId(userId);
 	}
 }

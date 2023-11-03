@@ -25,7 +25,6 @@ public class SuggestRestController {
 
     private final HttpSession session;
     private final SuggestServiceImpl suggestService;
-    private final UserRepository userRepository;
 
     @PostMapping("/post")
     public Integer postSuggest(@RequestBody PostSuggestDto postSuggestDto) {

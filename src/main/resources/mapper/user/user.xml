@@ -68,11 +68,16 @@
         WHERE editor_id = #{editorId}
     </update>
 
-    <select id="findByEmail" resultType="com.green.vrink.user.repository.model.User">
-    	SELECT *
-		FROM user AS u 
+    <select id="findByEmail" resultType="com.green.vrink.user.dto.SignInResponseDto">
+        SELECT u.user_id, u.email, u.password, u.name,
+               u.nickname, u.phone, u.created_at, u.account,
+               u.account_name, u.editor_created_at, u.point, u.user_image,
+               u.editor, u.enabled_check, u.level, ed.editor_id
+        FROM user AS u
+                 left join editor_detail ed
+                           on ed.user_id = u.user_id
 		WHERE u.email = #{email}
-    </select>	
+    </select>
     
     <update id="updateNickname">
     	UPDATE user 
