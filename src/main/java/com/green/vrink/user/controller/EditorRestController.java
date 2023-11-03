@@ -86,12 +86,8 @@ public class EditorRestController {
     }
     
     @PostMapping("/editor-price") 
-    public ResponseEntity<?> EditorPrice(EditorPriceListDTO editorPriceDTO) {
-        User user = (User)session.getAttribute(Define.USER);
-        int editorId = userRepository.findEditorIdByUserId(user.getUserId());
-        editorPriceDTO.setEditorId(editorId);
-    	editorServiceImpl.requestEditorPrice(editorPriceDTO);
-    	log.info("priceDTO {} ", editorPriceDTO);
+    public ResponseEntity<?> EditorPrice(EditorPriceListDTO editorPriceListDTO) {
+    	editorServiceImpl.requestEditorPrice(editorPriceListDTO);
     	return ResponseEntity.ok().build();
     }
 

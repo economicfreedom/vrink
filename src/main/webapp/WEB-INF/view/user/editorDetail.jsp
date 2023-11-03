@@ -371,10 +371,10 @@
 
                     <div>
                         <div id="edit"
-                             style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer">
+                             style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer" onclick="location.href='/editor/editor-edit?editorId=${editorDetail.editorId}'">
                             수정하기</div>
                         <div id="suggest"
-                                style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer">
+                                style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editorId=${editorDetail.editorId}'">
                             작가에게 의뢰하기</div>
                         </div>
                     </div>
@@ -479,4 +479,5 @@
             </div>
         </div>
 </section>
+
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

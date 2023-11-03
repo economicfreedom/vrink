@@ -2,6 +2,7 @@ package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
 import com.green.vrink.util.Criteria;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,12 +17,15 @@ public interface EditorService {
 	List<EditorDTO> getList(Criteria cri);
 
 	Integer getTotal();
-	
-	Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO);
-	Integer findEditorId(Integer userId);
+
+    Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO);
+
+    Integer findEditorId(Integer userId);
 	Integer calculatePoint(CalculatePointDto calculatePointDto);
 	Integer updatePoint(Integer userId, Integer point);
 
     Integer getUserIdByEditorId(Integer editorId);
 	String getNicknameByEditorId(Integer editorId);
+
+	List<EditorPriceDTO> responsePrice(Integer editorId);
 }

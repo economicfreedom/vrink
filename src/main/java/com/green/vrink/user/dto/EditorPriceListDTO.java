@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class EditorPriceListDTO {
 	private Integer editorId;
-	private List<String> options;
-	private List<Integer> prices;
+	private String options[];
+	private Integer price[];
 }

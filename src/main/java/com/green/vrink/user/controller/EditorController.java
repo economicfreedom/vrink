@@ -4,6 +4,7 @@ import com.green.vrink.morph.service.MorphService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
+import com.green.vrink.user.dto.EditorPriceDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
@@ -64,9 +65,9 @@ public class EditorController {
         return "user/editorWrite";
     }
 
-    @GetMapping("/editor-edit/{editorId}")
-    public String editorEdit(@PathVariable("editorId") Integer editorId, Model model) {
-        if (editorId == null) {
+    @GetMapping("/editor-edit")
+    public String editorEdit(@RequestParam("editorId") Integer editorId, Model model) {
+        if (session.getAttribute(Define.EDITOR_ID) == null || editorId == null || session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
         EditorDTO editorDTO = editorServiceImpl.responseEditorEdit(editorId);
@@ -123,10 +124,23 @@ if (editorId == null) {
     
     @GetMapping("/editor-price")
     public String editorPrice(@RequestParam Integer editorId) {
-
+        if(session.getAttribute(Define.EDITOR_ID) == null ||
+                session.getAttribute(Define.EDITOR_ID) != editorId) {
+            return "redirect:/";
+        }
     	return "user/editorPrice";
     }
 
+    @GetMapping("/editor-price-edit")
+    public String editorPriceEdit(@RequestParam Integer editorId, Model model) {
+        if(session.getAttribute(Define.EDITOR_ID) == null ||
+                session.getAttribute(Define.EDITOR_ID) != editorId) {
+            return "redirect:/";
+        }
+        List<EditorPriceDTO> editorPriceDTO = editorServiceImpl.responsePrice(editorId);
+        model.addAttribute("editorPriceDTO",editorPriceDTO);
+        return "user/editorPriceEdit";
+    }
     @GetMapping("/calculate/point")
     public String calculatePoint(Model model) {
         User user = (User) session.getAttribute(Define.USER);

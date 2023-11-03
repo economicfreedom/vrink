@@ -2,6 +2,7 @@ package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.Define;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import com.green.vrink.user.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -17,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class EditorServiceImpl implements EditorService{
 	private final UserRepository userRepository;
-
+    private final HttpSession session;
 
 
     @Transactional
@@ -72,18 +74,18 @@ public class EditorServiceImpl implements EditorService{
     @Transactional
     @Override
     public Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO) {
-    	for (int i = 0; i < editorPriceListDTO.getOptions().size(); i++) {
-            String option = editorPriceListDTO.getOptions().get(i);
-            Integer price = editorPriceListDTO.getPrices().get(i);
-
-            EditorPriceDTO priceDTO = new EditorPriceDTO();
-            priceDTO.setEditorId(editorPriceListDTO.getEditorId());
-            priceDTO.setOption(option);
+        log.info("{}",editorPriceListDTO);
+        EditorPriceDTO priceDTO = new EditorPriceDTO();
+        priceDTO.setEditorId((Integer) session.getAttribute(Define.EDITOR_ID));
+        for (int i = 0; i < editorPriceListDTO.getOptions().length; i++) {
+            String option = editorPriceListDTO.getOptions()[i];
+            Integer price = editorPriceListDTO.getPrice()[i];
+            priceDTO.setOptions(option);
             priceDTO.setPrice(price);
-
+            log.info("{}",priceDTO);
             userRepository.insertPrice(priceDTO);
         }
-    	return 0;
+    	return 1;
     }
 
     @Override
@@ -111,5 +113,10 @@ public class EditorServiceImpl implements EditorService{
         Integer userId = userRepository.findUserIdByEditorId(editorId);
 
         return userRepository.findUserNicknameById(userId);
+    }
+
+    @Override
+    public List<EditorPriceDTO> responsePrice(Integer editorId) {
+        return userRepository.findPriceByEditorId(editorId);
     }
 }

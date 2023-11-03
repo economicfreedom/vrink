@@ -119,14 +119,16 @@
 
     </update>
 
-
     <insert id="insertPrice">
     	INSERT INTO price (editor_id, options, price)
-    	VALUES (#{editorId}, #{option}, #{price})
+    	VALUES (#{editorId}, #{options}, #{price})
     </insert>
 
     <insert id="calculatePoint">
         INSERT INTO calculator (editor_id, cal_price, created_at) VALUES (#{userId}, #{point}, now());
     </insert>
 
+    <select id="findPriceByEditorId" resultType="com.green.vrink.user.dto.EditorPriceDTO">
+        SELECT * FROM price WHERE editor_id = #{editorId}
+    </select>
 </mapper>

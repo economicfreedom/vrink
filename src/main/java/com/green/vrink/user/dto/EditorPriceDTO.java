@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class EditorPriceDTO {
 	private Integer editorId;
-	private String option;
+	private String options;
 	private Integer price;
 }

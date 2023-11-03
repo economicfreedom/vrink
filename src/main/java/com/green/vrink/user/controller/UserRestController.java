@@ -73,19 +73,23 @@ public class UserRestController {
 	
 	@PostMapping("/sign-in")
 	public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
+
 		User user = userService.signIn(signInDto.getEmail());
 
 		 if(!passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) {
+
 			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		 }
 
 		if(user.getEnabledCheck() != 0) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+
 		Integer editorId = userRepository.findEditorIdByUserId(user.getUserId());
 		session.setAttribute(Define.EDITOR_ID,editorId);
 		session.setAttribute(Define.USER, user);
 		return ResponseEntity.ok().build();
+
 	}
 	
 	// 닉네임 변경

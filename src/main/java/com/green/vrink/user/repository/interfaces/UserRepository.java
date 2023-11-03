@@ -42,4 +42,6 @@ public interface UserRepository {
     Integer findUserIdByEditorId(Integer editorId);
 
 	void updateEditorPoint(@Param("userId")Integer userId,@Param("point") Integer point);
+
+	List<EditorPriceDTO> findPriceByEditorId(Integer editorId);
 }
