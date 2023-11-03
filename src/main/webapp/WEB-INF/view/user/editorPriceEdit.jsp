@@ -10,7 +10,7 @@
 				<h2>작품 가격 설정</h2>
 				<span>소개를 작성해보세요</span>
 			</div>
-			<form class="price-form" action="/editor/editor-price" method="post">
+			<form class="price-form" action="/editor/editor-price-edit" method="post">
 				<div class="editor-div">
 					<div class="row">
 						<div class="price-area">

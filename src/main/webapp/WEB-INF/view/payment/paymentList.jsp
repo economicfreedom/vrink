@@ -31,7 +31,7 @@ function refund(impUid, totalprice) {
                             amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
                         })
                     }).then(response=>response.json())
-                        .then(alert('환불이 완료되었습니다.'))
+                        .then(data=>console.log(data))
                 })
     })
 }

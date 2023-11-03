@@ -5,6 +5,7 @@ import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorPriceDTO;
+import com.green.vrink.user.dto.EditorPriceListDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorServiceImpl;
@@ -13,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -66,7 +64,7 @@ public class EditorController {
     }
 
     @GetMapping("/editor-edit")
-    public String editorEdit(@RequestParam("editorId") Integer editorId, Model model) {
+    public String editorEdit(@RequestParam("editor-id") Integer editorId, Model model) {
         if (session.getAttribute(Define.EDITOR_ID) == null || editorId == null || session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
@@ -123,7 +121,7 @@ if (editorId == null) {
     }
     
     @GetMapping("/editor-price")
-    public String editorPrice(@RequestParam Integer editorId) {
+    public String editorPrice(@RequestParam("editor-id") Integer editorId) {
         if(session.getAttribute(Define.EDITOR_ID) == null ||
                 session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
@@ -132,13 +130,22 @@ if (editorId == null) {
     }
 
     @GetMapping("/editor-price-edit")
-    public String editorPriceEdit(@RequestParam Integer editorId, Model model) {
+    public String editorPriceEdit(@RequestParam("editor-id") Integer editorId, Model model) {
         if(session.getAttribute(Define.EDITOR_ID) == null ||
                 session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
         List<EditorPriceDTO> editorPriceDTO = editorServiceImpl.responsePrice(editorId);
         model.addAttribute("editorPriceDTO",editorPriceDTO);
+        return "user/editorPriceEdit";
+    }
+
+    @PostMapping("/editor-price-edit")
+    public String editorPriceEditProc(EditorPriceListDTO editorPriceListDTO) {
+        if(session.getAttribute(Define.EDITOR_ID) == null) {
+            return "redirect:/";
+        }
+        editorServiceImpl.requestEditorPriceEdit(editorPriceListDTO);
         return "user/editorPriceEdit";
     }
     @GetMapping("/calculate/point")

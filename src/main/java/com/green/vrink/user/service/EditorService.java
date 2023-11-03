@@ -28,4 +28,6 @@ public interface EditorService {
 	String getNicknameByEditorId(Integer editorId);
 
 	List<EditorPriceDTO> responsePrice(Integer editorId);
+
+    Integer requestEditorPriceEdit(EditorPriceListDTO editorPriceListDTO);
 }

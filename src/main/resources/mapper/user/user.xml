@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.green.vrink.user.repository.interfaces.UserRepository">
 
-
     <select id="requestApproval" resultType="java.lang.Integer">
         insert into apply(user_id, name, number)
             value (#{userId},#{accountName},#{accountNumber})
@@ -30,7 +29,7 @@
     </insert>
 
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
-        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, ed.vrm, u.nickname
+        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, replace(ed.vrm,"\\",'/') as vrm, u.nickname
 		from editor_detail ed
 		left join user u
 		on u.user_id = ed.user_id
@@ -131,4 +130,8 @@
     <select id="findPriceByEditorId" resultType="com.green.vrink.user.dto.EditorPriceDTO">
         SELECT * FROM price WHERE editor_id = #{editorId}
     </select>
+
+    <delete id="deletePriceByEditorId">
+        DELETE FROM price WHERE editor_id = #{editorId}
+    </delete>
 </mapper>

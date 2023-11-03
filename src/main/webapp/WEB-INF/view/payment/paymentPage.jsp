@@ -69,7 +69,7 @@
 								price: prices,
 								quantity: quantities
 							})
-						}).then(location.href="/payment/payment-list")
+						}).then(location.href="/list")
 					} else {
 						alert("결제 금액이 잘못되었습니다.");
 						// 인증코드 발행
@@ -100,7 +100,7 @@
 														imp_uid : rsp.imp_uid, // imp_uid를 환불 `unique key`로 입력
 														amount: rsp.paid_amount // 가맹점 클라이언트로부터 받은 환불금액
 													})
-												}).then(response=>response)
+												}).then(location.reload())
 											})
 								})
 						location.reload();
@@ -165,7 +165,6 @@
 				</div>
 			</div>
 		</div>
-		<button id="test">테스트</button>
 	</section>
 </div>
 <script>

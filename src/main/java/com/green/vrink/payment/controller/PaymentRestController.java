@@ -6,6 +6,7 @@ import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.service.PaymentServiceImpl;
+import com.siot.IamportRestClient.IamportClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentRestController {
     private final PaymentServiceImpl paymentServiceImpl;
-
     @PostMapping("/validation")
     public ResponseEntity<?> complete(ValidationDTO validationDTO) {
-
 
         Boolean validation = paymentServiceImpl.validationPrice(validationDTO);
 
@@ -40,6 +39,7 @@ public class PaymentRestController {
 
     @GetMapping("/cancel/{paymentId}")
     public Payment cancel(@PathVariable("paymentId") Integer payment_id) {
+
         return paymentServiceImpl.responseCancelData(payment_id);
     }
 
@@ -49,6 +49,4 @@ public class PaymentRestController {
         paymentServiceImpl.insertPayment(paymentDTO);
         return ResponseEntity.ok().build();
     }
-
-    
 }

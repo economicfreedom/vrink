@@ -29,7 +29,7 @@ public class PaymentController {
 	private final HttpSession session;
 	@LoginCheck
 	@GetMapping("/payment-page")
-	public String payment(@RequestParam("editorId") Integer editorId, Model model) {
+	public String payment(@RequestParam("editor-id") Integer editorId, Model model) {
 		User user = (User)session.getAttribute(Define.USER);
 		List<PriceDTO> priceDTOs = paymentServiceImpl.responsePrice(editorId);
 		model.addAttribute("priceDTOs", priceDTOs);
@@ -38,10 +38,10 @@ public class PaymentController {
 	}
 	@LoginCheck
 	@GetMapping("/payment-list")
-	public String paymentList(@RequestParam("paymentId") Integer paymentId,@RequestParam("userId") Integer userId, Model model) {
+	public String paymentList(@RequestParam("payment-id") Integer paymentId,@RequestParam("user-id") Integer userId, Model model) {
 		User user = (User)session.getAttribute(Define.USER);
 		if(userId != user.getUserId()) {
-
+			return "redirect:/";
 		}
 		Payment payment = paymentServiceImpl.responsePayment(paymentId);
 		List<PaymentDetailDTO> paymentDetail = paymentServiceImpl.responsePaymentDetail(paymentId);

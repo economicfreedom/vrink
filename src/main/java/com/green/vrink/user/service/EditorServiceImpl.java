@@ -89,6 +89,23 @@ public class EditorServiceImpl implements EditorService{
     }
 
     @Override
+    public Integer requestEditorPriceEdit(EditorPriceListDTO editorPriceListDTO) {
+        EditorPriceDTO priceDTO = new EditorPriceDTO();
+        Integer editorId = (Integer) session.getAttribute(Define.EDITOR_ID);
+        priceDTO.setEditorId(editorId);
+        userRepository.deletePriceByEditorId(editorId);
+        for (int i = 0; i < editorPriceListDTO.getOptions().length; i++) {
+            String option = editorPriceListDTO.getOptions()[i];
+            Integer price = editorPriceListDTO.getPrice()[i];
+            priceDTO.setOptions(option);
+            priceDTO.setPrice(price);
+            log.info("{}",priceDTO);
+            userRepository.insertPrice(priceDTO);
+        }
+        return 1;
+    }
+
+    @Override
     public Integer findEditorId(Integer userId) {
         return userRepository.findEditorIdByUserId(userId);
     }

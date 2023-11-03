@@ -5406,7 +5406,9 @@ p {
 .w-full {
 	width: 100%;
 }
-
+.h-full {
+    height: 100%;
+}
 .p-block {
 	padding:45px 0;
 }
