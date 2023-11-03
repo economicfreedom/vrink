@@ -59,6 +59,19 @@ public class SuggestServiceImpl implements SuggestService{
 
     @Override
     public Integer deleteSuggestReply(Integer suggestId) {
+
         return suggestRepository.deleteSuggestReply(suggestId);
     }
+
+    @Override
+    public Integer getTotal(Criteria criteria) {
+        return suggestRepository.getTotal(criteria);
+    }
+
+    @Override
+    public List<GetSuggestDto> getSuggestList(Criteria criteria) {
+        return suggestRepository.getSuggestList(criteria);
+    }
+
+
 }

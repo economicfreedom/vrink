@@ -72,11 +72,11 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: $('.kakao-email-input').val(),
-                password: $('.kakao-password-input').val(),
-                name: $('.kakao-name-input').val(),
-                nickname: $('.kakao-nickname-input').val(),
-                phone: $('.kakao-phone-input').val()
+                email: `${email}`,
+                password: $('.kakao-password-input').val().trim(),
+                name: $('.kakao-name-input').val().trim(),
+                nickname: `${nickname}`,
+                phone: $('.kakao-phone-input').val().trim()
             })
         })
             .then(response => {

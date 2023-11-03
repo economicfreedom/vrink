@@ -149,7 +149,6 @@ if (editorId == null) {
         }
         if (Objects.equals(user.getEditor(), "editor")) {
             User newUser = userRepository.findByUserId(user.getUserId());
-            System.out.println(newUser);
             model.addAttribute("newUser", newUser);
             return "user/calculatePoint";
         }

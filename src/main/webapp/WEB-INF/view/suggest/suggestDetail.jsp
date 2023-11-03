@@ -125,7 +125,7 @@
 
     function more() {
         pageNum++;
-        const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
+        const url = `/suggest/more-reply?suggest-id=${suggest.suggestId}&page-num=` + pageNum + `&total=${total}`;
         let html = '';
 
 // fetch를 사용한 요청

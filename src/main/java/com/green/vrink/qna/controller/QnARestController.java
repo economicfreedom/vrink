@@ -37,7 +37,6 @@ public class QnARestController {
         Integer save = qnAService.save(qnADTO);
 
         if (save != 1) {
-            System.out.println("너냐?");
             return ResponseEntity.badRequest().build();
         }
 

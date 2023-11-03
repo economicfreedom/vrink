@@ -51,4 +51,36 @@
     <select id="getReplyCount" resultType="java.lang.Integer">
         SELECT count(suggest_id) FROM suggest_reply WHERE suggest_id = #{suggestId}
     </select>
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(suggest_id) FROM suggest
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') OR
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <select id="getSuggestList" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+             , s.user_id
+             , s.title
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , u.nickname
+        FROM suggest s
+                 LEFT JOIN user u
+                           ON s.user_id = u.user_id
+        ORDER BY s.created_at desc
+            LIMIT #{offset}, #{countPerPage}
+    </select>
 </mapper>

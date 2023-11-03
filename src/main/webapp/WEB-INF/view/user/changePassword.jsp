@@ -6,10 +6,7 @@
 	        <div class="registration-sec">
 	            <h3>비밀번호 변경</h3>
 	            <div class="common-sign-up">
-					<input type="text" class="my-user-id" value="${USER.userId }" readonly="readonly" />
-	                <div class="field">
-	                    <input type="text" placeholder="현재 비밀번호" class="encoded-password" value="${USER.password }" readonly="readonly" />
-	                </div>
+					<input type="hidden" class="my-user-id" value="${USER.userId }" readonly="readonly" />
 					<div class="field">
 	                    <input type="text" placeholder="현재 비밀번호" class="my-password-check" value=""/>
 						<input type="text" class="encoded-password-check-flag" value="1"/>
@@ -57,7 +54,7 @@
 			alert('새로운 비밀번호가 서로 일치하지않습니다.');
 			return;
 		}
-		changePassword($('.my-user-id').val());
+		changePassword(`${USER.userId}`);
 	});
 
 	async function checkPassword() {
@@ -67,7 +64,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				encodedPassword : $('.encoded-password').val(),
+				encodedPassword : `${USER.password}`,
 				insertPassword : $('.my-password-check').val().trim()
 			})
 		});

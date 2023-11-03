@@ -40,7 +40,6 @@ public class PaymentRestController {
 
     @GetMapping("/cancel/{paymentId}")
     public Payment cancel(@PathVariable("paymentId") Integer payment_id) {
-        System.out.println(payment_id);
         return paymentServiceImpl.responseCancelData(payment_id);
     }
 

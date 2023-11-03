@@ -40,7 +40,6 @@ public class KakaoController {
 	
 	@GetMapping("/sign-in")
 	public String getKakaoUserInfo(String code, Model model) throws ParseException {
-	    System.out.println("OAuth Code : "+code);
 	    //////////////////////Token 정보 요청//////////////////////
 	    try {
 	        URL url = new URL("https://kauth.kakao.com/oauth/token");
@@ -74,8 +73,7 @@ public class KakaoController {
 	            if (br != null)
 	                br.close();
 	        }
-	        System.out.println("result : " + result);
-	        
+
 	        ObjectMapper mapper = new ObjectMapper();
 	        String access_token = mapper.readValue(result, KakaoSignInDto.class).getAccess_token();
 	        
@@ -84,7 +82,6 @@ public class KakaoController {
 	        conn.setRequestMethod("POST");
 	        conn.setDoOutput(true);
 	        conn.setRequestProperty("Authorization", "Bearer "+access_token);
-	        System.out.println(conn.getURL());
 
 	        line = ""; result = "";
 	        try {
@@ -98,8 +95,7 @@ public class KakaoController {
 	            if (br != null)
 	                br.close();
 	        }
-	        System.out.println("result user : " + result);
-	        
+
 	        JSONParser jsonParser = new JSONParser();
 	        Object object = jsonParser.parse(result);
 	        JSONObject jsonObject = (JSONObject)object;
@@ -115,10 +111,6 @@ public class KakaoController {
 	        	
 	        	String nickname = jsonObject.get("nickname").toString();
 	        	String profileImage = jsonObject.get("profile_image_url").toString();
-	        	
-	        	System.out.println(email);
-	        	System.out.println(nickname);
-	        	System.out.println(profileImage);
 	        	
 	        	model.addAttribute("email", email);
 	        	model.addAttribute("profileImage", profileImage);

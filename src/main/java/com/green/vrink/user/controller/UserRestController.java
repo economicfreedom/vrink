@@ -100,7 +100,6 @@ public class UserRestController {
 
 
 		if (result != 1) {
-			System.out.println("닉네임 변경 실패");
 			return 0;
 		}
 
@@ -125,7 +124,6 @@ public class UserRestController {
 		int result = userService.updatePassword(userId, passwordEncoder.encode(password));
 		
 		if (result != 1) {
-			System.out.println("비밀번호 변경 실패");
 			return 0;
 		}
 		session.removeAttribute(Define.USER);
@@ -144,7 +142,6 @@ public class UserRestController {
 	@DeleteMapping("/delete/{userId}")
 	public int deleteUser(@PathVariable String userId) {
 		int result = userService.deleteByUserId(userId);
-		System.out.println(result);
 		return 1;
 	}
 

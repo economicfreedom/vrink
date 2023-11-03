@@ -7,7 +7,6 @@
 	            <h3>MY PAGE</h3>
 				<p>${newUser.nickname}님 환영합니다!!</p>
 	            <div class="common-sign-up">
-					<input type="hidden" class="my-user-id" value="${newUser.userId}">
 	                <div class="field">
 	                    <input type="text" value="${newUser.email }" readonly="readonly" />
 	                </div>
@@ -32,7 +31,7 @@
 <script type="text/javascript">
 
 	$('.change-my-nickname-btn').on('click', function () {
-		changeNickname($('.my-user-id').val().trim());
+		changeNickname(`${USER.userid}`);
 	});
 
 	async function changeNickname(userId) {

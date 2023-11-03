@@ -94,20 +94,15 @@ public class EditorRestController {
     @PostMapping("/calculate/point")
     public ResponseEntity<?> calculatePoint(@RequestBody CalculatePointDto calculatePointDto) {
         User user = userRepository.findByUserId(calculatePointDto.getUserId());
-        System.out.println("userId: " + user.getUserId());
         int editorId = editorServiceImpl.findEditorId(calculatePointDto.getUserId());
-        System.out.println("editId: " + editorId);
         calculatePointDto.setUserId(editorId);
 
         int result = editorServiceImpl.calculatePoint(calculatePointDto);
-        System.out.println("result: " + 0);
         if (result != 1) {
             return ResponseEntity.badRequest().build();
         }
         int balancePoint =  user.getPoint() - calculatePointDto.getPoint();
-        System.out.println("balancePoint: " + balancePoint);
         int saveChangePoint = editorServiceImpl.updatePoint(user.getUserId(), balancePoint);
-        System.out.println("saveChangePoint: " + saveChangePoint);
 
         if (saveChangePoint != 1) {
             return ResponseEntity.badRequest().build();

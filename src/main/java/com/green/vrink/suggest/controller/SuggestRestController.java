@@ -1,16 +1,19 @@
 package com.green.vrink.suggest.controller;
 
-import com.green.vrink.suggest.dto.PatchSuggestDto;
-import com.green.vrink.suggest.dto.PatchSuggestReplyDto;
-import com.green.vrink.suggest.dto.PostSuggestDto;
-import com.green.vrink.suggest.dto.PostSuggestReplyDto;
+import com.green.vrink.community.dto.FreeBoardReplyDTO;
+import com.green.vrink.suggest.dto.*;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.repository.model.SuggestReply;
 import com.green.vrink.suggest.service.SuggestServiceImpl;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.util.AsyncPageDTO;
+import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
+import com.green.vrink.util.PageDTO;
+import com.sun.mail.iap.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,5 +87,29 @@ public class SuggestRestController {
             return -1;
         }
         return suggestService.deleteSuggestReply(replyId);
+    }
+
+    @GetMapping("/more-reply")
+    public ResponseEntity<?> more(@RequestParam(name = "suggest-id") Integer suggestId,
+                                  @RequestParam(name = "page-num") Integer pageNum) {
+        Suggest suggest = suggestService.getSuggest(suggestId);
+        if (suggest == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Criteria cri = new Criteria();
+        Integer replyCount = suggestService.getReplyCount(suggestId);
+        cri.setPageNum(pageNum);
+        cri.setCountPerPage(5);
+        List<SuggestReplyDto> replyList = suggestService.getSuggestReplyList(suggestId, cri);
+
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(replyCount);
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setHasNext(pageNum, pageDTO.getEndPage());
+        asyncPageDTO.setPageDTOs(replyList);
+
+        return ResponseEntity.ok().body(asyncPageDTO);
     }
 }

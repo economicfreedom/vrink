@@ -1,5 +1,6 @@
 package com.green.vrink.suggest.controller;
 
+import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.repository.model.SuggestReply;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -47,7 +49,7 @@ public class SuggestController {
         Criteria cri = new Criteria();
         Integer replyCount = suggestService.getReplyCount(suggestId);
         cri.setPageNum(1);
-        cri.setCountPerPage(7);
+        cri.setCountPerPage(5);
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
@@ -78,4 +80,28 @@ public class SuggestController {
         return "suggest/suggestPatch";
     }
 
+    @GetMapping("/list")
+    public String getSuggestList(@RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
+                                ,@RequestParam(name = "keyword",defaultValue = "") String keyword
+                                ,@RequestParam(name = "type" ,defaultValue = "") String type
+                                ,Model model) {
+        Criteria criteria = new Criteria();
+        criteria.setType(type);
+        criteria.setKeyword(keyword);
+        criteria.setCountPerPage(10);
+        criteria.setPageNum(pageNum);
+
+        Integer total = suggestService.getTotal(criteria);
+        List<GetSuggestDto> suggestList = suggestService.getSuggestList(criteria);
+
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(criteria);
+        pageDTO.setArticleTotalCount(total);
+
+        model.addAttribute("pageDTO", pageDTO);
+        model.addAttribute("suggestList", suggestList);
+        model.addAttribute("total", total);
+
+        return "suggest/suggestList";
+    }
 }

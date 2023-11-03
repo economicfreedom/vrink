@@ -17,4 +17,6 @@ public interface SuggestService {
     Integer getReplyCount(Integer suggestId);
     Integer patchSuggestReply(PatchSuggestReplyDto patchSuggestReplyDto);
     Integer deleteSuggestReply(Integer suggestId);
+    Integer getTotal(Criteria criteria);
+    List<GetSuggestDto> getSuggestList(Criteria criteria);
 }

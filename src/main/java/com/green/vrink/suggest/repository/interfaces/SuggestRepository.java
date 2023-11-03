@@ -19,4 +19,7 @@ public interface SuggestRepository {
     List<SuggestReplyDto> getSuggestReplyListBySuggestId(@Param("suggestId") Integer suggestId, @Param("criteria") Criteria criteria);
     Integer patchSuggestReply(PatchSuggestReplyDto patchSuggestReplyDto);
     Integer deleteSuggestReply(Integer replyId);
+    Integer getTotal(Criteria criteria);
+    List<GetSuggestDto> getSuggestList(Criteria criteria);
+
 }

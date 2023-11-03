@@ -38,10 +38,10 @@
                             <div>
                                 <h4>로그인</h4>
                                 <div class="field">
-                                    <input type="text" class="sign-in-email" placeholder="Username" value="vrinkteam@gmail.com"/>
+                                    <input type="text" class="sign-in-email" placeholder="이메일" value="vrinkteam@gmail.com"/>
                                 </div>
                                 <div class="field">
-                                    <input type="password" class="sign-in-password" placeholder="Password"/>
+                                    <input type="password" class="sign-in-password" placeholder="비밀번호"/>
                                 </div>
                                 <div class="field">
                                     <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
@@ -132,8 +132,6 @@
                 </c:if>
 
                 <div class="popup-client">
-                	<input type=hidden class="sign-in-user-flag" value="${USER.email }">
-                    <input type=hidden class="standard-or-edit" value="${USER.editor }">
                     <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
                     <span class="log-out-btn" style="display: none">로그아웃</span>
                 </div>
@@ -223,22 +221,27 @@
 <script type="text/javascript">
     let authEmailNumber = null; // 함수 밖의 변수
 
-    if($('.standard-or-edit').val() == 'standard') {
+    if(`${USER.editor}` == 'standard') {
         $('#only-editor').css("display", "none");
     }
-    
-    $('.sign-in-user-flag').val() == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
-    if($('.sign-in-user-flag').val() !== '') {
+
+    `${USER.email}` == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
+
+    if(`${USER.email}` !== '') {
     	$('.log-in-btn').css("display", "none");
     } 
-    if($('.sign-in-user-flag').val() !== '') {
+    if(`${USER.email}` !== '') {
     	$('.log-out-btn').css("display", "block");
     } 
 
     $('.email-check-btn').on('click', function () {
-        let email = $('.email-input').val();
-        emailCheck(email);
+        let email = $('.email-input').val().trim();
+        if (emailValidation(email)) {
+            emailCheck(email);
+        }
     });
+
+
 
     async function emailCheck(email) {
         try {
@@ -263,6 +266,7 @@
             console.log(error);
         }
     }
+
 
     async function sendEmail(email) {
         try {
@@ -303,17 +307,31 @@
     }
 
     $('.password-input').change(function () {
-        console.log($('.password-input').val());
-        $('.password-check-flag').val('1');
+        let password = $('.password-input').val().trim();
+            $('.password-check-flag').val('0');
+        if (passwordVaildation(password)) {
+            $('.password-check-flag').val('1');
+        }
     });
+
     $('.password-check-input').change(function () {
         console.log($('.password-check-input').val());
         if ($('.password-input').val() != $('.password-check-input').val()) {
             alert('비밀번호가 서로 다릅니다.');
+            $('.password-check-input').val('');
             $('.password-check-flag').val('1');
             return;
         }
         $('.password-check-flag').val('0');
+    });
+
+    $('.phone-input').change(function () {
+        let phone = $('.phone-input').val().trim();
+        $('.phone-check-flag').val('1');
+
+       if(phoneValidation(phone)) {
+           $('.phone-check-flag').val('0');
+       }
     });
 
     $('#sign-up-btn').on('click', function () {
@@ -328,6 +346,10 @@
         }
         if ($('.password-check-flag').val() != '0') {
             alert('비밀번호가 서로 다릅니다.');
+            return;
+        }
+        if ($('.phone-check-flag').val() != '0') {
+            alert('올바른 형식의 휴대폰 번호를 입력해주세요.');
             return;
         }
 
@@ -438,6 +460,39 @@
         } catch (error) {
             console.log(error);
         }
+    }
+
+    // 유효성 검사 함수
+    function phoneValidation(str) {
+        const msg = '"-"을 제외한 11자리 숫자를 입력해주세요.';
+
+        if (/^[0-9]{3}[0-9]{4}[0-9]{4}/.test(str)) {
+            return true;
+        }
+        alert(msg);
+        $('.phone-input').val('');
+        return false;
+    }
+
+    function emailValidation(str) {
+        const msg = '올바른 형식의 이메일 주소를 입력해주세요.';
+
+        if (/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/.test(str)) {
+            return true;
+        }
+        alert(msg);
+        $('.email-input').val('');
+        return false;
+    }
+
+    function passwordVaildation(str) {
+        const msg = '비밀번호는 영어,숫자,특수문자(@$!%*#?&)가 포함된 8자리 이상이어야 합니다.';
+        if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(str)) {
+            return true;
+        }
+        alert(msg);
+        $('.password-input').val('');
+        return false;
     }
 
 </script>
