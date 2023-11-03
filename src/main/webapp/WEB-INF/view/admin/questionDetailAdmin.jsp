@@ -3,77 +3,62 @@
 
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"/><!-- Bootstrap -->
-<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css"/><!-- Icons -->
-<link rel="stylesheet" href="/css/owl.carousel.css" type="text/css"/><!-- Owl Carousal -->
+<div class="card m-4">
 
-<link rel="stylesheet" href="/css/style.css" type="text/css"/><!-- Style -->
-<link rel="stylesheet" href="/css/responsive.css" type="text/css"/><!-- Responsive -->
-<link rel="stylesheet" href="/css/colors/colors.css" type="text/css"/><!-- color -->
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 문의 상세</h3></div>
 
-
-
-
-        <div class="container">
-
-            <div class="row">
-                <div class="title">
-
-                    <h1><c:choose>
+    <div class="row" style="margin: 10px;">
+        <div class="title">
+            <div>
+                <span>작성자 : ${questionDetail.nickname}</span> <span>작성일 : ${questionDetail.createdAt}</span></div>
+            <div class="my-3">
+                <h2>
+                    <c:choose>
                         <c:when test="${questionDetail.status == 0}">
-                            [답변 대기] ${questionDetail.title}
+                            제목 : [답변 대기] ${questionDetail.title}
                         </c:when>
                         <c:otherwise>
-                            [답변 완료] ${questionDetail.title}
+                            제목 : [답변 완료] ${questionDetail.title}
                         </c:otherwise>
                     </c:choose>
-
-                    </h1>
-
-                    <br>
-                    <small>${questionDetail.createdAt}</small>
-
-                    <hr>
-
-
-                </div>
-                <div class="content">
-            <span>
-                ${questionDetail.content}
-            </span>
-                </div>
-                <c:if test="${answer != null}">
-                    <hr style="background-color: black;height: 2px">
-                </c:if>
-
+                </h2>
             </div>
-            <h1>
-                <c:choose>
-                <c:when test="${answer == null}">
-                <hr>
+            <hr>
 
-            <div class="row p-block">
-                <div class="col-sm-8 col-center">
-                    <div class="contact-form">
-                        <div class="editor-div">
-                            <div class="title ">
-                                <i class="fa fa-pencil"></i> <span>답변 작성</span>
-                            </div>
-                            <div class="row">
+        </div>
+        <div class="content">
+                <span>
+                    ${questionDetail.content}
+                </span>
+        </div>
+        <c:if test="${answer != null}">
+            <hr style="background-color: black;height: 2px">
+        </c:if>
 
-                                <div class="col-md-12">
-                                    <textarea name="editordata" id="editordata"
+    </div>
+    <h4>
+        <c:choose>
+        <c:when test="${answer == null}">
+
+        <div class="row p-block" style="margin: 21px;">
+            <hr>
+            <div class="col-sm-8 col-center">
+                <div class="contact-form">
+                    <div class="editor-div">
+                        <div class="title">
+                            <i class="fa fa-pencil"></i> <span>답변 작성</span>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12 mt-3">
+                                    <textarea name="summernote" id="summernote"
                                               class="input-style summernote"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <input type=button class="btn btn-dark btn-block" id="submit" value="작성">
-                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type=button class="btn btn-secondary btn-block mt-3" id="submit" value="작성">
                             </div>
                         </div>
                     </div>
@@ -83,7 +68,7 @@
         </c:when>
         <c:otherwise>
 
-        <div class="row">
+        <div class="row" style="margin: 18px;">
             <div class="title">
                 답변 내용
                 <small>${answer.createdAt}</small>
@@ -100,49 +85,65 @@
         </c:otherwise>
         </c:choose>
 
-
+</div>
 <c:if test="${answer == null}">
     <script>
-        $('.summernote').summernote({
-            toolbar: [
-                // [groupName, [list of button]]
-                ['fontname', ['fontname']],
-                ['fontsize', ['fontsize']],
-                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-                ['color', ['forecolor', 'color']],
-                ['table', ['table']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['insert', ['picture', 'link', 'video']],
-                ['view', ['fullscreen', 'help']]
-            ],
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
-            placeholder: "글 내용을 작성해주세요.",
-            height: 300,
-            lang: "ko-KR"
+        // $('.summernote').summernote({
+        //     toolbar    : [
+        //         // [groupName, [list of button]]
+        //         ['fontname', ['fontname']],
+        //         ['fontsize', ['fontsize']],
+        //         ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+        //         ['color', ['forecolor', 'color']],
+        //         ['table', ['table']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['height', ['height']],
+        //         ['insert', ['picture', 'link', 'video']],
+        //         ['view', ['fullscreen', 'help']]
+        //     ],
+        //     fontNames  : ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
+        //     fontSizes  : ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
+        //     placeholder: "글 내용을 작성해주세요.",
+        //     height     : 300,
+        //     lang       : "ko-KR"
+        //
+        // });
 
+        $('#summernote').summernote({
+            placeholder: '글 내용을 작성해주세요.',
+            height     : 300,
+            width      : `151%`,
+            toolbar    : [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
         });
+
         $(document).ready(function () {
             $("#submit").click(function () {
-                let content = $("#editordata").val();
+                let content = $("#summernote").val();
                 if (content.length <= 0) {
                     alert("내용을 입력해주세요.")
-                    $("#editordata").focus();
+                    $("#summernote").focus();
                     return;
                 }
                 let json = JSON.stringify({
-                    userId: 1, // 관리자 아이디 적기
-                    content: content,
+                    userId    : 0, // 관리자 아이디 적기
+                    content   : content,
                     questionId: ${questionDetail.questionId}
                 });
 
                 fetch('/qna/save-answer', {
-                    method: 'POST',
+                    method : 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: json
+                    body   : json
                 })
                     .then(response => {
                         if (!response.ok) {

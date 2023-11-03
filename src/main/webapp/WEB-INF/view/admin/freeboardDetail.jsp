@@ -112,7 +112,7 @@
                 }
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
-                    html += '<ul class="list-group custom-list-group" style="margin-top:3px;" id="reply-' + reply.replyId + '">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:10px;" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
@@ -183,7 +183,7 @@
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
                             <ul class="list-group custom-list-group"
-                                style="margin-top:3px;"
+                                style="margin-top:10px;"
                                 id="reply-${reply.replyId}">
                                 <li class="list-group-item custom-list-item"
                                     style="border: 1px solid #00000075; padding: 5px;">

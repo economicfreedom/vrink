@@ -201,7 +201,7 @@
 
     <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 자유게시판 관리</h3></div>
 
-    <form style="width: 95%;" action="#" name="pageForm">
+    <form style="width: 96%;" action="#" name="pageForm">
         <div class="mx-4 mb-2 mt-3">
             <select name="searchType"
                     id="searchType"
