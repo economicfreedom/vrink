@@ -20,7 +20,7 @@ public class BuyResponseDTO {
     private Integer userId;
     private String image;
     private Integer quantity;
-    private Byte state;
+    private String state;
     private Integer paymentId;
 
 
