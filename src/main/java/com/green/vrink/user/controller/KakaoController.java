@@ -11,17 +11,14 @@ import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
-import com.green.vrink.user.dto.SignInResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.vrink.user.dto.KakaoSignInDto;
@@ -130,8 +127,8 @@ public class KakaoController {
 	        	return "/user/kakaoSignup";
 			}
 	        
-	        SignInResponseDto signInResponseDto = userService.signIn(email);
-	        session.setAttribute(Define.USER, signInResponseDto);
+	        User user = userService.signIn(email);
+	        session.setAttribute(Define.USER, user);
 	        
 	    } catch (IOException e) {
 	        e.printStackTrace();

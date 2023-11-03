@@ -2,4 +2,5 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 <h1>${USER}</h1>
+<h1>${EDITOR_ID}</h1>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

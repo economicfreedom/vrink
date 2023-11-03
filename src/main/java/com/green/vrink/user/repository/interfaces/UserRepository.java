@@ -26,7 +26,7 @@ public interface UserRepository {
 
 	Integer getTotal();
 	
-	public SignInResponseDto findByEmail(String email);
+	public User findByEmail(String email);
 	public User findByUserId(Integer userId);
 	
 	//@Param("applyId") Integer applyId, @Param("content") String content

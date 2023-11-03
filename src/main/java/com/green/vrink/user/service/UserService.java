@@ -1,16 +1,11 @@
 package com.green.vrink.user.service;
 
-import com.green.vrink.user.dto.SignInResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 //import com.green.vrink.handle.CustomRestfulException;
 import com.green.vrink.user.dto.SignUpDto;
-import com.green.vrink.user.dto.UpdateNicknameDto;
-import com.green.vrink.user.dto.UpdatePasswordDto;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 
@@ -29,7 +24,7 @@ public class UserService {
 		}
 	}
 	
-	public SignInResponseDto signIn(String email) {
+	public User signIn(String email) {
 		return userRepository.findByEmail(email);
 	}
 
