@@ -413,16 +413,23 @@ SELECT ps.point
      , p.editor_id
      , p.user_id
      , ed.image
-     , pd.quantity
-     , p.state
+     , sum(pd.quantity)
+     , ps.state
      , p.payment_id
 FROM payment_state ps
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
          LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
          LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
-WHERE p.user_id = 1
-  AND customer_recognize = 0;
+WHERE p.user_id = 0
+  AND customer_recognize = 0
+AND ps.created_at = (select max(created_at)  from payment_state where payment_id = p.payment_id )
+
+group by ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id, ed.image, ps.state, p.payment_id;
+
+select * from payment_detail;
+
+select * from user;
 
        SELECT   r.reply_id
                , r.community_id
@@ -443,8 +450,39 @@ SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname,count
         LEFT JOIN community_reply cr ON c.community_id = cr.community_id
 GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname;
 
+
 UPDATE user SET
                 email='qwer1234@gamil.com'
 WHERE user_id =1;
 
 SELECT * FROM user;
+
+INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize,state, point)
+value (3,0,0,'payment_done',19000);
+
+SELECT ps.point
+     , customer_recognize
+     , editor_recognize
+     , payment_state_id
+     , ps.created_at
+     , u.nickname
+     , p.editor_id
+     , p.user_id
+     , ed.image
+     , SUM(pd.quantity) as quantity
+     , ps.state
+     , p.payment_id
+FROM payment_state ps
+JOIN (
+    SELECT payment_id, MAX(created_at) as max_created_at
+    FROM payment_state
+    GROUP BY payment_id
+) as ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+LEFT JOIN payment p ON ps.payment_id = p.payment_id
+LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+LEFT JOIN user u ON ed.user_id = u.user_id
+WHERE p.user_id = 0
+GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id, ed.image, ps.state, p.payment_id;
+
+select * from payment;

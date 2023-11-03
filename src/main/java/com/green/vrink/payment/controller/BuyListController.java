@@ -32,18 +32,27 @@ public class BuyListController {
     ) {
 
         Criteria cri = new Criteria();
+        cri.setCountPerPage(5);
+        cri.setPageNum(1);
         User user = (User) httpSession.getAttribute(Define.USER);
+
         List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(user.getUserId(), cri);
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         pageDTO.setArticleTotalCount(buyResponseDTOS.size());
 
+        boolean nextPage = pageDTO.getEndPage() == 1;
+
+
         log.info("구매 목록 : ", buyResponseDTOS);
+
+        boolean hasNext = pageDTO.getEndPage() == pageDTO.getEndPage();
 
 
         model.addAttribute("list", buyResponseDTOS);
-        model.addAttribute("pageDTO",pageDTO);
+        model.addAttribute("pageDTO", pageDTO);
+        model.addAttribute("hasNext",hasNext);
 
         return "buyList";
     }

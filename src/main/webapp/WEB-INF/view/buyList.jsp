@@ -100,35 +100,43 @@
                     </div>
                 </div>
                 <div class="cart-lists">
-                    <ul>
-                        <%--                        <c:forEach items="${list}" var="dto">--%>
-                        <li>
-                            <div class="cart-thumb">
-                                <span><img src="http://placehold.it/270x371" alt=""/></span>
-                                <a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>
-                                <h3>
-                                    <a href="http://localhost/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
-                                       title="">${dto.nickname}</a></h3>
-                                <div class="price-cart-item">
-                                    <span>￦${dto.point}</span>
+                    <ul id="list">
+                        <c:forEach items="${list}" var="dto">
+                            <li>
+                                <div class="cart-thumb">
+                                    <span><img src="${dto.image}" alt=""/></span>
+                                    <a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>
+                                    <h3>
+                                        <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
+                                           title="">${dto.nickname}</a></h3>
+                                    <div class="price-cart-item">
+                                        <span>￦${dto.point}</span>
+                                    </div>
+
+                                </div>
+                                <div class="c-input-number">
+
+                                        <%--                                <c:if test="${dto.editorRecognize == 1}">--%>
+
+                                    <button type="button" class="flat-btn"
+                                            style="margin-bottom: 10px; margin-right: 10px">
+                                        구매 확정
+                                    </button>
+
+                                        <%--                                </c:if>--%>
+
+                                        <%--                                <c:if test="${dto.editorRecognize == 0}">--%>
+                                    <button class="button button2">환불 요청</button>
+                                        <%--                                </c:if>--%>
+
                                 </div>
 
-                            </div>
-                            <div class="c-input-number">
-
-                                <button type="button" class="flat-btn" style="margin-bottom: 10px; margin-right: 10px">
-                                    구매 확정
-                                </button>
-                                <button class="button button2">환불 요청</button>
-
-
-                            </div>
-                            <div class="cart-item-quantity">
-                                <i class="fa  fa-shopping-basket"></i>
-                                <span>수량 : ${dto.quantity}</span>
-                            </div>
-                        </li>
-                        <%--                        </c:forEach>--%>
+                                <div class="cart-item-quantity">
+                                    <i class="fa  fa-shopping-basket"></i>
+                                    <span>수량 : ${dto.quantity}</span>
+                                </div>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
 
@@ -136,5 +144,102 @@
         </div>
     </div>
 </section>
+
+<script>
+    var debounceTimer;
+    var pageNum = 1;
+    var hasNext = `${hasNext}`;
+    $(window).scroll(function () {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(checkScrollEnd, 1000);  // 1초 동안 딜레이
+    });
+
+    function checkScrollEnd() {
+        var scrollHeight = $(document).height();
+        var scrollPosition = $(window).height() + $(window).scrollTop();
+
+        if ((scrollHeight - scrollPosition) / scrollHeight < 0.10 && hasNext) {
+            console.log("스크롤이 페이지의 90% 이상 도달했습니다!");
+            fetchListMore();
+
+
+        }
+    }
+
+    function fetchListMore() {
+        pageNum++;
+        const url = `/payment-state/list-more?page-num=` + pageNum + `&user-id=` + `${USER.userId}` +`&total=`+`${pageDTO.articleTotalCount}`
+        let html = '';
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                hasNext = data.hasNext
+                console.log(data);
+                console.log(hasNext);
+                data.pageDTOs.forEach(dto => {
+
+                    html += '<li>';
+                    html += '<div class="cart-thumb">';
+                    html += '<span><img src="' + dto.image + '" alt=""/></span>';
+                    html += '<a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>';
+                    html += '<h3>';
+                    html += '<a href="/payment/payment-list?payment-id=' + dto.paymentId + '&user-id=' + dto.userId + '"';
+                    html += ' title="">' + dto.nickname + '</a></h3>';
+                    html += '<div class="price-cart-item">';
+                    html += '<span>￦' + dto.point + '</span>';
+                    html += '</div>';
+
+                    html += '</div>';
+                    html += '<div class="c-input-number">';
+
+                    if (dto.editorRecognize == 1) {
+
+                        html += '<button type="button" className="flat-btn" ';
+                        html += ' style="margin-bottom: 10px; margin-right: 10px">';
+                        html += '구매 확정';
+                        html += '</button>';
+                    }
+                    if (dto.editorRecognize == 0) {
+
+                        html += '<button class="button button2">환불 요청</button>';
+                    }
+
+                    html += '</div>'
+
+                    html += '<div class="cart-item-quantity">';
+                    html += '<i class="fa  fa-shopping-basket"></i>';
+                    html += '<span>수량 : ' + dto.quantity + '</span>';
+                    html += '</div>';
+                    html += '</li>';
+
+                })
+                // 필요한 처리를 여기에 추가하세요.
+                $("#list").append(html)
+
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    }
+
+    function confirm(payment_id) {
+
+
+    }
+</script>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
