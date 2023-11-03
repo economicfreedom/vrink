@@ -11,6 +11,11 @@
         margin-top: 20px;
     }
 
+    .tab--user li {
+        margin-right: 8px !important;
+        width: 112px !important;
+    }
+
     .t-head {
         background-color: #ececec;
     }
@@ -50,29 +55,22 @@
     }
 
     h4 {
-        font-size: 17px;
+        font-size: 20px;
         margin-top: 5px;
     }
 
     .classification {
         display: inline-block;
         font-weight: bold;
-        padding: 8px 10px;
-        padding-left: 8px !important;
+        padding: 8px 0;
     }
 
     .classification2 {
         display: inline-block;
-        font-weight: bold;
-        padding: 8px 10px;
-        padding-left: 8px !important;
     }
 
     .classification3 {
         display: inline-block;
-        font-weight: bold;
-        padding: 8px 10px;
-        padding-left: 8px !important;
     }
 
     .write-btn {
@@ -90,9 +88,9 @@
     }
 
     .tab--user {
-        margin-top: 15px;
+        margin-top: 8px;
         margin-left: 24px;
-        /*margin-bottom: 5px;*/
+        margin-bottom: 0px;
         padding: 0;
         overflow: hidden;
     }
@@ -137,6 +135,7 @@
         height: calc(100% - 1px);
         border: 1px solid #e5e5e5;
         content: "";
+        border-radius: 9px;
     }
 
     .tab--user::after {
@@ -152,6 +151,7 @@
     .tab--user li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
+        border-radius: 10px;
     }
 
     .tab--user li.active a {
@@ -280,7 +280,8 @@
 
     <form style="width: 90%;" name="pageForm">
         <div class="mt-2 mx-4">
-            <select name="searchType" id="searchType">
+            <select name="searchType" id="searchType" class="datatable-selector"
+                    style="padding-left: 1.125rem; padding-right: 2.125rem;">
                 <c:choose>
                     <c:when test="${uSearchType == '이메일'}">
                         <option value="전체">전체</option>
@@ -319,18 +320,18 @@
                     </c:otherwise>
                 </c:choose>
 
-            </select> <input type="text" id="keyword" name="keyword"
+            </select> <input type="text" id="keyword" name="keyword" class="datatable-input" placeholder="검색어를 입력해주세요"
                              value="${uKeyword}">
-            <button class="btn btn-dark btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="searchButton">검색
             </button>
-            <button class="btn btn-dark btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="resetButton"
                     onClick="location.href='/admin/user?reset=1'">검색초기화
             </button>
         </div>
 
-        <table class="table">
+        <table class="datatable-table table">
             <tbody id="user-list-container">
             </tbody>
         </table>
@@ -345,7 +346,7 @@
                     <c:forEach var="num" begin="${pagination.beginPage}"
                                end="${pagination.endPage}">
                         <li
-                                class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
+                                class="${pagination.paging.page == num ? 'page-item active mx-1' : 'mx-1'} page-item"><a
                                 class="page-list" href="#" data-page="${num}">${num}</a></li>
                     </c:forEach>
 
@@ -450,7 +451,7 @@
                         success: function (data) {
                             var userList = data.userList;
                             var pagination = data.pagination;
-                            var userListHTML = '<tr>'
+                            var userListHTML = '<tr class="t-head">'
                                 + '<td><h4>타입</h4></td>'
                                 + '<td><h4>이메일</h4></td>'
                                 + '<td><h4>이름</h4></td>'
@@ -462,17 +463,26 @@
                                 + '<td><h4>이미지</h4></td>'
                                 + '<td><h4>탈퇴여부</h4></td>'
                                 + '<td><h4>권한</h4></td>'
-                                + '<td><h4>판매자<br>전환일</h4></td>'
+                                + '<td><h4>판매전환</h4></td>'
                                 + '<td><h4>가입일</h4></td>'
                                 + '</tr>';
                             for (var i = 0; i < userList.length; i++) {
                                 var user = userList[i];
-                                if (user.level === 0) user.level = '일반 유저';
-                                else user.level = '<text style="font-weight: bold">관리자</text>'
                                 if (user.editor === 'standard') user.editor = '<text style="color: blue">구매자</text>'
                                 else user.editor = '<text style="color: red">판매자</text>'
+                                if (user.level === 0) user.level = '일반 유저';
+                                else {
+                                    user.level = '<text style="font-weight: bold; color:green">관리자</text>'
+                                    user.editor = '<text style="font-weight: bold; color:green">관리자</text>'
+                                }
                                 if (user.enabledCheck === 0) user.enabledCheck = '비탈퇴';
                                 else user.enabledCheck = '<text style="color: red">탈퇴</text>'
+                                if (user.account === null) user.account = '없음';
+                                if (user.accountName === null) user.accountName = '없음';
+                                if (user.point === null) user.point = 0;
+                                if (user.userImage === null) user.userImage = '없음';
+
+
                                 let editorData = user.editorCreatedAt.substring(2, 10);
                                 let regData = user.createdAt.substring(2, 10);
                                 userListHTML += '<tr>'
@@ -565,8 +575,8 @@
                             }
                             for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                                 paginationHTML += '<li class="'
-                                    + (pagination.paging.page == num ? 'page-item active'
-                                        : 'page-item')
+                                    + (pagination.paging.page == num ? 'page-item active mx-1'
+                                        : 'page-item mx-1')
                                     + '"><a class="page-list" href="#" data-page="' + num + '">'
                                     + num + '</a></li>';
                             }

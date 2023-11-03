@@ -102,6 +102,15 @@
   }
 }
 
+.input-l {
+ width: 100%;
+}
+
+.user-inline {
+  margin: 0 auto;
+  width: 100%;
+}
+
 body {
   margin: 0;
   /*font-family: var(--bs-body-font-family);*/
@@ -2828,6 +2837,11 @@ textarea.form-control-lg {
   border-radius: var(--bs-btn-border-radius);
   background-color: var(--bs-btn-bg);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-admin {
+    font-size: 14px;
+    padding: 7px;
 }
 @media (prefers-reduced-motion: reduce) {
   .btn {
@@ -11162,7 +11176,6 @@ body {
 .datatable-pagination .pager a {
   font-weight: bold;
 }
-
 /* TABLE */
 .datatable-table {
   border-collapse: collapse;

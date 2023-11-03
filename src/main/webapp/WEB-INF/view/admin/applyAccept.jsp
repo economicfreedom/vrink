@@ -10,6 +10,12 @@
         margin-left: 25px;
         margin-top: 20px;
     }
+
+    .tab--adminApply li {
+        margin-right: 8px !important;
+        width: 112px !important;
+    }
+
     .t-head {
         background-color: #ececec;
     }
@@ -55,6 +61,7 @@
 
     h4 {
         margin-top: 5px;
+        font-size: 20px;
     }
 
     .classification {
@@ -125,6 +132,7 @@
         height: calc(100% - 1px);
         border: 1px solid #e5e5e5;
         content: "";
+        border-radius: 9px;
     }
 
     .tab--adminApply::after {
@@ -140,6 +148,7 @@
     .tab--adminApply li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
+        border-radius: 10px;
     }
 
     .tab--adminApply li.active a {
@@ -209,27 +218,28 @@
 <%--</c:forEach>--%>
 <div class="card m-4">
     <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 판매자 신청 목록</h3></div>
-    <ul class="tab--adminApply">
-        <c:choose>
-            <c:when test="${uClassification == '전체' or empty uClassification}">
-                <li class="active" data-classification="전체"><a href="#">전체</a></li>
-                <li data-classification="0"><a href="#">승인 대기</a></li>
-                <li data-classification="1"><a href="#">승인됨</a></li>
 
-            </c:when>
-            <c:when test="${uClassification == '0'}">
-                <li data-classification="전체"><a href="#">전체</a></li>
-                <li class="active" data-classification="0"><a href="#">승인 대기
-                </a></li>
-                <li data-classification="1"><a href="#">승인됨</a></li>
-            </c:when>
-            <c:otherwise>
-                <li data-classification="전체"><a href="#">전체</a></li>
-                <li data-classification="0"><a href="#">승인 대기</a></li>
-                <li class="active" data-classification="1"><a href="#">승인됨</a></li>
-            </c:otherwise>
-        </c:choose>
-    </ul>
+        <ul class="tab--adminApply">
+            <c:choose>
+                <c:when test="${uClassification == '전체' or empty uClassification}">
+                    <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                    <li data-classification="0"><a href="#">승인 대기</a></li>
+                    <li data-classification="1"><a href="#">승인됨</a></li>
+
+                </c:when>
+                <c:when test="${uClassification == '0'}">
+                    <li data-classification="전체"><a href="#">전체</a></li>
+                    <li class="active" data-classification="0"><a href="#">승인 대기
+                    </a></li>
+                    <li data-classification="1"><a href="#">승인됨</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li data-classification="전체"><a href="#">전체</a></li>
+                    <li data-classification="0"><a href="#">승인 대기</a></li>
+                    <li class="active" data-classification="1"><a href="#">승인됨</a></li>
+                </c:otherwise>
+            </c:choose>
+        </ul>
 
     <form style="width: 95%;" action="#" name="pageForm">
         <div class="mx-4 mb-2">
@@ -277,19 +287,18 @@
 
             </select> <input type="text" id="keyword" name="keyword" class="datatable-input"
                              placeholder="검색어를 입력해주세요" value="${uKeyword}">
-            <button class="btn btn-secondary btn-block" type="button" style="position: relative; top: -1px;"
+            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px;"
                     id="searchButton">검색
             </button>
-            <button class="btn btn-secondary btn-block" type="button" style="position: relative; top: -1px;"
+            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px;"
                     id="resetButton"
                     onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
             </button>
         </div>
-
-        <table class="datatable-table table">
-            <tbody id="adminApply-list-container">
-            </tbody>
-        </table>
+            <table class="datatable-table table">
+                <tbody id="adminApply-list-container">
+                </tbody>
+            </table>
         <div class="paging">
             <div class="text-center clearfix">
                 <ul class="pagination" id="pagination--a">
@@ -301,7 +310,7 @@
                     <c:forEach var="num" begin="${pagination.beginPage}"
                                end="${pagination.endPage}">
                         <li
-                                class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
+                                class="${pagination.paging.page == num ? 'page-item active mx-1' : 'mx-1'} page-item"><a
                                 class="page-list" href="#" data-page="${num}">${num}</a></li>
                     </c:forEach>
 
@@ -427,7 +436,7 @@
                             + '<td><h4>사기이력</h4></td>'
                             + '<td><h4>은행이름</h4></td>'
                             + '<td><h4>계좌번호</h4></td>'
-                            + '<td><h4>유저이름</h4></td>'
+                            + '<td><h4>아이디</h4></td>'
                             + '<td><h4>신청날짜</h4></td>'
                             + '</tr>';
                         for (var i = 0; i < adminApplyList.length; i++) {
@@ -449,7 +458,7 @@
                             adminApplyListHTML += '<tr>'
                                 + '<td><p class="classification" style="min-width: 100px">'
                                 + adminApply.accepted
-                                + '</p> <button class="btn btn-secondary btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
+                                + '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
                                 + cheating
                                 + '<td>'
                                 + adminApply.name
@@ -473,8 +482,8 @@
                         }
                         for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                             paginationHTML += '<li class="'
-                                + (pagination.paging.page == num ? 'page-item active'
-                                    : 'page-item')
+                                + (pagination.paging.page == num ? 'page-item active mx-1'
+                                    : 'page-item mx-1')
                                 + '"><a class="page-list" href="#" data-page="' + num + '">'
                                 + num + '</a></li>';
                         }

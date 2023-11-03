@@ -94,7 +94,7 @@ public class AdminController {
 
         log.info("자유게시판 목록 컨트롤러 호출");
 
-        paging.setRecordSize(20);
+        paging.setRecordSize(10);
 
         if(reset.equals("1")) {
             session.removeAttribute("uSearchType");

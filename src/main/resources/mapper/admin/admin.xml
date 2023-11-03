@@ -62,24 +62,30 @@
     </select>
 
     <select id="getFreeboardById" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
         FROM community c
         LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
         WHERE c.community_id = #{id}
+        GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
     </select>
 
     <select id="getAllFreeboardList" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
         FROM community c
         LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+        GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
     </select>
 
     <select id="getAllFreeboardListByPaging" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT community_id, c.user_id, title, c.content, c.created_at, nickname
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
         FROM community c
         LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+        GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
         LIMIT #{offset}, #{recordSize}
     </select>

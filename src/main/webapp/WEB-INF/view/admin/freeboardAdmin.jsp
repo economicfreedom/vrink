@@ -58,6 +58,7 @@
 
     h4 {
         margin-top: 5px;
+        font-size: 20px;
     }
 
     .write-btn {
@@ -121,6 +122,7 @@
         height: calc(100% - 1px);
         border: 1px solid #e5e5e5;
         content: "";
+        border-radius: 9px;
     }
 
     .tab--freeboard::after {
@@ -234,10 +236,10 @@
 
             </select> <input type="text" id="keyword" name="keyword" class="datatable-input" placeholder="검색어를 입력해주세요"
                              value="${uKeyword}">
-            <button class="btn btn-secondary btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="searchButton">검색
             </button>
-            <button class="btn btn-secondary btn-block" type="button"
+            <button class="btn btn-secondary btn-block btn-admin" type="button"
                     id="resetButton"
                     onClick="location.href='/admin/freeboard?reset=1'">검색초기화
             </button>
@@ -258,7 +260,7 @@
                     <c:forEach var="num" begin="${pagination.beginPage}"
                                end="${pagination.endPage}">
                         <li
-                                class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
+                                class="${pagination.paging.page == num ? 'page-item active mx-1' : 'mx-1'} page-item"><a
                                 class="page-list" href="#" data-page="${num}">${num}</a></li>
                     </c:forEach>
 
@@ -383,14 +385,16 @@
                                 + '">'
                                 + freeboard.title
                                 + '</a></div></td>'
-                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 800px; max-height: 20px">'
+                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 820px; max-height: 20px; display: inline-block;">'
                                 + '<a href="/admin/freeboard-detail?page='
                                 + pagination.paging.page
                                 + '&id='
                                 + freeboard.communityId
                                 + '">'
                                 + freeboard.content
-                                + '</a></div></td>'
+                                + '</a></div><small style="color: red"> ['
+                                + freeboard.count
+                                + ']</small><div style="min-width: 850px;"></div></td>'
                                 + '<td>'
                                 + regData
                                 + '</td>'
@@ -405,8 +409,8 @@
                         }
                         for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                             paginationHTML += '<li class="'
-                                + (pagination.paging.page == num ? 'page-item active'
-                                    : 'page-item')
+                                + (pagination.paging.page == num ? 'page-item active mx-1'
+                                    : 'page-item mx-1')
                                 + '"><a class="page-list" href="#" data-page="' + num + '">'
                                 + num + '</a></li>';
                         }

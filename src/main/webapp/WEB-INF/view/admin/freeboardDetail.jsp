@@ -177,7 +177,6 @@
         <div class="col">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">댓글</h3>
                 </div>
                 <div class="panel-body">
                     <!-- 댓글 리스트 부분 -->
@@ -239,7 +238,7 @@
         border: none;
         background-color: transparent;
         box-shadow: none;
-        width: 100%;
+        width: 96%;
         overflow: hidden;
     }
 
