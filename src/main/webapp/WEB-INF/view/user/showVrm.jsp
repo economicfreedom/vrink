@@ -70,11 +70,11 @@
     // scene
     const scene = new THREE.Scene();
 
-    scene.background = new THREE.Color("white")
+    scene.background = new THREE.Color("black")
 
     // light
     const light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(1.0, 1.0, 1.0).normalize();
+    light.position.set(0.0, 0.5, 0.0).normalize();
     scene.add(light);
 			// lookat target
 

@@ -247,7 +247,7 @@
 
     <div class="row ">
         <div class="title">
-            <div style="background-color:grey; border:grey solid 1px">
+            <div style="background-color:grey; border:grey solid 1px; border-radius: 2px;">
                 <a href="/board/board-list" style="color: grey; text-decoration: none; text-decoration-color: grey; "><h2
                         style="color: white; margin-left: 6px">자유 게시판</h2></a>
             </div>
