@@ -36,11 +36,11 @@ public class QnAController {
         return "qna/qnaQuestion";
     }
 
-    @GetMapping("/list/{user-id}")
+    @GetMapping("/list")
     @LoginCheck
     public String list(
-            @PathVariable(name = "user-id") int userId
-            , @RequestParam(value = "page-num", defaultValue = "1")
+//            @PathVariable(name = "user-id") int userId
+             @RequestParam(value = "page-num", defaultValue = "1")
             Integer pageNum
 
             , Model model
@@ -51,12 +51,12 @@ public class QnAController {
         User user = (User) httpSession.getAttribute(Define.USER);
 
         log.info("user {}", user);
-        int _userId = user.getUserId();
-
-        if (userId != _userId) {
-            log.info("문의 접근한 사람의 아이디가 같지 않음");
-            return "redirect:/";
-        }
+        int userId = user.getUserId();
+//
+//        if (userId != _userId) {
+//            log.info("문의 접근한 사람의 아이디가 같지 않음");
+//            return "redirect:/";
+//        }
 
         Criteria cri = new Criteria();
         cri.setPageNum(pageNum);

@@ -9,8 +9,15 @@
 <div class="container">
     <div class="row">
         <div class="title">
-            <a href="/qna/list/${USER.userId}"><h2 style="color: grey">문의 목록</h2></a>
-            <hr style="border: #ff2929 solid 8px;margin-bottom: 100px">
+            <div style="background-color:grey; border:grey solid 1px;border-radius: 2px; margin-top: 14px">
+                <a href="/qna/list" style="color: grey; text-decoration: none; text-decoration-color: grey; ">
+                    <h2
+                            style="color: white; margin-left: 6px">문의 게시판</h2></a>
+            </div>
+
+
+            <hr style="border: black solid 1px;margin-bottom: 100px; margin-top: 23px">
+            <br>
             <h3><c:choose>
                 <c:when test="${dto.status == 0}">
                     [답변 대기] ${dto.title}
@@ -21,8 +28,6 @@
             </c:choose>
 
             </h3>
-
-            <br>
             <small>${dto.createdAt}</small>
 
             <hr>
@@ -50,13 +55,13 @@
                 <div class="col-sm-8 col-center">
                     <div class="contact-form">
                         <div class="editor-div">
-                            <div class="title ">
-                                <span style="font-size: 2px">답변 작성</span>
-                            </div>
+                                <%--                            <div class="title ">--%>
+                                <%--                                <span style="font-size: 2px">답변 작성</span>--%>
+                                <%--                            </div>--%>
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-pencil"></i>`
                                     <textarea name="editordata" id="editordata"
                                               class="input-style summernote"></textarea>
 
@@ -68,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                            <hr style="border: #ff2929 solid 1px;">
+                    <%--                            <hr style="border: #ff2929 solid 1px;">--%>
 
             </div>
 
@@ -78,9 +83,9 @@
 
         <div class="row">
 
-            <span style="font-size: 20px;"> 답변 내용</span>
-            <br>
-            <small style="font-size: 12px">${answer.createdAt}</small>
+                <%--            <span style="font-size: 20px;"> 답변 내용</span>--%>
+                <%--            <br>--%>
+                <%--            <small style="font-size: 12px">${answer.createdAt}</small>--%>
 
 
             <hr>

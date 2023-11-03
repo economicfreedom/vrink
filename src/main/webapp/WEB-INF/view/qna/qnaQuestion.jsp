@@ -94,7 +94,7 @@
                         console.log(response.json());
                         alert("실패");
                     } else {
-                        location.href = "/qna/list/"+Number(`${USER.userId}`);
+                        location.href = "/qna/list";
                     }
 
                 })
