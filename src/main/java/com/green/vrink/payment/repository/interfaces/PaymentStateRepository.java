@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface PaymentStateRepository {
 
 
-    Integer saveState(PaymentStateDTO paymentStateDTO);
+    Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO);
 
 
 

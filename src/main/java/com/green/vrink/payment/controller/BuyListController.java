@@ -47,9 +47,9 @@ public class BuyListController {
 
         log.info("구매 목록 : ", buyResponseDTOS);
 
-        boolean hasNext = pageDTO.getEndPage() == pageDTO.getEndPage();
+        boolean hasNext = pageDTO.getEndPage() > 1;
 
-
+        log.info("다음 페이지가 있는가? : {}",hasNext);
         model.addAttribute("list", buyResponseDTOS);
         model.addAttribute("pageDTO", pageDTO);
         model.addAttribute("hasNext",hasNext);

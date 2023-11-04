@@ -5,7 +5,8 @@ import com.green.vrink.payment.dto.PaymentStateDTO;
 
 public interface PaymentStateService {
 
-    Integer saveState(PaymentStateDTO paymentStateDTO);
+    Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO);
+
 
 
 }

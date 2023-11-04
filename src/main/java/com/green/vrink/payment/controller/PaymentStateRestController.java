@@ -31,7 +31,7 @@ public class PaymentStateRestController {
     private final PaymentStateService paymentStateService;
 
 
-    @PostMapping("/save-state")
+    @PostMapping("/save-customer-confirm")
     @LoginCheck
     public ResponseEntity<?> completed(
             @RequestBody
@@ -55,10 +55,46 @@ public class PaymentStateRestController {
 
         }
 
-        paymentStateService.saveState(paymentStateDTO);
+        Integer res = paymentStateService.saveCustomerConfirm(paymentStateDTO);
+
+        if (res == 0) {
+            CustomResponse response = new CustomResponse(400, "가격이 일치하지 않습니다");
+            return ResponseEntity.badRequest().body(
+                    response
+
+            );
+        }
 
 
         return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/list-more")
+    public ResponseEntity<?> listMore(
+            @RequestParam(name = "page-num") Integer pageNum
+
+            , @RequestParam(name = "user-id", defaultValue = "0") Integer userId
+            , @RequestParam Integer total
+    ) {
+        log.info("total {}", total);
+        Criteria cri = new Criteria();
+        cri.setCountPerPage(5);
+        cri.setPageNum(pageNum);
+        List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(userId, cri);
+
+        PageDTO pageDTO = new PageDTO();
+
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(total);
+        log.info("Test {}", pageDTO.getEndPage());
+
+        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
+        asyncPageDTO.setPageDTOs(buyResponseDTOS);
+        asyncPageDTO.setHasNext(pageNum, pageDTO.getEndPage());
+
+
+        return ResponseEntity.ok(asyncPageDTO);
     }
 
     @Data
@@ -71,32 +107,4 @@ public class PaymentStateRestController {
 
 
     }
-
-    @GetMapping("/list-more")
-    public ResponseEntity<?> listMore(
-            @RequestParam(name = "page-num") Integer pageNum
-
-            , @RequestParam(name = "user-id", defaultValue = "0") Integer userId
-            , @RequestParam Integer total
-    ) {
-        log.info("total {}",total);
-        Criteria cri = new Criteria();
-        cri.setCountPerPage(5);
-        cri.setPageNum(pageNum);
-        List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(userId, cri);
-
-        PageDTO pageDTO = new PageDTO();
-
-        pageDTO.setCri(cri);
-        pageDTO.setArticleTotalCount(total);
-        log.info("Test {}",pageDTO.getEndPage());
-
-        AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
-        asyncPageDTO.setPageDTOs(buyResponseDTOS);
-        asyncPageDTO.setHasNext(pageNum, pageDTO.getEndPage());
-
-
-        return ResponseEntity.ok(asyncPageDTO);
-    }
-
 }

@@ -112,9 +112,11 @@
         WHERE user_id = #{userId}
     </update>
     <update id="updateEditorPoint">
-        UPDATE user SET
-        point = point+#{point}
-        WHERE user_id = #{userId}
+        UPDATE user
+        SET point = ifnull(point,0) + #{point}
+        WHERE user_id = (SELECT user_id
+                         FROM editor_detail
+                         WHERE editor_id = #{editorId})
 
     </update>
 

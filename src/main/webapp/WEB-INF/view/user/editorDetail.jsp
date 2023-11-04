@@ -387,4 +387,108 @@
 
     resizeObserver.observe(target);
 </script>
+<script>
+    $(document).ready(function () {
+
+        $("#report").click(function () {
+            fetch('/report/report-board', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    reportUserId: `${editorDetail.userId}`,
+                    userId: 1,
+                    boardId: null,
+                    editorId: `${editorDetail.editorId}`
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        alert("이미 요청된 신고입니다.")
+                    } else {
+                        alert("정상적으로 신고 되었습니다.")
+                    }
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        })
+
+        $("#review-submit").click(function () {
+            let currentURL = window.location.href
+
+            let strings = currentURL.split("/");
+            let editorId = strings[5];
+
+
+            console.log(currentURL);
+            let content = $("#review-content").val();
+
+            let star = $("#star-val").val();
+
+            if (content.length <=0 ){
+                alert("리뷰를 입력해주세요.");
+                return;
+            }
+
+            console.log(star);
+
+
+            fetch('/review/save', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    editorId: editorId,
+                    userId: `${USER.userId}`,
+                    content: content,
+                    count: star,
+                    nickname : `${USER.nickname}`
+
+
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+
+                        alert("로그인 이후 사용가능합니다.")
+                        $(".log-in-btn").click()
+                    } else {
+
+                        location.reload();
+
+                    }
+                })
+                .then((data) => console.log(data))
+                .catch(error => console.error('Error:', error));
+
+        })
+
+
+    })
+
+    function deleteReview(reviewId) {
+
+
+        fetch('/review/del/' + reviewId, {
+            method: 'DELETE',
+
+        })
+
+            .then(response => {
+                if (!response.ok) {
+                    alert("")
+                } else {
+                    location.reload();
+                }
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+
+
+    }
+
+</script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

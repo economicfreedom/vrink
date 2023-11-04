@@ -27,14 +27,14 @@ public class QnARestController {
     @PostMapping("/save")
     public ResponseEntity<?> save(
             @Valid @RequestBody
-            QuestionDTO qnADTO
+            QuestionDTO qnaDTO
             , BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest()
                     .body(bindingResult.getFieldError().getDefaultMessage());
         }
-        Integer save = qnAService.save(qnADTO);
+        Integer save = qnAService.save(qnaDTO);
 
         if (save != 1) {
             return ResponseEntity.badRequest().build();

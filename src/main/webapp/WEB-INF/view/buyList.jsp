@@ -109,6 +109,9 @@
                                     <h3>
                                         <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
                                            title="">${dto.nickname}</a></h3>
+                                    <span style="margin-left: 10px">010-1234-1234</span>
+                                    <br>
+                                    <span style="margin-left: 10px">asdasdfasdff@asdf.com</span>
                                     <div class="price-cart-item">
                                         <span>￦${dto.point}</span>
                                     </div>
@@ -118,7 +121,13 @@
 
                                         <%--                                <c:if test="${dto.editorRecognize == 1}">--%>
 
-                                    <button type="button" class="flat-btn"
+                                    <button type="button" class="flat-btn" onclick="paymentConfirm(
+                                        ${dto.editorId},
+                                        ${dto.paymentId}
+                                            ,${dto.editorRecognize}
+                                            ,${dto.customerRecognize}
+                                            ,${dto.point}
+                                            )"
                                             style="margin-bottom: 10px; margin-right: 10px">
                                         구매 확정
                                     </button>
@@ -126,7 +135,39 @@
                                         <%--                                </c:if>--%>
 
                                         <%--                                <c:if test="${dto.editorRecognize == 0}">--%>
-                                    <button class="button button2">환불 요청</button>
+                                    <button class="button button2" onclick="refundRequest(${dto.paymentId})"
+                                            value="0"
+                                            id="request-refund-${dto.paymentId}">
+                                        환불 요청
+                                    </button>
+                                    <div class="form-group">
+                                        <label for="reason-${dto.paymentId}" id="for-r-${dto.paymentId}"
+                                               style="display: none">환불 사유</label>
+                                        <select class="form-control"
+                                                style="display: none"
+                                                id="reason-${dto.paymentId}">
+                                            <option value="잘못구입">잘못 구입했습니다.</option>
+                                            <option value="연락두절">연락이 없어요.</option>
+                                            <option value="기타">기타</option>
+                                        </select>
+                                        <label for="etc-${dto.paymentId}"
+                                               style="display: none"
+                                               id="for-e-${dto.paymentId}">기타 사유</label>
+                                        <input type="text" class="form-control" id="etc-${dto.paymentId}"
+                                               style="display: none">
+                                        <button type="button" class="btn btn-primary"
+                                                style="margin-top: 4px; display: none"
+                                                onclick="refundOk(${dto.paymentId},${dto.paymentStateId})"
+                                                id="ok-${dto.paymentId}">
+                                            확인
+                                        </button>
+                                        <button type="button" class="btn btn-default"
+                                                style="margin-top: 4px; display: none"
+                                                id="cancel-${dto.paymentId}"
+                                                onclick="refundCancel(${dto.paymentId})">
+                                            취소
+                                        </button>
+                                    </div>
                                         <%--                                </c:if>--%>
 
                                 </div>
@@ -135,6 +176,7 @@
                                     <i class="fa  fa-shopping-basket"></i>
                                     <span>수량 : ${dto.quantity}</span>
                                 </div>
+
                             </li>
                         </c:forEach>
                     </ul>
@@ -146,9 +188,9 @@
 </section>
 
 <script>
-    var debounceTimer;
-    var pageNum = 1;
-    var hasNext = `${hasNext}`;
+    let debounceTimer;
+    let pageNum = 1;
+    let hasNext = ${hasNext};
     $(window).scroll(function () {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(checkScrollEnd, 1000);  // 1초 동안 딜레이
@@ -168,7 +210,7 @@
 
     function fetchListMore() {
         pageNum++;
-        const url = `/payment-state/list-more?page-num=` + pageNum + `&user-id=` + `${USER.userId}` +`&total=`+`${pageDTO.articleTotalCount}`
+        const url = `/payment-state/list-more?page-num=` + pageNum + `&user-id=` + `${USER.userId}` + `&total=` + `${pageDTO.articleTotalCount}`
         let html = '';
 
         fetch(url, {
@@ -207,13 +249,35 @@
                     if (dto.editorRecognize == 1) {
 
                         html += '<button type="button" className="flat-btn" ';
-                        html += ' style="margin-bottom: 10px; margin-right: 10px">';
+                        html += ' style="margin-bottom: 10px; margin-right: 10px" onclick(';
+                        html += dto.paymentId;
+                        html += ',' + dto.editorRecognize;
+                        html += ',' + dto.customerRecognize;
+                        html += ',' + dto.point;
+                        html += ')>';
                         html += '구매 확정';
                         html += '</button>';
                     }
                     if (dto.editorRecognize == 0) {
 
-                        html += '<button class="button button2">환불 요청</button>';
+                        html += '<button class="button button2" onclick="refundRequests(' + dto.paymentId + ')">환불 요청</button>';
+
+                        html += '<div class="form-group">'
+                        html += ' <label for="reason-' + dto.paymentId + '" id="for-r-' + dto.paymentId + '"'
+                        html += ' style="display: none">환불 사유</label>'
+                        html += '<select class="form-control" id="reason-' + dto.paymentId + '"'
+                        html += ' style="display: none">'
+                        html += '<option value="잘못구입">잘못 구입했습니다.</option>'
+                        html += '<option value="연락두절">연락이 없어요.</option>'
+                        html += '<option value="etc">기타</option>'
+                        html += '</select>'
+                        html += '<label for="etc-' + dto.paymentId + '"'
+                        html += ' style="display: none"'
+                        html += ' id="for-e-' + dto.paymentId + '+">기타 사유</label>'
+                        html += '<input type="text" class="form-control" id="etc-' + dto.paymentId + '"'
+                        html += ' style="display: none">'
+                        html += '</div>'
+
                     }
 
                     html += '</div>'
@@ -236,10 +300,7 @@
 
     }
 
-    function confirm(payment_id) {
-
-
-    }
 </script>
+<script src="/js/buy-list.js"/>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

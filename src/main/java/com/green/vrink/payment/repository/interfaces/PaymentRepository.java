@@ -36,4 +36,6 @@ public interface PaymentRepository {
     void insertByPaymentDetail(PaymentDetailDTO paymentDetailDTO);
 
     List<PaymentDetailDTO> findPaymentDetailByPaymentId(Integer paymentId);
+
+    int findTotalPriceById(Integer paymentId);
 }

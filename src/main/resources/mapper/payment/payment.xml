@@ -65,4 +65,8 @@
 	<select id="findPaymentDetailByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDetailDTO">
 		SELECT * FROM payment_detail WHERE payment_id = #{paymentId}
 	</select>
+    <select id="findTotalPriceById" resultType="java.lang.Integer">
+        SELECT total_price FROM payment
+        WHERE payment_id = #{paymnetId}
+    </select>
 </mapper>

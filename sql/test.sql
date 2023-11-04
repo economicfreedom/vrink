@@ -423,46 +423,50 @@ FROM payment_state ps
          LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 0
   AND customer_recognize = 0
-AND ps.created_at = (select max(created_at)  from payment_state where payment_id = p.payment_id )
+  AND ps.created_at = (select max(created_at) from payment_state where payment_id = p.payment_id)
 
-group by ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id, ed.image, ps.state, p.payment_id;
+group by ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id,
+         p.user_id, ed.image, ps.state, p.payment_id;
 
-select * from payment_detail;
+select *
+from payment_detail;
 
-select * from user;
+select *
+from user;
 
-       SELECT   r.reply_id
-               , r.community_id
-               , r.user_id
-               , r.content
-               , DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at
-               , u.nickname
-               , c.title
-        FROM community_reply r
-        LEFT JOIN user u ON r.user_id = u.user_id
-        LEFT JOIN community c ON r.community_id = c.community_id
-        WHERE r.community_id=291
-        LIMIT 0,5;
-SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname,count(cr.community_id )AS count
+SELECT r.reply_id
+     , r.community_id
+     , r.user_id
+     , r.content
+     , DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at
+     , u.nickname
+     , c.title
+FROM community_reply r
+         LEFT JOIN user u ON r.user_id = u.user_id
+         LEFT JOIN community c ON r.community_id = c.community_id
+WHERE r.community_id = 291
+LIMIT 0,5;
+SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id) AS count
 
-        FROM community c
-        LEFT JOIN user u ON c.user_id = u.user_id
-        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+FROM community c
+         LEFT JOIN user u ON c.user_id = u.user_id
+         LEFT JOIN community_reply cr ON c.community_id = cr.community_id
 GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname;
 
 
-UPDATE user SET
-                email='qwer1234@gamil.com'
-WHERE user_id =1;
+UPDATE user
+SET email='qwer1234@gamil.com'
+WHERE user_id = 1;
 
-SELECT * FROM user;
+SELECT *
+FROM user;
 
-INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize,state, point)
-value (3,0,0,'payment_done',19000);
+INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, state, point)
+    value (3, 0, 0, 'payment_done', 19000);
 
 SELECT ps.point
-     , customer_recognize
      , editor_recognize
+     , customer_recognize
      , payment_state_id
      , ps.created_at
      , u.nickname
@@ -473,16 +477,70 @@ SELECT ps.point
      , ps.state
      , p.payment_id
 FROM payment_state ps
-JOIN (
-    SELECT payment_id, MAX(created_at) as max_created_at
-    FROM payment_state
-    GROUP BY payment_id
-) as ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
-LEFT JOIN payment p ON ps.payment_id = p.payment_id
-LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
-LEFT JOIN user u ON ed.user_id = u.user_id
+         JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+               FROM payment_state
+               GROUP BY payment_id) as ps_max
+              ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+         LEFT JOIN payment p ON ps.payment_id = p.payment_id
+         LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 0
-GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id, ed.image, ps.state, p.payment_id;
+GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id,
+         p.user_id, ed.image, ps.state, p.payment_id;
 
-select * from payment;
+select *
+from payment;
+
+select *
+from payment_state;
+
+select state
+from payment_state;
+
+update payment_state
+set customer_recognize = 1
+where payment_state_id = 29;
+
+select *
+from user;
+select *
+from user
+where user_id = 52;
+SELECT user_id
+FROM editor_detail
+WHERE editor_id = 52;
+
+SELECT * FROM editor_detail;
+UPDATE user
+SET point = ifnull(point,0)+1111
+WHERE user_id = (SELECT user_id
+                 FROM editor_detail
+                 WHERE editor_id = 52);
+
+update user
+set point = null
+where user_id = 136;
+
+SELECT * FROM user WHERE user_id = 136;
+
+CREATE TABLE `refund_reason` (
+	`refund_id`	int	NOT NULL primary key auto_increment,
+	`payment_id`	int	NOT NULL,
+	`payment_state_id`	int	NOT NULL,
+	`reason`	varchar(100)	NOT NULL,
+	`reason_detail`	text	NULL,
+	`created_at`	timestamp	NOT NULL	DEFAULT now()
+);
+
+
+ALTER TABLE `refund_reason` ADD CONSTRAINT `PK_REFUND_REASON` PRIMARY KEY (
+	`refund_id`
+);
+
+INSERT INTO refund_reason(payment_id, payment_state_id, reason, reason_detail)
+value ()
+
+
+select *
+from refund_reason;

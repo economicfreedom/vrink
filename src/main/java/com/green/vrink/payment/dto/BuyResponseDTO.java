@@ -13,6 +13,7 @@ public class BuyResponseDTO {
 
     private Integer point;
     private Byte editorRecognize;
+    private Byte customerRecognize;
     private Integer paymentStateId;
     private String createdAt;
     private String nickname;
@@ -22,6 +23,7 @@ public class BuyResponseDTO {
     private Integer quantity;
     private String state;
     private Integer paymentId;
+
 
 
 }
