@@ -1,10 +1,10 @@
-package refund.service;
+package com.green.vrink.refund.service;
 
+import com.green.vrink.refund.repository.RefundRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import refund.dto.RefundDetailRequestDTO;
-import refund.repository.RefundRepository;
+import com.green.vrink.refund.dto.RefundDetailRequestDTO;
 
 @RequiredArgsConstructor
 @Service

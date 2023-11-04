@@ -1,7 +1,7 @@
-package refund.repository;
+package com.green.vrink.refund.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import refund.dto.RefundDetailRequestDTO;
+import com.green.vrink.refund.dto.RefundDetailRequestDTO;
 
 @Mapper
 public interface RefundRepository {

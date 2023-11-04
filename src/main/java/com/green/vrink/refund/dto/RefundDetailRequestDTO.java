@@ -1,4 +1,4 @@
-package refund.dto;
+package com.green.vrink.refund.dto;
 
 import lombok.*;
 

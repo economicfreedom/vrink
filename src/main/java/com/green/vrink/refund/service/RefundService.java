@@ -1,6 +1,6 @@
-package refund.service;
+package com.green.vrink.refund.service;
 
-import refund.dto.RefundDetailRequestDTO;
+import com.green.vrink.refund.dto.RefundDetailRequestDTO;
 
 public interface RefundService {
 
