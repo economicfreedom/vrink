@@ -7070,6 +7070,14 @@ textarea.form-control-lg {
   display: flex !important;
 }
 
+.d-flex.j-around {
+  justify-content: space-around;
+}
+
+.d-flex.j-evenly {
+  justify-content: space-evenly;
+}
+
 .d-inline-flex {
   display: inline-flex !important;
 }

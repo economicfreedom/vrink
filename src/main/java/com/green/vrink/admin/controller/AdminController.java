@@ -1,5 +1,6 @@
 package com.green.vrink.admin.controller;
 
+import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.AdminApplyDto;
 import com.green.vrink.admin.dto.Pagination;
 import com.green.vrink.admin.dto.PagingDto;
@@ -36,7 +37,6 @@ public class AdminController {
     private final FreeBoardReplyService freeBoardReplyService;
     private final QnAService qnAService;
 
-    private final MessageService messageService;
     private final Test test;
 
     @GetMapping("/main")
@@ -55,10 +55,7 @@ public class AdminController {
     }
     @GetMapping("/apply-accept")
     public String applyAccept(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
-            required = false, defaultValue="1")int page, @RequestParam(value="classification",
-            required = false, defaultValue="전체")String classification, @RequestParam(value="searchType",
-            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
-            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="1")int page, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model){
 
         log.info("판매자 신청 목록 컨트롤러 호출");
@@ -87,9 +84,7 @@ public class AdminController {
 
     @GetMapping("/freeboard")
     public String freeBoard(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
-            required = false, defaultValue="1")int page, @RequestParam(value="searchType",
-            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
-            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="1")int page, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model){
 
         log.info("자유게시판 목록 컨트롤러 호출");
@@ -153,9 +148,8 @@ public class AdminController {
 
     @GetMapping("/user")
     public String userAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
-            required = false, defaultValue="1")int page, @RequestParam(value="classification",
-            required = false, defaultValue="전체")String classification,
-            @RequestParam(value="classification2", required = false, defaultValue="전체")String classification2,
+            required = false, defaultValue="1")int page,
+                            @RequestParam(value="classification2", required = false, defaultValue="전체")String classification2,
             @RequestParam(value="classification3", required = false, defaultValue="전체")String classification3, @RequestParam(value="searchType",
             required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
             required = false, defaultValue="")String keyword, @RequestParam(value="reset",
@@ -197,11 +191,8 @@ public class AdminController {
 
     @GetMapping("/question")
     public String questionAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
-            required = false, defaultValue="1")int page, @RequestParam(value="classification",
-            required = false, defaultValue="전체")String classification, @RequestParam(value="classification2",
-            required = false, defaultValue="전체")String classification2, @RequestParam(value="searchType",
-            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
-            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="1")int page, @RequestParam(value="classification2",
+            required = false, defaultValue="전체")String classification2, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model) {
 
         log.info("문의 관리 페이지 컨트롤러 호출");
@@ -238,15 +229,12 @@ public class AdminController {
         return "admin/questionDetailAdmin";
     }
 
-    @GetMapping("/ad")
+    @GetMapping("/ad-admin")
     public String adAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page",
-            required = false, defaultValue="1")int page, @RequestParam(value="classification",
-            required = false, defaultValue="전체")String classification, @RequestParam(value="searchType",
-            required = false, defaultValue="전체")String searchType, @RequestParam(value="keyword",
-            required = false, defaultValue="")String keyword, @RequestParam(value="reset",
+            required = false, defaultValue="1")int page, @RequestParam(value="reset",
             required = false, defaultValue="2")String reset, Model model){
 
-        log.info("판매자 신청 목록 컨트롤러 호출");
+        log.info("배너광고 목록 컨트롤러 호출");
 
         if(reset.equals("1")) {
             session.removeAttribute("uClassification");
@@ -262,13 +250,19 @@ public class AdminController {
         int count = adminService.countAllAd();
         pagination.setArticleTotalCount(count);
 
-//        List<AdminAdDto> adminAdList = adminService.getAllAdminApplyListByPaging(paging);
+        List<AdminAdDto> adminAdList = adminService.getAllAdListByPaging(paging);
 
-//        model.addAttribute("adminApplyList", adminApplyList);
+        model.addAttribute("adminAdList", adminAdList);
         model.addAttribute("pagination", pagination);
 
-        return "/admin/applyAccept";
+        return "/admin/adAdmin";
     }
 
+    @GetMapping("/ad-admin/detail")
+    public String adDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
+        model.addAttribute("adDetail", adminService.getAdById(id));
+
+        return "admin/adDetailAdmin";
+    }
 
 }

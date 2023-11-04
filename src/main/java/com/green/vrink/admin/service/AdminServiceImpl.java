@@ -130,7 +130,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Integer countAdByType(PagingDto paging) {
-        return null;
+        return adminRepository.countAdByType(paging);
     }
 
     @Override
@@ -169,6 +169,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public AdminAdDto getAdById(Integer id) {
+        return adminRepository.getAdById(id);
+    }
+
+    @Override
     public Integer countAllAdminApply() {
         return adminRepository.countAllAdminApply();
     }
@@ -202,6 +207,16 @@ public class AdminServiceImpl implements AdminService {
 //        if(result != 1) {
 //            throw new CustomRestfulException("승인 상태 변경에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
+    }
+
+    @Override
+    public void changeAd(Integer adId, Integer status) {
+        adminRepository.changeAd(adId, status);
+    }
+
+    @Override
+    public void changeAdPeriod(Integer adId, Integer adPeriod) {
+        adminRepository.changeAdPeriod(adId, adPeriod);
     }
 
     public boolean getCheatCheckList(String number) throws IOException {
