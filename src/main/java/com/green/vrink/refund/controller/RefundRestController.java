@@ -39,7 +39,7 @@ public class RefundRestController {
 
         refundService.refundSave(refundDetailRequestDTO);
 
-        log.info("여기까지옴");
+
         return ResponseEntity.ok().build();
     }
 

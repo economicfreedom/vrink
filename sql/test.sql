@@ -539,8 +539,11 @@ ALTER TABLE `refund_reason` ADD CONSTRAINT `PK_REFUND_REASON` PRIMARY KEY (
 );
 
 INSERT INTO refund_reason(payment_id, payment_state_id, reason, reason_detail)
-value ()
+VALUE ()
 
 
-select *
-from refund_reason;
+select * from refund_reason;
+
+
+
+

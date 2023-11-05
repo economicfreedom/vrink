@@ -3,8 +3,8 @@
 <mapper namespace="com.green.vrink.user.repository.interfaces.UserRepository">
 
     <select id="requestApproval" resultType="java.lang.Integer">
-        insert into apply(user_id, name, number)
-            value (#{userId},#{accountName},#{accountNumber})
+        insert into apply(user_id, name, number,accepted)
+            value (#{userId},#{accountName},#{accountNumber},0)
     </select>
 
     <insert id="signUp">
