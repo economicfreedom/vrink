@@ -206,40 +206,57 @@
 
     <select id="getAllAdList" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
-        FROM apply
+        FROM ad
     </select>
 
     <select id="getAllAdListByType" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
-        FROM apply
+        FROM ad
         WHERE status = #{classification}
         ORDER BY ad_id DESC
     </select>
 
     <select id="getAllAdListByPaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
-        FROM apply
+        FROM ad
         ORDER BY ad_id DESC
         LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllAdListByTypePaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
-        FROM apply
+        FROM ad
         WHERE status = #{classification}
         ORDER BY ad_id DESC
         LIMIT #{offset}, #{recordSize}
     </select>
 
-    <select id="countAllAd" resultType="java.lang.Integer">
+    <select id="countAllAd" resultType="integer">
         SELECT count(*)
         FROM ad
     </select>
 
-    <select id="countAdByType" resultType="java.lang.Integer">
+    <select id="countAdByType" resultType="integer">
         SELECT count(*)
         FROM ad
         WHERE status = #{classification}
+    </select>
+
+    <update id="changeAd">
+        UPDATE ad
+        SET status = #{status}
+        WHERE ad_id = #{adId}
+    </update>
+
+    <update id="changeAdPeriod">
+        UPDATE ad
+        SET ad_period = #{adPeriod}
+        WHERE ad_id = #{adId}
+    </update>
+
+    <select id="getAdById" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT * from ad
+        WHERE ad_id = #{id}
     </select>
 
     <update id="updateUserLevelById">

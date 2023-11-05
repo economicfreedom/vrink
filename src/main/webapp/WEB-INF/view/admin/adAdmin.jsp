@@ -11,7 +11,7 @@
         margin-top: 20px;
     }
 
-    .tab--adminApply li {
+    .tab--ad li {
         margin-right: 8px !important;
         width: 112px !important;
     }
@@ -75,7 +75,7 @@
         text-align: right;
     }
 
-    .title--adminApply {
+    .title--ad {
         position: relative;
         color: #535353;
         font-size: 35px;
@@ -85,18 +85,18 @@
         border-bottom: 1px solid #535353;
     }
 
-    .tab--adminApply {
+    .tab--ad {
         margin-top: 15px;
         margin-left: 24px;
         padding: 0;
         overflow: hidden;
     }
 
-    .tab--adminApply :hover {
+    .tab--ad :hover {
         cursor: pointer;
     }
 
-    .tab--adminApply li {
+    .tab--ad li {
         float: left;
         display: table;
         width: calc(20% - 2px);
@@ -105,11 +105,11 @@
         margin-right: 0px;
     }
 
-    .tab--adminApply li:last-child {
+    .tab--ad li:last-child {
         border-right: none;
     }
 
-    .tab--adminApply li a {
+    .tab--ad li a {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
@@ -119,12 +119,12 @@
         padding: 5px 8px;
     }
 
-    .tab--adminApply > li.on::before {
+    .tab--ad > li.on::before {
         z-index: 10;
         border: 1px solid #222;
     }
 
-    .tab--adminApply > li::before {
+    .tab--ad > li::before {
         position: absolute;
         top: 0;
         left: -1px;
@@ -135,7 +135,7 @@
         border-radius: 9px;
     }
 
-    .tab--adminApply::after {
+    .tab--ad::after {
         content: "";
         display: table;
         clear: both;
@@ -145,13 +145,13 @@
         box-sizing: content-box;
     }
 
-    .tab--adminApply li.active {
+    .tab--ad li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
         border-radius: 10px;
     }
 
-    .tab--adminApply li.active a {
+    .tab--ad li.active a {
         font-weight: bold;
         color: black;
     }
@@ -209,34 +209,34 @@
     }
 </style>
 
-<%--		<c:if test="${adminApply.roleTypeId == 2}">--%>
-<%--			<a href="/customerservice/adminApply/write" class="write-btn">글쓰기</a>--%>
+<%--		<c:if test="${ad.roleTypeId == 2}">--%>
+<%--			<a href="/customerservice/ad/write" class="write-btn">글쓰기</a>--%>
 <%--		</c:if>--%>
 
-<%--<c:forEach items="${adminApplyList}" var="dto">--%>
+<%--<c:forEach items="${adList}" var="dto">--%>
 <%--    <h1>${dto.nickname}</h1>--%>
 <%--</c:forEach>--%>
 <div class="card m-4">
-    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 판매자 신청 목록</h3></div>
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 배너 목록</h3></div>
 
-        <ul class="tab--adminApply">
+        <ul class="tab--ad">
             <c:choose>
                 <c:when test="${uClassification == '전체' or empty uClassification}">
                     <li class="active" data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="0"><a href="#">승인 대기</a></li>
-                    <li data-classification="1"><a href="#">승인됨</a></li>
+                    <li data-classification="0"><a href="#">게시중</a></li>
+                    <li data-classification="1"><a href="#">게시 중단</a></li>
 
                 </c:when>
                 <c:when test="${uClassification == '0'}">
                     <li data-classification="전체"><a href="#">전체</a></li>
-                    <li class="active" data-classification="0"><a href="#">승인 대기
+                    <li class="active" data-classification="0"><a href="#">게시중
                     </a></li>
-                    <li data-classification="1"><a href="#">승인됨</a></li>
+                    <li data-classification="1"><a href="#">게시 중단</a></li>
                 </c:when>
                 <c:otherwise>
                     <li data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="0"><a href="#">승인 대기</a></li>
-                    <li class="active" data-classification="1"><a href="#">승인됨</a></li>
+                    <li data-classification="0"><a href="#">게시중</a></li>
+                    <li class="active" data-classification="1"><a href="#">비게시</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>
@@ -248,40 +248,30 @@
                     class="datatable-selector"
                     style="padding-left: 1.125rem; padding-right: 2.125rem;">
                 <c:choose>
-                    <c:when test="${uSearchType == '사기이력'}">
+                    <c:when test="${uSearchType == '회사이름'}">
                         <option value="전체">전체</option>
-                        <option value="사기이력" selected>사기이력</option>
-                        <option value="은행이름">은행이름</option>
-                        <option value="계좌번호">계좌번호</option>
-                        <option value="닉네임">닉네임</option>
+                        <option value="회사이름" selected>회사이름</option>
+                        <option value="가격">가격</option>
+                        <option value="기간">기간</option>
                     </c:when>
-                    <c:when test="${uSearchType == '은행이름'}">
+                    <c:when test="${uSearchType == '가격'}">
                         <option value="전체">전체</option>
-                        <option value="사기이력">사기이력</option>
-                        <option value="은행이름" selected>은행이름</option>
-                        <option value="계좌번호">계좌번호</option>
-                        <option value="닉네임">닉네임</option>
+                        <option value="회사이름">회사이름</option>
+                        <option value="가격" selected>가격</option>
+                        <option value="기간">기간</option>
                     </c:when>
-                    <c:when test="${uSearchType == '계좌번호'}">
+                    <c:when test="${uSearchType == '기간'}">
                         <option value="전체">전체</option>
-                        <option value="사기이력">사기이력</option>
-                        <option value="은행이름">은행이름</option>
-                        <option value="계좌번호" selected>계좌번호</option>
-                        <option value="닉네임">닉네임</option>
+                        <option value="회사이름">회사이름</option>
+                        <option value="가격">가격</option>
+                        <option value="기간" selected>기간</option>
                     </c:when>
-                    <c:when test="${uSearchType == '닉네임'}">
-                        <option value="전체">전체</option>
-                        <option value="사기이력">사기이력</option>
-                        <option value="은행이름">은행이름</option>
-                        <option value="계좌번호">계좌번호</option>
-                        <option value="닉네임" selected>닉네임</option>
-                    </c:when>
+
                     <c:otherwise>
                         <option value="전체" selected>전체</option>
-                        <option value="사기이력">사기이력</option>
-                        <option value="은행이름">은행이름</option>
-                        <option value="계좌번호">계좌번호</option>
-                        <option value="닉네임">닉네임</option>
+                        <option value="회사이름">회사이름</option>
+                        <option value="가격">가격</option>
+                        <option value="기간">기간</option>
                     </c:otherwise>
                 </c:choose>
 
@@ -292,11 +282,11 @@
             </button>
             <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px;"
                     id="resetButton"
-                    onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
+                    onClick="location.href='/admin/ad-admin?reset=1'">검색초기화
             </button>
         </div>
             <table class="datatable-table table">
-                <tbody id="adminApply-list-container">
+                <tbody id="ad-list-container">
                 </tbody>
             </table>
         <div class="paging">
@@ -332,21 +322,18 @@
 
 <script>
 
-    function changeApply(applyId, accepted, number) {
+    function changeApply(adId, status) {
 
         $.ajax({
             type   : "POST",
-            url    : "/admin/change-apply",
+            url    : "/admin/change-ad",
             data   : {
-                "applyId" : applyId,
-                "accepted": accepted,
-                "number"  : number
+                "adId" : adId,
+                "status": status
             },
             success: function (data) {
                 if (data === 200) {
-                    window.location.href = "/admin/apply-accept";
-                } else if (data === 400) {
-                    alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
+                    window.location.href = "/admin/ad-admin";
                 } else {
                     alert('에러 읍니다.');
                 }
@@ -362,7 +349,7 @@
 
             setupPaginationEventHandlers();
 
-            loadadminApplys(`${uClassification}`,
+            loadads(`${uClassification}`,
                 `${pagination.paging.page}`, `${uSearchType}`,
                 `${uKeyword}`);
 
@@ -372,7 +359,7 @@
                 'click',
                 function () {
                     console.log(classification2);
-                    loadadminApplys(classification2, undefined, $(
+                    loadads(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -387,21 +374,21 @@
             $("#keyword").on("keyup", function (key) {
                 if (key.keyCode == 13) {
                     console.log(classification2);
-                    loadadminApplys(classification2, undefined, $(
+                    loadads(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 }
             });
 
-            $('.tab--adminApply li').click(
+            $('.tab--ad li').click(
                 function () {
                     classification2 = $(this).data(
                         'classification');
                     console.log(classification2);
-                    $('.tab--adminApply li').removeClass('active');
+                    $('.tab--ad li').removeClass('active');
                     $(this).addClass('active');
 
-                    loadadminApplys(classification2, undefined, $(
+                    loadads(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -412,15 +399,15 @@
                         e.preventDefault();
                         const value = $(this).data('page');
                         // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
-                        loadadminApplys($('.tab--adminApply li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
+                        loadads($('.tab--ad li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
                     });
             }
 
 
-            function loadadminApplys(classification, page, searchType, keyword) {
+            function loadads(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
-                    url    : '/admin/apply-accept/classification',
+                    url    : '/admin/ad-admin/classification',
                     data   : {
                         classification: classification,
                         page          : page,
@@ -429,49 +416,68 @@
                     }, // 페이지 번호와 카테고리 정보를 전달합니다.
                     success: function (data) {
 
-                        var adminApplyList = data.adminApplyList;
+                        var adList = data.adList;
                         var pagination = data.pagination;
-                        var adminApplyListHTML = '<tr class="t-head">'
-                            + '<td><h4>신청상태</h4></td>'
-                            + '<td><h4>사기이력</h4></td>'
-                            + '<td><h4>은행이름</h4></td>'
-                            + '<td><h4>계좌번호</h4></td>'
-                            + '<td><h4>아이디</h4></td>'
-                            + '<td><h4>신청날짜</h4></td>'
+                        var adListHTML = '<tr class="t-head">'
+                            + '<td><h4>상태</h4></td>'
+                            + '<td><h4>회사이름</h4></td>'
+                            + '<td><h4>이미지</h4></td>'
+                            + '<td><h4>가격</h4></td>'
+                            + '<td><h4>의뢰일</h4></td>'
+                            + '<td><h4>기간</h4></td>'
                             + '</tr>';
-                        for (var i = 0; i < adminApplyList.length; i++) {
-                            var adminApply = adminApplyList[i];
-                            let acct = 0;
+                        for (var i = 0; i < adList.length; i++) {
+                            var ad = adList[i];
+                            let stt = 0;
 
-                            if (adminApply.accepted === 0) {
-                                adminApply.accepted = '<text style="color: cadetblue">승인 대기</text>';
-                                acct = 0;
+                            if (ad.status === 0) {
+                                ad.status = '<text style="color: cadetblue">게시중</text>';
+                                stt = 0;
                             } else {
-                                adminApply.accepted = '<text style="color: #173f41">승인됨</text>';
-                                acct = 1;
+                                ad.status = '<text style="color: #173f41">비게시</text>';
+                                stt = 1;
                             }
-                            let regData = adminApply.createdAt.substring(0, 10);
-                            let cheating;
+                            let regData = ad.createdAt.substring(0, 16);
 
-                            if (adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
-                            else cheating = '<th><a target="_blank" style="text-decoration: none; color: red;" href="https://web.joongna.com/fraud/result?inputValue=' + adminApply.number + '&type=account_number">' + adminApply.cheater + '</a></th>'
-                            adminApplyListHTML += '<tr>'
+                            adListHTML += '<tr>'
                                 + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
-                                + adminApply.accepted
-                                + '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
-                                + cheating
-                                + '<td>'
-                                + adminApply.name
-                                + '</td>'
-                                + '<td>'
-                                + adminApply.number
-                                + '</td>'
-                                + '<td>'
-                                + adminApply.nickname
-                                + '</td>'
-                                + '<td>'
+                                + ad.status
+                                + '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + ad.adId + ',' + stt + ')">변경</button></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + ad.adComName
+                                + '</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + ad.image
+                                + '</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + ad.price
+                                + '</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
                                 + regData
-                                + '</td>'
+                                + '</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + ad.adPeriod
+                                + '</a></td>'
                                 + '</tr>';
                         }
                         var paginationHTML = '';
@@ -492,8 +498,8 @@
                                 + (pagination.endPage + 1)
                                 + '">Next</a></li>';
                         }
-                        $('#adminApply-list-container').html(
-                            adminApplyListHTML);
+                        $('#ad-list-container').html(
+                            adListHTML);
                         $('#pagination--a').html(
                             paginationHTML);
                     },

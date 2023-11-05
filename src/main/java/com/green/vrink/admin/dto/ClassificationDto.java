@@ -13,5 +13,6 @@ public class ClassificationDto {
 	List<FreeBoardDTO> freeboardList;
 	List<User> userList;
 	List<QuestionDTO> questionList;
+	List<AdminAdDto> adList;
 	Pagination pagination;
 }

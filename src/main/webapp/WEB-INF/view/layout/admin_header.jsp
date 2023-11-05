@@ -124,7 +124,7 @@
                         고객센터
                     </a>
 
-                    <a class="nav-link collapsed" href="/admin/question?reset=1">
+                    <a class="nav-link collapsed" href="/admin/ad-admin?reset=1">
                         <div class="sb-nav-link-icon"><i class="fa-brands fa-adversal"></i></div>
                         배너 목록
                     </a>

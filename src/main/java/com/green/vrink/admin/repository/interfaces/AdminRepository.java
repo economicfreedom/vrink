@@ -42,6 +42,9 @@ public interface AdminRepository {
     List<User> getAllUserPaging(PagingDto paging);
     List<User> getAllUserByTypePaging(PagingDto paging);
     User getUserById(Integer id);
+
+    AdminAdDto getAdById(Integer id);
+
     Integer userTotalCount(PagingDto paging);
     Integer userTotalCountClassification(PagingDto paging);
     Integer countAllAdminApply();
@@ -50,5 +53,7 @@ public interface AdminRepository {
     int updateUserEnabledCheckById(User user);
     int changeApply(@Param("applyId") Integer applyId, @Param("accepted") Integer accepted);
     int changeCheater(@Param("applyId") Integer applyId, @Param("content") String content);
+    int changeAd(@Param("adId") Integer adId, @Param("status") Integer status);
+    int changeAdPeriod(@Param("adId") Integer adId, @Param("adPeriod") Integer adPeriod);
 
 }

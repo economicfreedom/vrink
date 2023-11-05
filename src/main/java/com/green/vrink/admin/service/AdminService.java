@@ -39,7 +39,7 @@ public interface AdminService {
     Integer questionTotalCount(PagingDto paging);
     Integer questionTotalCountClassification(PagingDto paging);
 
-
+    AdminAdDto getAdById(Integer id);
     User getUserById(Integer id);
     Integer userTotalCount(PagingDto paging);
     Integer userTotalCountClassification(PagingDto paging);
@@ -49,5 +49,7 @@ public interface AdminService {
     void updateUserEnabledCheckById(User user);
     void changeApply(Integer applyId, Integer accepted);
     void changeCheater(Integer applyId, String content);
+    void changeAd(Integer adId, Integer status);
+    void changeAdPeriod(Integer adId, Integer adPeriod);
     boolean getCheatCheckList(String number) throws IOException;
 }
