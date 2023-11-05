@@ -13,6 +13,7 @@ import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -49,22 +50,21 @@ public class EditorRestController {
         return ResponseEntity.ok().build();
 
     }
-    
-    @PostMapping("/editor-write")
-    public Integer editorWriteProc(EditorWriteDTO editorWriteDTO) {
 
+    @Transactional
+    @PostMapping("/editor-write")
+    public ResponseEntity<?> editorWriteProc(EditorWriteDTO editorWriteDTO) {
         User user = (User)session.getAttribute(Define.USER);
         editorWriteDTO.setUserId(user.getUserId());
         log.info("{}", editorWriteDTO);
-    	Integer res = editorServiceImpl.requestEditorWrite(editorWriteDTO);
-    	log.info("EditorWriteDTO {}",editorWriteDTO);
-    	return res;
+    	editorServiceImpl.requestEditorWrite(editorWriteDTO);
+    	return ResponseEntity.ok().build();
     }
     
     @PostMapping("/editor-edit")
-    public Integer editorEidtProc(EditorDTO editorDTO) {
-    	Integer res = editorServiceImpl.requestEditorEdit(editorDTO);
-    	return res;
+    public ResponseEntity<?> editorEidtProc(EditorDTO editorDTO) {
+    	editorServiceImpl.requestEditorEdit(editorDTO);
+    	return ResponseEntity.ok().build();
     }
 
     @GetMapping("/list-more")
@@ -83,12 +83,6 @@ public class EditorRestController {
         asyncPageDTO.setPageDTOs(editorDTO);
         asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
         return ResponseEntity.ok(asyncPageDTO);
-    }
-    
-    @PostMapping("/editor-price") 
-    public ResponseEntity<?> EditorPrice(EditorPriceListDTO editorPriceListDTO) {
-    	editorServiceImpl.requestEditorPrice(editorPriceListDTO);
-    	return ResponseEntity.ok().build();
     }
 
     @PostMapping("/calculate/point")

@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html; charset=UTF-8" language="java"
-
-         pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
 
@@ -50,14 +48,16 @@
         </div>
         <div class="row mb-5">
             <div class="col-sm-9">
-                <div class="mb-3">
-                    <canvas id="canvas" width="870px" height="870px"></canvas>
-                </div>
-                <div class="mb-3 t-center">
-                <a
-                        href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
-				크게 보러 가기</a>
-                </div>
+                <c:if test="${editorDetail.vrm != null}">
+                    <div class="mb-3">
+                        <canvas id="canvas" width="870px" height="870px"></canvas>
+                    </div>
+                    <div class="mb-3 t-center">
+                    <a
+                            href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
+                    크게 보러 가기</a>
+                    </div>
+                </c:if>
                 <div class="mb-3" id="thumbnail">
                     <img class="w-full" alt="" src="${editorDetail.image}">
                 </div>
@@ -84,116 +84,125 @@
                     <h5>${editorDetail.introduce}</h5>
                     <h5>잘부탁드립니다</h5>
                     <div>
-                        <c:if test="${EDITOR_ID == editorDetail.editorId}">
-                        <div id="edit"
-                             style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
-                            수정하기</div>
+                        <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
+                            <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer; border-bottom: 1px solid black;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
+                                소개 수정하기</div>
                         </c:if>
-                        <div id="suggest"
-                                style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
-                            작가에게 의뢰하기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-sm-11 t-center mt-5" style="float: left">${editorDetail.content}
-                    <c:choose>
-                        <c:when test="${morph != null}">
-                            <div style="border: 1px solid black"><h5>${morph}</h5></div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="col-sm-1">
-                                <img width="100" height="100" src="/image/bot.png">
+                        <c:if test="${not empty editorPrice}">
+                        <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold;">
+                                가격 옵션</div>
+                        <c:forEach items="${editorPrice}" var="editorPrice">
+                            <div class="d-flex j-around">
+                                <div><h5>${editorPrice.options}</h5></div>
+                                <div><h5>${editorPrice.price}</h5></div>
                             </div>
-                            <div style="border: 1px solid black"><h5>아직 리뷰가 없어요..</h5></div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-sm-2">
-                    <div style="display: inline-block; vertical-align: middle;">
-					<span class="star"> ★★★★★ <span id="place-score"
-                                                    style="width: 60%;">★★★★★</span> <input type="range"
-                                                                                            name="place-score"
-                                                                                            id="star-val"
-                                                                                            oninput="drawStar(this)"
-                                                                                            value="6"
-                                                                                            step="2" min="0" max="10">
-
-					</span>
-                    </div>
-                    <script>
-                        function drawStar(target) {
-                            document.querySelector('#place-score').style.width = (target.value * 10) + '%';
-                        }
-                    </script>
-                </div>
-                <div class="col-sm-2" style="height: 48px; line-height: 58px">
-                    <strong>별점을 선택해주세요</strong>
-                </div>
-                <div class="col-sm-11">
-				<textarea rows="3" cols="" style="width: 100%; resize: none;"
-                          placeholder="리뷰를 입력해주세요." id="review-content"></textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div
-                            style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px; cursor: pointer"
-                            id="review-submit">작성
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-sm-12">
-                    <div>
-                        <table class="w-full">
-                            <colgroup>
-
-                                <col width="15%">
-                                <col width="50%">
-                                <col width="15%">
-                                <col width="10%">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th class="list-th">별점</th>
-                                <th class="list-th tleft">내용</th>
-                                <th class="list-th"></th>
-                                <th class="list-th">작성자</th>
-                                <th class="list-th">작성일</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${reviewList}" var="review">
-                                <tr class="list-tr">
-
-                                    <td style="color: gold">${review.star}</td>
-                                    <td class="t-left"><textarea rows="3" cols=""
-                                                                 style="width: 100%; resize: none; border: none; outline: none; cursor: default"
-                                                                 readonly
-                                                                 placeholder="리뷰를 입력해주세요.">${review.content}</textarea>
-                                    </td>
-                                    <td>
-                                        <div
-                                                style="display: flex; flex-direction: column; gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
-                                            <c:if test="${review.userId == USER.userId}">
-                                            <button type="button" class="btn btn-danger"
-                                                    onclick="deleteReview(${review.reviewId})" id="review-del">삭제
-                                            </button>
-                                            </c:if>
-                                        </div>
-                                    </td>
-                                    <td>${review.nickname}</td>
-                                    <td>${review.createdAt}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                        </c:forEach>
+                        <div id="suggest"
+                             style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
+                            작가에게 의뢰하기</div>
+                        </c:if>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row mb-5">
+            <div class="col-sm-12 t-center mt-5">${editorDetail.content}
+                <c:choose>
+                    <c:when test="${morph != null}">
+                        <div style="border: 1px solid black"><h5>${morph}</h5></div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="col-sm-1">
+                            <img width="100" height="100" src="/image/bot.png" style="margin-left: -20px; margin-top: -35px;">
+                        </div>
+                        <div class="col-sm-11" style="border: 1px solid black"><h5>아직 리뷰가 없어요..</h5></div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-sm-2">
+                <div style="display: inline-block; vertical-align: middle;">
+                <span class="star"> ★★★★★ <span id="place-score"
+                                                style="width: 60%;">★★★★★</span> <input type="range"
+                                                                                        name="place-score"
+                                                                                        id="star-val"
+                                                                                        oninput="drawStar(this)"
+                                                                                        value="6"
+                                                                                        step="2" min="0" max="10">
+
+                </span>
+                </div>
+                <script>
+                    function drawStar(target) {
+                        document.querySelector('#place-score').style.width = (target.value * 10) + '%';
+                    }
+                </script>
+            </div>
+            <div class="col-sm-2" style="height: 48px; line-height: 58px">
+                <strong>별점을 선택해주세요</strong>
+            </div>
+            <div class="col-sm-11">
+            <textarea rows="3" cols="" style="width: 100%; resize: none;"
+                      placeholder="리뷰를 입력해주세요." id="review-content"></textarea>
+            </div>
+            <div class="col-sm-1">
+                <div
+                        style="background-color: #343434; text-align: center; height: 65px; color: white; line-height: 65px; cursor: pointer"
+                        id="review-submit">작성
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-sm-12">
+                <div>
+                    <table class="w-full">
+                        <colgroup>
+
+                            <col width="15%">
+                            <col width="50%">
+                            <col width="15%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="list-th">별점</th>
+                            <th class="list-th tleft">내용</th>
+                            <th class="list-th"></th>
+                            <th class="list-th">작성자</th>
+                            <th class="list-th">작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${reviewList}" var="review">
+                            <tr class="list-tr">
+
+                                <td style="color: gold">${review.star}</td>
+                                <td class="t-left"><textarea rows="3" cols=""
+                                                             style="width: 100%; resize: none; border: none; outline: none; cursor: default"
+                                                             readonly
+                                                             placeholder="리뷰를 입력해주세요.">${review.content}</textarea>
+                                </td>
+                                <td>
+                                    <div
+                                            style="display: flex; flex-direction: column; gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
+                                        <c:if test="${review.userId == USER.userId}">
+                                        <button type="button" class="btn btn-danger"
+                                                onclick="deleteReview(${review.reviewId})" id="review-del">삭제
+                                        </button>
+                                        </c:if>
+                                    </div>
+                                </td>
+                                <td>${review.nickname}</td>
+                                <td>${review.createdAt}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
@@ -218,7 +227,7 @@
         antialias: true,
         canvas: document.querySelector("#canvas")
     });
-    renderer.setSize($('.w-full').width(), $('.w-full').height()-100);
+    renderer.setSize($('.w-full').width(), $('.w-full').height()-200);
 
     // document.body.appendChild(renderer.domElement);
 
@@ -382,7 +391,7 @@
             antialias: true,
             canvas: document.querySelector("#canvas")
         });
-        renderer.setSize($('#thumbnail').width(), $('#thumbnail').height()-100);
+        renderer.setSize($('#thumbnail').width(), $('#thumbnail').height()-200);
     })
 
     resizeObserver.observe(target);

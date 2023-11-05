@@ -6,7 +6,6 @@ import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.service.PaymentServiceImpl;
-import com.siot.IamportRestClient.IamportClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

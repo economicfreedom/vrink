@@ -40,7 +40,7 @@ public class PaymentController {
 	@GetMapping("/payment-list")
 	public String paymentList(@RequestParam("payment-id") Integer paymentId,@RequestParam("user-id") Integer userId, Model model) {
 		User user = (User)session.getAttribute(Define.USER);
-		if(userId != user.getUserId()) {
+		if((int)userId != (int)user.getUserId()) {
 			return "redirect:/";
 		}
 		Payment payment = paymentServiceImpl.responsePayment(paymentId);

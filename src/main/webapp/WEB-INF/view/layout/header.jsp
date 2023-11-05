@@ -143,10 +143,13 @@
                             <a href="/editor/list" title="">작가</a>
                             <ul>
                                 <li><a href="/editor/list" title="">둘러보기</a></li>
+                                <c:if test="${not empty user && empty EDITOR_ID}">
                                 <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
-                                <li><a href="branch2.html" title="">Branch 2 Col</a></li>
-                                <li><a href="branch3.html" title="">Branch Sidebar</a></li>
-                                <li><a href="branch4.html" title="">Branch Wide</a></li>
+                                </c:if>
+                                <c:if test="${not empty EDITOR_ID}">
+                                <li><a href="/editor/editor-price?editor-id=${EDITOR_ID}" title="">가격 설정하기</a></li>
+                                </c:if>
+                                <li><a href="branch3.html" title="">Branch Wide</a></li>
                                     <a href="http://themeforest.net/item/VRINK-the-multipurpose-responsive-html5-template/14915795?ref=themenum"
                                        title="">Buy VRINK Now</a></li>
                             </ul>

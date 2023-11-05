@@ -5438,6 +5438,11 @@ p {
 	justify-content: space-around;
 }
 
+.d-flex.j-evenly {
+    justify-content: space-evenly;
+}
+
+
 .contact-form > form {
     float: left;
     width: 100%;

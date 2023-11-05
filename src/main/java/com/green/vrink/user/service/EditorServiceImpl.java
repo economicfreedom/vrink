@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class EditorServiceImpl implements EditorService{
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final HttpSession session;
 
 
@@ -33,25 +33,25 @@ public class EditorServiceImpl implements EditorService{
     
     @Transactional
     public Integer requestEditorWrite(EditorWriteDTO editorWriteDTO) {
-    	return userRepository.editorWrite(editorWriteDTO);
+    return userRepository.editorWrite(editorWriteDTO);
     }
     @Transactional
     @Override
     public EditorDTO responseEditorDeatil(Integer editorId) {
-    	
-    	return userRepository.findByEditorId(editorId);
+
+    return userRepository.findByEditorId(editorId);
     }
     @Transactional
     @Override
     public EditorDTO responseEditorEdit(Integer editorId) {
-    	
-    	return userRepository.findByEditorId(editorId);
+
+    return userRepository.findByEditorId(editorId);
     }
     @Transactional
     @Override
     public Integer requestEditorEdit(EditorDTO editorDTO) {
-    	
-    	return userRepository.updateByEditorId(editorDTO);
+
+    return userRepository.updateByEditorId(editorDTO);
     }
     @Transactional
     @Override
@@ -74,9 +74,10 @@ public class EditorServiceImpl implements EditorService{
     @Transactional
     @Override
     public Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO) {
-        log.info("{}",editorPriceListDTO);
         EditorPriceDTO priceDTO = new EditorPriceDTO();
-        priceDTO.setEditorId((Integer) session.getAttribute(Define.EDITOR_ID));
+        Integer editorId = (Integer) session.getAttribute(Define.EDITOR_ID);
+        priceDTO.setEditorId(editorId);
+        userRepository.deletePriceByEditorId(editorId);
         for (int i = 0; i < editorPriceListDTO.getOptions().length; i++) {
             String option = editorPriceListDTO.getOptions()[i];
             Integer price = editorPriceListDTO.getPrice()[i];
@@ -85,7 +86,7 @@ public class EditorServiceImpl implements EditorService{
             log.info("{}",priceDTO);
             userRepository.insertPrice(priceDTO);
         }
-    	return 1;
+    return 1;
     }
 
     @Override
