@@ -31,7 +31,7 @@
 <script type="text/javascript">
 
 	$('.change-my-nickname-btn').on('click', function () {
-		changeNickname(`${USER.userid}`);
+		changeNickname(`${USER.userId}`);
 	});
 
 	async function changeNickname(userId) {

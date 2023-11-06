@@ -3,6 +3,7 @@ package com.green.vrink.payment.controller;
 import java.util.List;
 
 import com.green.vrink.payment.dto.BuyResponseDTO;
+import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.PaymentDetailDTO;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.service.PaymentService;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class PaymentController {
 
+
     private final PaymentServiceImpl paymentServiceImpl;
     private final HttpSession session;
     private final HttpSession httpSession;
@@ -51,9 +53,9 @@ public class PaymentController {
         if ((int) userId != (int) user.getUserId()) {
             return "redirect:/";
         }
-        Payment payment = paymentServiceImpl.responsePayment(paymentId);
+        PaymentDTO paymentDTO = paymentServiceImpl.responsePayment(paymentId);
         List<PaymentDetailDTO> paymentDetail = paymentServiceImpl.responsePaymentDetail(paymentId);
-        model.addAttribute("payment", payment);
+        model.addAttribute("payment", paymentDTO);
         model.addAttribute("paymentDetail", paymentDetail);
         return "payment/paymentList";
     }
@@ -92,5 +94,6 @@ public class PaymentController {
 
         return "buyList";
     }
+
 
 }

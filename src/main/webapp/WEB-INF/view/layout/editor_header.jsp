@@ -28,7 +28,7 @@
                     <div class="col-md-6">
                         <div class="account-user">
                             <div class="logo">
-                                <a href="#" title="">
+                                <a href="/" title="">
                                     <i class="fa fa-get-pocket"></i>
                                     <span>VRINK</span>
                                     <strong>승철이</strong>

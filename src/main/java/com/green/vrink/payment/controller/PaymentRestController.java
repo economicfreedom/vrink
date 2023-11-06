@@ -44,7 +44,6 @@ public class PaymentRestController {
 
     @PostMapping("/payment-done")
     public ResponseEntity<?> PaymentDone(@RequestBody PaymentDTO paymentDTO) {
-        log.info("paymentDTO : {} ",paymentDTO);
         paymentServiceImpl.insertPayment(paymentDTO);
         return ResponseEntity.ok().build();
     }

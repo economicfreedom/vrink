@@ -8,7 +8,9 @@
       function requestPay() {
 		  let options = [];
 		  let prices = [];
-		  let quantities = []
+		  let quantities = [];
+		  let request = $('.cart-request textarea').val();
+		  let name = '';
 		  $('li').each(function() {
 
 			  // 각 <li> 요소 내에서 "manual-adjust" 클래스를 가진 input 요소를 선택합니다.
@@ -22,12 +24,15 @@
 				  quantities.push($(this).find('.manual-adjust').val());
 			  }
 		  });
+		  if(options.length != 1) {
+			  name = ' 외 '+(options.length-1) +'건'
+		  }
         IMP.request_pay(
           {
             pg: "kcp.{TC0ONETIME}",
             pay_method: "card",
             merchant_uid: "merchant_"+new Date().getTime(),
-            name: $($('.options')[0]).text() + ' 외 '+(options.length-1) +'건',
+            name: options[0] + name,
             amount: paymentPrice,
             buyer_email: '${user.email}',
             buyer_name: '${user.name}',
@@ -67,7 +72,8 @@
 								totalPrice: rsp.paid_amount,
 								option: options,
 								price: prices,
-								quantity: quantities
+								quantity: quantities,
+								request: request
 							})
 						}).then(location.href="/payment/buy-list")
 					} else {
@@ -113,22 +119,43 @@
         );
       }
     </script>
+<style>
+	.cart-request {
+		position: relative;
+	}
+	.cart-request textarea {
+		background: white none repeat scroll 0 0;
+		border: medium none;
+		float: left;
+		font-family: Nunito;
+		font-size: 15px;
+		padding: 18px 80px;
+		resize: none;
+	}
+	.cart-request i {
+		color: #b5b5b5;
+		font-size: 15px;
+		left: 58px;
+		line-height: 16px;
+		margin-top: -7px;
+		position: absolute;
+		top: 48%;
+	}
+</style>
 <div class="container">
 	<section class="block">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-10 col-center">
 					<div class="heading3">
-						<h3>의뢰 하기</h3>
-						<span>Easy to Customize</span>
+						<h3>작가에게 의뢰 하기</h3>
+						<span></span>
 					</div>
 					<div class="cart-lists">
 						<ul>						
 							<c:forEach items="${priceDTOs}" var="priceDTO">
 								<li>
 									<div class="cart-thumb">
-										<span><img src="http://artmugfile2.cafe24.com/image/goods_img1/2/28755.jpg?ver=1696564449" alt=""></span>
-										<a class="delete-cart" title=""><i class="fa fa-trash-o"></i></a>
 										<h3><a class="options" href="#" title="">${priceDTO.options}</a></h3>
 										<div class="price-cart-item">
 											<span class="price-area">${priceDTO.price}</span>
@@ -136,7 +163,7 @@
 										<p>The best item that you can get</p>
 									</div>
 									<div class="c-input-number">
-										<span><input id="box1" type="number" class="manual-adjust" min="0" value="0" title="Enter &quot;+x&quot; or &quot;+x%&quot; or &quot;*x&quot; 
+										<span><input type="number" class="manual-adjust" min="0" value="0" title="Enter &quot;+x&quot; or &quot;+x%&quot; or &quot;*x&quot;
 	to change increment"></span>
 									</div>
 									<div class="cart-item-quantity">
@@ -145,6 +172,22 @@
 									</div>
 								</li>
 							</c:forEach>
+							<li>
+								<div class="cart-thumb">
+									<h3><a class="options" href="#" title="">요청사항</a></h3>
+									<div class="price-cart-item">
+										<span class="price-area">${priceDTO.price}</span>
+									</div>
+									<p>The best item that you can get</p>
+								</div>
+								<div class="c-input-number cart-request">
+									<i class="fa fa-at"></i>
+									<textarea rows="3"></textarea>
+								</div>
+								<div class="cart-item-quantity">
+
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>

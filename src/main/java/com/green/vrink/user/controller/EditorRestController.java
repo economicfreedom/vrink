@@ -1,9 +1,11 @@
 package com.green.vrink.user.controller;
 
 
+import com.green.vrink.upload.service.UploadService;
 import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.EditorServiceImpl;
 
 import com.green.vrink.util.AsyncPageDTO;
@@ -24,9 +26,10 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class EditorRestController {
-    private final EditorServiceImpl editorServiceImpl;
+    private final EditorService editorService;
     private final UserRepository userRepository;
     private final HttpSession session;
+    private final UploadService uploadService;
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -41,7 +44,7 @@ public class EditorRestController {
         approvalDTO.setUserId(user.getUserId());
 
 
-        Integer res =  editorServiceImpl.requestApproval(approvalDTO);
+        Integer res =  editorService.requestApproval(approvalDTO);
 
 
         log.info("Test Dto {}", approvalDTO);
@@ -57,13 +60,16 @@ public class EditorRestController {
         User user = (User)session.getAttribute(Define.USER);
         editorWriteDTO.setUserId(user.getUserId());
         log.info("{}", editorWriteDTO);
-    	editorServiceImpl.requestEditorWrite(editorWriteDTO);
+        editorService.requestEditorWrite(editorWriteDTO);
     	return ResponseEntity.ok().build();
     }
     
     @PostMapping("/editor-edit")
     public ResponseEntity<?> editorEidtProc(EditorDTO editorDTO) {
-    	editorServiceImpl.requestEditorEdit(editorDTO);
+        List<String> delImages;
+
+        log.info("{}",editorDTO);
+        editorService.requestEditorEdit(editorDTO);
     	return ResponseEntity.ok().build();
     }
 
@@ -76,9 +82,9 @@ public class EditorRestController {
         cri.setCountPerPage(6);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
-        Integer total = editorServiceImpl.getTotal();
+        Integer total = editorService.getTotal();
         pageDTO.setArticleTotalCount(total);
-        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        List<EditorDTO> editorDTO = editorService.getList(cri);
         AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
         asyncPageDTO.setPageDTOs(editorDTO);
         asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
@@ -88,15 +94,15 @@ public class EditorRestController {
     @PostMapping("/calculate/point")
     public ResponseEntity<?> calculatePoint(@RequestBody CalculatePointDto calculatePointDto) {
         User user = userRepository.findByUserId(calculatePointDto.getUserId());
-        int editorId = editorServiceImpl.findEditorId(calculatePointDto.getUserId());
+        int editorId = editorService.findEditorId(calculatePointDto.getUserId());
         calculatePointDto.setUserId(editorId);
 
-        int result = editorServiceImpl.calculatePoint(calculatePointDto);
+        int result = editorService.calculatePoint(calculatePointDto);
         if (result != 1) {
             return ResponseEntity.badRequest().build();
         }
         int balancePoint =  user.getPoint() - calculatePointDto.getPoint();
-        int saveChangePoint = editorServiceImpl.updatePoint(user.getUserId(), balancePoint);
+        int saveChangePoint = editorService.updatePoint(user.getUserId(), balancePoint);
 
         if (saveChangePoint != 1) {
             return ResponseEntity.badRequest().build();
@@ -104,7 +110,4 @@ public class EditorRestController {
 
         return ResponseEntity.ok().build();
     }
-
-
-    
 }

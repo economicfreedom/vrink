@@ -19,7 +19,7 @@ public interface PaymentService {
 
 	Integer insertPayment(PaymentDTO paymentDTO);
 
-    Payment responsePayment(Integer paymentId);
+    PaymentDTO responsePayment(Integer paymentId);
 
 
     Integer insertPaymentState(PaymentState paymentState);

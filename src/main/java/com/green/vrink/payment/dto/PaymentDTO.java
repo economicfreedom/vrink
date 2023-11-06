@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PaymentDTO {
+    private Integer paymentId;
     private Integer userId;
     private Integer editorId;
     private String name;
@@ -13,4 +14,6 @@ public class PaymentDTO {
     private String option[];
     private Integer price[];
     private Integer quantity[];
+    private String request;
+    private String createdAt;
 }

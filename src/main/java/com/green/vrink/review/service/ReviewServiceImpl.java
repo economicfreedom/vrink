@@ -1,5 +1,6 @@
 package com.green.vrink.review.service;
 
+import com.green.vrink.review.dto.ReviewCountDTO;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.repository.interfaces.ReviewRepository;
 import com.green.vrink.review.repository.model.Review;
@@ -52,5 +53,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Integer getReviewUserId(Integer reviewId) {
         return replyRepository.findUserIdByReviewId(reviewId);
+    }
+
+    @Override
+    public List<ReviewCountDTO> getList() {
+        return replyRepository.findByAll();
     }
 }

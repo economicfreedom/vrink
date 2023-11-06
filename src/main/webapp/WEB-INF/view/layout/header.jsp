@@ -18,9 +18,7 @@
     <link rel="stylesheet" href="/css/colors/colors.css" type="text/css"/><!-- color -->
 
 </head>
-
 <div class="theme-layout">
-
     <div class="account-popup-sec">
         <div class="account-popup-area">
             <div class="account-popup">
@@ -28,7 +26,7 @@
                     <div class="col-md-6">
                         <div class="account-user">
                             <div class="logo">
-                                <a href="#" title="">
+                                <a href="/" title="">
                                     <i class="fa fa-get-pocket"></i>
                                     <span>VRINK</span>
                                     <strong>승철이</strong>
@@ -143,7 +141,7 @@
                             <a href="/editor/list" title="">작가</a>
                             <ul>
                                 <li><a href="/editor/list" title="">둘러보기</a></li>
-                                <c:if test="${not empty user && empty EDITOR_ID}">
+                                <c:if test="${not empty USER && empty EDITOR_ID}">
                                 <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
                                 </c:if>
                                 <c:if test="${not empty EDITOR_ID}">

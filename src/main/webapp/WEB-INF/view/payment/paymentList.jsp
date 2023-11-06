@@ -54,13 +54,16 @@ function refund(impUid, totalprice) {
                     <ul>
                         <li><h3>상품명</h3> <span>${payment.name}</span></li>
                         <li><h3>가격</h3> <span>${payment.totalPrice}원</span></li>
+                        <c:if test="${payment.request != null}">
+                        <li><h3>요청사항</h3> <span>${payment.request}</span></li>
+                        </c:if>
                         <li><span id="showButton">구매내역 상세보기</span></li>
                         <c:forEach items="${paymentDetail}" var="paymentDetail">
                         <li class="hidden-row"><h3>상품이름</h3><span>${paymentDetail.options}</span></li>
                         <li class="hidden-row"><h3>개수</h3><span>${paymentDetail.quantity}개</span></li>
                         <li class="hidden-row"><h3>가격</h3><span>${paymentDetail.price}원</span></li>
                         </c:forEach>
-                        <li class="hidden-row"><span><input type="button" class="flat-btn refund" value="환불하기" onclick="getPayment('${payment.paymentId}')"></span></li>
+                        <li><span><input type="button" class="flat-btn refund" value="돌아가기" onclick="location.href='/list'"></span></li>
                     </ul>
                 </div>
             </div>

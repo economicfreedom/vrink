@@ -9,6 +9,7 @@ import com.green.vrink.user.dto.EditorPriceDTO;
 import com.green.vrink.user.dto.EditorPriceListDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.EditorServiceImpl;
 import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ import java.util.Objects;
 public class EditorController {
 
     private final ReviewService reviewService;
-    private final EditorServiceImpl editorServiceImpl;
+    private final EditorService editorService;
     private final MorphService morphService;
     private final HttpSession session;
     private final UserRepository userRepository;
@@ -49,9 +50,9 @@ public class EditorController {
         model.addAttribute("reviewList", reviewDTOS);
         log.info("reviewList {}", reviewDTOS);
 
-        EditorDTO editorDTO = editorServiceImpl.responseEditorDeatil(editorId);
+        EditorDTO editorDTO = editorService.responseEditorDeatil(editorId);
         model.addAttribute("editorDetail", editorDTO);
-        List<EditorPriceDTO> editorPrice = editorServiceImpl.responsePrice(editorId);
+        List<EditorPriceDTO> editorPrice = editorService.responsePrice(editorId);
         model.addAttribute("editorPrice", editorPrice);
         log.info("editorDetail{}", editorDTO);
         log.info("morph : {}",morph);
@@ -73,7 +74,7 @@ public class EditorController {
         if (session.getAttribute(Define.EDITOR_ID) == null || editorId == null || session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
-        EditorDTO editorDTO = editorServiceImpl.responseEditorEdit(editorId);
+        EditorDTO editorDTO = editorService.responseEditorEdit(editorId);
         model.addAttribute("editorEdit", editorDTO);
         return "user/editorEdit";
     }
@@ -100,7 +101,7 @@ public class EditorController {
 if (editorId == null) {
             return "redirect:/";
         }
-        String vrm = editorServiceImpl.getVrm(editorId);
+        String vrm = editorService.getVrm(editorId);
         vrm = vrm.replace("\\", "/");
         model.addAttribute("vrm", vrm);
         log.info("vrm 경로 {}", vrm);
@@ -114,9 +115,9 @@ if (editorId == null) {
         cri.setCountPerPage(6);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
-        Integer total = editorServiceImpl.getTotal();
+        Integer total = editorService.getTotal();
         pageDTO.setArticleTotalCount(total);
-        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        List<EditorDTO> editorDTO = editorService.getList(cri);
         AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
         asyncPageDTO.setPageDTOs(editorDTO);
         asyncPageDTO.setHasNext(1, pageDTO.getEndPage());
@@ -131,14 +132,14 @@ if (editorId == null) {
                 session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
-        List<EditorPriceDTO> editorPriceDTO = editorServiceImpl.responsePrice(editorId);
+        List<EditorPriceDTO> editorPriceDTO = editorService.responsePrice(editorId);
         model.addAttribute("editorPriceDTO",editorPriceDTO);
     	return "user/editorPrice";
     }
 
     @PostMapping("/editor-price")
     public String EditorPrice(EditorPriceListDTO editorPriceListDTO) {
-        editorServiceImpl.requestEditorPrice(editorPriceListDTO);
+        editorService.requestEditorPrice(editorPriceListDTO);
 
         return "redirect:/editor/editor-detail/"+session.getAttribute(Define.EDITOR_ID);
     }

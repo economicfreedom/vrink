@@ -1207,7 +1207,7 @@ aside .widget:first-child {
     width: 100%;
 }
 .heading1 > h2 {
-    color: #ffffff;
+    /*color: #ffffff;*/
     float: left;
     font-family: Nunito;
     font-size: 21px;
@@ -5546,5 +5546,10 @@ p {
 .note-image-input.form-control-file.note-form-control.note-input::file-selector-button:hover {
     background: rgb(77,77,77);
     color: #fff;
- } 
+ }
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
 /* psg end */

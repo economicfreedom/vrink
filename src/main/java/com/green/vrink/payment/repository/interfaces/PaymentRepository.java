@@ -22,7 +22,7 @@ public interface PaymentRepository {
 	List<PriceDTO> findByEditorId(Integer editorId);
 	Integer insertByPayment(PaymentDTO paymentDTO);
 
-    Payment findByPaymentId(Integer paymentId);
+    PaymentDTO findByPaymentId(Integer paymentId);
 
     Integer insertByPaymentState(PaymentState paymentState);
 

@@ -7,12 +7,12 @@
 	</select>
 
     <insert id="insertByPayment">
-		INSERT INTO payment (user_id, editor_id, name, imp_uid, merchant_uid, total_price)
-		VALUES (#{userId}, #{editorId}, #{name}, #{impUid}, #{merchantUid}, #{totalPrice})
+		INSERT INTO payment (user_id, editor_id, name, imp_uid, merchant_uid, total_price, request)
+		VALUES (#{userId}, #{editorId}, #{name}, #{impUid}, #{merchantUid}, #{totalPrice}, #{request})
 	</insert>
 
-    <select id="findByPaymentId" resultType="com.green.vrink.payment.repository.model.Payment">
-		SELECT payment_id, user_id, name, imp_uid, merchant_uid, total_price, date_format(created_at,'%y-%m-%d %h:%i') as created_at
+    <select id="findByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDTO">
+		SELECT payment_id, user_id, name, imp_uid, merchant_uid, total_price, date_format(created_at,'%y-%m-%d %h:%i') as created_at, request
 		FROM payment WHERE payment_id = #{paymentId};
 	</select>
 

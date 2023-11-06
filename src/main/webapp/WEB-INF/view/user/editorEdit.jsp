@@ -177,6 +177,7 @@ $('#submit').on('click',async function() {
 	let profileURL = $('#profileURL').val();
 	let thumbnailURL = $('#thumbnailURL').val();
 	let vrmURL = $('#vrmURL').val();
+	let delImage = [];
 	
 	if(introduce.length === 0) {
 		alert('소개 내용을 1자 이상 입력해주세요.');
@@ -221,14 +222,17 @@ $('#submit').on('click',async function() {
         }
     }
 	if(profileInput.files.length !== 0) {
+		delImage.push(profileURL);
     	profileURL = await uploadImage(profileInput,"/upload-img","user");
 	}
 	
 	if(thumbnailInput.files.length !== 0) {
+		delImage.push(thumbnailURL);
     	thumbnailURL = await uploadImage(thumbnailInput,"/upload-img","user");
 	}
 	
 	if(vrmInput.files.length !== 0) {
+		delImage.push(vrmURL);
 		vrmURL = await uploadImage(vrmInput,"/upload-vrm","vrm");
 	}
 	
@@ -239,6 +243,11 @@ $('#submit').on('click',async function() {
     formData.append("image", thumbnailURL);
     formData.append("content", editordata);
     formData.append("vrm", vrmURL);
+	if(delImage.length != 0) {
+		for(i = 0; i < delImage.length; i++)
+		formData.append("delImage", delImage[i]);
+	}
+
 
     // POST 요청 보내기
     try {

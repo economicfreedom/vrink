@@ -1,6 +1,7 @@
 package com.green.vrink.review.service;
 
 
+import com.green.vrink.review.dto.ReviewCountDTO;
 import com.green.vrink.review.dto.ReviewDTO;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface ReviewService {
     Integer getReviewUserId(Integer reviewId);
     void delete(Integer reviewId);
 
+    List<ReviewCountDTO> getList();
 }

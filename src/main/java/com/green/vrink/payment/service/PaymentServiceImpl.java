@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Payment responsePayment(Integer paymentId) {
+	public PaymentDTO responsePayment(Integer paymentId) {
 		return paymentRepository.findByPaymentId(paymentId);
 	}
 	@Transactional
