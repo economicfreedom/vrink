@@ -128,6 +128,15 @@
                         <h3>VRINK를 이용해주셔서 감사합니다.</h3>
                         <span>Easy to Customize</span>
                     </div>
+
+<%--                    나중에 수정--%>
+<%--                    <div>--%>
+<%--                        <label for="done">작업 종료</label>--%>
+<%--                        <input type="radio" name="test" value="1" id="done">--%>
+<%--                        <br>--%>
+<%--                        <label for="ing">작업중</label>--%>
+<%--                        <input type="radio" name="test" value="2" id="ing">--%>
+<%--                    </div>--%>
                     <div class="coupon" style="float: right;margin-right: 20px;margin-bottom: 20px;">
 
                         <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword">
@@ -145,7 +154,7 @@
                                         <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
                                            title="">${dto.nickname}</a></h3>
                                     <span style="margin-left: 10px">010-1234-1234</span>
-                                    <br>
+                            z        <br>
                                     <span style="margin-left: 10px">asdasdfasdff@asdf.com</span>
                                     <div class="price-cart-item">
                                         <span>￦${dto.point}</span>
