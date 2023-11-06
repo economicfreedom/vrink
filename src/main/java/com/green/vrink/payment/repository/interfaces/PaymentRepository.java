@@ -37,5 +37,6 @@ public interface PaymentRepository {
 
     List<PaymentDetailDTO> findPaymentDetailByPaymentId(Integer paymentId);
 
-    int findTotalPriceById(Integer paymentId);
+    int findTotalPriceByPaymentId(Integer paymentId);
+
 }

@@ -69,7 +69,7 @@
 								price: prices,
 								quantity: quantities
 							})
-						}).then(location.href="/list")
+						}).then(location.href="/payment/buy-list")
 					} else {
 						alert("결제 금액이 잘못되었습니다.");
 						// 인증코드 발행

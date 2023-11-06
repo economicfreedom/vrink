@@ -23,6 +23,8 @@ public class BuyResponseDTO {
     private Integer quantity;
     private String state;
     private Integer paymentId;
+    private String email;
+    private String phone;
 
 
 

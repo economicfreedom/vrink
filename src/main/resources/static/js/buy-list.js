@@ -97,9 +97,10 @@ function refundRequest(paymentId) {
 
 }
 
-function refundOk(paymentId,paymentStateId) {
+function refundOk(paymentId, paymentStateId) {
+    show_spinner()
 
-    
+
     let requestRefund = $(`#request-refund-${paymentId}`);
     let forRPayment = $(`#for-r-${paymentId}`);
     let reason = $(`#reason-${paymentId}`);
@@ -107,7 +108,7 @@ function refundOk(paymentId,paymentStateId) {
     let btnCancel = $(`#cancel-${paymentId}`);
     let labelE = $(`#for-e-${paymentId}`);
     let selectEtcInput = $(`#etc-${paymentId}`);
-    console.log(paymentId,paymentStateId,selectEtcInput.val(),reason.val())
+    console.log(paymentId, paymentStateId, selectEtcInput.val(), reason.val())
     fetch('/refund/request-refund', {
         method: 'POST',
         headers: {
@@ -115,12 +116,12 @@ function refundOk(paymentId,paymentStateId) {
         },
         body: JSON.stringify({
 
-            
+
             paymentId: paymentId,
-            paymentStateId:paymentStateId,
-            reason:reason.val(),
-            reasonDetail:selectEtcInput.val()
-            
+            paymentStateId: paymentStateId,
+            reason: reason.val(),
+            reasonDetail: selectEtcInput.val()
+
         })
     })
         .then(response => {
@@ -128,7 +129,13 @@ function refundOk(paymentId,paymentStateId) {
                 alert("에러남")
             } else {
 
-                location.reload();
+                fetch('/payment/cancel/' + paymentId, {
+                    method: 'GET',
+                }).then(response => response.json())
+                    .then(data => {
+                        refund(data.impUid, data.totalPrice)
+                    })
+
             }
         })
         .then(data => console.log(data))
@@ -173,4 +180,49 @@ function displayNone(labelE
     forRPayment.css("display", "none");
     reason.css("display", "none");
     requestRefund.val(0)
+}
+
+function show_spinner() {
+    document.getElementsByClassName('layer-popup')[0].style.display = 'block';
+}
+
+function hide_spinner() {
+    document.getElementsByClassName('layer-popup')[0].style.display = 'none';
+}
+
+function refund(impUid, totalprice) {
+    fetch('/payment/authorizedCode', {
+        method: 'POST'
+    }).then(response => response.json())
+        .then(data => {
+            fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken', {
+                method: 'POST',
+                headers: {              // Http header
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                    imp_key: data.apiKey,
+                    imp_secret: data.apiSecret
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    // 결제 취소
+                    fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel', {
+                        method: 'POST',
+                        headers: {              // Http header
+                            "Content-Type": 'application/json',
+                            "Authorization": data.response.access_token
+                        },
+                        body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                            reason: '환불', // 가맹점 클라이언트로부터 받은 환불사유
+                            imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
+                            amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            hide_spinner()
+                            location.reload()
+                        })
+                })
+        })
 }

@@ -42,6 +42,8 @@
              , SUM(pd.quantity) as quantity
              , ps.state
              , p.payment_id
+             , u.email
+             , u.phone
         FROM payment_state ps
                  JOIN (SELECT payment_id, MAX(created_at) as max_created_at
                        FROM payment_state
@@ -51,7 +53,10 @@
                  LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
                  LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
                  LEFT JOIN user u ON ed.user_id = u.user_id
-        WHERE p.user_id = #{userId}
+        WHERE p.user_id = #{userId} AND customer_recognize =0
+        <if test="cri.keyword != null">
+            AND u.nickname = CONCAT('%',${cri.keyword},'%')
+        </if>
         GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
                  p.editor_id, p.user_id, ed.image, ps.state, p.payment_id
 
@@ -65,8 +70,9 @@
 	<select id="findPaymentDetailByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDetailDTO">
 		SELECT * FROM payment_detail WHERE payment_id = #{paymentId}
 	</select>
-    <select id="findTotalPriceById" resultType="java.lang.Integer">
+    <select id="findTotalPriceByPaymentId" resultType="java.lang.Integer">
         SELECT total_price FROM payment
         WHERE payment_id = #{paymnetId}
     </select>
+
 </mapper>

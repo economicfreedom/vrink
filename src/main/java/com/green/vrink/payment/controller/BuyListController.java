@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -26,14 +27,16 @@ public class BuyListController {
 
     @GetMapping("/list")
     public String test(
-
-            Model model
+            @RequestParam(name = "user-id", required = false) Integer userId
+            , @RequestParam(name = "keyword", required = false) String keyword
+            , Model model
 
     ) {
 
         Criteria cri = new Criteria();
         cri.setCountPerPage(5);
         cri.setPageNum(1);
+        cri.setKeyword(keyword);
         User user = (User) httpSession.getAttribute(Define.USER);
 
         List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(user.getUserId(), cri);
@@ -49,10 +52,10 @@ public class BuyListController {
 
         boolean hasNext = pageDTO.getEndPage() > 1;
 
-        log.info("다음 페이지가 있는가? : {}",hasNext);
+        log.info("다음 페이지가 있는가? : {}", hasNext);
         model.addAttribute("list", buyResponseDTOS);
         model.addAttribute("pageDTO", pageDTO);
-        model.addAttribute("hasNext",hasNext);
+        model.addAttribute("hasNext", hasNext);
 
         return "buyList";
     }

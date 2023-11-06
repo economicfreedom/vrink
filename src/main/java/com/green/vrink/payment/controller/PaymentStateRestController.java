@@ -76,11 +76,13 @@ public class PaymentStateRestController {
 
             , @RequestParam(name = "user-id", defaultValue = "0") Integer userId
             , @RequestParam Integer total
+            , @RequestParam(name = "keyword", required = false) String keyword
     ) {
         log.info("total {}", total);
         Criteria cri = new Criteria();
         cri.setCountPerPage(5);
         cri.setPageNum(pageNum);
+        cri.setKeyword(keyword);
         List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(userId, cri);
 
         PageDTO pageDTO = new PageDTO();

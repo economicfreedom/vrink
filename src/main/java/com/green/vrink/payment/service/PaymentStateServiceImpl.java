@@ -20,7 +20,7 @@ public class PaymentStateServiceImpl implements PaymentStateService {
     @Override
     public Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO) {
 
-        int totalPrice = paymentRepository.findTotalPriceById(paymentStateDTO.getPaymentId());
+        int totalPrice = paymentRepository.findTotalPriceByPaymentId(paymentStateDTO.getPaymentId());
         int point = paymentStateDTO.getPoint();
 
         if (point != totalPrice) {

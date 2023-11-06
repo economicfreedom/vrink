@@ -14,6 +14,7 @@ class VrinkApplicationTests {
     private static final String SK = "asdfdd";
 
 
+
     @Test
     void contextLoads() {
         String upperCase = JWT.toUpperCase();
@@ -203,4 +204,9 @@ class VrinkApplicationTests {
             System.out.println("같음");
         }
     }
+    @Test
+    public void asdf(){
+
+    }
+
 }

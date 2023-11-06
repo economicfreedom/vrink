@@ -1,4 +1,4 @@
-package com.green.vrink.upload;
+package com.green.vrink.upload.controller;
 
 
 import com.green.vrink.upload.dto.UploadRequestDTO;
@@ -34,6 +34,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 public class UploadController {
+
     @Value("${org.zerock.upload.path}")
 	private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
 //    private String uploadPath;

@@ -15,5 +15,12 @@
             ,#{point} )
 
     </insert>
+    <select id="findEditorRecognizeByPaymentId" resultType="java.lang.Byte">
+        SELECT editor_recognize
+        FROM payment_state
+        WHERE created_at = (SELECT MAX(created_at)
+                            FROM payment_state
+                            where payment_id = #{paymentId})
+    </select>
 
 </mapper>

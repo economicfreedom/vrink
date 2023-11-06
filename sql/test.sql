@@ -547,3 +547,12 @@ select * from refund_reason;
 
 
 
+select * from payment_state;
+select * from refund_reason;
+
+UPDATE user SET password = '$2a$10$XozbWTHCHD3o5JplgB6c/ecU.zT6CmedOEy1b8QjJgdOXM/..NdTO'
+WHERE user_id = 141;
+
+SELECT editor_recognize FROM payment_state
+WHERE
+    created_at = (SELECT MAX(created_at) FROM payment_state where payment_id = #{paymentId});

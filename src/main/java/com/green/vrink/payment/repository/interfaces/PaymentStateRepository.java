@@ -9,8 +9,7 @@ public interface PaymentStateRepository {
 
     Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO);
 
-
-
+    Byte findEditorRecognizeByPaymentId(Integer paymentId);
 
 
 }
