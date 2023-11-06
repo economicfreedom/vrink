@@ -106,15 +106,15 @@ public class KakaoController {
 	        String email = jsonObject.get("email").toString();
 	        
 	        if (userRepository.checkEmail(email) == null) {
-	        	object = jsonParser.parse(jsonObject.get("profile").toString());
-	        	jsonObject = (JSONObject)object;
+//	        	object = jsonParser.parse(jsonObject.get("profile").toString());
+//	        	jsonObject = (JSONObject)object;
 	        	
-	        	String nickname = jsonObject.get("nickname").toString();
-	        	String profileImage = jsonObject.get("profile_image_url").toString();
+//	        	String nickname = jsonObject.get("nickname").toString();
+//	        	String profileImage = jsonObject.get("profile_image_url").toString();
 	        	
 	        	model.addAttribute("email", email);
-	        	model.addAttribute("profileImage", profileImage);
-	        	model.addAttribute("nickname", nickname);
+//	        	model.addAttribute("profileImage", profileImage);
+//	        	model.addAttribute("nickname", nickname);
 
 	        	return "/user/kakaoSignup";
 			}

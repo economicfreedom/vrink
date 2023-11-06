@@ -142,8 +142,21 @@ public class UserRestController {
 	@DeleteMapping("/delete/{userId}")
 	public int deleteUser(@PathVariable String userId) {
 		int result = userService.deleteByUserId(userId);
-		return 1;
+		if (result == 1) {
+			return result;
+		}
+		return 0;
 	}
 
+	// 닉네임 중복확인
+	@GetMapping("/check-nickname/{nickname}")
+	public int checkNickname(@PathVariable String nickname) {
+		return userService.findUserByNickname(nickname);
+	}
 
+	// 아이디 찾기
+	@PostMapping("/find/email")
+	public String findEmail(@RequestBody FindEmailDto findEmailDto) {
+		return userService.findEmailByNicknameAndPhone(findEmailDto);
+	}
 }

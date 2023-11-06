@@ -8,7 +8,6 @@ import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
-import com.green.vrink.message.service.MessageService;
 import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
@@ -41,8 +40,16 @@ public class AdminController {
 
     @GetMapping("/main")
     @AdminCheck
-    public String main(){
+    public String main(Model model){
         log.info("관리자 페이지 메인 컨트롤러 실행");
+
+        model.addAttribute("userSevenDate", adminService.getDateCountSevenDaysByTableName("user"));
+        model.addAttribute("communitySevenDate", adminService.getDateCountSevenDaysByTableName("community"));
+        model.addAttribute("userMonthDate", adminService.getDateCountMonthByTableName("user"));
+        model.addAttribute("communityMonthDate", adminService.getDateCountMonthByTableName("community"));
+
+        log.info("cmmonth : " + adminService.getDateCountMonthByTableName("user"));
+
         return "/admin/main";
     }
 
@@ -64,7 +71,13 @@ public class AdminController {
             session.removeAttribute("uClassification");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
         }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored){}
+
 
         paging.setPage(page);
 
@@ -94,7 +107,12 @@ public class AdminController {
         if(reset.equals("1")) {
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
         }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored){}
 
         paging.setPage(page);
 
@@ -163,7 +181,12 @@ public class AdminController {
             session.removeAttribute("uClassification3");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
         }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored){}
 
         paging.setPage(page);
         if(classification2.equals("전체")) paging.setClassification2("3");
@@ -205,7 +228,12 @@ public class AdminController {
             session.removeAttribute("uClassification2");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
         }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored){}
 
         paging.setPage(page);
         Pagination pagination = new Pagination();
@@ -240,7 +268,12 @@ public class AdminController {
             session.removeAttribute("uClassification");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
         }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored){}
 
         paging.setPage(page);
 

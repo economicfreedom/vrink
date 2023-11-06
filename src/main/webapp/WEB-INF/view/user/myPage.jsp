@@ -14,9 +14,9 @@
 	                    <input type="text" value="${newUser.name }" readonly="readonly"/>
 	                </div>
 	                <div class="field">
-						<div class="email-check-div">
+						<div class="check-div">
 							<input type="text" class="my-nickname-input" value="${newUser.nickname }"/>
-							<input type="button" value="닉네임 변경" class="change-my-nickname-btn" id="email-btn"/>
+							<input type="button" value="닉네임 변경" class="check-btn" id="change-my-nickname-btn"/>
 							<input type="hidden" class="my-nickname-check-flag" value="1"/>
 						</div>
 	                </div>
@@ -29,6 +29,7 @@
     </div>
 </div>
 <script type="text/javascript">
+
 
 	$('.change-my-nickname-btn').on('click', function () {
 		changeNickname(`${USER.userId}`);

@@ -332,7 +332,7 @@
 
 <script>
 
-    function changeApply(applyId, accepted, number) {
+    function changeApply(applyId, accepted, number, userId) {
 
         $.ajax({
             type   : "POST",
@@ -340,7 +340,8 @@
             data   : {
                 "applyId" : applyId,
                 "accepted": accepted,
-                "number"  : number
+                "number"  : number,
+                "userId" : userId
             },
             success: function (data) {
                 if (data === 200) {
@@ -381,7 +382,6 @@
                 if (key.keyCode === 13) {
                     key.preventDefault();
                 }
-                ;
             });
 
             $("#keyword").on("keyup", function (key) {
@@ -442,13 +442,16 @@
                         for (var i = 0; i < adminApplyList.length; i++) {
                             var adminApply = adminApplyList[i];
                             let acct = 0;
+                            let button;
 
                             if (adminApply.accepted === 0) {
                                 adminApply.accepted = '<text style="color: cadetblue">승인 대기</text>';
                                 acct = 0;
+                                button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ',' + adminApply.userId + ')">변경</button></td>'
                             } else {
                                 adminApply.accepted = '<text style="color: #173f41">승인됨</text>';
                                 acct = 1;
+                                button = '</td>';
                             }
                             let regData = adminApply.createdAt.substring(0, 10);
                             let cheating;
@@ -458,7 +461,7 @@
                             adminApplyListHTML += '<tr>'
                                 + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
                                 + adminApply.accepted
-                                + '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
+                                + button
                                 + cheating
                                 + '<td>'
                                 + adminApply.name

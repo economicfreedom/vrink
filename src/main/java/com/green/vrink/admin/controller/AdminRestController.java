@@ -46,9 +46,14 @@ public class AdminRestController {
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
 
+        log.info("page : " + page);
+        log.info("keyword : " + keyword);
+        log.info("searchType : " + searchType);
+
         session.setAttribute("uClassification", classification);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
@@ -205,6 +210,7 @@ public class AdminRestController {
 
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
@@ -338,6 +344,7 @@ public class AdminRestController {
         session.setAttribute("uClassification3", classification3);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
@@ -519,6 +526,7 @@ public class AdminRestController {
         session.setAttribute("uClassification2", classification2);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
@@ -670,6 +678,7 @@ public class AdminRestController {
         session.setAttribute("uClassification", classification);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
@@ -795,21 +804,21 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-apply")
-    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number) throws IOException {
+    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number, @RequestParam("userId") Integer userId) throws IOException {
 
         log.info("승인 상태 변경 컨트롤러 실행");
 
-        if (accepted == 1) {
-
-            //승인에서 비승인으로 바꿀 때
-
-            log.info("승인 상태이므로 비승인 상태로 변경");
-
-            accepted = 0;
-            adminService.changeApply(applyId, accepted);
-            adminService.changeCheater(applyId, "이력 없음");
-            return ResponseEntity.status(HttpStatus.OK).body(200);
-        } else {
+//        if (accepted == 1) {
+//
+//            //승인에서 비승인으로 바꿀 때
+//
+//            log.info("승인 상태이므로 비승인 상태로 변경");
+//
+//            accepted = 0;
+//            adminService.changeApply(applyId, accepted);
+//            adminService.changeCheater(applyId, "이력 없음");
+//            return ResponseEntity.status(HttpStatus.OK).body(200);
+//        } else {
 
             //비승인에서 승인으로 바꿀 때
 
@@ -820,13 +829,18 @@ public class AdminRestController {
                 accepted = 1;
                 adminService.changeApply(applyId, accepted);
                 adminService.changeCheater(applyId, "이력 없음");
+                adminService.updateUserEditorById(userId);
+                int ce = adminService.countEditorDetailByUserId(userId);
+                if(ce == 0) {
+                    adminService.insertEditorDetailByUserId(userId);
+                }
                 return ResponseEntity.status(HttpStatus.OK).body(200);
             } else {
                 log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼임");
                 adminService.changeCheater(applyId, "사기 이력");
                 return ResponseEntity.status(HttpStatus.OK).body(400);
             }
-        }
+//        }
     }
 
     @Transactional

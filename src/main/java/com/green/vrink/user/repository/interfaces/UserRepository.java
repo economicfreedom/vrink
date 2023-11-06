@@ -46,4 +46,6 @@ public interface UserRepository {
 	List<EditorPriceDTO> findPriceByEditorId(Integer editorId);
 
     Integer deletePriceByEditorId(Integer editorId);
+	Integer findUserByNickname(String nickname);
+	String findEmailByNicknameAndPhone(FindEmailDto findEmailDto);
 }

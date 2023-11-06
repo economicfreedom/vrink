@@ -271,4 +271,76 @@
         WHERE user_id = #{userId}
     </update>
 
+    <update id="updateUserEditorById">
+        UPDATE user
+        SET editor = 'editor'
+        WHERE user_id = #{userId}
+    </update>
+
+    <insert id="insertEditorDetailByUserId">
+        INSERT INTO editor_detail(user_id, image)
+        VALUES(#{userId}, '/images/resource/default_image.gif')
+    </insert>
+
+    <select id="countEditorDetailByUserId" resultType="integer">
+        SELECT count(*)
+        FROM editor_detail
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getDateCountSevenDaysByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        WITH DateRange AS (
+            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
+        FROM (
+            SELECT 0 AS n UNION ALL
+            SELECT 1 UNION ALL
+            SELECT 2 UNION ALL
+            SELECT 3 UNION ALL
+            SELECT 4 UNION ALL
+            SELECT 5 UNION ALL
+            SELECT 6
+            ) AS Numbers
+            )
+
+        SELECT DateRange.date, IFNULL(count, 0) AS count
+        FROM DateRange
+                 LEFT JOIN (
+            SELECT DATE(created_at) AS date, COUNT(*) AS count
+        FROM ${tableName}
+        WHERE created_at >= CURDATE() - INTERVAL 7 DAY
+        GROUP BY DATE(created_at)
+            ) AS Data
+        ON DateRange.date = Data.date
+    </select>
+
+    <select id="getDateCountMonthByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH RECURSIVE DateRange AS (
+        SELECT
+        DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
+        LAST_DAY(CURDATE()) AS end_date
+        UNION ALL
+        SELECT
+        DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
+        LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
+        FROM DateRange
+        WHERE start_date < LAST_DAY(CURDATE())
+        )
+
+        SELECT
+        DATE_FORMAT(start_date, '%Y-%m') AS date,
+        IFNULL(SUM(count), 0) AS count
+        FROM DateRange
+        LEFT JOIN (
+        SELECT DATE_FORMAT(created_at, '%Y-%m') AS date, COUNT(*) AS count
+        FROM ${tableName}
+        WHERE created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
+        AND created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
+        GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+        ) AS Data
+        ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
+        GROUP BY DATE_FORMAT(start_date, '%Y-%m')
+        ]]>
+    </select>
+
 </mapper>

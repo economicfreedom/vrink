@@ -486,6 +486,45 @@ iframe{
     letter-spacing: 0.3px;
 
 }
+.logout-div {
+    float: right;
+    margin-left: 65px;
+}
+.logout-div > span {
+    background: #FF2929 none repeat scroll 0 0;
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+
+    color: #ffffff;
+    float: left;
+    font-family: Nunito;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+    margin: 39px 0;
+    padding: 13px 30px;
+    cursor: pointer;
+}
+.logout-div > span:hover{
+    background: #ffffff;
+    color: #ff2929;
+}
+.simple-header.for-sticky.sticky > .menu .logout-div > span {
+    margin: 25px 0;
+}
+.logout-div > span i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+.log-out-btn {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
 .popup-client {
     float: right;
     margin-left: 65px;
@@ -1656,22 +1695,20 @@ blockquote p {
     border-radius: 3px;
 
 }
+.flat-btn-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
 .btn-div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.email-check-div {
+.check-div {
 	display: flex;
 }
- #auth-email-div {
-	display: flex;
- }
-.email-input {
-	/*display: inline;
-	box-sizing: border-box;*/
-}
-#email-btn {
+.check-btn {
 	background-color: #ff2929;
 	margin-top: 16px;
 	height: 58px;
@@ -4015,6 +4052,10 @@ header.white .popup-client > span:hover {
     background: #333333;
     color: #ffffff !important;
 }
+header.white .logout-div > span:hover {
+    background: #333333;
+    color: #ffffff !important;
+}
 header.white .popup-alarm > span:hover {
     background: #333333;
     color: #ffffff !important;
@@ -5211,6 +5252,7 @@ footer.light-footer .bottom-line a {
 .gallery-detail > a,
 .close-popup,
 .popup-client > span,
+.logout-div > span,
 .popup-alarm > span,
 .popup-alarm > div,
 .square-services::before,

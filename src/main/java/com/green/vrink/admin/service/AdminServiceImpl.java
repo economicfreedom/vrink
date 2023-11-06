@@ -1,9 +1,6 @@
 package com.green.vrink.admin.service;
 
-import com.green.vrink.admin.dto.AdminAdDto;
-import com.green.vrink.admin.dto.AdminApplyDto;
-import com.green.vrink.admin.dto.CheatCheckDto;
-import com.green.vrink.admin.dto.PagingDto;
+import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.qna.dto.QuestionDTO;
@@ -193,6 +190,11 @@ public class AdminServiceImpl implements AdminService {
         int result = adminRepository.updateUserEnabledCheckById(user);
     }
 
+    @Override
+    public void updateUserEditorById(Integer userId) {
+        int result = adminRepository.updateUserEditorById(userId);
+    }
+
     @Transactional
     public void changeApply(Integer applyId, Integer accepted) {
         int result = adminRepository.changeApply(applyId, accepted);
@@ -241,6 +243,26 @@ public class AdminServiceImpl implements AdminService {
 
         if(cheatCheckList.size() == 3) return false;
         else return true;
+    }
+
+    @Override
+    public void insertEditorDetailByUserId(Integer userId) {
+        int result = adminRepository.insertEditorDetailByUserId(userId);
+    }
+
+    @Override
+    public int countEditorDetailByUserId(Integer userId) {
+        return adminRepository.countEditorDetailByUserId(userId);
+    }
+
+    @Override
+    public List<DateCountDto> getDateCountSevenDaysByTableName(String tableName) {
+        return adminRepository.getDateCountSevenDaysByTableName(tableName);
+    }
+
+    @Override
+    public List<DateCountDto> getDateCountMonthByTableName(String tableName) {
+        return adminRepository.getDateCountMonthByTableName(tableName);
     }
 
 }

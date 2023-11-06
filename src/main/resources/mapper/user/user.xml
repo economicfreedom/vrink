@@ -133,6 +133,17 @@
         SELECT * FROM price WHERE editor_id = #{editorId}
     </select>
 
+    <select id="findUserByNickname" resultType="java.lang.Integer">
+        SELECT count(user.user_id) FROM user WHERE user.nickname = #{nickname}
+    </select>
+
+    <select id="findEmailByNicknameAndPhone" resultType="java.lang.String">
+        SELECT user.email
+        FROM user
+        WHERE user.nickname = #{nickname}
+        AND user.phone = #{phone}
+    </select>
+
     <delete id="deletePriceByEditorId">
         DELETE FROM price WHERE editor_id = #{editorId}
     </delete>

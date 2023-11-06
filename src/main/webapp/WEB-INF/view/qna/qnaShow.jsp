@@ -67,7 +67,9 @@
 
                                 </div>
                                 <div class="col-md-12">
-                                    <input type=button class="flat-btn" id="submit" value="작성">
+                                    <div class="flat-btn-div">
+                                        <input type=button class="flat-btn" id="submit" value="작성">
+                                    </div>
                                 </div>
                             </div>
                         </div>

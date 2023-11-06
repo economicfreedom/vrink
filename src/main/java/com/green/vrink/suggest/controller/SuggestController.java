@@ -4,6 +4,7 @@ import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.repository.model.SuggestReply;
+import com.green.vrink.suggest.service.SuggestService;
 import com.green.vrink.suggest.service.SuggestServiceImpl;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
@@ -29,7 +30,7 @@ public class SuggestController {
 
     private final HttpSession session;
     private final UserRepository userRepository;
-    private final SuggestServiceImpl suggestService;
+    private final SuggestService suggestService;
     @GetMapping("/post")
     public String postSuggest() {
         User user = (User)session.getAttribute(Define.USER);
