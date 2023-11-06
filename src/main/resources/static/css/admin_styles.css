@@ -2345,6 +2345,10 @@ textarea.form-control-lg {
   filter: none;
   opacity: 0.65;
 }
+.btn-divider {
+  border-left: 2px solid #555555;
+  height: 38px;
+}
 
 .form-range {
   width: 100%;

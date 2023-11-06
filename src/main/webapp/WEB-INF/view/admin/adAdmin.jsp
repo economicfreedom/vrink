@@ -224,14 +224,13 @@
                 <c:when test="${uClassification == '전체' or empty uClassification}">
                     <li class="active" data-classification="전체"><a href="#">전체</a></li>
                     <li data-classification="0"><a href="#">게시중</a></li>
-                    <li data-classification="1"><a href="#">게시 중단</a></li>
-
+                    <li data-classification="1"><a href="#">비게시</a></li>
                 </c:when>
                 <c:when test="${uClassification == '0'}">
                     <li data-classification="전체"><a href="#">전체</a></li>
                     <li class="active" data-classification="0"><a href="#">게시중
                     </a></li>
-                    <li data-classification="1"><a href="#">게시 중단</a></li>
+                    <li data-classification="1"><a href="#">비게시</a></li>
                 </c:when>
                 <c:otherwise>
                     <li data-classification="전체"><a href="#">전체</a></li>
@@ -454,9 +453,9 @@
                                 + pagination.paging.page
                                 + '&id='
                                 + ad.adId
-                                + '">'
+                                + '"><img style="width: 75px; height: 75px;" src="'
                                 + ad.image
-                                + '</a></td>'
+                                + '"></a></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='

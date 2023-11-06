@@ -2,6 +2,7 @@ package com.green.vrink.admin.repository.interfaces;
 
 import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.AdminApplyDto;
+import com.green.vrink.admin.dto.DateCountDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.qna.dto.QuestionDTO;
@@ -51,9 +52,16 @@ public interface AdminRepository {
     Integer countAdminApplyByType(PagingDto paging);
     int updateUserLevelById(User user);
     int updateUserEnabledCheckById(User user);
+    int updateUserEditorById(Integer userId);
     int changeApply(@Param("applyId") Integer applyId, @Param("accepted") Integer accepted);
     int changeCheater(@Param("applyId") Integer applyId, @Param("content") String content);
     int changeAd(@Param("adId") Integer adId, @Param("status") Integer status);
     int changeAdPeriod(@Param("adId") Integer adId, @Param("adPeriod") Integer adPeriod);
+
+    int insertEditorDetailByUserId(Integer userId);
+    int countEditorDetailByUserId(Integer userId);
+
+    List<DateCountDto> getDateCountSevenDaysByTableName(String tableName);
+    List<DateCountDto> getDateCountMonthByTableName(String tableName);
 
 }
