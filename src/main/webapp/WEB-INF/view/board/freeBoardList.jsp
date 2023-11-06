@@ -52,7 +52,7 @@
     })
 </script>
 
-<div class="container">
+<div class="container mt-5">
     <div class="row mt-5 mb-5">
         <div class="col-sm-9 col-center">
             <div class="d-flex mb-3" style="justify-content: space-between;">
@@ -62,7 +62,9 @@
                     </c:if>
 
                     <c:if test="${pageDTO.cri.keyword == ''}">
-                        <h2 style="color: grey">자유 게시판</h2>
+                        <div class="heading1">
+                            <h2 style="color: grey">자유 게시판</h2>
+                        </div>
                     </c:if>
                 </div>
                 <div>

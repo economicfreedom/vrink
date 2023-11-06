@@ -9,17 +9,19 @@
 					<input type="hidden" class="my-user-id" value="${USER.userId }" readonly="readonly" />
 					<div class="field">
 	                    <input type="text" placeholder="현재 비밀번호" class="my-password-check" value=""/>
-						<input type="text" class="encoded-password-check-flag" value="1"/>
+						<input type="hidden" class="encoded-password-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
 	                    <input type="password" placeholder="새로운 비밀번호" class="new-password"/>
 	                </div>
 	                <div class="field">
 	                    <input type="password" placeholder="비밀번호 확인" class="new-password-check"/>
-	                    <input type="text" class="new-password-check-flag" value="1"/>
+	                    <input type="hidden" class="new-password-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
-			            <input type="button" value="변경" id="change-password-btn" class="flat-btn"/>
+						<div class="flat-btn-div">
+				            <input type="button" value="변경" id="change-password-btn" class="flat-btn"/>
+						</div>
 	                </div>
 	            </div>
 	    </div>

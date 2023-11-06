@@ -1,5 +1,6 @@
 package com.green.vrink.user.service;
 
+import com.green.vrink.user.dto.FindEmailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +41,13 @@ public class UserService {
 
 	public Integer deleteByUserId(String userId) {
 		return userRepository.deleteByUserId(userId);
+	}
+
+	public Integer findUserByNickname(String nickname) {
+		return userRepository.findUserByNickname(nickname);
+	}
+
+	public String findEmailByNicknameAndPhone(FindEmailDto findEmailDto) {
+		return userRepository.findEmailByNicknameAndPhone(findEmailDto);
 	}
 }

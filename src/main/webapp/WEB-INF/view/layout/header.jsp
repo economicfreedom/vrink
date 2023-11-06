@@ -35,7 +35,7 @@
                                 </a>
                             </div><!-- LOGO -->
                             <p>WELCOME TO 승철 WOULD</p>
-                            <div>
+                            <div style="padding-top: 40px; padding-bottom: 40px">
                                 <h4>로그인</h4>
                                 <div class="field">
                                     <input type="text" class="sign-in-email" placeholder="이메일" value="vrinkteam@gmail.com"/>
@@ -44,11 +44,18 @@
                                     <input type="password" class="sign-in-password" placeholder="비밀번호"/>
                                 </div>
                                 <div class="field">
-                                    <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
+                                    <div class="flat-btn-div">
+                                        <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="find-info-div" style="margin-top: 20px; display: flex; justify-content: flex-end;">
+                                        <a>아이디/비밀번호 찾기</a>
+                                    </div>
                                 </div>
                             </div>
-                            <i>또는</i>
-                            <span>LOGIN WITH</span>
+                            <i style="padding-bottom: 20px">또는</i>
+                            <span style="padding-bottom: 15px">LOGIN WITH</span>
                             <div class="kakao-login-div">
 	                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
 	                            	<img alt="카카오 로그인" src="/images/kakao_login_small.png">
@@ -62,13 +69,13 @@
                             <p>WELCOME TO 승철 WOULD.</p>
                             <div class="common-sign-up">
                                 <div class="field">
-                                    <div class="email-check-div">
+                                    <div class="check-div">
                                         <input type="text" placeholder="이메일" class="email-input"/>
-                                        <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
+                                        <input type="button" value="중복확인" class="check-btn" id="email-check-btn"/>
                                         <input type="hidden" class="email-check-result"/>
                                     </div>
                                 </div>
-                                <div class="field" id="auth-email-div">
+                                <div class="field" id="auth-email-div" style="display: flex">
 
                                 </div>
                                 <div class="field">
@@ -83,15 +90,20 @@
                                     <input type="hidden" class="name-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
-                                    <input type="text" placeholder="닉네임" class="nickname-input"/>
-                                    <input type="hidden" class="nickname-check-flag" value="1"/>
+                                    <div class="check-div">
+                                        <input type="text" placeholder="닉네임" class="nickname-input"/>
+                                        <input type="button" value="중복확인" class="check-btn" id="nickname-check-btn"/>
+                                        <input type="hidden" class="nickname-check-flag" value="1"/>
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <input type="text" placeholder="휴대폰번호" class="phone-input"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
-		                            <input type="button" value="회원가입"class="flat-btn" id="sign-up-btn" />
+                                    <div class="flat-btn-div">
+		                                <input type="button" value="회원가입" class="flat-btn" id="sign-up-btn" />
+                                    </div>
                                 </div>
                             </div>
                         </div><!-- Registration sec -->
@@ -131,16 +143,20 @@
                     </div>
                 </c:if>
 
-                <div class="popup-client">
-                    <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
-                    <span class="log-out-btn" style="display: none">로그아웃</span>
+                <div>
+                    <div class="popup-client">
+                        <span class="log-in-btn"><i class="fa fa-user"></i> /  로그인</span>
+                    </div>
+                    <div class="logout-div">
+                        <span class="log-out-btn" style="display: none">로그아웃</span>
+                    </div>
                 </div>
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
-                <nav style="float: none; margin: 0 auto;">
-                    <ul>
+                <nav style="float: none; margin: 0 auto; background-color: #ff2929">
+                    <ul style="margin-left: 2px">
 
                         <li class="menu-item-has-children">
-                            <a href="/editor/list" title="">작가</a>
+                            <a class="menu-title" href="/editor/list" title="">작가</a>
                             <ul>
                                 <li><a href="/editor/list" title="">둘러보기</a></li>
                                 <c:if test="${not empty user && empty EDITOR_ID}">
@@ -156,28 +172,19 @@
                         </li>
 
                         <li class="menu-item-has-children">
-                            <a href="#" title="">의뢰 하기</a>
+                            <a class="menu-title" href="" title="">의뢰 하기</a>
                             <ul>
-                                <li><a href="blog.html" title="">Blog</a></li>
-                                <li><a href="blog-sidebar.html" title="">Blog Sidebar</a></li>
-                                <li><a href="blog-wide.html" title="">Blog Wide</a></li>
-                                <li><a href="single-post.html" title="">Single Post</a></li>
-                                <li><a href="single-post2.html" title="">Single Post 2</a></li>
+                                <li><a href="/suggest/list" title="">의뢰게시판</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#" title="">자유게시판</a>
+                            <a class="menu-title" href="#" title="">자유게시판</a>
                             <ul>
                                 <li><a href="/board/board-list" title="">보러가기</a></li>
-                                <li><a href="portfolio2.html" title="">Portfolio 2</a></li>
-                                <li><a href="portfolio3.html" title="">Portfolio 3</a></li>
-                                <li><a href="portfolio4.html" title="">Portfolio 4</a></li>
-                                <li><a href="portfolio-single.html" title="">Portfolio Single</a></li>
-                                <li><a href="portfolio-single2.html" title="">Portfolio Single 2</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#" title="">문의 하기</a>
+                            <a class="menu-title" href="#" title="">문의 하기</a>
                             <ul>
                                 <li><a href="event.html" title="">Event</a></li>
                                 <li><a href="event2.html" title="">Event 2</a></li>
@@ -188,7 +195,7 @@
                             </ul>
                         </li>
                         <li id="my-info-list" class="menu-item-has-children">
-                        	<a href="contact.html" title="">MY PAGE</a>
+                        	<a class="menu-title" href="contact.html" title="">MY PAGE</a>
                             <ul>
                                 <li><a href="/user/my-page" title="">내 정보</a></li>
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
@@ -204,24 +211,20 @@
             </div>
         </div>
     </header>
-    <div class="top-bar">
-        <div class="container">
-
-            <ul class="contact-item">
-                <li><i class="fa fa-envelope-o"></i>yourcompnay@email.com</li>
-                <li><i class="fa fa-mobile"></i>+7 998 71 150 / +7 998 30 20</li>
-            </ul>
-
-            <div class="choose-language">
-                <a href="#" title="">FR</a>
-                <a href="#" title="">PO</a>
-                <a href="#" title="">DE</a>
-                <a href="#" title="">EN</a>
-            </div>
-        </div>
-    </div><!-- Top bar -->
 </div>
 <script type="text/javascript">
+    $(window).resize(function() {
+        open_chatroom();
+    });
+    function open_chatroom() {
+        var windowWidth = $(window).width();
+
+        if (windowWidth < 1200) {
+            $(".menu-title").css("color", "#333333");
+        } else {
+            $(".menu-title").css("color", "#ffffff");
+        }
+    }
     let authEmailNumber = null; // 함수 밖의 변수
 
     if(`${USER.editor}` == 'standard') {
@@ -237,14 +240,17 @@
     	$('.log-out-btn').css("display", "block");
     } 
 
-    $('.email-check-btn').on('click', function () {
+    $('#email-check-btn').on('click', function () {
         let email = $('.email-input').val().trim();
         if (emailValidation(email)) {
             emailCheck(email);
         }
     });
 
-
+    $('#nickname-check-btn').on('click', function () {
+       let nickname = $('.nickname-input').val().trim();
+       nicknameCheck(nickname);
+    });
 
     async function emailCheck(email) {
         try {
@@ -256,8 +262,8 @@
                 authEmailNumber = sendEmail(email);
                 console.log(authEmailNumber);
                 $('.email-input').attr('readonly', true);
-                $('.email-check-btn').attr('disabled', true);
-                $('.email-check-btn').css('background-color', "grey");
+                $('#email-check-btn').attr('disabled', true);
+                $('#email-check-btn').css('background-color', "grey");
                 $('#auth-email-div').append('<input type="text" placeholder="인증번호" class="auth-email-input"/>');
                 $('#auth-email-div').append('<input type="button" value="인증확인" class="auth-email-check-btn" id="email-btn"/>');
                 checkNum();
@@ -307,6 +313,19 @@
             $('.email-check-result').val('0');
         });
 
+    }
+
+    async function nicknameCheck(nickname) {
+        let result = await fetch('http://localhost/user/check-nickname/' + nickname);
+        let resultCode = await result.json();
+        if (resultCode !== 0) {
+            alert('이미 사용 중인 닉네임입니다.');
+            $('.nickname-input').val('');
+            $('.nickname-check-flag').val('1');
+            return;
+        }
+        alert('사용 가능한 닉네임입니다.');
+        $('.nickname-check-flag').val('0');
     }
 
     $('.password-input').change(function () {
@@ -459,7 +478,7 @@
         try {
             alert('로그아웃 되었습니다.');
             await fetch("http://localhost/user/log-out");
-            location.reload();
+            location.href= "http://localhost";
         } catch (error) {
             console.log(error);
         }

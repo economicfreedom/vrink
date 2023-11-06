@@ -11,7 +11,7 @@
 	                    <input type="text" value="보유 포인트   ${newUser.point }원" readonly="readonly" />
 	                </div>
 	                <div class="field">
-						<div class="email-check-div">
+						<div class="check-div">
 							<input type="text" class="point-input" placeholder="신청 금액"/>
 							<input type="button" value="정산 신청" class="calculate-point-btn" id="email-btn"/>
 						</div>

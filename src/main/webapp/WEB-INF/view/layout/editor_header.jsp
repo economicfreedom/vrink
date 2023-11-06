@@ -44,7 +44,9 @@
                                     <input type="password" class="sign-in-password" placeholder="Password"/>
                                 </div>
                                 <div class="field">
-                                    <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
+                                    <div class="flat-btn-div">
+                                        <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
+                                    </div>
                                 </div>
                             </div>
                             <i>또는</i>
@@ -62,7 +64,7 @@
                             <p>WELCOME TO 승철 WOULD.</p>
                             <div class="common-sign-up">
                                 <div class="field">
-                                    <div class="email-check-div">
+                                    <div class="check-div">
                                         <input type="text" placeholder="이메일" class="email-input" />
                                         <input type="button" value="중복확인" class="email-check-btn" id="email-btn"/>
                                         <input type="hidden" class="email-check-result"/>
@@ -91,7 +93,9 @@
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
-		                            <input type="button" value="회원가입"class="flat-btn" id="sign-up-btn" />
+                                    <div class="flat-btn-div">
+		                                <input type="button" value="회원가입"class="flat-btn" id="sign-up-btn" />
+                                    </div>
                                 </div>
                             </div>
                         </div><!-- Registration sec -->
