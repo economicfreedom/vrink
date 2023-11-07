@@ -78,7 +78,8 @@ public class PaymentController {
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
-        pageDTO.setArticleTotalCount(buyResponseDTOS.size());
+        Integer total = paymentService.buyListTotal(cri, user.getUserId());
+        pageDTO.setArticleTotalCount(total);
 
         boolean nextPage = pageDTO.getEndPage() == 1;
 
@@ -86,11 +87,12 @@ public class PaymentController {
         log.info("구매 목록 : ", buyResponseDTOS);
 
         boolean hasNext = pageDTO.getEndPage() > 1;
-
+        log.info("엔드 페이지 : {}", pageDTO.getEndPage());
         log.info("다음 페이지가 있는가? : {}", hasNext);
         model.addAttribute("list", buyResponseDTOS);
         model.addAttribute("pageDTO", pageDTO);
         model.addAttribute("hasNext", hasNext);
+        model.addAttribute("keyword",keyword);
 
         return "buyList";
     }

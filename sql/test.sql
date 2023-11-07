@@ -553,9 +553,31 @@ select * from refund_reason;
 UPDATE user SET password = '$2a$10$XozbWTHCHD3o5JplgB6c/ecU.zT6CmedOEy1b8QjJgdOXM/..NdTO'
 WHERE user_id = 141;
 
-SELECT editor_recognize FROM payment_state
-WHERE
-    created_at = (SELECT MAX(created_at) FROM payment_state where payment_id = #{paymentId});
+# SELECT editor_recognize FROM payment_state
+# WHERE
+#     created_at = (SELECT MAX(created_at) FROM payment_state where payment_id = #{paymentId});
 
 
-SELECT * FROM
+
+
+
+
+SELECT * FROM payment
+where user_id =136;
+select * from
+SELECT * FROM editor_detail;
+SELECT * FROM user;
+
+  SELECT COUNT(ps.payment_id) FROM payment_state ps
+        JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+        FROM payment_state
+        GROUP BY payment_id) as ps_max
+        ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+        LEFT JOIN user u ON ed.user_id = u.user_id
+        WHERE p.user_id = #{userId} AND customer_recognize =0
+
+        GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
+        p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id

@@ -31,4 +31,6 @@ public interface PaymentService {
 	List<BuyResponseDTO> buyList(Integer userId, Criteria cri);
 
 	List<PaymentDetailDTO> responsePaymentDetail(Integer paymentId);
+
+	Integer buyListTotal(Criteria cri, Integer userId);
 }
