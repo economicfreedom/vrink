@@ -39,7 +39,7 @@
 <body class="sb-nav-fixed" style="width: 97%">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/admin/main">Vrink</a>
+    <a class="navbar-brand ps-3" href="/admin/main"><i class="fa-solid fa-hammer"></i> VRINK ADMIN</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i></button>
@@ -77,8 +77,8 @@
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Main Page</div>
                     <a class="nav-link" href="http://localhost">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Vrink
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-chevron-down"></i></div>
+                        VRINK
                     </a>
                     <div class="sb-sidenav-menu-heading">Admin Menu</div>
                     <a class="nav-link collapsed"
@@ -116,7 +116,7 @@
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/admin/freeboard?reset=1">자유게시판 관리</a>
-                            <a class="nav-link" href="#">의뢰게시판 관리</a>
+                            <a class="nav-link" href="/admin/suggest?reset=1"">의뢰게시판 관리</a>
                         </nav>
                     </div> <!-- end of 게시판  -->
 
@@ -135,11 +135,11 @@
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
                 <c:choose>
-                    <c:when test="${empty user}">
-                        Vrink
+                    <c:when test="${empty USER}">
+                        <i class="fa-solid fa-user-gear"></i> Vrink
                     </c:when>
                     <c:otherwise>
-                        ${user.username}
+                        <i class="fa-solid fa-user-gear"></i> ${USER.nickname}
                     </c:otherwise>
                 </c:choose>
             </div>

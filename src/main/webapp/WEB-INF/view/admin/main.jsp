@@ -51,7 +51,7 @@
 
 
 
-<h3 class="mt-4">사용자 정보</h3>
+<h3 class="mt-4"><i class="fa-solid fa-users"></i> 사용자 정보</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">User Information</li>
 </ol>
@@ -61,7 +61,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
-                    <i class="fas fa-chart-area me-1"></i>
+                    <i class="fa-solid fa-chart-column"></i>
                     User Count
                 </div>
                 <div class="btn-group" role="group" aria-label="카테고리 선택">
@@ -86,7 +86,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
-                    <i class="fas fa-chart-area me-1"></i>
+                    <i class="fa-solid fa-chart-column"></i>
                     Buyer/Seller Count
                 </div>
                 <div class="btn-group" role="group" aria-label="카테고리 선택">
@@ -98,24 +98,24 @@
                 </div>
             </div>
             <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
-                <div style="width: 250px; height: 300px;">
-                    <span style="left: 155px;
-                        top: 76px;
-                        position: absolute;
-                        font-size: 14px;
-                        color: #9a9a9a;"
+                <div style="width: 250px; height: 300px; margin-top: -20px;">
+                    <span style="left: 140px;
+                        top: 26px;
+                        position: relative;
+                        font-size: 13px;
+                        color: #666666;"
                     >: ${standardNum}명</span>
-                    <span style="left: 155px;
-                        top: 99px;
-                        position: absolute;
-                        font-size: 14px;
-                        color: #9a9a9a;"
+                    <span style="left: 98.5px;
+                        top: 48px;
+                        position: relative;
+                        font-size: 13px;
+                        color: #666666;"
                     >: ${editorNum}명</span>
-                    <span style="left: 155px;
-                        top: 122px;
-                        position: absolute;
-                        font-size: 14px;
-                        color: #9a9a9a;"
+                    <span style="left: 64.5px;
+                        top: 70px;
+                        position: relative;
+                        font-size: 13px;
+                        color: #666666;"
                     >: ${enabledNum}명</span>
                     <canvas id="buyer-seller"></canvas>
                 </div>
@@ -130,7 +130,7 @@
 
 </div>
 
-<h3 class="mt-4">게시판 정보</h3>
+<h3 class="mt-4"><i class="fa-solid fa-clipboard-list"></i> 게시판 정보</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Community Information</li>
 </ol>
@@ -140,7 +140,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
-                    <i class="fas fa-chart-area me-1"></i>
+                    <i class="fa-solid fa-chart-column"></i>
                     FreeBoard Count
                 </div>
                 <div class="btn-group" role="group" aria-label="카테고리 선택">
@@ -164,20 +164,31 @@
 
     <div class="col-xl-6">
         <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-chart-area me-1"></i>
-                SuggestBoard Count
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fa-solid fa-chart-column"></i>
+                    SuggestBoard Count
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cSuggestSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cSuggestWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cSuggestMonth()">월별</button>
+                </div>
             </div>
             <div class="card-body">
                 <div style="width: 600px; height: 300px; margin: 0 auto">
-                    <canvas id="suggest-board"></canvas>
+                    <canvas id="all-suggest-seven"></canvas>
+                    <canvas id="all-suggest-week"></canvas>
+                    <canvas id="all-suggest-month"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<h3 class="mt-4">사이트 수익</h3>
+<h3 class="mt-4"><i class="fa-solid fa-sack-dollar"></i> 사이트 수익</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Revenue & Visitor Total Count</li>
 </ol>
@@ -185,7 +196,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-area me-1"></i>
+                <i class="fa-solid fa-chart-column"></i>
                 Revenue Amount
             </div>
             <div class="card-body">
@@ -196,7 +207,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-bar me-1"></i>
+                <i class="fa-solid fa-chart-column"></i>
                 Visitor Count
             </div>
             <div class="card-body">
@@ -476,7 +487,7 @@
                 </c:forEach>
             ],
             datasets: [{
-                label: ' 일별 게시글 수',
+                label: ' 일별 자유게시판 게시글 수',
                 data: [
                     <c:forEach items="${freeBoardSevenDate}" var="date">
                     '${date.count}',
@@ -549,7 +560,7 @@
                         </c:forEach>
                     ],
                     datasets: [{
-                        label: ' 주별 게시글 수',
+                        label: ' 주별 자유게시판 게시글 수',
                         data: [
                             <c:forEach items="${freeBoardWeekDate}" var="date">
                             '${date.count}',
@@ -614,7 +625,7 @@
                         </c:forEach>
                     ],
                     datasets: [{
-                        label: ' 월별 게시글 수',
+                        label: ' 월별 자유게시판 게시글 수',
                         data: [
                             <c:forEach items="${freeBoardMonthDate}" var="date">
                             '${date.count}',
@@ -657,6 +668,205 @@
     }
 
     // ------------------------------------- 자게 차트 일/주/월 --------------------------------------
+
+    // ------------------------------------- 의뢰게시판 차트 일/주/월 --------------------------------------
+
+    const allSuggestSeven = document.getElementById('all-suggest-seven');
+    let allSuggestWeek = null;
+    let allSuggestMonth = null;
+
+    new Chart(allSuggestSeven, {
+        type: 'bar',
+        data: {
+            labels: [
+                <c:forEach items="${suggestSevenDate}" var="date">
+                '${date.date}',
+                </c:forEach>
+            ],
+            datasets: [{
+                label: ' 일별 의뢰게시판 게시글 수',
+                data: [
+                    <c:forEach items="${suggestSevenDate}" var="date">
+                    '${date.count}',
+                    </c:forEach>
+                ],
+                backgroundColor: [
+                    <c:forEach var="i" begin="1" end="${suggestSevenDate.size()}" step="7">
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    </c:forEach>
+                ],
+                borderColor: [
+                    <c:forEach var="i" begin="1" end="${suggestSevenDate.size()}" step="7">
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)',
+                    </c:forEach>
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function cSuggestSeven() {
+        allSuggestSeven.style.display = 'block'; // seven 보여주기
+        if(allSuggestWeek) {
+            allSuggestWeek.style.display = 'none'; // week 숨기기
+        }
+        if(allSuggestMonth) {
+            allSuggestMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cSuggestWeek() {
+
+        if(allSuggestWeek) {
+            allSuggestSeven.style.display = 'none';
+            allSuggestWeek.style.display = 'block';
+            if(allSuggestMonth){
+                allSuggestMonth.style.display = 'none';
+            }
+        } else {
+            allSuggestSeven.style.display = 'none';
+            if(allSuggestMonth) {
+                allSuggestMonth.style.display = 'none';
+            }
+            allSuggestWeek = document.getElementById('all-suggest-week');
+            new Chart(allSuggestWeek, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${suggestWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 주별 의뢰게시판 게시글 수',
+                        data: [
+                            <c:forEach items="${suggestWeekDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${suggestWeekDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${suggestWeekDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function cSuggestMonth() {
+
+        if(allSuggestMonth) {
+            allSuggestSeven.style.display = 'none'; // seven 보여주기
+            if(allSuggestWeek) {
+                allSuggestWeek.style.display = 'none'; // seven 보여주기
+            }
+            allSuggestMonth.style.display = 'block'; // month 숨기기
+        } else {
+            allSuggestSeven.style.display = 'none'; // seven 보여주기
+            if(allSuggestWeek) {
+                allSuggestWeek.style.display = 'none'; // seven 보여주기
+            }
+            allSuggestMonth = document.getElementById('all-suggest-month');
+            new Chart(allSuggestMonth, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${suggestMonthDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 월별 의뢰게시판 게시글 수',
+                        data: [
+                            <c:forEach items="${suggestMonthDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${suggestMonthDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${suggestMonthDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ------------------------------------- 의뢰게시판 차트 일/주/월 --------------------------------------
+
+
 
     // ------------------------------------- 구/판매 차트 일/주/월 --------------------------------------
 

@@ -430,10 +430,10 @@
                             let stt = 0;
 
                             if (ad.status === 0) {
-                                ad.status = '<text style="color: cadetblue">게시중</text>';
+                                ad.status = '<text style="color: blue"><i class="fa-solid fa-signs-post"></i> 게시중</text>';
                                 stt = 0;
                             } else {
-                                ad.status = '<text style="color: #173f41">비게시</text>';
+                                ad.status = '<text style="color: red"><i class="fa-regular fa-circle-xmark"></i> 비게시</text>';
                                 stt = 1;
                             }
                             let regData = ad.createdAt.substring(0, 16);

@@ -151,6 +151,11 @@
                     <div class="logout-div">
                         <span class="log-out-btn" style="display: none">로그아웃</span>
                     </div>
+                    <c:if test="${USER.level == 1}">
+                        <div class="go-admin-div" style="margin-right: -60px;">
+                            <a href="${pageContext.request.contextPath}/admin/main" style="text-decoration: none; color: white;"><span class="go-admin-btn">관리자 홈</span></a>
+                        </div>
+                    </c:if>
                 </div>
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
                 <nav style="float: none; margin: 0 auto; background-color: #ff2929">

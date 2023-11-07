@@ -8,14 +8,15 @@
     let pageNum = 1;
 
     function deleteBoard(id) {
-        fetch('/admin/del/' + id, {
+        fetch('/admin/suggest/del/' + id, {
             method: 'DELETE',
         })
             .then(response => {
                 if (!response.ok) {
-                    alert("");
+                    alert("에러입니다");
                 } else {
-                    location.href = "/admin/freeboard";
+                    alert("게시글이 삭제 되었습니다.");
+                    location.href = "/admin/suggest";
                 }
             })
             .then(data => console.log(data))
@@ -23,7 +24,7 @@
     }
 
     function deleteReply(id) {
-        fetch('/free-reply/del/' + id, {
+        fetch('/admin/suggest-reply/del/' + id, {
             method: 'DELETE',
         })
             .then(response => {
@@ -39,7 +40,7 @@
 
     function more() {
         pageNum++;
-        const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
+        const url = `/suggest/more-reply?suggest-id=${suggest.suggestId}&page-num=` + pageNum + `&total=${total}`;
         let html = '';
 // fetch를 사용한 요청
         fetch(url, {
@@ -93,27 +94,29 @@
             });
     }
 
+
 </script>
 
 <div class="card m-4">
-    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 자유게시판 상세</h3></div>
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 의뢰게시판 상세</h3></div>
     <%--    <div class="container" style="margin: 50px auto;border: 1px solid black;">--%>
     <div class="row" style="margin: 10px;">
         <div class="title">
             <div>
-                <span>작성자 : ${dto.nickname}</span> <span>작성일 : ${dto.createdAt}</span></div>
+                <span>작성자 : ${suggest.nickname}</span> <span>작성일 : ${suggest.createdAt}</span></div>
             <div class="my-3">
-                <h2>제목 : ${dto.title}
+                <h2>제목 : ${suggest.title}
                     <button type="button" style="float: right;margin-left: 20px " class="btn btn-secondary btn-block"
-                            onclick="deleteBoard(${dto.communityId})">삭제
+                            onclick="deleteBoard(${suggest.suggestId})">삭제
                     </button>
             </div>
             <hr>
 
+
         </div>
         <div class="content">
             <span>
-                ${dto.content}
+                ${suggest.content}
             </span>
             <hr style="margin-bottom: -10px;">
         </div>
@@ -129,7 +132,7 @@
                 <div class="panel-body">
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
-                        <c:forEach var="reply" items="${list}">
+                        <c:forEach var="reply" items="${suggestReply}">
                             <ul class="list-group custom-list-group"
                                 style="margin-top:10px;"
                                 id="reply-${reply.replyId}">

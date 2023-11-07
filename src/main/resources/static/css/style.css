@@ -525,6 +525,48 @@ iframe{
     color: #000000;
 }
 
+
+
+.go-admin-div {
+    float: right;
+    margin-left: 65px;
+}
+.go-admin-div span {
+    background: #FF2929 none repeat scroll 0 0;
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+
+    color: #ffffff;
+    float: left;
+    font-family: Nunito;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+    margin: 39px 0;
+    padding: 13px 30px;
+    cursor: pointer;
+}
+.go-admin-div span:hover{
+    background: #ffffff;
+    color: #ff2929;
+}
+.simple-header.for-sticky.sticky > .menu .go-admin-div > span {
+    margin: 25px 0;
+}
+.go-admin-div span i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+.go-admin-btn {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+
 .popup-client {
     float: right;
     margin-left: 65px;

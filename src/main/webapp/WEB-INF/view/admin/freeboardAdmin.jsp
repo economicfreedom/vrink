@@ -385,7 +385,7 @@
                                 + '">'
                                 + freeboard.title
                                 + '</a></div></td>'
-                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 820px; max-height: 20px; display: inline-block;">'
+                                + '<td><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 675px; max-height: 20px; display: inline-block;">'
                                 + '<a href="/admin/freeboard-detail?page='
                                 + pagination.paging.page
                                 + '&id='
@@ -394,7 +394,7 @@
                                 + freeboard.content
                                 + '</a></div><small style="color: red"> ['
                                 + freeboard.count
-                                + ']</small><div style="min-width: 850px;"></div></td>'
+                                + ']</small><div style="min-width: 700px;"></div></td>'
                                 + '<td>'
                                 + regData
                                 + '</td>'

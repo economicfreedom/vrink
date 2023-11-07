@@ -90,6 +90,43 @@
         LIMIT #{offset}, #{recordSize}
     </select>
 
+
+
+
+    <select id="countAllSuggest" resultType="integer">
+        SELECT count(*)
+        FROM suggest
+    </select>
+
+    <select id="getSuggestById" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        FROM suggest s
+            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+        WHERE s.suggest_id = #{id}
+        GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
+        ORDER BY suggest_id DESC
+    </select>
+
+    <select id="getAllSuggestList" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        FROM suggest s
+            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+        GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
+        ORDER BY suggest_id DESC
+    </select>
+
+    <select id="getAllSuggestListByPaging" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        FROM suggest s
+            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+        GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
+        ORDER BY suggest_id DESC
+            LIMIT #{offset}, #{recordSize}
+    </select>
+
 <!--    <if test="type == 'nickname'">-->
 <!--        WHERE nickname LIKE CONCAT('%',#{keyword},'%')-->
 <!--    </if>-->

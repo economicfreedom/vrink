@@ -6,6 +6,7 @@ import com.green.vrink.admin.dto.DateCountDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.qna.dto.QuestionDTO;
+import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.user.repository.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,10 +19,16 @@ public interface AdminRepository {
     List<AdminApplyDto> getAllAdminApplyListByType(String classification);
     List<AdminApplyDto> getAllAdminApplyListByPaging(PagingDto paging);
     List<AdminApplyDto> getAllAdminApplyListByTypePaging(PagingDto paging);
+
     List<FreeBoardDTO> getAllFreeboardList();
     List<FreeBoardDTO> getAllFreeboardListByPaging(PagingDto paging);
     FreeBoardDTO getFreeboardById(Integer id);
     Integer countAllFreeboard();
+
+    List<AdminSuggestDto> getAllSuggestList();
+    List<AdminSuggestDto> getAllSuggestListByPaging(PagingDto paging);
+    AdminSuggestDto getSuggestById(Integer id);
+    Integer countAllSuggest();
 
     List<AdminAdDto> getAllAdList();
     List<AdminAdDto> getAllAdListByType(String classification);
@@ -29,6 +36,7 @@ public interface AdminRepository {
     List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging);
     Integer countAllAd();
     Integer countAdByType(PagingDto paging);
+    AdminAdDto getAdById(Integer id);
 
     List<QuestionDTO> getAllQuestion(PagingDto paging);
     List<QuestionDTO> getAllQuestionByType(String classification);
@@ -44,12 +52,11 @@ public interface AdminRepository {
     List<User> getAllUserByTypePaging(PagingDto paging);
     User getUserById(Integer id);
 
-    AdminAdDto getAdById(Integer id);
-
     Integer userTotalCount(PagingDto paging);
     Integer userTotalCountClassification(PagingDto paging);
     Integer countAllAdminApply();
     Integer countAdminApplyByType(PagingDto paging);
+
     int updateUserLevelById(User user);
     int updateUserEnabledCheckById(User user);
     int updateUserEditorById(Integer userId);
@@ -64,7 +71,6 @@ public interface AdminRepository {
     int countStandardUser();
     int countEditorUser();
     int countEnabledUser();
-
 
     List<DateCountDto> getDateCountSevenDaysByTableName(String tableName);
     List<DateCountDto> getDateCountWeekByTableName(String tableName);

@@ -9,6 +9,10 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.qna.service.QnAService;
+import com.green.vrink.suggest.dto.AdminSuggestDto;
+import com.green.vrink.suggest.dto.SuggestReplyDto;
+import com.green.vrink.suggest.repository.model.Suggest;
+import com.green.vrink.suggest.service.SuggestService;
 import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.PageDTO;
@@ -35,6 +39,7 @@ public class AdminController {
     private final AdminService adminService;
     private final FreeBoardReplyService freeBoardReplyService;
     private final QnAService qnAService;
+    private final SuggestService suggestService;
 
     private final Test test;
 
@@ -44,15 +49,18 @@ public class AdminController {
         log.info("관리자 페이지 메인 컨트롤러 실행");
 
         model.addAttribute("userSevenDate", adminService.getDateCountSevenDaysByTableName("user"));
-        model.addAttribute("freeBoardSevenDate", adminService.getDateCountSevenDaysByTableName("community"));
         model.addAttribute("userWeekDate", adminService.getDateCountWeekByTableName("user"));
-        model.addAttribute("freeBoardWeekDate", adminService.getDateCountWeekByTableName("community"));
         model.addAttribute("userMonthDate", adminService.getDateCountMonthByTableName("user"));
+        model.addAttribute("freeBoardSevenDate", adminService.getDateCountSevenDaysByTableName("community"));
+        model.addAttribute("freeBoardWeekDate", adminService.getDateCountWeekByTableName("community"));
         model.addAttribute("freeBoardMonthDate", adminService.getDateCountMonthByTableName("community"));
+        model.addAttribute("suggestSevenDate", adminService.getDateCountSevenDaysByTableName("suggest"));
+        model.addAttribute("suggestWeekDate", adminService.getDateCountWeekByTableName("suggest"));
+        model.addAttribute("suggestMonthDate", adminService.getDateCountMonthByTableName("suggest"));
+
         model.addAttribute("editorSevenDate", adminService.getEditorDateCountSevenDays());
         model.addAttribute("editorWeekDate", adminService.getEditorDateCountWeek());
         model.addAttribute("editorMonthDate", adminService.getEditorDateCountMonth());
-
 
         model.addAttribute("standardNum", adminService.countStandardUser());
         model.addAttribute("editorNum", adminService.countEditorUser());
@@ -70,7 +78,10 @@ public class AdminController {
     }
 
     @GetMapping("/apply-accept")
-    public String applyAccept(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+    public String applyAccept(@ModelAttribute("paging") PagingDto paging,
+                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                              @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                              Model model) {
 
         log.info("판매자 신청 목록 컨트롤러 호출");
 
@@ -104,11 +115,14 @@ public class AdminController {
     }
 
     @GetMapping("/freeboard")
-    public String freeBoard(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+    public String freeBoard(@ModelAttribute("paging") PagingDto paging,
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                            Model model) {
 
         log.info("자유게시판 목록 컨트롤러 호출");
 
-        paging.setRecordSize(10);
+        paging.setRecordSize(20);
 
         if (reset.equals("1")) {
             session.removeAttribute("uSearchType");
@@ -126,16 +140,16 @@ public class AdminController {
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
 
-        int count = adminService.countAllAdminApply();
+        int count = adminService.countAllFreeboard();
         pagination.setArticleTotalCount(count);
 
         List<FreeBoardDTO> freeBoardDTOList = adminService.getAllFreeboardListByPaging(paging);
 
-        for (FreeBoardDTO freeBoradDto : freeBoardDTOList) {
-            if (freeBoradDto.getContent().contains("<img")) {
-                freeBoradDto.setContent("이미지 파일 포함");
+        for (FreeBoardDTO freeBoardDto : freeBoardDTOList) {
+            if (freeBoardDto.getContent().contains("<img")) {
+                freeBoardDto.setContent("이미지 파일 포함");
             } else {
-                freeBoradDto.setContent(freeBoradDto.getContent().replaceAll("<br>", ""));
+                freeBoardDto.setContent(freeBoardDto.getContent().replaceAll("<br>", ""));
             }
         }
 
@@ -159,8 +173,7 @@ public class AdminController {
         pageDTO.setArticleTotalCount(total);
 
         List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(freeBoardDTO.getCommunityId(), cri);
-        log.info(pageDTO.toString());
-        log.info("total : {}", total);
+
         boolean next = pageDTO.getEndPage() > 1;
 
         model.addAttribute("list", freeBoardReplyDTOS);
@@ -171,8 +184,102 @@ public class AdminController {
         return "admin/freeboardDetail";
     }
 
+    @GetMapping("/suggest")
+    public String suggest(@ModelAttribute("paging") PagingDto paging,
+                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                          @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                          Model model) {
+
+        log.info("의뢰게시판 목록 컨트롤러 호출");
+
+        paging.setRecordSize(10);
+
+        if (reset.equals("1")) {
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
+        }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored) {
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllSuggest();
+        pagination.setArticleTotalCount(count);
+
+        List<AdminSuggestDto> adminSuggestDtoList = adminService.getAllSuggestListByPaging(paging);
+
+        for (AdminSuggestDto suggestDto : adminSuggestDtoList) {
+            if (suggestDto.getContent().contains("<img")) {
+                suggestDto.setContent("이미지 파일 포함");
+            } else {
+                suggestDto.setContent(suggestDto.getContent().replaceAll("<br>", ""));
+            }
+        }
+
+        model.addAttribute("suggestList", adminSuggestDtoList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/suggestAdmin";
+    }
+
+    @GetMapping("/suggest-detail")
+    public String suggestDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, @RequestParam("nickname") String nickname, Model model) {
+
+        Suggest suggest = suggestService.getSuggest(id);
+
+        if (suggest == null) {
+            return "main";
+        }
+
+        AdminSuggestDto adminSuggestDto = AdminSuggestDto.builder()
+                .title(suggest.getTitle())
+                .suggestId(suggest.getSuggestId())
+                .content(suggest.getContent())
+                .createdAt(suggest.getCreatedAt())
+                .nickname(nickname)
+                .count(0)
+                .build();
+
+        Criteria cri = new Criteria();
+        Integer replyCount = suggestService.getReplyCount(id);
+        cri.setPageNum(1);
+        cri.setCountPerPage(5);
+
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(replyCount);
+
+        List<SuggestReplyDto> replyList = suggestService.getSuggestReplyList(id, cri);
+
+        boolean next = pageDTO.getEndPage() > 1;
+
+        model.addAttribute("suggest", adminSuggestDto);
+        model.addAttribute("suggestReply", replyList);
+        model.addAttribute("next",next);
+        model.addAttribute("replyCount", replyCount);
+
+        return "admin/suggestDetail";
+    }
+
     @GetMapping("/user")
-    public String userAdmin(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "classification2", required = false, defaultValue = "전체") String classification2, @RequestParam(value = "classification3", required = false, defaultValue = "전체") String classification3, @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+    public String userAdmin(@ModelAttribute("paging") PagingDto paging,
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                            @RequestParam(value = "classification2", required = false, defaultValue = "전체")
+                            String classification2,
+                            @RequestParam(value = "classification3", required = false, defaultValue = "전체")
+                            String classification3,
+                            @RequestParam(value = "searchType", required = false, defaultValue = "전체")
+                            String searchType,
+                            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                            Model model) {
 
         log.info("유저 관리 페이지 컨트롤러 호출");
 
@@ -215,7 +322,12 @@ public class AdminController {
     }
 
     @GetMapping("/question")
-    public String questionAdmin(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "classification2", required = false, defaultValue = "전체") String classification2, @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+    public String questionAdmin(@ModelAttribute("paging") PagingDto paging,
+                                @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                @RequestParam(value = "classification2", required = false, defaultValue = "전체")
+                                String classification2,
+                                @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                                Model model) {
 
         log.info("문의 관리 페이지 컨트롤러 호출");
 
@@ -258,7 +370,10 @@ public class AdminController {
     }
 
     @GetMapping("/ad-admin")
-    public String adAdmin(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+    public String adAdmin(@ModelAttribute("paging") PagingDto paging,
+                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                          @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                          Model model) {
 
         log.info("배너광고 목록 컨트롤러 호출");
 

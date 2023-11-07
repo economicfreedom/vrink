@@ -4,6 +4,7 @@ import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.qna.dto.QuestionDTO;
+import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.user.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,6 +99,26 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Integer countAllFreeboard() {
         return adminRepository.countAllFreeboard();
+    }
+
+    @Override
+    public List<AdminSuggestDto> getAllSuggestList() {
+        return adminRepository.getAllSuggestList();
+    }
+
+    @Override
+    public List<AdminSuggestDto> getAllSuggestListByPaging(PagingDto paging) {
+        return adminRepository.getAllSuggestListByPaging(paging);
+    }
+
+    @Override
+    public AdminSuggestDto getSuggestById(Integer id) {
+        return adminRepository.getSuggestById(id);
+    }
+
+    @Override
+    public Integer countAllSuggest() {
+        return adminRepository.countAllSuggest();
     }
 
     @Override

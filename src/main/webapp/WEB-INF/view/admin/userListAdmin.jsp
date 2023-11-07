@@ -468,15 +468,15 @@
                                 + '</tr>';
                             for (var i = 0; i < userList.length; i++) {
                                 var user = userList[i];
-                                if (user.editor === 'standard') user.editor = '<text style="color: blue">구매자</text>'
-                                else user.editor = '<text style="color: red">판매자</text>'
+                                if (user.editor === 'standard') user.editor = '<text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> 구매자</text>'
+                                else user.editor = '<text style="color: red"><i class="fa-solid fa-coins"></i> 판매자</text>'
                                 if (user.level === 0) user.level = '일반 유저';
                                 else {
-                                    user.level = '<text style="font-weight: bold; color:green">관리자</text>'
-                                    user.editor = '<text style="font-weight: bold; color:green">관리자</text>'
+                                    user.level = '<text style="font-weight: bold; color:green"><i class="fa-solid fa-user-gear"></i> 관리자</text>'
+                                    user.editor = '<text style="font-weight: bold; color:green"><i class="fa-solid fa-user-gear"></i> 관리자</text>'
                                 }
                                 if (user.enabledCheck === 0) user.enabledCheck = '비탈퇴';
-                                else user.enabledCheck = '<text style="color: red">탈퇴</text>'
+                                else user.enabledCheck = '<text style="color: red"><i class="fa-solid fa-ban"></i> 탈퇴</text>'
                                 if (user.account === null) user.account = '없음';
                                 if (user.accountName === null) user.accountName = '없음';
                                 if (user.point === null) user.point = 0;

@@ -439,10 +439,10 @@
                             for (var i = 0; i < questionList.length; i++) {
                                 var question = questionList[i];
                                 if (question.status === 0) question.status = '답변 대기';
-                                else question.status = '<text style="color: red">답변 완료</text>';
-                                if (question.type === 'question') question.type = '문의';
-                                else if (question.type === 'report') question.type = '<text style="color: blue">신고</text>';
-                                else question.type = '<text style="color: green">기타</text>';
+                                else question.status = '<text style="color: lightgray">답변 완료 <i class="fa-solid fa-circle-check"></i></text>';
+                                if (question.type === 'question') question.type = '<text style="color: blue"><i class="fa-solid fa-circle-question"></i> 문의</text>';
+                                else if (question.type === 'report') question.type = '<text style="color: red"><i class="fa-solid fa-bell"></i> 신고</text>';
+                                else question.type = '<text style="color: green"><i class="fa-solid fa-guitar"></i> 기타</text>';
                                 let regData = question.createdAt.substring(0, 16);
                                 questionListHTML += '<tr>'
                                     + '<td><p class="classification">'

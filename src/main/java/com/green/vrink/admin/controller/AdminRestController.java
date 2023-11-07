@@ -6,6 +6,8 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
 import com.green.vrink.qna.dto.QuestionDTO;
+import com.green.vrink.suggest.dto.AdminSuggestDto;
+import com.green.vrink.suggest.service.SuggestService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.LoginCheck;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class AdminRestController {
     private final AdminService adminService;
     private final FreeBoardReplyService freeBoardReplyService;
     private final FreeBoardService freeBoardService;
+    private final SuggestService suggestService;
 
     @GetMapping("/apply-accept/classification")
     @ResponseBody
@@ -195,7 +198,7 @@ public class AdminRestController {
 
     @GetMapping("/freeboard/classification")
     @ResponseBody
-    public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
+    public ClassificationDto freeboardClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
             required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
             required = false, defaultValue = "") String keyword) {
@@ -294,7 +297,7 @@ public class AdminRestController {
         int sessionUserId = user.getUserId();
         log.info("sessionId" + sessionUserId);
 
-        if (sessionUserId == 1) {
+        if (sessionUserId == 0) {
             freeBoardReplyService.delete(replyId);
             return ResponseEntity.ok().build();
         }
@@ -302,21 +305,151 @@ public class AdminRestController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/suggest/classification")
+    @ResponseBody
+    public ClassificationDto suggestClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
+            required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
+            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
+            required = false, defaultValue = "") String keyword) {
+
+        log.info("의뢰게시판 관리 목록 레스트 컨트롤러 호출");
+
+        paging.setRecordSize(20);
+
+        paging.setPage(page);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.countAllSuggest());
+
+        List<AdminSuggestDto> suggestDtoList = adminService.getAllSuggestListByPaging(paging);
+
+        if (!keyword.isEmpty()) {
+
+            List<AdminSuggestDto> lastAdminSuggestDtoList = new ArrayList<>();
+            List<AdminSuggestDto> finalAdminSuggestDtoList = new ArrayList<>();
+
+            suggestDtoList = adminService.getAllSuggestList();
+
+            if (searchType.equals("아이디")) {
+                for (AdminSuggestDto suggestDto : suggestDtoList) {
+                    if (suggestDto.getNickname().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    }
+                }
+            } else if (searchType.equals("제목")) {
+                for (AdminSuggestDto suggestDto : suggestDtoList) {
+                    if (suggestDto.getTitle().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    }
+                }
+            } else if (searchType.equals("내용")) {
+                for (AdminSuggestDto suggestDto : suggestDtoList) {
+                    if (suggestDto.getContent().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    }
+                }
+            } else {
+                for (AdminSuggestDto suggestDto : suggestDtoList) {
+                    if (suggestDto.getNickname().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    } else if (suggestDto.getTitle().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    } else if (suggestDto.getContent().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    } else if (suggestDto.getCreatedAt().contains(keyword)) {
+                        lastAdminSuggestDtoList.add(suggestDto);
+                    }
+                }
+            }
+
+            pagination.setArticleTotalCount(lastAdminSuggestDtoList.size());
+            for (int i = (page - 1) * 20; i < Math.min((page - 1) * 20 + 20, lastAdminSuggestDtoList.size()); i++) {
+                finalAdminSuggestDtoList.add(lastAdminSuggestDtoList.get(i));
+            }
+            suggestDtoList = finalAdminSuggestDtoList;
+
+        }
+
+        for (AdminSuggestDto suggestDto : suggestDtoList) {
+            if (suggestDto.getContent().contains("<img")) {
+                suggestDto.setContent("이미지 파일 포함");
+            } else {
+                suggestDto.setContent(suggestDto.getContent().replaceAll("<br>", " "));
+            }
+        }
+
+        classificationDto.setSuggestList(suggestDtoList);
+        classificationDto.setPagination(pagination);
+
+        return classificationDto;
+    }
+
     @DeleteMapping("/del/{community-id}")
     @LoginCheck
-    public ResponseEntity<?> delete(
+    public ResponseEntity<?> deleteFreeBoard(
             @PathVariable("community-id")
             Integer communityId
     ) {
         User user = (User) session.getAttribute("USER");
         int sessionUserId = user.getUserId();
-        if (sessionUserId != 1) {
+        if (sessionUserId != 0) {
             return ResponseEntity.badRequest().build();
         }
         freeBoardService.delete(communityId);
         return ResponseEntity.ok().build();
     }
 
+
+    @DeleteMapping("/suggest/del/{suggest-id}")
+    @LoginCheck
+    public ResponseEntity<?> deleteSuggest(
+            @PathVariable("suggest-id")
+            Integer suggestId
+    ) {
+
+        log.info("의뢰게시판 게시글 삭제 레스트 컨트롤러 호출");
+
+        User user = (User) session.getAttribute("USER");
+        int sessionUserId = user.getUserId();
+        if (sessionUserId != 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        suggestService.deleteSuggest(suggestId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/suggest-reply/del/{reply-id}")
+    @LoginCheck
+    public ResponseEntity<?> delSuggestReply(
+            @PathVariable(name = "reply-id")
+            Integer replyId
+    ) {
+
+        log.info("의뢰게시판 댓글 삭제 레스트 컨트롤러 호출");
+
+        if (replyId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = (User) session.getAttribute("USER");
+        int sessionUserId = user.getUserId();
+        log.info("sessionId" + sessionUserId);
+
+        if (sessionUserId == 0) {
+            suggestService.deleteSuggestReply(replyId);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
 
     @GetMapping("/user/classification")
     @ResponseBody
