@@ -273,7 +273,7 @@
 
     <update id="updateUserEditorById">
         UPDATE user
-        SET editor = 'editor'
+        SET editor = 'editor', editor_created_at = now()
         WHERE user_id = #{userId}
     </update>
 
@@ -302,15 +302,15 @@
             ) AS Numbers
             )
 
-        SELECT DateRange.date, IFNULL(count, 0) AS count
+        SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
         FROM DateRange
-                 LEFT JOIN (
+            LEFT JOIN (
             SELECT DATE(created_at) AS date, COUNT(*) AS count
-        FROM ${tableName}
-        WHERE created_at >= CURDATE() - INTERVAL 7 DAY
-        GROUP BY DATE(created_at)
+            FROM ${tableName}
+            WHERE created_at >= CURDATE() - INTERVAL 7 DAY
+            GROUP BY DATE(created_at)
             ) AS Data
-        ON DateRange.date = Data.date
+        ON DATE(DateRange.date) = Data.date;
     </select>
 
     <select id="getDateCountMonthByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
@@ -341,6 +341,148 @@
         ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
         GROUP BY DATE_FORMAT(start_date, '%Y-%m')
         ]]>
+    </select>
+
+    <select id="getDateCountWeekByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH Weeks AS (
+            SELECT 0 AS week
+            UNION SELECT 1
+            UNION SELECT 2
+            UNION SELECT 3
+            UNION SELECT 4
+            UNION SELECT 5
+            UNION SELECT 6
+            UNION SELECT 7
+            UNION SELECT 8
+            UNION SELECT 9
+            UNION SELECT 10
+            UNION SELECT 11
+        )
+
+        SELECT
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
+    IFNULL(SUM(IFNULL(count, 0)), 0) AS count
+        FROM Weeks
+            LEFT JOIN (
+            SELECT DATE_FORMAT(created_at, '%Y-%u') AS date, COUNT(*) AS count
+            FROM ${tableName}
+            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
+            AND created_at <= CURDATE()
+            GROUP BY DATE_FORMAT(created_at, '%Y-%u')
+            ) AS Data
+        ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
+        GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
+        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
+        ]]>
+    </select>
+
+
+    <select id="getEditorDateCountSevenDays" resultType="com.green.vrink.admin.dto.DateCountDto">
+        WITH DateRange AS (
+            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
+        FROM (
+            SELECT 0 AS n UNION ALL
+            SELECT 1 UNION ALL
+            SELECT 2 UNION ALL
+            SELECT 3 UNION ALL
+            SELECT 4 UNION ALL
+            SELECT 5 UNION ALL
+            SELECT 6
+            ) AS Numbers
+            )
+
+        SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
+        FROM DateRange
+            LEFT JOIN (
+            SELECT DATE(editor_created_at) AS date, COUNT(*) AS count
+            FROM user
+            WHERE editor_created_at >= CURDATE() - INTERVAL 7 DAY
+            GROUP BY DATE(editor_created_at)
+            ) AS Data
+        ON DATE(DateRange.date) = Data.date;
+    </select>
+
+    <select id="getEditorDateCountMonth" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH RECURSIVE DateRange AS (
+            SELECT
+                DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
+                LAST_DAY(CURDATE()) AS end_date
+            UNION ALL
+            SELECT
+                DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
+                LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
+            FROM DateRange
+            WHERE start_date < LAST_DAY(CURDATE())
+        )
+
+        SELECT
+            DATE_FORMAT(start_date, '%Y-%m') AS date,
+        IFNULL(SUM(count), 0) AS count
+        FROM DateRange
+            LEFT JOIN (
+            SELECT DATE_FORMAT(editor_created_at, '%Y-%m') AS date, COUNT(*) AS count
+            FROM user
+            WHERE editor_created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
+            AND editor_created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
+            GROUP BY DATE_FORMAT(editor_created_at, '%Y-%m')
+            ) AS Data
+        ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
+        GROUP BY DATE_FORMAT(start_date, '%Y-%m')
+        ]]>
+    </select>
+
+    <select id="getEditorDateCountWeek" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH Weeks AS (
+            SELECT 0 AS week
+            UNION SELECT 1
+            UNION SELECT 2
+            UNION SELECT 3
+            UNION SELECT 4
+            UNION SELECT 5
+            UNION SELECT 6
+            UNION SELECT 7
+            UNION SELECT 8
+            UNION SELECT 9
+            UNION SELECT 10
+            UNION SELECT 11
+        )
+
+        SELECT
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
+    IFNULL(SUM(IFNULL(count, 0)), 0) AS count
+        FROM Weeks
+            LEFT JOIN (
+            SELECT DATE_FORMAT(editor_created_at, '%Y-%u') AS date, COUNT(*) AS count
+            FROM user
+            WHERE editor_created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
+            AND editor_created_at <= CURDATE()
+            GROUP BY DATE_FORMAT(editor_created_at, '%Y-%u')
+            ) AS Data
+        ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
+        GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
+        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
+        ]]>
+    </select>
+
+    <select id="countStandardUser" resultType="integer">
+        SELECT count(*)
+        FROM user
+        WHERE editor = 'standard' AND enabled_check = 0
+    </select>
+
+    <select id="countEditorUser" resultType="integer">
+        SELECT count(*)
+        FROM user
+        WHERE editor = 'editor' AND enabled_check = 0
+    </select>
+
+    <select id="countEnabledUser" resultType="integer">
+        SELECT count(*)
+        FROM user
+        WHERE enabled_check = 1
     </select>
 
 </mapper>

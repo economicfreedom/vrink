@@ -482,8 +482,13 @@
                                 if (user.point === null) user.point = 0;
                                 if (user.userImage === null) user.userImage = '없음';
 
+                                let editorData;
 
-                                let editorData = user.editorCreatedAt.substring(2, 10);
+                                if(user.editorCreatedAt) {
+                                    editorData = user.editorCreatedAt.substring(2, 10);
+                                } else {
+                                    editorData = '구매자';
+                                }
                                 let regData = user.createdAt.substring(2, 10);
                                 userListHTML += '<tr>'
                                     + '<td><p class="classification">'

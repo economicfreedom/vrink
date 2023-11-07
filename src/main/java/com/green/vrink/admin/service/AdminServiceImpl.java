@@ -256,13 +256,48 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public int countStandardUser() {
+        return adminRepository.countStandardUser();
+    }
+
+    @Override
+    public int countEditorUser() {
+        return adminRepository.countEditorUser();
+    }
+
+    @Override
+    public int countEnabledUser() {
+        return adminRepository.countEnabledUser();
+    }
+
+    @Override
     public List<DateCountDto> getDateCountSevenDaysByTableName(String tableName) {
         return adminRepository.getDateCountSevenDaysByTableName(tableName);
     }
 
     @Override
+    public List<DateCountDto> getDateCountWeekByTableName(String tableName) {
+        return adminRepository.getDateCountWeekByTableName(tableName);
+    }
+
+    @Override
     public List<DateCountDto> getDateCountMonthByTableName(String tableName) {
         return adminRepository.getDateCountMonthByTableName(tableName);
+    }
+
+    @Override
+    public List<DateCountDto> getEditorDateCountSevenDays() {
+        return adminRepository.getEditorDateCountSevenDays();
+    }
+
+    @Override
+    public List<DateCountDto> getEditorDateCountMonth() {
+        return adminRepository.getEditorDateCountMonth();
+    }
+
+    @Override
+    public List<DateCountDto> getEditorDateCountWeek() {
+        return adminRepository.getEditorDateCountWeek();
     }
 
 }

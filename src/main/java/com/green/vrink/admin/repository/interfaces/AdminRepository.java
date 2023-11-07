@@ -61,7 +61,16 @@ public interface AdminRepository {
     int insertEditorDetailByUserId(Integer userId);
     int countEditorDetailByUserId(Integer userId);
 
+    int countStandardUser();
+    int countEditorUser();
+    int countEnabledUser();
+
+
     List<DateCountDto> getDateCountSevenDaysByTableName(String tableName);
+    List<DateCountDto> getDateCountWeekByTableName(String tableName);
     List<DateCountDto> getDateCountMonthByTableName(String tableName);
+    List<DateCountDto> getEditorDateCountSevenDays();
+    List<DateCountDto> getEditorDateCountMonth();
+    List<DateCountDto> getEditorDateCountWeek();
 
 }

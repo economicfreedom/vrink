@@ -1,15 +1,17 @@
 package com.green.vrink.community.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FreeBoardDTO {
 
 

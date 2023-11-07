@@ -75,6 +75,7 @@
             <div class="card-body">
                 <div style="width: 600px; height: 300px; margin: 0 auto">
                     <canvas id="all-user-seven"></canvas>
+                    <canvas id="all-user-week"></canvas>
                     <canvas id="all-user-month"></canvas>
                 </div>
             </div>
@@ -83,17 +84,50 @@
 
     <div class="col-xl-6">
         <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-chart-area me-1"></i>
-                Buyer Celler Count
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-chart-area me-1"></i>
+                    Buyer/Seller Count
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cEditorSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cEditorWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cEditorMonth()">월별</button>
+                </div>
             </div>
-            <div class="card-body">
-                <div style="width: 300px; height: 300px; margin: 0 auto">
+            <div class="card-body" style=" display: flex; justify-content: center; align-items: center;">
+                <div style="width: 250px; height: 300px;">
+                    <span style="left: 155px;
+                        top: 76px;
+                        position: absolute;
+                        font-size: 14px;
+                        color: #9a9a9a;"
+                    >: ${standardNum}명</span>
+                    <span style="left: 155px;
+                        top: 99px;
+                        position: absolute;
+                        font-size: 14px;
+                        color: #9a9a9a;"
+                    >: ${editorNum}명</span>
+                    <span style="left: 155px;
+                        top: 122px;
+                        position: absolute;
+                        font-size: 14px;
+                        color: #9a9a9a;"
+                    >: ${enabledNum}명</span>
                     <canvas id="buyer-seller"></canvas>
+                </div>
+                <div style="width: 500px; height: 300px; position: relative; top: 15px;">
+                    <canvas id="editor-seven"></canvas>
+                    <canvas id="editor-week" style="display: none;"></canvas>
+                    <canvas id="editor-month" style="display: none;"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <h3 class="mt-4">게시판 정보</h3>
@@ -104,17 +138,30 @@
 
     <div class="col-xl-6">
         <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-chart-area me-1"></i>
-                FreeBoard Count
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-chart-area me-1"></i>
+                    FreeBoard Count
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cFreeBoardSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cFreeBoardWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cFreeBoardMonth()">월별</button>
+                </div>
             </div>
             <div class="card-body">
                 <div style="width: 600px; height: 300px; margin: 0 auto">
-                    <canvas id="free-board"></canvas>
+                    <canvas id="all-freeBoard-seven"></canvas>
+                    <canvas id="all-freeBoard-week"></canvas>
+                    <canvas id="all-freeBoard-month"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
@@ -213,11 +260,14 @@
 
 <script>
     const buyerSeller = document.getElementById('buyer-seller');
+    const freeBoard = document.getElementById('free-board');
+    const suggestBoard = document.getElementById('suggest-board');
+
+    // ------------------------------------- 가입자 차트 일/주/월 --------------------------------------
+
     const allUserSeven = document.getElementById('all-user-seven');
     let allUserWeek = null;
     let allUserMonth = null;
-    const freeBoard = document.getElementById('free-board');
-    const suggestBoard = document.getElementById('suggest-board');
 
     new Chart(allUserSeven, {
         type: 'bar',
@@ -270,16 +320,92 @@
 
     function cUserSeven() {
         allUserSeven.style.display = 'block'; // seven 보여주기
-        allUserMonth.style.display = 'none'; // month 숨기기
+        if(allUserWeek) {
+            allUserWeek.style.display = 'none'; // week 숨기기
+        }
+        if(allUserMonth) {
+            allUserMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cUserWeek() {
+
+        if(allUserWeek) {
+            allUserSeven.style.display = 'none';
+            allUserWeek.style.display = 'block';
+            if(allUserMonth){
+                allUserMonth.style.display = 'none';
+            }
+        } else {
+            allUserSeven.style.display = 'none';
+            if(allUserMonth) {
+                allUserMonth.style.display = 'none';
+            }
+            allUserWeek = document.getElementById('all-user-week');
+            new Chart(allUserWeek, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${userWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 주별 가입자 수',
+                        data: [
+                            <c:forEach items="${userWeekDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${userWeekDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${userWeekDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     }
 
     function cUserMonth() {
 
         if(allUserMonth) {
             allUserSeven.style.display = 'none'; // seven 보여주기
+            if(allUserWeek) {
+                allUserWeek.style.display = 'none'; // seven 보여주기
+            }
             allUserMonth.style.display = 'block'; // month 숨기기
         } else {
             allUserSeven.style.display = 'none'; // seven 보여주기
+            if(allUserWeek) {
+                allUserWeek.style.display = 'none'; // seven 보여주기
+            }
             allUserMonth = document.getElementById('all-user-month');
             new Chart(allUserMonth, {
                 type: 'bar',
@@ -332,67 +458,50 @@
         }
     }
 
-    new Chart(buyerSeller, {
-        type: 'doughnut',
-        data: {
-            labels: [
-                '구매자 : 50명',
-                '판매자 : 150명'
-            ],
-            datasets: [{
-                label: ' 사용자 수',
-                data: [100, 50],
-                backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 99, 132)'
-                ],
-                hoverOffset: 4
-            }]
-        },
-        // options: {
-        //     scales: {
-        //         y: {
-        //             beginAtZero: true
-        //         }
-        //     }
-        // }
-    });
+    // ------------------------------------- 가입자 차트 일/주/월 --------------------------------------
 
-    new Chart(freeBoard, {
+
+    // ------------------------------------- 자게 차트 일/주/월 --------------------------------------
+
+    const allFreeBoardSeven = document.getElementById('all-freeBoard-seven');
+    let allFreeBoardWeek = null;
+    let allFreeBoardMonth = null;
+
+    new Chart(allFreeBoardSeven, {
         type: 'bar',
         data: {
             labels: [
-                <c:forEach items="${communitySevenDate}" var="date">
-                   '${date.date}',
+                <c:forEach items="${freeBoardSevenDate}" var="date">
+                '${date.date}',
                 </c:forEach>
             ],
             datasets: [{
                 label: ' 일별 게시글 수',
                 data: [
-                    <c:forEach items="${communitySevenDate}" var="date">
-                        '${date.count}',
+                    <c:forEach items="${freeBoardSevenDate}" var="date">
+                    '${date.count}',
                     </c:forEach>
                 ],
                 backgroundColor: [
-                    <c:forEach var="i" begin="1" end="${communitySevenDate.size()}" step="7">
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)',
+                    <c:forEach var="i" begin="1" end="${freeBoardSevenDate.size()}" step="7">
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
                     </c:forEach>
                 ],
                 borderColor: [
-                    <c:forEach var="i" begin="1" end="${communitySevenDate.size()}" step="7">
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)',
+                    <c:forEach var="i" begin="1" end="${freeBoardSevenDate.size()}" step="7">
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)',
                     </c:forEach>
                 ],
                 borderWidth: 1
@@ -407,9 +516,380 @@
         }
     });
 
+    function cFreeBoardSeven() {
+        allFreeBoardSeven.style.display = 'block'; // seven 보여주기
+        if(allFreeBoardWeek) {
+            allFreeBoardWeek.style.display = 'none'; // week 숨기기
+        }
+        if(allFreeBoardMonth) {
+            allFreeBoardMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cFreeBoardWeek() {
+
+        if(allFreeBoardWeek) {
+            allFreeBoardSeven.style.display = 'none';
+            allFreeBoardWeek.style.display = 'block';
+            if(allFreeBoardMonth){
+                allFreeBoardMonth.style.display = 'none';
+            }
+        } else {
+            allFreeBoardSeven.style.display = 'none';
+            if(allFreeBoardMonth) {
+                allFreeBoardMonth.style.display = 'none';
+            }
+            allFreeBoardWeek = document.getElementById('all-freeBoard-week');
+            new Chart(allFreeBoardWeek, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${freeBoardWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 주별 게시글 수',
+                        data: [
+                            <c:forEach items="${freeBoardWeekDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${freeBoardWeekDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${freeBoardWeekDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function cFreeBoardMonth() {
+
+        if(allFreeBoardMonth) {
+            allFreeBoardSeven.style.display = 'none'; // seven 보여주기
+            if(allFreeBoardWeek) {
+                allFreeBoardWeek.style.display = 'none'; // seven 보여주기
+            }
+            allFreeBoardMonth.style.display = 'block'; // month 숨기기
+        } else {
+            allFreeBoardSeven.style.display = 'none'; // seven 보여주기
+            if(allFreeBoardWeek) {
+                allFreeBoardWeek.style.display = 'none'; // seven 보여주기
+            }
+            allFreeBoardMonth = document.getElementById('all-freeBoard-month');
+            new Chart(allFreeBoardMonth, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${freeBoardMonthDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 월별 게시글 수',
+                        data: [
+                            <c:forEach items="${freeBoardMonthDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${freeBoardMonthDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${freeBoardMonthDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ------------------------------------- 자게 차트 일/주/월 --------------------------------------
+
+    // ------------------------------------- 구/판매 차트 일/주/월 --------------------------------------
+
+    const editorSeven = document.getElementById('editor-seven');
+    let editorWeek = null;
+    let editorMonth = null;
+
+    new Chart(editorSeven, {
+        type: 'bar',
+        data: {
+            labels: [
+                <c:forEach items="${editorSevenDate}" var="date">
+                '${date.date}',
+                </c:forEach>
+            ],
+            datasets: [{
+                label: ' 일별 판매자 전환 수',
+                data: [
+                    <c:forEach items="${editorSevenDate}" var="date">
+                    '${date.count}',
+                    </c:forEach>
+                ],
+                backgroundColor: [
+                    <c:forEach var="i" begin="1" end="${editorSevenDate.size()}" step="7">
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    </c:forEach>
+                ],
+                borderColor: [
+                    <c:forEach var="i" begin="1" end="${editorSevenDate.size()}" step="7">
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)',
+                    </c:forEach>
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function cEditorSeven() {
+        editorSeven.style.display = 'block'; // seven 보여주기
+        if(editorWeek) {
+            editorWeek.style.display = 'none'; // week 숨기기
+        }
+        if(editorMonth) {
+            editorMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cEditorWeek() {
+
+        if(editorWeek) {
+            editorSeven.style.display = 'none';
+            editorWeek.style.display = 'block';
+            if(editorMonth){
+                editorMonth.style.display = 'none';
+            }
+        } else {
+            editorSeven.style.display = 'none';
+            if(editorMonth) {
+                editorMonth.style.display = 'none';
+            }
+            editorWeek = document.getElementById('editor-week');
+            editorWeek.style.display = 'block';
+            new Chart(editorWeek, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${editorWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 주별 판매자 전환 수',
+                        data: [
+                            <c:forEach items="${editorWeekDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${editorWeekDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${editorWeekDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function cEditorMonth() {
+
+        if(editorMonth) {
+            editorSeven.style.display = 'none'; // seven 보여주기
+            if(editorWeek) {
+                editorWeek.style.display = 'none'; // seven 보여주기
+            }
+            editorMonth.style.display = 'block'; // month 숨기기
+        } else {
+            editorSeven.style.display = 'none'; // seven 보여주기
+            if(editorWeek) {
+                editorWeek.style.display = 'none'; // seven 보여주기
+            }
+            editorMonth = document.getElementById('editor-month');
+            editorMonth.style.display = 'block'; // month 숨기기
+            new Chart(editorMonth, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        <c:forEach items="${editorMonthDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label: ' 월별 판매자 전환 수',
+                        data: [
+                            <c:forEach items="${editorMonthDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${editorMonthDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor: [
+                            <c:forEach var="i" begin="1" end="${editorMonthDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ------------------------------------- 구/판매 차트 일/주/월 --------------------------------------
 
 
-
+    new Chart(buyerSeller, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                '구매자                 ',
+                '판매자                 ',
+                '탈퇴자                 '
+            ],
+            datasets: [{
+                label: ' 사용자 수',
+                data: [${standardNum}, ${editorNum}, ${enabledNum}],
+                backgroundColor: [
+                    'rgb(54, 162, 235, 0.8)',
+                    'rgb(255, 99, 132, 0.8)',
+                    'rgb(0, 128, 0, 0.8)',
+                ],
+                borderColor: [
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 99, 132)',
+                    'rgb(0, 128, 0)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'top', // 레전드 위치 설정 (top, left, bottom, right 중 선택)
+                }
+            }
+        }
+    });
 
 </script>
 

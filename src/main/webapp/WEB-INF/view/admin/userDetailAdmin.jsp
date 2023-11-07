@@ -103,7 +103,7 @@
                 <div class="user-inline">
                     <label class="form-label my-0" for="editor-createdAt">판매자 전환일</label>
                     <div style="display: flex;">
-                        <input type="text" id="editor-createdAt" value="${userDetail.editorCreatedAt}"
+                        <input type="text" id="editor-createdAt" value="${userDetail.editorCreatedAt != null ? userDetail.editorCreatedAt : '구매자'}"
                                class="form-control form-control input-l me-1" readonly="readonly"/>
                     </div>
                 </div>
