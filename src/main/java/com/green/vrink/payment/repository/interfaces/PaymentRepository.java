@@ -39,4 +39,5 @@ public interface PaymentRepository {
 
     int findTotalPriceByPaymentId(Integer paymentId);
 
+    Integer findBuyListTotalByCriAndUserId( @Param("cri")Criteria cri,@Param("userId") Integer userId);
 }

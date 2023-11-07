@@ -83,8 +83,9 @@ public class PaymentStateRestController {
         cri.setCountPerPage(5);
         cri.setPageNum(pageNum);
         cri.setKeyword(keyword);
-        List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(userId, cri);
 
+        List<BuyResponseDTO> buyResponseDTOS = paymentService.buyList(userId, cri);
+        total = paymentService.buyListTotal(cri, userId);
         PageDTO pageDTO = new PageDTO();
 
         pageDTO.setCri(cri);

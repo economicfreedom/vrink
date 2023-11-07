@@ -101,4 +101,9 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentDetailDTO> responsePaymentDetail(Integer paymentId) {
 		return paymentRepository.findPaymentDetailByPaymentId(paymentId);
 	}
+
+	@Override
+	public Integer buyListTotal(Criteria cri, Integer userId) {
+		return paymentRepository.findBuyListTotalByCriAndUserId(cri,userId);
+	}
 }

@@ -126,7 +126,6 @@ function refundOk(paymentId, paymentStateId) {
     })
         .then(response => {
             if (!response.ok) {
-                alert("에러남")
             } else {
 
                 fetch('/payment/cancel/' + paymentId, {
@@ -226,3 +225,36 @@ function refund(impUid, totalprice) {
                 })
         })
 }
+
+$(document).ready(function () {
+
+
+
+
+    $('#keyword').keyup(function (event) {
+
+    let keyword = $("#keyword").val();
+        if (event.keyCode === 13) {
+
+            if (keyword.length <= 0) {
+
+                return;
+            }
+            location.href = '/payment/buy-list?keyword=' + keyword;
+
+        }
+
+    });
+    $('#search').click(function () {
+        let keyword = $("#keyword").val();
+
+
+        if (keyword.length <= 0) {
+            return;
+        }
+
+        location.href = '/payment/buy-list?keyword=' + keyword;
+
+
+    });
+})

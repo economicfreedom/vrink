@@ -129,18 +129,19 @@
                         <span>Easy to Customize</span>
                     </div>
 
-<%--                    나중에 수정--%>
-<%--                    <div>--%>
-<%--                        <label for="done">작업 종료</label>--%>
-<%--                        <input type="radio" name="test" value="1" id="done">--%>
-<%--                        <br>--%>
-<%--                        <label for="ing">작업중</label>--%>
-<%--                        <input type="radio" name="test" value="2" id="ing">--%>
-<%--                    </div>--%>
+                    <%--                    나중에 수정--%>
+                    <%--                    <div>--%>
+                    <%--                        <label for="done">작업 종료</label>--%>
+                    <%--                        <input type="radio" name="test" value="1" id="done">--%>
+                    <%--                        <br>--%>
+                    <%--                        <label for="ing">작업중</label>--%>
+                    <%--                        <input type="radio" name="test" value="2" id="ing">--%>
+                    <%--                    </div>--%>
                     <div class="coupon" style="float: right;margin-right: 20px;margin-bottom: 20px;">
 
-                        <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword">
-                        <button type="submit" class="flat-btn"><i class="fa fa-search"></i>검색하기</button>
+                        <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword"
+                               value="${keyword == null ? '':keyword}">
+                        <button type="submit" class="flat-btn" id="search"><i class="fa fa-search"></i>검색하기</button>
                     </div>
                 </div>
                 <div class="cart-lists">
@@ -153,9 +154,9 @@
                                     <h3>
                                         <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
                                            title="">${dto.nickname}</a></h3>
-                                    <span style="margin-left: 10px">010-1234-1234</span>
-                            z        <br>
-                                    <span style="margin-left: 10px">asdasdfasdff@asdf.com</span>
+                                    <span style="margin-left: 10px">${dto.phone}</span>
+                                    <br>
+                                    <span style="margin-left: 10px">${dto.email}</span>
                                     <div class="price-cart-item">
                                         <span>￦${dto.point}</span>
                                     </div>
@@ -234,33 +235,7 @@
     <div class="spinner"></div>
 </div>
 <script>
-    $(document).ready(function () {
 
-        const keyword = $("#keyword").val();
-
-
-        const url = '/payment/buy-list?keyword=' + keyword
-        $('#keyword').keyup(function (event) {
-            if (keyword.length >= 0) {
-                return;
-            }
-
-            if (event.keyCode === 13) {
-                location.href = url;
-
-            }
-
-        });
-        $('#search').click(function () {
-
-            if (keyword.length >= 0) {
-                return;
-            }
-            location.href = url;
-
-
-        });
-    })
     let debounceTimer;
     let pageNum = 1;
     let hasNext = ${hasNext};
@@ -272,7 +247,7 @@
     function checkScrollEnd() {
         let scrollHeight = $(document).height();
         let scrollPosition = $(window).height() + $(window).scrollTop();
-
+        console.log(hasNext)
         if ((scrollHeight - scrollPosition) / scrollHeight < 0.10 && hasNext) {
 
             fetchListMore();
@@ -285,7 +260,7 @@
         pageNum++;
         let url = `/payment-state/list-more?page-num=` + pageNum + `&user-id=` + `${USER.userId}` + `&total=` + `${pageDTO.articleTotalCount}`
         let html = '';
-        const keyword = $("#keyword").val();
+        let keyword = $("#keyword").val();
         if (keyword.length > 0) {
             url += "&keyword=" + keyword
         }
@@ -309,23 +284,26 @@
                     console.log(hasNext);
                     data.pageDTOs.forEach(dto => {
 
-                        html += '<li>';
-                        html += '<div class="cart-thumb">';
-                        html += '<span><img src="' + dto.image + '" alt=""/></span>';
-                        html += '<a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>';
-                        html += '<h3>';
-                        html += '<a href="/payment/payment-list?payment-id=' + dto.paymentId + '&user-id=' + dto.userId + '"';
-                        html += ' title="">' + dto.nickname + '</a></h3>';
-                        html += '<div class="price-cart-item">';
-                        html += '<span>￦' + dto.point + '</span>';
-                        html += '</div>';
+                        html += `<li>`
+                        html += `    <div class="cart-thumb">`
+                        html += `<span><img src="` + dto.image + `" alt=""/></span>`
+                        html += `<a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>`
+                        html += `<h3>`
+                        html += `<a href="/payment/payment-list?payment-id=` + dto.paymentId + `&` + `user-id="` + dto.userId + `"`
+                        html += `title="">` + dto.nickname + `</a></h3>`
+                        html += `<span style="margin-left: 10px">` + dto.phone + `</span>`
+                        html += `<br>`
+                        html += `<span style="margin-left: 10px">` + dto.email + `</span>`
+                        html += `<div class="price-cart-item">`
+                        html += `<span>￦` + dto.point + `</span>`
+                        html += `</div>`
 
-                        html += '</div>';
-                        html += '<div class="c-input-number">';
+                        html += `</div>`
+                        html += `<div class="c-input-number">`
 
                         if (dto.editorRecognize == 1) {
 
-                            html += '<button type="button" className="flat-btn" ';
+                            html += '<button type="button" class="flat-btn" ';
                             html += ' style="margin-bottom: 10px; margin-right: 10px" onclick(';
                             html += dto.paymentId;
                             html += ',' + dto.editorRecognize;
@@ -337,15 +315,15 @@
                         }
                         if (dto.editorRecognize == 0) {
 
-                            html += `<button className="button button2" onClick="refundRequest(` + dto.paymentId + `)"`
-                            html += `value="0"`
+                            html += `<button class="button button2" onClick="refundRequest(` + dto.paymentId + `)" `
+                            html += ` value="0" `
                             html += `id="request-refund-` + dto.paymentId + ` ">`
                             html += `환불 요청`
                             html += `</button>`
-                            html += `<div className="form-group">`
-                            html += `<label htmlFor="reason-` + dto.paymentId + `" id="for-r-${dto.paymentId}" `
-                            html += `style="display: none">환불 사유</label>`
-                            html += `<select className="form-control" `
+                            html += `<div class="form-group">`
+                            html += `<label htmlFor="reason-` + dto.paymentId + `" id="for-r-` + dto.paymentId + `" `
+                            html += ` style="display: none">환불 사유</label>`
+                            html += `<select class="form-control" `
                             html += `style="display: none" `
                             html += `id="reason-` + dto.paymentId + `">`
                             html += `<option value="잘못구입">잘못 구입했습니다.</option>`
@@ -355,15 +333,15 @@
                             html += `<label htmlFor="etc-` + dto.paymentId + `" `
                             html += `style="display: none" `
                             html += `id="for-e-` + dto.paymentId + `">기타 사유</label>`
-                            html += `<input type="text" className="form-control" id="etc-` + dto.paymentId + `" `
+                            html += `<input type="text" class="form-control" id="etc-` + dto.paymentId + `" `
                             html += `style="display: none">`
-                            html += `<button type="button" className="btn btn-primary" `
+                            html += `<button type="button" class="btn btn-primary" `
                             html += `style="margin-top: 4px; display: none" `
                             html += `onClick="refundOk(` + dto.paymentId + `,` + dto.paymentStateId + `)" `
                             html += `id="ok-` + dto.paymentId + `">`
                             html += `확인`
                             html += `</button>`
-                            html += `<button type="button" className="btn btn-default"`
+                            html += `<button type="button" class="btn btn-default"`
                             html += ` style="margin-top: 4px; display: none"`
                             html += `  id="cancel-` + dto.paymentId + `"`
                             html += `   onClick="refundCancel(` + dto.paymentId + `)">`

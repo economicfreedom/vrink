@@ -1,78 +1,111 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.green.vrink.payment.repository.interfaces.PaymentRepository">
-	<select id="findByEditorId" resultType="com.green.vrink.payment.dto.PriceDTO">
-		SELECT * FROM price
-		WHERE editor_id = #{editorId}
-	</select>
+    <select id="findByEditorId" resultType="com.green.vrink.payment.dto.PriceDTO">
+        SELECT *
+        FROM price
+        WHERE editor_id = #{editorId}
+    </select>
 
     <insert id="insertByPayment">
-		INSERT INTO payment (user_id, editor_id, name, imp_uid, merchant_uid, total_price, request)
-		VALUES (#{userId}, #{editorId}, #{name}, #{impUid}, #{merchantUid}, #{totalPrice}, #{request})
-	</insert>
+        INSERT INTO payment (user_id, editor_id, name, imp_uid, merchant_uid, total_price, request)
+        VALUES (#{userId}, #{editorId}, #{name}, #{impUid}, #{merchantUid}, #{totalPrice}, #{request})
+    </insert>
 
     <select id="findByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDTO">
-		SELECT payment_id, user_id, name, imp_uid, merchant_uid, total_price, date_format(created_at,'%y-%m-%d %h:%i') as created_at, request
-		FROM payment WHERE payment_id = #{paymentId};
-	</select>
+        SELECT payment_id,
+               user_id,
+               name,
+               imp_uid,
+               merchant_uid,
+               total_price,
+               date_format(created_at, '%y-%m-%d %h:%i') as created_at,
+               request
+        FROM payment
+        WHERE payment_id = #{paymentId};
+    </select>
 
-	<insert id="insertByPaymentState">
-		INSERT INTO payment_state (payment_id, point)
-		values (#{paymentId}, #{point})
-	</insert>
+    <insert id="insertByPaymentState">
+        INSERT INTO payment_state (payment_id, point)
+        values (#{paymentId}, #{point})
+    </insert>
 
-	<select id="findByCancelData" resultType="com.green.vrink.payment.repository.model.Payment">
-		SELECT * FROM payment WHERE payment_id = #{paymentId}
-	</select>
+    <select id="findByCancelData" resultType="com.green.vrink.payment.repository.model.Payment">
+        SELECT *
+        FROM payment
+        WHERE payment_id = #{paymentId}
+    </select>
 
-	<select id="findByLastPaymentId" resultType="java.lang.Integer">
-		SELECT * FROM payment ORDER BY payment_id DESC LIMIT 1;
-	</select>
+    <select id="findByLastPaymentId" resultType="java.lang.Integer">
+        SELECT *
+        FROM payment
+        ORDER BY payment_id DESC LIMIT 1;
+    </select>
     <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyResponseDTO">
 
         SELECT ps.point
-             , customer_recognize
-             , editor_recognize
-             , payment_state_id
-             , ps.created_at
-             , u.nickname
-             , p.editor_id
-             , p.user_id
-             , ed.image
-             , SUM(pd.quantity) as quantity
-             , ps.state
-             , p.payment_id
-             , u.email
-             , u.phone
+        , customer_recognize
+        , editor_recognize
+        , payment_state_id
+        , ps.created_at
+        , u.nickname
+        , p.editor_id
+        , p.user_id
+        , ed.thumbnail AS image
+        , SUM(pd.quantity) as quantity
+        , ps.state
+        , p.payment_id
+        , u.email
+        , u.phone
         FROM payment_state ps
-                 JOIN (SELECT payment_id, MAX(created_at) as max_created_at
-                       FROM payment_state
-                       GROUP BY payment_id) as ps_max
-                      ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
-                 LEFT JOIN payment p ON ps.payment_id = p.payment_id
-                 LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-                 LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
-                 LEFT JOIN user u ON ed.user_id = u.user_id
+        JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+        FROM payment_state
+        GROUP BY payment_id) as ps_max
+        ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+        LEFT JOIN user u ON ed.user_id = u.user_id
         WHERE p.user_id = #{userId} AND customer_recognize =0
         <if test="cri.keyword != null">
-            AND u.nickname = CONCAT('%',${cri.keyword},'%')
+            AND u.nickname LIKE CONCAT('%',#{cri.keyword},'%')
         </if>
         GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
-                 p.editor_id, p.user_id, ed.image, ps.state, p.payment_id
-
+        p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
+        LIMIT #{cri.offset}
+        , #{cri.countPerPage}
     </select>
 
-	<insert id="insertByPaymentDetail">
-		INSERT INTO payment_detail (payment_id, options, price, quantity)
-		values (#{paymentId}, #{options}, #{price}, #{quantity})
-	</insert>
+    <insert id="insertByPaymentDetail">
+        INSERT INTO payment_detail (payment_id, options, price, quantity)
+        values (#{paymentId}, #{options}, #{price}, #{quantity})
+    </insert>
 
-	<select id="findPaymentDetailByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDetailDTO">
-		SELECT * FROM payment_detail WHERE payment_id = #{paymentId}
-	</select>
+    <select id="findPaymentDetailByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDetailDTO">
+        SELECT *
+        FROM payment_detail
+        WHERE payment_id = #{paymentId}
+    </select>
     <select id="findTotalPriceByPaymentId" resultType="java.lang.Integer">
-        SELECT total_price FROM payment
+        SELECT total_price
+        FROM payment
         WHERE payment_id = #{paymnetId}
+    </select>
+    <select id="findBuyListTotalByCriAndUserId" resultType="java.lang.Integer">
+        SELECT COUNT(ps.payment_id) FROM payment_state ps
+        JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+        FROM payment_state
+        GROUP BY payment_id) as ps_max
+        ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+        LEFT JOIN user u ON ed.user_id = u.user_id
+        WHERE p.user_id = #{userId} AND customer_recognize =0
+        <if test="cri.keyword != null">
+            AND u.nickname LIKE CONCAT('%',#{cri.keyword},'%')
+        </if>
+
     </select>
 
 </mapper>
