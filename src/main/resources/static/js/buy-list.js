@@ -38,7 +38,6 @@ function paymentConfirm(
 }
 
 function refundRequest(paymentId) {
-
     let btnVal = $(`#cancel-${paymentId}`).val();
     let requestRefund = $(`#request-refund-${paymentId}`);
     let forRPayment = $(`#for-r-${paymentId}`);
@@ -49,11 +48,10 @@ function refundRequest(paymentId) {
     let selectEtcInput = $(`#etc-${paymentId}`);
     if (requestRefund.val() == 0) {
 
-
         forRPayment.css("display", "block");
         reason.css("display", "block");
-
-
+        
+        
         // 이전에 바인딩된 change 이벤트 핸들러를 제거
         reason.off('change').on('change', function () {
             let reasonVal = $(this).val(); // $(this)를 사용하여 현재 변경된 요소를 참조

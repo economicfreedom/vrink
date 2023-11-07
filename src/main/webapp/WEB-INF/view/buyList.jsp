@@ -154,11 +154,11 @@
                                     <h3>
                                         <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
                                            title="">${dto.nickname}</a></h3>
-                                    <span style="margin-left: 10px">${dto.phone}</span>
+                                    <span style="margin-left: 20px; margin-top: 20px">${dto.phone}</span>
                                     <br>
-                                    <span style="margin-left: 10px">${dto.email}</span>
+                                    <span style="margin-left: 20px; margin-top: 20px">${dto.email}</span>
                                     <div class="price-cart-item">
-                                        <span>￦${dto.point}</span>
+                                        <span style="margin-top: 70px">￦${dto.point}</span>
                                     </div>
 
                                 </div>
@@ -291,11 +291,11 @@
                         html += `<h3>`
                         html += `<a href="/payment/payment-list?payment-id=` + dto.paymentId + `&` + `user-id="` + dto.userId + `"`
                         html += `title="">` + dto.nickname + `</a></h3>`
-                        html += `<span style="margin-left: 10px">` + dto.phone + `</span>`
+                        html += `<span style="margin-left: 20px; margin-top: 20px">` + dto.phone + `</span>`
                         html += `<br>`
-                        html += `<span style="margin-left: 10px">` + dto.email + `</span>`
+                        html += `<span style="margin-left: 20px; margin-top: 20px">` + dto.email + `</span>`
                         html += `<div class="price-cart-item">`
-                        html += `<span>￦` + dto.point + `</span>`
+                        html += `<span style="margin-top: 70px">￦` + dto.point + `</span>`
                         html += `</div>`
 
                         html += `</div>`
@@ -315,34 +315,33 @@
                         }
                         if (dto.editorRecognize == 0) {
 
-                            html += `<button class="button button2" onClick="refundRequest(` + dto.paymentId + `)" `
-                            html += ` value="0" `
-                            html += `id="request-refund-` + dto.paymentId + ` ">`
+                            html += `<button class="button button2" onClick="refundRequest(` + dto.paymentId + `)" value="0" `
+                            html += `id="request-refund-` + dto.paymentId + `">`
                             html += `환불 요청`
                             html += `</button>`
                             html += `<div class="form-group">`
-                            html += `<label htmlFor="reason-` + dto.paymentId + `" id="for-r-` + dto.paymentId + `" `
-                            html += ` style="display: none">환불 사유</label>`
+                            html += `<label for="reason-` + dto.paymentId + `" id="for-r-` + dto.paymentId + `" `
+                            html += ` style="display: none;">환불 사유</label>`
                             html += `<select class="form-control" `
-                            html += `style="display: none" `
+                            html += `style="display: none;" `
                             html += `id="reason-` + dto.paymentId + `">`
                             html += `<option value="잘못구입">잘못 구입했습니다.</option>`
                             html += `<option value="연락두절">연락이 없어요.</option>`
                             html += `<option value="기타">기타</option>`
                             html += `</select>`
-                            html += `<label htmlFor="etc-` + dto.paymentId + `" `
+                            html += `<label for="etc-` + dto.paymentId + `" `
                             html += `style="display: none" `
                             html += `id="for-e-` + dto.paymentId + `">기타 사유</label>`
                             html += `<input type="text" class="form-control" id="etc-` + dto.paymentId + `" `
-                            html += `style="display: none">`
+                            html += `style="display: none;">`
                             html += `<button type="button" class="btn btn-primary" `
-                            html += `style="margin-top: 4px; display: none" `
+                            html += `style="margin-top: 4px; display: none;" `
                             html += `onClick="refundOk(` + dto.paymentId + `,` + dto.paymentStateId + `)" `
                             html += `id="ok-` + dto.paymentId + `">`
                             html += `확인`
                             html += `</button>`
                             html += `<button type="button" class="btn btn-default"`
-                            html += ` style="margin-top: 4px; display: none"`
+                            html += ` style="margin-top: 4px; display: none;"`
                             html += `  id="cancel-` + dto.paymentId + `"`
                             html += `   onClick="refundCancel(` + dto.paymentId + `)">`
                             html += `취소`

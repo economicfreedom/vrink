@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BuyResponseDTO {
 
-    private Integer point;
+    private String point;
     private Byte editorRecognize;
     private Byte customerRecognize;
     private Integer paymentStateId;

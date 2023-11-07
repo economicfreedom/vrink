@@ -562,11 +562,18 @@ WHERE user_id = 141;
 
 
 
-SELECT * FROM payment
-where user_id =136;
-select * from
+SELECT p.payment_id,p.name,u.nickname,p.created_at FROM payment p
+LEFT JOIN user u on p.user_id = u.user_id
+
+where editor_id = 7;
+
+select * FROM payment_state;
+select * from payment_detail;
+
+
+
 SELECT * FROM editor_detail;
-SELECT * FROM user;
+SELECT * FROM user where user_id = 2;
 
   SELECT COUNT(ps.payment_id) FROM payment_state ps
         JOIN (SELECT payment_id, MAX(created_at) as max_created_at

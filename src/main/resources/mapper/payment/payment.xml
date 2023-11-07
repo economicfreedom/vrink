@@ -43,7 +43,7 @@
     </select>
     <select id="findBuyListByUserId" resultType="com.green.vrink.payment.dto.BuyResponseDTO">
 
-        SELECT ps.point
+        SELECT FORMAT(ps.point, 0) AS point
         , customer_recognize
         , editor_recognize
         , payment_state_id
@@ -56,7 +56,13 @@
         , ps.state
         , p.payment_id
         , u.email
-        , u.phone
+        , CONCAT(
+        SUBSTRING(u.phone, 1, 3), '-',
+        SUBSTRING(u.phone, 4, 4), '-',
+        SUBSTRING(u.phone, 8)
+        ) AS  phone
+
+
         FROM payment_state ps
         JOIN (SELECT payment_id, MAX(created_at) as max_created_at
         FROM payment_state
