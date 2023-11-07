@@ -30,4 +30,10 @@ public interface EditorService {
 	List<EditorPriceDTO> responsePrice(Integer editorId);
 
     Integer requestEditorPriceEdit(EditorPriceListDTO editorPriceListDTO);
+
+    int getEditorIdByUserId(Integer userId);
+
+	List<RequestListDTO> getRequestList(Criteria cri, int editorId);
+
+	int getRequestListTotal(Criteria cri,Integer editorId);
 }

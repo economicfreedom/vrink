@@ -25,9 +25,11 @@ import static com.green.vrink.util.Check.isNull;
 @RequiredArgsConstructor
 @Slf4j
 public class FreeBoardReplyRestController {
+
     private final FreeBoardReplyService freeBoardReplyService;
+
     private final HttpSession httpSession;
-    //    private final Check check;
+
     private final MessageService messageService;
 
     @PostMapping("/add")

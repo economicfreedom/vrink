@@ -41,11 +41,24 @@ public interface UserRepository {
 	public Integer updatePoint(@Param("userId") Integer userId, @Param("point") Integer point);
     Integer findUserIdByEditorId(Integer editorId);
 
-	void updateEditorPoint(@Param("editorId")Integer editorId, @Param("point") Integer point);
+	void updateEditorPoint(
+			@Param("editorId")Integer editorId
+			, @Param("point") Integer point)
+			;
 
 	List<EditorPriceDTO> findPriceByEditorId(Integer editorId);
 
     Integer deletePriceByEditorId(Integer editorId);
 	Integer findUserByNickname(String nickname);
 	String findEmailByNicknameAndPhone(FindEmailDto findEmailDto);
+
+    List<RequestListDTO> findRequestListByCriAndEditorId(
+			@Param("cri") Criteria cri
+			, @Param("editorId") int editorId
+	);
+
+	int findRequestListTotalByCriAndEditorId(
+			  @Param("cri") Criteria cri
+			, @Param("editorId") Integer editorId
+	);
 }

@@ -137,4 +137,19 @@ public class EditorServiceImpl implements EditorService{
     public List<EditorPriceDTO> responsePrice(Integer editorId) {
         return userRepository.findPriceByEditorId(editorId);
     }
+
+    @Override
+    public int getEditorIdByUserId(Integer userId) {
+        return userRepository.findEditorIdByUserId(userId);
+    }
+
+    @Override
+    public List<RequestListDTO> getRequestList(Criteria cri, int editorId) {
+        return userRepository.findRequestListByCriAndEditorId(cri,editorId);
+    }
+
+    @Override
+    public int getRequestListTotal(Criteria cri,Integer editorId) {
+        return userRepository.findRequestListTotalByCriAndEditorId(cri,editorId);
+    }
 }

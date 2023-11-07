@@ -71,22 +71,43 @@
     </div>
 </div>
 <!-- inner Head -->
-<div class="container mb-5"  >
+<div class="container mb-5">
 
-    <div >
-        <table style="padding: 20;margin-bottom: 30%" >
+    <div>
+        <table style="padding: 20;margin-bottom: 3%">
             <caption>의뢰 요청 목록
+                <div class="coupon"
+                     style="float: right;margin-right: 20px;margin-bottom: 20px; display: flex;gap: 1rem;justify-content: end;">
+                    <label for="type"></label>
+                    <select class="form-control" id="type" style="width: 20%">
+                        <option value="all">전체</option>
+                        <option value="request">의뢰</option>
+                        <option value="nickname">닉네임</option>
+                    </select>
+                    <input type="text" placeholder="검색어 입력"
+                           style="height: 5%; width: 60%; font-size: 20px;color: black"
+                           id="keyword"
+                           value="${keyword == null ? '':keyword}">
+                    <button type="button" class="flat-btn" id="search"
+                            style="float: right;height: 33px; font-size: 15px; padding: 0; width: 24%;">
+                        <i class="fa fa-search"
+                           style="font-size: 15px; "></i>검색하기
+                    </button>
+                </div>
 
                 <hr style="width: 10%; border: solid #ff2929;">
+
                 <div style="text-align: right;font-size: 15px">
-                    <input type="radio" id="all" name="filter" style="margin-left: 2%;" checked>
+                    <input type="radio" id="all" name="filter" value="all" style="margin-left: 2%;" checked>
                     <label for="all">모두 보기</label>
-                    <input type="radio" id="ing" name="filter" style="margin-left: 2%;">
+                    <input type="radio" id="ing" name="filter" value="ing" style="margin-left: 2%;">
                     <label for="ing">진행중인 작업 보기</label>
-                    <input type="radio" id="done" name="filter" style="margin-left: 2%;">
+                    <input type="radio" id="done" name="filter" value="done" style="margin-left: 2%;">
                     <label for="done">완료된 작업 보기</label>
                 </div>
-            </caption> <!-- 테이블 제목 추가 -->
+
+
+            </caption>
 
 
             <tr>
@@ -96,15 +117,96 @@
                 <th class="th-text-center">의뢰 신청일자</th>
                 <th class="th-text-center">여부</th>
             </tr>
-            <tr style="padding: 20">
-                <td class="th-text-center">1</td>
-                <td class="th-text-center">웹사이트 개발</td>
-                <td class="th-text-center">webmaster123</td>
-                <td class="th-text-center">2023-11-01</td>
-                <td class="th-text-center">확인중</td>
-            </tr>
-            <!-- 추가적인 행들을 이곳에 삽입 -->
+            <c:forEach items="${list}" var="dto">
+                <tr style="padding: 20">
+                    <td class="th-text-center">${dto.paymentId}</td>
+                    <td class="th-text-center">${dto.name}</td>
+                    <td class="th-text-center">${dto.nickname}</td>
+                    <td class="th-text-center">${dto.createdAt}</td>
+                    <td class="th-text-center">${dto.state}</td>
+                </tr>
+            </c:forEach>
+
         </table>
+
     </div>
+    <form action="/editor/request-list" name="page-form">
+        <ul class="pagination" id="pagination" style="margin: 20px 0;">
+
+            <c:if test="${pageDTO.prev}">
+                <li class="disabled"><a href="#"
+                                        data-page-num="${pageDTO.beginPage-1}"><span>PREV</span></a>
+                </li>
+            </c:if>
+            <c:if test="${!pageDTO.prev}">
+                <li class="disabled"><a href="#"
+                                        data-page-num="${pageDTO.beginPage-1}"><span></span></a>
+                </li>
+            </c:if>
+
+            <c:forEach var="num" begin="${pageDTO.beginPage}" end="${pageDTO.endPage}">
+                <li class="${pageDTO.cri.pageNum == num ? 'active' : ''}">
+                    <a href="#" data-page-num="${num}">${num}</a>
+                </li>
+            </c:forEach>
+
+            <c:if test="${pageDTO.next}">
+            <li><a href="#"
+                   data-page-num="${pageDTO.endPage+1}"><span>NEXT</span></a></li>
+        </ul>
+        </c:if>
+        <input type="hidden" name="page-num" value="${pageDTO.cri.pageNum}">
+        <input type="hidden" name="countPerPage" value="${pageDTO.cri.countPerPage}">
+        <input type="hidden" name="keyword" value="${pageDTO.cri.keyword}">
+        <input type="hidden" name="type" value="${pageDTO.cri.type}">
+        <input type="hidden" name="filter" value="${pageDTO.cri.filter}">
+
+    </form>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#search").click(function () {
+
+            let type = $("#type").val();
+            let keyword = $("#keyword").val();
+            let filter = $('input[name="filter"]:checked').val();
+
+            alert(type)
+            alert(keyword)
+
+            location.href = "/editor/request-list?type=" + type
+                + "&keyword=" + keyword
+                + "&filter=" + filter;
+
+        });
+        $("#keyword").keypress(function (event) {
+
+            if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
+                let type = $("#type").val();
+                let keyword = $("#keyword").val();
+                let filter = $('input[name="filter"]:checked').val();
+
+                location.href = "/editor/request-list?type=" + type
+                    + "&keyword=" + keyword
+                    + "&filter=" + filter;
+
+            }
+        });
+
+        $('#pagination').on('click', 'a', function (e) {
+            e.preventDefault();
+            const value = $(this).data('page-num');
+            console.log(value);
+
+            document["page-form"]["page-num"].value = value;
+            document["page-form"].type.value = $("select[name='type']").val();
+            document["page-form"].keyword.value = $("#keyword").val();
+            document["page-form"].filter.value = $('input[name="filter"]:checked').val()
+            document["page-form"]["order-by"].value = $("input[name=optradio]:checked").val();
+            document["page-form"].submit();
+        }); // end of #pagination
+    })
+</script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

@@ -7,6 +7,7 @@ import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.EditorDTO;
 import com.green.vrink.user.dto.EditorPriceDTO;
 import com.green.vrink.user.dto.EditorPriceListDTO;
+import com.green.vrink.user.dto.RequestListDTO;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
@@ -35,6 +36,7 @@ public class EditorController {
     private final MorphService morphService;
     private final HttpSession session;
     private final UserRepository userRepository;
+
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
             , HttpSession session
@@ -55,8 +57,8 @@ public class EditorController {
         List<EditorPriceDTO> editorPrice = editorService.responsePrice(editorId);
         model.addAttribute("editorPrice", editorPrice);
         log.info("editorDetail{}", editorDTO);
-        log.info("morph : {}",morph);
-        model.addAttribute("morph",morph);
+        log.info("morph : {}", morph);
+        model.addAttribute("morph", morph);
 
 
         return "user/editorDetail";
@@ -98,7 +100,7 @@ public class EditorController {
             Integer editorId
             , Model model
     ) {
-if (editorId == null) {
+        if (editorId == null) {
             return "redirect:/";
         }
         String vrm = editorService.getVrm(editorId);
@@ -125,23 +127,23 @@ if (editorId == null) {
         model.addAttribute("next", asyncPageDTO.isHasNext());
         return "user/editorList";
     }
-    
+
     @GetMapping("/editor-price")
-    public String editorPrice(@RequestParam("editor-id") Integer editorId,Model model) {
-        if(session.getAttribute(Define.EDITOR_ID) == null ||
+    public String editorPrice(@RequestParam("editor-id") Integer editorId, Model model) {
+        if (session.getAttribute(Define.EDITOR_ID) == null ||
                 session.getAttribute(Define.EDITOR_ID) != editorId) {
             return "redirect:/";
         }
         List<EditorPriceDTO> editorPriceDTO = editorService.responsePrice(editorId);
-        model.addAttribute("editorPriceDTO",editorPriceDTO);
-    	return "user/editorPrice";
+        model.addAttribute("editorPriceDTO", editorPriceDTO);
+        return "user/editorPrice";
     }
 
     @PostMapping("/editor-price")
     public String EditorPrice(EditorPriceListDTO editorPriceListDTO) {
         editorService.requestEditorPrice(editorPriceListDTO);
 
-        return "redirect:/editor/editor-detail/"+session.getAttribute(Define.EDITOR_ID);
+        return "redirect:/editor/editor-detail/" + session.getAttribute(Define.EDITOR_ID);
     }
 
     @GetMapping("/calculate/point")
@@ -157,5 +159,56 @@ if (editorId == null) {
         }
 
         return "user/applyForm";
+    }
+
+    @GetMapping("/request-list")
+    public String editorRequestList(
+            Model model
+
+            , @RequestParam(
+              name = "page-num"
+            , required = false
+            , defaultValue = "1")
+            Integer pageNum
+            , @RequestParam(required = false)
+              String keyword
+            , @RequestParam(required = false)
+              String filter
+            , @RequestParam(required = false)
+              String type
+
+    ) {
+        User user = (User) session.getAttribute("USER");
+        Integer userId = user.getUserId();
+        int editorId = editorService.getEditorIdByUserId(userId);
+
+        Criteria cri = new Criteria();
+        cri.setKeyword(keyword);
+        cri.setType(type);
+        cri.setFilter(filter);
+        cri.setPageNum(pageNum);
+        cri.setCountPerPage(10);
+        int total = editorService.getRequestListTotal(cri, editorId);
+        List<RequestListDTO> list = editorService.getRequestList(cri, editorId);
+
+        PageDTO pageDTO = new PageDTO();
+
+
+        pageDTO.setCri(cri);
+        pageDTO.setArticleTotalCount(total);
+
+
+        model.addAttribute("list", list);
+        model.addAttribute("pageDTO", pageDTO);
+        return "requestList";
+
+    }
+
+    @GetMapping("/request-view")
+    public String requestView() {
+
+
+        return "requestView";
+
     }
 }

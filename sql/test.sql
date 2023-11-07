@@ -511,9 +511,10 @@ SELECT user_id
 FROM editor_detail
 WHERE editor_id = 52;
 
-SELECT * FROM editor_detail;
+SELECT *
+FROM editor_detail;
 UPDATE user
-SET point = ifnull(point,0)+1111
+SET point = ifnull(point, 0) + 1111
 WHERE user_id = (SELECT user_id
                  FROM editor_detail
                  WHERE editor_id = 52);
@@ -522,69 +523,101 @@ update user
 set point = null
 where user_id = 136;
 
-SELECT * FROM user WHERE user_id = 136;
+SELECT *
+FROM user
+WHERE user_id = 136;
 
-CREATE TABLE `refund_reason` (
-	`refund_id`	int	NOT NULL primary key auto_increment,
-	`payment_id`	int	NOT NULL,
-	`payment_state_id`	int	NOT NULL,
-	`reason`	varchar(100)	NOT NULL,
-	`reason_detail`	text	NULL,
-	`created_at`	timestamp	NOT NULL	DEFAULT now()
+CREATE TABLE `refund_reason`
+(
+    `refund_id`        int          NOT NULL primary key auto_increment,
+    `payment_id`       int          NOT NULL,
+    `payment_state_id` int          NOT NULL,
+    `reason`           varchar(100) NOT NULL,
+    `reason_detail`    text         NULL,
+    `created_at`       timestamp    NOT NULL DEFAULT now()
 );
 
 
-ALTER TABLE `refund_reason` ADD CONSTRAINT `PK_REFUND_REASON` PRIMARY KEY (
-	`refund_id`
-);
+ALTER TABLE `refund_reason`
+    ADD CONSTRAINT `PK_REFUND_REASON` PRIMARY KEY (
+                                                   `refund_id`
+        );
 
 INSERT INTO refund_reason(payment_id, payment_state_id, reason, reason_detail)
-VALUE ()
+    VALUE ()
 
 
-select * from refund_reason;
+select *
+from refund_reason;
 
 
 
+select *
+from payment_state;
+select *
+from refund_reason;
 
-select * from payment_state;
-select * from refund_reason;
-
-UPDATE user SET password = '$2a$10$XozbWTHCHD3o5JplgB6c/ecU.zT6CmedOEy1b8QjJgdOXM/..NdTO'
+UPDATE user
+SET password = '$2a$10$XozbWTHCHD3o5JplgB6c/ecU.zT6CmedOEy1b8QjJgdOXM/..NdTO'
 WHERE user_id = 141;
 
 # SELECT editor_recognize FROM payment_state
 # WHERE
 #     created_at = (SELECT MAX(created_at) FROM payment_state where payment_id = #{paymentId});
 
+# 의뢰 리스트
+SELECT p.payment_id,
+       p.name,
+       u.nickname,
+       DATE_FORMAT(p.created_at, '%Y-%m-%d') AS created_at,
+       (CASE
+            WHEN ps.state = 'payment_done' THEN '진행중'
+            WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+            WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+            ELSE '거래 완료'
+           END)                              AS state
+FROM payment_state ps
+         LEFT JOIN payment p ON ps.payment_id = p.payment_id
+
+         LEFT JOIN user u ON p.user_id = u.user_id
+         JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+               FROM payment_state
+               GROUP BY payment_id) AS ps_max
+              ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+WHERE editor_id = 7;
+
+SELECT COUNT(payment_id)
+FROM payment
+WHERE editor_id = 7;
+
+SELECT *
+FROM payment
+WHERE editor_id = 7;
+select *
+FROM payment_state;
+select *
+from payment_detail;
 
 
 
+SELECT *
+FROM editor_detail;
+SELECT *
+FROM user
+where user_id = 2;
 
+SELECT COUNT(ps.payment_id)
+FROM payment_state ps
+         JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+               FROM payment_state
+               GROUP BY payment_id) as ps_max
+              ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+         LEFT JOIN payment p ON ps.payment_id = p.payment_id
+         LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
+         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN user u ON ed.user_id = u.user_id
 
-SELECT p.payment_id,p.name,u.nickname,p.created_at FROM payment p
-LEFT JOIN user u on p.user_id = u.user_id
+WHERE p.user_id = #{userId} AND customer_recognize =0
 
-where editor_id = 7;
-
-select * FROM payment_state;
-select * from payment_detail;
-
-
-
-SELECT * FROM editor_detail;
-SELECT * FROM user where user_id = 2;
-
-  SELECT COUNT(ps.payment_id) FROM payment_state ps
-        JOIN (SELECT payment_id, MAX(created_at) as max_created_at
-        FROM payment_state
-        GROUP BY payment_id) as ps_max
-        ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
-        LEFT JOIN payment p ON ps.payment_id = p.payment_id
-        LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
-        LEFT JOIN user u ON ed.user_id = u.user_id
-        WHERE p.user_id = #{userId} AND customer_recognize =0
-
-        GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
-        p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
+GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
+         p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id

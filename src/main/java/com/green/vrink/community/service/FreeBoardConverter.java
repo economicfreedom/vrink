@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 @Service("freeBoardConverter")
 public class FreeBoardConverter implements Converter<FreeBoardDTO, FreeBoard> {
 
+
+
     @Override
     public FreeBoardDTO toDTO(FreeBoard freeBoard) {
         return FreeBoardDTO
@@ -31,4 +33,5 @@ public class FreeBoardConverter implements Converter<FreeBoardDTO, FreeBoard> {
                 .createdAt(freeBoardDTO.getCreatedAt())
                 .build();
     }
+
 }
