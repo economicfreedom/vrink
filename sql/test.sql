@@ -546,10 +546,12 @@ ALTER TABLE `refund_reason`
 INSERT INTO refund_reason(payment_id, payment_state_id, reason, reason_detail)
     VALUE ()
 
+SELECT * FROM payment_state;
 
 select *
 from refund_reason;
 
+SELECT * FROM refund_reason;
 
 
 select *

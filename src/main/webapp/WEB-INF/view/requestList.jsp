@@ -74,19 +74,20 @@
 <div class="container mb-5">
 
     <div>
-        <table style="padding: 20;margin-bottom: 3%">
+        <table style="padding: 20px;margin-bottom: 3%">
             <caption>의뢰 요청 목록
                 <div class="coupon"
                      style="float: right;margin-right: 20px;margin-bottom: 20px; display: flex;gap: 1rem;justify-content: end;">
                     <label for="type"></label>
                     <select class="form-control" id="type" style="width: 20%">
-                        <option value="all">전체</option>
-                        <option value="request">의뢰</option>
-                        <option value="nickname">닉네임</option>
+                        <option value="all" ${type == 'all' ? 'selected':''}>전체</option>
+                        <option value="request" ${type == 'request' ? 'selected':''}>의뢰</option>
+                        <option value="nickname"${type == 'nickname' ? 'selected':''}>닉네임</option>
                     </select>
                     <input type="text" placeholder="검색어 입력"
                            style="height: 5%; width: 60%; font-size: 20px;color: black"
                            id="keyword"
+
                            value="${keyword == null ? '':keyword}">
                     <button type="button" class="flat-btn" id="search"
                             style="float: right;height: 33px; font-size: 15px; padding: 0; width: 24%;">
@@ -98,11 +99,17 @@
                 <hr style="width: 10%; border: solid #ff2929;">
 
                 <div style="text-align: right;font-size: 15px">
-                    <input type="radio" id="all" name="filter" value="all" style="margin-left: 2%;" checked>
+                    <input type="radio" name="filter" value="all" style="margin-left: 2%;"
+                           ${filter == 'all' ? 'checked':''}
+                           id="all">
                     <label for="all">모두 보기</label>
-                    <input type="radio" id="ing" name="filter" value="ing" style="margin-left: 2%;">
+                    <input type="radio" name="filter" value="ing" style="margin-left: 2%;"
+                           ${filter == 'ing' ? 'checked':''}
+                           id="ing">
                     <label for="ing">진행중인 작업 보기</label>
-                    <input type="radio" id="done" name="filter" value="done" style="margin-left: 2%;">
+                    <input type="radio" name="filter" value="done" style="margin-left: 2%;"
+                           ${filter == 'done' ? 'checked':''}
+                           id="done">
                     <label for="done">완료된 작업 보기</label>
                 </div>
 
@@ -167,14 +174,23 @@
 <script>
 
     $(document).ready(function () {
+        $('input[name="filter"]').click(function () {
+            let type = $("#type").val();
+            let keyword = $("#keyword").val();
+            let filter = $('input[name="filter"]:checked').val();
+
+
+            location.href = "/editor/request-list?type=" + type
+                + "&keyword=" + keyword
+                + "&filter=" + filter;
+        })
+
         $("#search").click(function () {
 
             let type = $("#type").val();
             let keyword = $("#keyword").val();
             let filter = $('input[name="filter"]:checked').val();
 
-            alert(type)
-            alert(keyword)
 
             location.href = "/editor/request-list?type=" + type
                 + "&keyword=" + keyword
@@ -204,7 +220,6 @@
             document["page-form"].type.value = $("select[name='type']").val();
             document["page-form"].keyword.value = $("#keyword").val();
             document["page-form"].filter.value = $('input[name="filter"]:checked').val()
-            document["page-form"]["order-by"].value = $("input[name=optradio]:checked").val();
             document["page-form"].submit();
         }); // end of #pagination
     })

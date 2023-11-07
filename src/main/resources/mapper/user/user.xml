@@ -175,7 +175,8 @@
           AND user.phone = #{phone}
     </select>
     <select id="findRequestListByCriAndEditorId" resultType="com.green.vrink.user.dto.RequestListDTO">
-        SELECT p.payment_id,
+        SELECT
+        p.payment_id,
         p.name,
         u.nickname,
         DATE_FORMAT(p.created_at, '%Y-%m-%d') AS created_at,
@@ -187,44 +188,83 @@
         END) AS state
         FROM payment_state ps
         LEFT JOIN payment p ON ps.payment_id = p.payment_id
-
         LEFT JOIN user u ON p.user_id = u.user_id
-        JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+        JOIN (
+        SELECT payment_id, MAX(created_at) AS max_created_at
         FROM payment_state
-        GROUP BY payment_id) AS ps_max
-        ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        GROUP BY payment_id
+        ) AS ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
         WHERE editor_id = #{editorId}
-        <choose>
-            <when test="cri.keyword != null">
+        <if test="cri.keyword == null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND ps.state = 'payment_done'
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND (ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel')
+                </when>
+            </choose>
+        </if>
+        <if test="cri.keyword != null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND (ps.state = 'payment_done' AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND ((ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel') AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <otherwise>
+                    AND (u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%'))
+                </otherwise>
+            </choose>
+        </if>
 
-            </when>
-            <otherwise></otherwise>
-        </choose>
-        <choose>
-            <when test="cri.filter == 'ing'">
-
-            </when>
-            <when test="cri.filter == 'done'">
-
-            </when>
-            <otherwise></otherwise>
-        </choose>
-        <choose>
-            <when test="cri.type == 'request'">
-
-            </when>
-            <when test="cri.type == 'nickname'">
-
-            </when>
-            <otherwise></otherwise>
-        </choose>
-        LIMIT #{cri.offset}
-        , #{cri.countPerPage}
+        LIMIT #{cri.offset}, #{cri.countPerPage}
     </select>
     <select id="findRequestListTotalByCriAndEditorId" resultType="java.lang.Integer">
-        SELECT COUNT(payment_id)
-        FROM payment
+        SELECT COUNT(p.payment_id)
+        FROM payment_state ps
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN user u ON p.user_id = u.user_id
+        JOIN (
+        SELECT payment_id, MAX(created_at) AS max_created_at
+        FROM payment_state
+        GROUP BY payment_id
+        ) AS ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
         WHERE editor_id = #{editorId}
+        <if test="cri.keyword == null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND ps.state = 'payment_done'
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND (ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel')
+                </when>
+            </choose>
+        </if>
+        <if test="cri.keyword != null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND (ps.state = 'payment_done' AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND ((ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel') AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <otherwise>
+                    AND (u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%'))
+                </otherwise>
+            </choose>
+        </if>
     </select>
 
     <select id="findPasswordByEmailAndName" resultType="java.lang.Integer">

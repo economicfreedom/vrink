@@ -204,6 +204,10 @@ public class EditorController {
 
         model.addAttribute("list", list);
         model.addAttribute("pageDTO", pageDTO);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("filter",filter);
+        model.addAttribute("type",type);
+
         return "requestList";
 
     }
