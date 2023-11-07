@@ -28,6 +28,7 @@ public class UserController {
 
 	private final UserRepository userRepository;
 	private final HttpSession session;
+	private final UserService userService;
 
 	@GetMapping("/sign-in")
 	public String signIn() {
@@ -49,7 +50,7 @@ public class UserController {
 			return "redirect:/user/sign-in";
 		}
 
-		User newUser = userRepository.findByUserId(user.getUserId());
+		User newUser = userService.findByUserId(user.getUserId());
 		model.addAttribute("newUser", newUser);
 		return "user/myPage";
 	}
@@ -63,6 +64,15 @@ public class UserController {
 		}
 
 		return "user/changePassword";
+	}
+
+	@GetMapping("find/email")
+	public String findEmail() {
+		return "user/findEmail";
+	}
+	@GetMapping("find/password")
+	public String findPassword() {
+		return "user/findPassword";
 	}
 
 	@GetMapping("/log-out")

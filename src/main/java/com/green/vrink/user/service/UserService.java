@@ -1,6 +1,7 @@
 package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.FindEmailDto;
+import com.green.vrink.user.dto.FindPasswordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public Integer updatePassword(String userId, String password) {
+	public Integer updatePassword(Integer userId, String password) {
 		return userRepository.updatePassword(userId, password);
 	}
 
@@ -49,5 +50,17 @@ public class UserService {
 
 	public String findEmailByNicknameAndPhone(FindEmailDto findEmailDto) {
 		return userRepository.findEmailByNicknameAndPhone(findEmailDto);
+	}
+
+	public Integer findPasswordByEmailAndName(FindPasswordDto findPasswordDto) {
+		return userRepository.findPasswordByEmailAndName(findPasswordDto);
+	}
+
+	public User findByUserId(int email) {
+		return userRepository.findByUserId(email);
+	}
+
+	public Integer findUserIdByEmail(String email) {
+		return userRepository.findUserIdByEmail((email));
 	}
 }

@@ -8,6 +8,7 @@ import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.EditorServiceImpl;
 
+import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
@@ -31,6 +32,8 @@ public class EditorRestController {
     private final UserRepository userRepository;
     private final HttpSession session;
     private final UploadService uploadService;
+    private final UserService userService;
+
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -113,7 +116,7 @@ public class EditorRestController {
 
     @PostMapping("/calculate/point")
     public ResponseEntity<?> calculatePoint(@RequestBody CalculatePointDto calculatePointDto) {
-        User user = userRepository.findByUserId(calculatePointDto.getUserId());
+        User user = userService.findByUserId(calculatePointDto.getUserId());
         int editorId = editorService.findEditorId(calculatePointDto.getUserId());
         calculatePointDto.setUserId(editorId);
 

@@ -12,6 +12,7 @@ import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.EditorServiceImpl;
+import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class EditorController {
     private final MorphService morphService;
     private final HttpSession session;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
@@ -155,7 +157,7 @@ public class EditorController {
             return "user/applyForm";
         }
         if (Objects.equals(user.getEditor(), "editor")) {
-            User newUser = userRepository.findByUserId(user.getUserId());
+            User newUser = userService.findByUserId(user.getUserId());
             model.addAttribute("newUser", newUser);
             return "user/calculatePoint";
         }

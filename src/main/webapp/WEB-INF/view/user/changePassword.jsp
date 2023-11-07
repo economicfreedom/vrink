@@ -6,9 +6,8 @@
 	        <div class="registration-sec">
 	            <h3>비밀번호 변경</h3>
 	            <div class="common-sign-up">
-					<input type="hidden" class="my-user-id" value="${USER.userId }" readonly="readonly" />
 					<div class="field">
-	                    <input type="text" placeholder="현재 비밀번호" class="my-password-check" value=""/>
+	                    <input type="password" placeholder="현재 비밀번호" class="my-password-check" value=""/>
 						<input type="hidden" class="encoded-password-check-flag" value="1"/>
 	                </div>
 	                <div class="field">

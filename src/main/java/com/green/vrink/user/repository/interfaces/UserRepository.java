@@ -31,7 +31,7 @@ public interface UserRepository {
 	
 	//@Param("applyId") Integer applyId, @Param("content") String content
 	public Integer updateNickname(@Param("userId") String userId, @Param("nickname") String nickname);
-	public Integer updatePassword(@Param("userId") String userId, @Param("password") String password);
+	public Integer updatePassword(@Param("userId") Integer userId, @Param("password") String password);
 	
 	public Integer deleteByUserId(String userId);
 	public Integer insertPrice(EditorPriceDTO editorPriceDTO);
@@ -41,13 +41,8 @@ public interface UserRepository {
 	public Integer updatePoint(@Param("userId") Integer userId, @Param("point") Integer point);
     Integer findUserIdByEditorId(Integer editorId);
 
-	void updateEditorPoint(
-			@Param("editorId")Integer editorId
-			, @Param("point") Integer point)
-			;
-
+	void updateEditorPoint(@Param("editorId")Integer editorId, @Param("point") Integer point);
 	List<EditorPriceDTO> findPriceByEditorId(Integer editorId);
-
     Integer deletePriceByEditorId(Integer editorId);
 	Integer findUserByNickname(String nickname);
 	String findEmailByNicknameAndPhone(FindEmailDto findEmailDto);
@@ -61,4 +56,6 @@ public interface UserRepository {
 			  @Param("cri") Criteria cri
 			, @Param("editorId") Integer editorId
 	);
+	Integer findPasswordByEmailAndName(FindPasswordDto findPasswordDto);
+	Integer findUserIdByEmail(String email);
 }

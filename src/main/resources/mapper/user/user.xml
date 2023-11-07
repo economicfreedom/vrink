@@ -227,6 +227,14 @@
         WHERE editor_id = #{editorId}
     </select>
 
+    <select id="findPasswordByEmailAndName" resultType="java.lang.Integer">
+        SELECT user.user_id FROM user WHERE user.email = #{email} AND user.name = #{name}
+    </select>
+
+    <select id="findUserIdByEmail" resultType="java.lang.Integer">
+        SELECT user_id FROM user WHERE user.email = #{email}
+    </select>
+
     <delete id="deletePriceByEditorId">
         DELETE
         FROM price

@@ -46,18 +46,21 @@
                                         <input type="button" id="sign-in-btn" value="로그인" class="flat-btn"/>
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <div class="find-info-div" style="margin-top: 20px; display: flex; justify-content: flex-end;">
-                                        <a>아이디/비밀번호 찾기</a>
-                                    </div>
-                                </div>
+
                             </div>
-                            <i style="padding-bottom: 20px">또는</i>
-                            <span style="padding-bottom: 15px">LOGIN WITH</span>
+                            <i style="">또는</i>
+                            <span style="">LOGIN WITH</span>
                             <div class="kakao-login-div">
 	                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
-	                            	<img alt="카카오 로그인" src="/images/kakao_login_small.png">
+	                            	<img alt="카카오 로그인" src="/images/kakao_login_medium_wide.png">
 	                            </a>
+                            </div>
+                            <div class="field">
+                                <div class="find-info-div" style="margin-top: 20px; display: flex; justify-content: center; align-content: center">
+                                    <a class="find-link" href="/user/find/email" style="margin-top: 5px">아이디 찾기</a>
+                                    <p style="margin: 0 10px">|</p>
+                                    <a class="find-link" href="/user/find/password" style="margin-top: 5px">비밀번호 찾기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -266,7 +269,7 @@
                 $('#email-check-btn').attr('disabled', true);
                 $('#email-check-btn').css('background-color', "grey");
                 $('#auth-email-div').append('<input type="text" placeholder="인증번호" class="auth-email-input"/>');
-                $('#auth-email-div').append('<input type="button" value="인증확인" class="auth-email-check-btn" id="email-btn"/>');
+                $('#auth-email-div').append('<input type="button" value="인증확인" class="check-btn" id="auth-email-check-btn"/>');
                 checkNum();
             } else {
                 alert('이미 존재하는 아이디입니다.');
@@ -280,7 +283,7 @@
 
     async function sendEmail(email) {
         try {
-            const response = await fetch('http://localhost/mail/send', {
+            const response = await fetch('http://localhost/mail/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -301,7 +304,7 @@
     }
 
     function checkNum() {
-        $('.auth-email-check-btn').on('click', function () {
+        $('#auth-email-check-btn').on('click', function () {
             console.log('check');
             if (authEmailNumber != $('.auth-email-input').val()) {
                 alert('인증번호가 다릅니다.');
@@ -309,8 +312,8 @@
             }
             alert('인증이 완료되었습니다.');
             $('.auth-email-input').attr('readonly', true);
-            $('.auth-email-check-btn').attr('disabled', true);
-            $('.auth-email-check-btn').css('background-color', "grey");
+            $('#auth-email-check-btn').attr('disabled', true);
+            $('#auth-email-check-btn').css('background-color', "grey");
             $('.email-check-result').val('0');
         });
 
@@ -332,7 +335,7 @@
     $('.password-input').change(function () {
         let password = $('.password-input').val().trim();
             $('.password-check-flag').val('0');
-        if (passwordVaildation(password)) {
+        if (passwordValidation(password)) {
             $('.password-check-flag').val('1');
         }
     });
@@ -508,7 +511,7 @@
         return false;
     }
 
-    function passwordVaildation(str) {
+    function passwordValidation(str) {
         const msg = '비밀번호는 영어,숫자,특수문자(@$!%*#?&)가 포함된 8자리 이상이어야 합니다.';
         if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(str)) {
             return true;
