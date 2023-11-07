@@ -45,12 +45,13 @@
 
                     html += '      <div class="col-md-3">'
                     html += '<div class="mini-portfolio">'
-                    html += '<img alt="" src="' + dto.thumbnail + '>'
+                    html += '<img alt="" src="' + dto.thumbnail + '">'
 
                     html += '<div class= "portfolio-info">'
                     html += '<span>' + dto.nickname + '</span>'
                     html += '<h3>' + dto.introduce + '</h3>'
                     html += '<span style="color: black">리뷰 점수 : ' + dto.count.toFixed(1) + '</span>'
+                    html += '<span>' + dto.star + '</span>'
                     html += '<ul>'
 
                     html += '<li><a title="" href="/editor/editor-detail/' + dto.editorId + '"><i'
@@ -100,16 +101,12 @@
                         <c:forEach items="${list}" var="dto">
                             <div class="col-md-3">
                                 <div class="mini-portfolio">
-                                    <c:if test="${dto.thumbnail == null}">
-                                        <img alt="" src="http://placehold.it/270x345">
-                                    </c:if>
-                                    <c:if test="${dto.thumbnail != null}">
-                                        <img alt="" src="${dto.thumbnail}" >
-                                    </c:if>
+                                    <img alt="" src="${dto.thumbnail}" >
                                     <div class="portfolio-info">
                                         <span>${dto.nickname}</span>
                                         <h3>${dto.introduce} </h3>
-                                        <span style="color: black">리뷰 점수 : ${dto.count} </span>
+                                        <span style="color: black">리뷰 점수 : ${dto.count}</span>
+                                        <span>${dto.star}</span>
                                         <ul>
                                                 <%--                                            <i class="fa fa-link"></i>--%>
                                             <li><a title="" href="/editor/editor-detail/${dto.editorId}"><i

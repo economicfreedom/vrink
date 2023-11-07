@@ -22,7 +22,7 @@ public class UploadServiceImpl implements UploadService {
     public void imgRemove(List<String> images) {
         for (int i = 0; i < images.size(); i++) {
 
-            String path = USER_DIR + this.path + images.get(i);
+            String path = USER_DIR+"\\" + this.path + images.get(i);
             log.info("삭제 파일 경로 : {}", path);
             File file = new File(path);
             if (file.exists()) {

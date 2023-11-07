@@ -14,4 +14,5 @@ public class EditorDTO {
 	private String nickname;
 	private Double count;
 	private String delImage[];
+	private String star;
 }

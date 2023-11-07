@@ -56,9 +56,11 @@ public class EditorController {
         model.addAttribute("editorDetail", editorDTO);
         List<EditorPriceDTO> editorPrice = editorService.responsePrice(editorId);
         model.addAttribute("editorPrice", editorPrice);
+
         log.info("editorDetail{}", editorDTO);
         log.info("morph : {}", morph);
         model.addAttribute("morph", morph);
+
 
 
         return "user/editorDetail";

@@ -48,6 +48,7 @@
         </div>
         <div class="row mb-5">
             <div class="col-sm-9">
+                    <c:if test="${editorDetail.vrm != null}">
                     <div class="mb-3">
                         <canvas id="canvas"></canvas>
                     </div>
@@ -56,6 +57,7 @@
                             href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
                     크게 보러 가기</a>
                     </div>
+                    </c:if>
             </div>
             <div class="col-sm-3">
                 <div class="t-center" style="border: 1px solid #343434;">
@@ -71,13 +73,13 @@
 
 
                     </div>
+
                     <div class="circle-profile-area">
                         <img class="circle-profile" alt=""
                              src="${editorDetail.profileImage}">
                     </div>
                     <h4>${editorDetail.nickname}작가</h4>
                     <h5>${editorDetail.introduce}</h5>
-                    <h4>★★★★★</h4>
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
                             <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
@@ -99,11 +101,15 @@
                         </c:if>
                         </c:if>
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="row mb-5">
-            <div class="col-sm-12 t-center mt-5">${editorDetail.content}
+            <div class="col-sm-12 t-center mt-5">${editorDetail.content}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
                 <c:choose>
                     <c:when test="${morph != null}">
                         <div style="border: 1px solid black"><h5>${morph}</h5></div>

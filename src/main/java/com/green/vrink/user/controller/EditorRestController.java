@@ -64,16 +64,28 @@ public class EditorRestController {
         editorService.requestEditorWrite(editorWriteDTO);
     	return ResponseEntity.ok().build();
     }
-    
+
     @PostMapping("/editor-edit")
     public ResponseEntity<?> editorEidtProc(EditorDTO editorDTO) {
-        if(editorDTO.getDelImage().length != 0) {
+        if(editorDTO.getDelImage() != null) {
+
             List<String> delImages = new ArrayList<>();
             for(int i = 0; i<editorDTO.getDelImage().length; i++) {
-                delImages.add(editorDTO.getDelImage()[i]);
+                delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
             }
-            log.info("delImages : ", delImages);
-            uploadService.imgRemove(delImages);
+
+            for(int j = 0; j < delImages.size(); j++) {
+                if(delImages.get(j).split("/")[delImages.get(j).split("/").length-1].equals("no_face.png")
+                || delImages.get(j).split("/")[delImages.get(j).split("/").length-1].equals("default_image.gif")) {
+                    delImages.remove(j);
+                }
+            }
+            log.info("delImages {}: ", delImages);
+            log.info("editorDTO{} : ", editorDTO);
+
+            if(delImages.size() > 0) {
+                uploadService.imgRemove(delImages);
+            }
         }
 
         log.info("{}",editorDTO);

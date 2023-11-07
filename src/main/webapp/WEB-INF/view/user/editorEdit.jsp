@@ -103,7 +103,7 @@ style.css에 합칠예정
 						</div>
 						<div class="col-md-12 d-flex j-around">
 							<div class="col-md-6 t-center filebox">
-								<input class="upload-name" id="thumbnail-filename" value="270x523으로 올려주세요." disabled="disabled" style="width: 200px;">
+								<input class="upload-name" id="thumbnail-filename" value="270x520으로 올려주세요." disabled="disabled" style="width: 200px;">
 								<label for="thumbnail">썸네일 업로드</label><input name="thumbnail" type="file" id="thumbnail" class="input-style">
 							</div>
 							<div class="col-md-6 t-center filebox">
@@ -196,7 +196,7 @@ $('#submit').on('click',async function() {
 	let thumbnailURL = $('#thumbnailURL').val();
 	let vrmURL = $('#vrmURL').val();
 	let delImage = [];
-	
+
 	if(introduce.length === 0) {
 		alert('소개 내용을 1자 이상 입력해주세요.');
 		$('#introduce').focus();
@@ -262,6 +262,7 @@ $('#submit').on('click',async function() {
     formData.append("content", editordata);
     formData.append("vrm", vrmURL);
 	if(delImage.length != 0) {
+		console.log(delImage.length)
 		for(i = 0; i < delImage.length; i++)
 		formData.append("delImage", delImage[i]);
 	}
