@@ -38,7 +38,7 @@
 <section class="block">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 mb-5">
+            <div class="col-sm-12 mb-5">
                 <div class="heading3">
                     <h3>작가 소개</h3>
                 </div>
@@ -77,9 +77,10 @@
                     </div>
                     <h4>${editorDetail.nickname}작가</h4>
                     <h5>${editorDetail.introduce}</h5>
+                    <h4>★★★★★</h4>
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
-                            <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer; border-bottom: 1px solid black;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
+                            <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
                                 소개 수정하기</div>
                         </c:if>
                         <c:if test="${not empty editorPrice}">
@@ -223,7 +224,7 @@
         antialias: true,
         canvas: document.querySelector("#canvas")
     });
-    renderer.setSize(870, 670);
+    renderer.setSize($('#vrm-width').width(), $('#vrm-width').height()*30);
 
     // document.body.appendChild(renderer.domElement);
 

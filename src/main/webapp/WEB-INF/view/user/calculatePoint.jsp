@@ -13,7 +13,7 @@
 	                <div class="field">
 						<div class="check-div">
 							<input type="text" class="point-input" placeholder="신청 금액"/>
-							<input type="button" value="정산 신청" class="calculate-point-btn" id="email-btn"/>
+							<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
 						</div>
 	                </div>
 	            </div>
@@ -23,7 +23,7 @@
 </div>
 <script type="text/javascript">
 
-	$('.calculate-point-btn').on('click', function () {
+	$('#calculate-point-btn').on('click', function () {
 		let pointInput = $('.point-input').val();
 
 		if($('.point-input').val().trim() === null || $('.point-input').val().trim() === 0) {

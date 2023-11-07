@@ -38,7 +38,9 @@
 
     }
 
-
+.more-link {
+    position: absolute;right: 20px;top: 45px;
+}
 
 </style>
 <section class="block">
@@ -83,7 +85,8 @@
                                 <img class="w-full" src="${review.thumbnail}" alt="" />
                                 <div class="gallery-detail">
                                     <a href="/editor/editor-detail/${review.editorId}" title=""><i class="fa fa-search"></i></a>
-                                    <h3>${review.nickname}</h3>
+                                    <h3>${review.nickname}작가</h3>
+                                    <h3 style="color: yellow">${review.star}</h3>
                                 </div>
                             </div><!-- Gallery Box -->
                         </div>
@@ -96,6 +99,7 @@
             <div class="col-sm-12 mt-5">
                 <div class="heading1">
                     <h2>공지사항</h2>
+                    <span class="more-link"><a href="/board/board-list">더보기</a></span>
                 </div>
                 <table class="w-full t-center">
                     <colgroup>
@@ -163,6 +167,7 @@
             <div class="col-sm-6 mt-5">
                 <div class="heading1">
                     <h2>자유 게시판</h2>
+                    <span class="more-link"><a href="/board/board-list">더보기</a></span>
                 </div>
                 <table class="w-full t-center">
                     <colgroup>

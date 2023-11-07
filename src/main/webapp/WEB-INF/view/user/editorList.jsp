@@ -43,9 +43,9 @@
                 console.log(data);
                 data.pageDTOs.forEach(dto => {
 
-                    html += '      <div class="col-md-4">'
+                    html += '      <div class="col-md-3">'
                     html += '<div class="mini-portfolio">'
-                    html += '<img alt="" src="' + dto.thumbnail + '" style="height: 445px;width: 370px">'
+                    html += '<img alt="" src="' + dto.thumbnail + '>'
 
                     html += '<div class= "portfolio-info">'
                     html += '<span>' + dto.nickname + '</span>'
@@ -98,13 +98,13 @@
                 <div class="portfolio-mini-sec">
                     <div class="row" id="list">
                         <c:forEach items="${list}" var="dto">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="mini-portfolio">
                                     <c:if test="${dto.thumbnail == null}">
                                         <img alt="" src="http://placehold.it/270x345">
                                     </c:if>
                                     <c:if test="${dto.thumbnail != null}">
-                                        <img alt="" src="${dto.thumbnail}" style="height: 445px;width: 370px">
+                                        <img alt="" src="${dto.thumbnail}" >
                                     </c:if>
                                     <div class="portfolio-info">
                                         <span>${dto.nickname}</span>

@@ -42,7 +42,20 @@
 
     <select id="findByAll" resultType="com.green.vrink.review.dto.ReviewCountDTO">
         SELECT r.editor_id,
-        avg(r.count) count,
+               avg(r.count) count,
+        CASE
+                   WHEN round(avg(r.count)) = 1 THEN '☆'
+                   WHEN round(avg(r.count)) = 2 THEN '★'
+                   WHEN round(avg(r.count)) = 3 THEN '★☆'
+                   WHEN round(avg(r.count)) = 4 THEN '★★'
+                   WHEN round(avg(r.count)) = 5 THEN '★★☆'
+                   WHEN round(avg(r.count)) = 6 THEN '★★★'
+                   WHEN round(avg(r.count)) = 7 THEN '★★★☆'
+                   WHEN round(avg(r.count)) = 8 THEN '★★★★'
+                   WHEN round(avg(r.count)) = 9 THEN '★★★★☆'
+                   WHEN round(avg(r.count)) = 10 THEN '★★★★★'
+                   ELSE ''
+        END AS star,
         ed.thumbnail,
         ed.introduce,
         u.nickname
@@ -50,6 +63,7 @@
         LEFT JOIN editor_detail ed ON r.editor_id = ed.editor_id
         LEFT JOIN user u ON u.user_id = ed.user_id
         group by ed.editor_id
-        order by count desc;
+        order by count desc
+        LIMIT 4;
     </select>
 </mapper>

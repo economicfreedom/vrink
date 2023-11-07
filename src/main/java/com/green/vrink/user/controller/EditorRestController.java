@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,7 +67,14 @@ public class EditorRestController {
     
     @PostMapping("/editor-edit")
     public ResponseEntity<?> editorEidtProc(EditorDTO editorDTO) {
-        List<String> delImages;
+        if(editorDTO.getDelImage().length != 0) {
+            List<String> delImages = new ArrayList<>();
+            for(int i = 0; i<editorDTO.getDelImage().length; i++) {
+                delImages.add(editorDTO.getDelImage()[i]);
+            }
+            log.info("delImages : ", delImages);
+            uploadService.imgRemove(delImages);
+        }
 
         log.info("{}",editorDTO);
         editorService.requestEditorEdit(editorDTO);

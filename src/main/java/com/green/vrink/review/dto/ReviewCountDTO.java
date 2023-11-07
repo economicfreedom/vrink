@@ -9,4 +9,5 @@ public class ReviewCountDTO {
     private String nickname;
     private String thumbnail;
     private String introduce;
+    private String star;
 }
