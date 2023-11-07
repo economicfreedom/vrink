@@ -24,12 +24,12 @@
     </select>
 
     <insert id="editorWrite">
-    	INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
-    	VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
+    	INSERT INTO editor_detail(user_id, profile_image, introduce, thumbnail, content, vrm)
+    	VALUES (#{userId}, #{profileImage}, #{introduce}, #{thumbnail}, #{content}, #{vrm})
     </insert>
 
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
-        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, replace(ed.vrm,"\\",'/') as vrm, u.nickname
+        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.thumbnail, ed.content, replace(ed.vrm,"\\",'/') as vrm, u.nickname
 		from editor_detail ed
 		left join user u
 		on u.user_id = ed.user_id
@@ -46,7 +46,7 @@
                  introduce,
                  nickname,
                  COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count,
-                 e.image
+                 e.thumbnail
           FROM editor_detail e
               LEFT JOIN user u
           ON e.user_id = u.user_id
@@ -63,7 +63,7 @@
 
     <update id="updateByEditorId">
         UPDATE editor_detail SET
-        profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
+        profile_image=#{profileImage}, introduce=#{introduce}, thumbnail=#{thumbnail}, content=#{content}, vrm=#{vrm}
         WHERE editor_id = #{editorId}
     </update>
 

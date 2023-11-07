@@ -7,7 +7,7 @@ public class EditorWriteDTO {
 	private Integer userId;
 	private String profileImage;
 	private String introduce;
-	private String image;
+	private String thumbnail;
 	private String content;
 	private String vrm;
 }

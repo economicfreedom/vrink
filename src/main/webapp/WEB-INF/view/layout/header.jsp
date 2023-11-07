@@ -116,7 +116,7 @@
         <div class="menu">
             <div class="container">
                 <div class="logo">
-                    <a href="#" title="">
+                    <a href="/" title="">
                         <i class="fa fa-get-pocket"></i>
                         <span>VRINK</span>
                         <strong>승철이</strong>
@@ -156,6 +156,9 @@
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="/editor/list" title="">작가</a>
                             <ul>
+                                <c:if test="${not empty EDITOR_ID}">
+                                <li><a href="/editor/editor-detail/${EDITOR_ID}" title="">내 소개</a></li>
+                                </c:if>
                                 <li><a href="/editor/list" title="">둘러보기</a></li>
                                 <c:if test="${not empty USER && empty EDITOR_ID}">
                                 <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>

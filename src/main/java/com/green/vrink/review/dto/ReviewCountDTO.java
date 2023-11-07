@@ -7,6 +7,6 @@ public class ReviewCountDTO {
     private Integer editorId;
     private double count;
     private String nickname;
-    private String profileImage;
+    private String thumbnail;
     private String introduce;
 }

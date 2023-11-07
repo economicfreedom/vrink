@@ -43,7 +43,7 @@
     <select id="findByAll" resultType="com.green.vrink.review.dto.ReviewCountDTO">
         SELECT r.editor_id,
         avg(r.count) count,
-        ed.profile_image,
+        ed.thumbnail,
         ed.introduce,
         u.nickname
         FROM review r

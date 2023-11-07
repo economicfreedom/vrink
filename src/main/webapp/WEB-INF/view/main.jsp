@@ -80,9 +80,9 @@
                         <c:forEach items="${reviewList}" var="review">
                         <div class="col-sm-3">
                             <div class="gallery-box curve">
-                                <img class="w-full" src="${review.profileImage}" alt="" />
+                                <img class="w-full" src="${review.thumbnail}" alt="" />
                                 <div class="gallery-detail">
-                                    <a href="images/preview.png" title=""><i class="fa fa-search"></i></a>
+                                    <a href="/editor/editor-detail/${review.editorId}" title=""><i class="fa fa-search"></i></a>
                                     <h3>${review.nickname}</h3>
                                 </div>
                             </div><!-- Gallery Box -->

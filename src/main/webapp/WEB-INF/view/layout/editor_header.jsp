@@ -110,7 +110,7 @@
         <div class="menu">
             <div class="container">
                 <div class="logo">
-                    <a href="#" title="">
+                    <a href="/" title="">
                         <i class="fa fa-get-pocket"></i>
                         <span>VRINK</span>
                         <strong>승철이</strong>

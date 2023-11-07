@@ -100,7 +100,7 @@ style.css에 합칠예정
 						</div>
 						<div class="col-md-12 d-flex j-around">
 							<div class="col-md-6 t-center filebox">
-								<input class="upload-name" id="thumbnail-filename" value="파일선택" disabled="disabled" style="width: 200px;">
+								<input class="upload-name" id="thumbnail-filename" value="270x523으로 올려주세요." disabled="disabled" style="width: 200px;">
 								<label for="thumbnail">썸네일 업로드</label><input name="thumbnail" type="file" id="thumbnail" class="input-style">
 							</div>
 							<div class="col-md-6 t-center filebox">
@@ -146,6 +146,23 @@ $('#thumbnail').change(function(){
 	     $('#thumbnail').val("");
 		return;
 	}
+	// 이미지 파일인 경우
+	var img = new Image();
+	img.src = URL.createObjectURL(thumbnailfile[0].files[0]);
+
+	// 이미지가 로드될 때
+	img.onload = function() {
+		// 너비와 높이 가져오기
+		var width = img.width;
+		var height = img.height;
+
+		if (width > 270 || height > 520) {
+			$('#thumbnail').val("");
+			$('#thumbnail-filename').val("270x520으로 올려주세요.");
+			alert('이미지의 크기는 270px x 520px 이어야 합니다.');
+			return
+		}
+	};
 	$('#thumbnail-filename').val(thumbnailfile.val());
 });
 
@@ -233,7 +250,7 @@ $('#submit').on('click',async function() {
 	let formData = new FormData();
     formData.append("profileImage", profileURL);
     formData.append("introduce", introduceInput);
-    formData.append("image", thumbnailURL);
+    formData.append("thumbnail", thumbnailURL);
     formData.append("content", editordata);
     formData.append("vrm", vrmURL);
 

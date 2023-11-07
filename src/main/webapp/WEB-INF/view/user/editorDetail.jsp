@@ -48,19 +48,14 @@
         </div>
         <div class="row mb-5">
             <div class="col-sm-9">
-                <c:if test="${editorDetail.vrm != null}">
                     <div class="mb-3">
-                        <canvas id="canvas" width="870px" height="870px"></canvas>
+                        <canvas id="canvas"></canvas>
                     </div>
-                    <div class="mb-3 t-center">
+                    <div class="mb-3 t-center" id="vrm-width">
                     <a
                             href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
                     크게 보러 가기</a>
                     </div>
-                </c:if>
-                <div class="mb-3" id="thumbnail">
-                    <img class="w-full" alt="" src="${editorDetail.image}">
-                </div>
             </div>
             <div class="col-sm-3">
                 <div class="t-center" style="border: 1px solid #343434;">
@@ -82,7 +77,6 @@
                     </div>
                     <h4>${editorDetail.nickname}작가</h4>
                     <h5>${editorDetail.introduce}</h5>
-                    <h5>잘부탁드립니다</h5>
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
                             <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer; border-bottom: 1px solid black;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
@@ -97,9 +91,11 @@
                                 <div><h5>${editorPrice.price}</h5></div>
                             </div>
                         </c:forEach>
+                        <c:if test="${editorDetail.editorId != EDITOR_ID}">
                         <div id="suggest"
                              style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
                             작가에게 의뢰하기</div>
+                        </c:if>
                         </c:if>
                     </div>
                 </div>
@@ -227,7 +223,7 @@
         antialias: true,
         canvas: document.querySelector("#canvas")
     });
-    renderer.setSize($('.w-full').width(), $('.w-full').height()-200);
+    renderer.setSize(870, 670);
 
     // document.body.appendChild(renderer.domElement);
 
@@ -384,14 +380,14 @@
     } );
 
 
-    const target = document.querySelector('#thumbnail');
+    const target = document.querySelector('#vrm-width');
     // 크기변화를 관찰할 요소지정
     const resizeObserver = new ResizeObserver((entries) => {
         renderer = new THREE.WebGLRenderer({
             antialias: true,
             canvas: document.querySelector("#canvas")
         });
-        renderer.setSize($('#thumbnail').width(), $('#thumbnail').height()-200);
+        renderer.setSize($('#vrm-width').width(), $('#vrm-width').height()*30);
     })
 
     resizeObserver.observe(target);
