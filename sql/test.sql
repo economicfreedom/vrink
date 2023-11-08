@@ -546,12 +546,14 @@ ALTER TABLE `refund_reason`
 INSERT INTO refund_reason(payment_id, payment_state_id, reason, reason_detail)
     VALUE ()
 
-SELECT * FROM payment_state;
+SELECT *
+FROM payment_state;
 
 select *
 from refund_reason;
 
-SELECT * FROM refund_reason;
+SELECT *
+FROM refund_reason;
 
 
 select *
@@ -625,5 +627,24 @@ GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.cr
          p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
 
 
+SELECT p.payment_id,p.name,u.nickname,u.phone,u.email,p.created_at,p.request
+FROM payment p
+         LEFT JOIN user u on p.user_id = u.user_id
+         JOIN (SELECT payment_id, MAX(created_at) as max_created_at
+               FROM payment_state
+               GROUP BY payment_id) ps_max
+         LEFT JOIN payment_state ps
+                   ON p.payment_id = ps_max.payment_id
+                       AND ps.created_at = ps_max.max_created_at
+WHERE p.payment_id = 58
+GROUP BY p.payment_id;
 
 
+
+SELECT * FROM payment;
+SELECT * FROM payment_detail
+WHERE payment_id =
+
+DESC payment;
+
+SELECT

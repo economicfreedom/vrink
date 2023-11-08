@@ -2,7 +2,6 @@ package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
 import com.green.vrink.util.Criteria;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,7 +32,15 @@ public interface EditorService {
 
     int getEditorIdByUserId(Integer userId);
 
-	List<RequestListDTO> getRequestList(Criteria cri, int editorId);
+	List<RequestDetailDTO> getRequestList(Criteria cri, int editorId);
 
 	int getRequestListTotal(Criteria cri,Integer editorId);
+
+	RequestViewDTO getRequestByPaymentId(Integer paymentId);
+	List<RequestDetailDTO> getRequestDetailListById(Integer paymentId);
+
+	RequestResultDTO getRequestDetailResult(Integer paymentId);
+
+
+
 }

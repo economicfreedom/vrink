@@ -1,15 +1,13 @@
 package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.green.vrink.user.repository.interfaces.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EditorServiceImpl implements EditorService{
+public class EditorServiceImpl implements EditorService {
     private final UserRepository userRepository;
     private final HttpSession session;
 
@@ -26,33 +24,35 @@ public class EditorServiceImpl implements EditorService{
     public Integer requestApproval(ApprovalDTO approvalDTO) {
 
 
-
-
         return userRepository.requestApproval(approvalDTO);
     }
-    
+
     @Transactional
     public Integer requestEditorWrite(EditorWriteDTO editorWriteDTO) {
-    return userRepository.editorWrite(editorWriteDTO);
+        return userRepository.editorWrite(editorWriteDTO);
     }
+
     @Transactional
     @Override
     public EditorDTO responseEditorDeatil(Integer editorId) {
 
-    return userRepository.findByEditorId(editorId);
+        return userRepository.findByEditorId(editorId);
     }
+
     @Transactional
     @Override
     public EditorDTO responseEditorEdit(Integer editorId) {
 
-    return userRepository.findByEditorId(editorId);
+        return userRepository.findByEditorId(editorId);
     }
+
     @Transactional
     @Override
     public Integer requestEditorEdit(EditorDTO editorDTO) {
 
-    return userRepository.updateByEditorId(editorDTO);
+        return userRepository.updateByEditorId(editorDTO);
     }
+
     @Transactional
     @Override
     public String getVrm(Integer editorId) {
@@ -70,7 +70,7 @@ public class EditorServiceImpl implements EditorService{
     public Integer getTotal() {
         return userRepository.getTotal();
     }
-    
+
     @Transactional
     @Override
     public Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO) {
@@ -83,10 +83,10 @@ public class EditorServiceImpl implements EditorService{
             Integer price = editorPriceListDTO.getPrice()[i];
             priceDTO.setOptions(option);
             priceDTO.setPrice(price);
-            log.info("{}",priceDTO);
+            log.info("{}", priceDTO);
             userRepository.insertPrice(priceDTO);
         }
-    return 1;
+        return 1;
     }
 
     @Override
@@ -100,7 +100,7 @@ public class EditorServiceImpl implements EditorService{
             Integer price = editorPriceListDTO.getPrice()[i];
             priceDTO.setOptions(option);
             priceDTO.setPrice(price);
-            log.info("{}",priceDTO);
+            log.info("{}", priceDTO);
             userRepository.insertPrice(priceDTO);
         }
         return 1;
@@ -144,12 +144,39 @@ public class EditorServiceImpl implements EditorService{
     }
 
     @Override
-    public List<RequestListDTO> getRequestList(Criteria cri, int editorId) {
-        return userRepository.findRequestListByCriAndEditorId(cri,editorId);
+    public List<RequestDetailDTO> getRequestList(Criteria cri, int editorId) {
+        return userRepository.findRequestListByCriAndEditorId(cri, editorId);
     }
 
     @Override
-    public int getRequestListTotal(Criteria cri,Integer editorId) {
-        return userRepository.findRequestListTotalByCriAndEditorId(cri,editorId);
+    public int getRequestListTotal(Criteria cri, Integer editorId) {
+        return userRepository.findRequestListTotalByCriAndEditorId(cri, editorId);
+    }
+
+    @Override
+    public RequestViewDTO getRequestByPaymentId(Integer paymentId) {
+        return userRepository.findRequestByPaymentId(paymentId);
+    }
+
+    @Override
+    public List<RequestDetailDTO> getRequestDetailListById(Integer paymentId) {
+        return null;
+    }
+
+    @Override
+    public RequestResultDTO getRequestDetailResult(Integer paymentId) {
+        List<RequestListDTO> requestListDTO = userRepository
+                .findPaymentDetailByPaymentId(paymentId);
+        RequestResultDTO requestResultDTO = new RequestResultDTO();
+        requestResultDTO.setRequestListDTOS(requestListDTO);
+
+        for (RequestListDTO requestDetailDTO : requestListDTO) {
+            requestResultDTO.setSumPrice(requestDetailDTO.getPrice());
+            requestResultDTO.setQuantity(requestDetailDTO.getQuantity());
+
+        }
+
+
+        return requestResultDTO;
     }
 }

@@ -47,7 +47,7 @@ public interface UserRepository {
 	Integer findUserByNickname(String nickname);
 	String findEmailByNicknameAndPhone(FindEmailDto findEmailDto);
 
-    List<RequestListDTO> findRequestListByCriAndEditorId(
+    List<RequestDetailDTO> findRequestListByCriAndEditorId(
 			@Param("cri") Criteria cri
 			, @Param("editorId") int editorId
 	);
@@ -58,4 +58,9 @@ public interface UserRepository {
 	);
 	Integer findPasswordByEmailAndName(FindPasswordDto findPasswordDto);
 	Integer findUserIdByEmail(String email);
+
+	RequestViewDTO findRequestByPaymentId(Integer paymentId);
+	List<RequestListDTO> findPaymentDetailByPaymentId(Integer paymentId);
+
+
 }

@@ -1,22 +1,17 @@
 package com.green.vrink.user.controller;
 
 import com.green.vrink.morph.service.MorphService;
-import com.green.vrink.payment.dto.PriceDTO;
+import com.green.vrink.payment.service.PaymentService;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
-import com.green.vrink.user.dto.EditorDTO;
-import com.green.vrink.user.dto.EditorPriceDTO;
-import com.green.vrink.user.dto.EditorPriceListDTO;
-import com.green.vrink.user.dto.RequestListDTO;
+import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
-import com.green.vrink.user.service.EditorServiceImpl;
 import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +33,7 @@ public class EditorController {
     private final HttpSession session;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final PaymentService paymentService;
 
     @GetMapping("/editor-detail/{editorId}")
     public String editorDetail(@PathVariable("editorId") Integer editorId
@@ -62,7 +58,6 @@ public class EditorController {
         log.info("editorDetail{}", editorDTO);
         log.info("morph : {}", morph);
         model.addAttribute("morph", morph);
-
 
 
         return "user/editorDetail";
@@ -170,16 +165,16 @@ public class EditorController {
             Model model
 
             , @RequestParam(
-              name = "page-num"
+            name = "page-num"
             , required = false
             , defaultValue = "1")
             Integer pageNum
             , @RequestParam(required = false)
-              String keyword
+            String keyword
             , @RequestParam(required = false)
-              String filter
+            String filter
             , @RequestParam(required = false)
-              String type
+            String type
 
     ) {
         User user = (User) session.getAttribute("USER");
@@ -193,7 +188,7 @@ public class EditorController {
         cri.setPageNum(pageNum);
         cri.setCountPerPage(10);
         int total = editorService.getRequestListTotal(cri, editorId);
-        List<RequestListDTO> list = editorService.getRequestList(cri, editorId);
+        List<RequestDetailDTO> list = editorService.getRequestList(cri, editorId);
 
         PageDTO pageDTO = new PageDTO();
 
@@ -204,16 +199,35 @@ public class EditorController {
 
         model.addAttribute("list", list);
         model.addAttribute("pageDTO", pageDTO);
-        model.addAttribute("keyword",keyword);
-        model.addAttribute("filter",filter);
-        model.addAttribute("type",type);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("filter", filter);
+        model.addAttribute("type", type);
 
         return "requestList";
 
     }
 
-    @GetMapping("/request-view")
-    public String requestView() {
+    @GetMapping("/request-view/{payment-id}")
+    public String requestView(Model model
+            , @PathVariable(name = "payment-id")
+              Integer paymentId
+    ) {
+
+        User user = (User) session.getAttribute(Define.USER);
+
+        int userId = user.getUserId();
+        RequestViewDTO requestDTO = editorService
+                                          .getRequestByPaymentId(paymentId);
+        log.info("requestDTO {}",requestDTO);
+        Integer editorId = requestDTO.getEditorId();
+        int userIdByEditorId = editorService.getUserIdByEditorId(editorId);
+
+        RequestResultDTO requestDetailResult = editorService.getRequestDetailResult(paymentId);
+
+
+
+        model.addAttribute("requestDTO",requestDTO);
+        model.addAttribute("detailDTO",requestDetailResult);
 
 
         return "requestView";

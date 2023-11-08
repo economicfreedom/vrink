@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestListDTO {
+public class RequestDetailDTO {
 
     private Integer paymentId;
-    private String options;
-    private int price;
-    private int quantity;
-
+    private String name;
+    private String nickname;
+    private String createdAt;
+    private String state;
 }
