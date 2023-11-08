@@ -6,7 +6,7 @@
         VALUE(#{comName},#{thumbnail},#{price},#{adPeriod})
     </insert>
     <select id="findAdImg" resultType="java.lang.String">
-        SELECT image FROM ad
+        SELECT main_image FROM ad
         WHERE ad_id = (SELECT MAX(ad_id) FROM ad)
     </select>
 </mapper>

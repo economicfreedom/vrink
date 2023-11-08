@@ -77,14 +77,19 @@ public class EditorRestController {
                 delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
             }
 
+            log.info("사이즈 : {}", delImages.size());
+            log.info("파일 이름 확인 : {}",delImages.get(0));
+            log.info("파일 이름 확인 : {}",delImages.get(0).split("\\\\")[0]);
             for(int j = 0; j < delImages.size(); j++) {
                 if(delImages.get(j).split("/")[delImages.get(j).split("/").length-1].equals("no_face.png")
                 || delImages.get(j).split("/")[delImages.get(j).split("/").length-1].equals("default_image.gif")) {
                     delImages.remove(j);
+
+                    log.info("삭제 이미지 확인 {}: ",delImages.get(j));
                 }
             }
-            log.info("delImages {}: ", delImages);
-            log.info("editorDTO{} : ", editorDTO);
+            log.info("여기 !!!delImages{}: ", delImages);
+
 
             if(delImages.size() > 0) {
                 uploadService.imgRemove(delImages);
