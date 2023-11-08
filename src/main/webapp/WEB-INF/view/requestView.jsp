@@ -6,7 +6,7 @@
         width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
-        font-size: 1.3rem; /* 폰트 사이즈 증가 */
+        font-size: 1.3rem;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         min-width: 400px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -14,17 +14,17 @@
     }
 
     caption {
-        caption-side: top; /* 제목을 위쪽에 배치 */
-        font-size: 1.5em; /* 제목 폰트 사이즈 */
-        font-weight: bold; /* 폰트 굵기 */
-        color: #ff2929; /* 제목 색상 */
-        padding: 10px; /* 패딩 */
-        text-align: center; /* 텍스트 중앙 정렬 */
-        margin-bottom: 15px; /* 제목과 테이블 사이 간격 */
+        caption-side: top;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ff2929;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 15px;
     }
 
     th, td {
-        padding: 12px !important; /* 패딩 증가 */
+        padding: 12px !important;
         text-align: left;
         border-bottom: 1px solid #dddddd;
 
@@ -33,10 +33,10 @@
 
     th {
 
-        background-color: #ff2929; /* 테이블 헤더 배경색 변경 */
+        background-color: #ff2929;
         color: #ffffff;
-        text-align: center; /* 텍스트 정렬을 왼쪽으로 변경 */
-        font-size: 1.3em; /* 테이블 헤더 폰트 사이즈 증가 */
+        text-align: center;
+        font-size: 1.3em;
 
     }
 
@@ -49,7 +49,7 @@
     }
 
 
-    /* 버튼 스타일링 */
+
     .button {
         padding: 10px 20px;
         background-color: #ff2929;
@@ -66,9 +66,9 @@
         background-color: #e60000;
     }
 
-    /* 아래 정렬을 위한 컨테이너 */
+
     .button-container {
-        text-align: right; /* 버튼을 오른쪽 정렬 */
+        text-align: right;
         margin-top: 20px;
     }
 
@@ -102,8 +102,8 @@
             <caption style="text-align: left; color: grey"> <span >상세보기
                 </span>
                 <hr style="width: 10%; border: solid #ff2929; text-align: center">
-            </caption> <!-- 테이블 제목 추가 -->
-            <!-- 세로로 데이터를 표시하는 행들 -->
+            </caption>
+
             <tr>
                 <th width="300" style="padding: 1px;">주문번호</th>
                 <td>1</td>

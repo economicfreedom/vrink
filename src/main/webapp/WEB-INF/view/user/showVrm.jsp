@@ -49,7 +49,7 @@
     import {VRMLoaderPlugin, VRMUtils} from '@pixiv/three-vrm';
 
 
-    // renderer
+    // 랜더링
     const renderer = new THREE.WebGLRenderer({
         antialias: true
     });
@@ -57,22 +57,22 @@
     renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild(renderer.domElement);
 
-    // camera
+    // 카메라
     const camera = new THREE.PerspectiveCamera(30.0, window.innerWidth / window.innerHeight, 0.1, 20.0);
     camera.position.set(0.0, 1.0, 5.0);
 
-    // camera controls
+    // 카메라 조종
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.screenSpacePanning = true;
     controls.target.set(0.0, 1.0, 0.0);
     controls.update();
 
-    // scene
+    // 장면
     const scene = new THREE.Scene();
 
     scene.background = new THREE.Color("black")
 
-    // light
+    // 조명
     const light = new THREE.DirectionalLight(0xffffff);
     light.position.set(0.0, 0.5, 0.0).normalize();
     scene.add(light);
@@ -82,7 +82,7 @@
 			camera.add( lookAtTarget );
 
 
-    // gltf and vrm
+    // gltf로 vrm 사용
     let currentVrm = undefined;
     let currentMixer = undefined;
 

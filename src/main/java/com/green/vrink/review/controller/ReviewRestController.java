@@ -43,6 +43,14 @@ public class ReviewRestController {
             return ResponseEntity.badRequest().body(defaultMessage);
         }
 
+        int editorId = reviewDTO.getEditorId();
+        int userIdByEditorId = editorService
+                              .getUserIdByEditorId(editorId);
+
+        Integer userId = editorService.getUserIdByEditorId(reviewDTO.getEditorId());
+        if (userId == userIdByEditorId){
+            return ResponseEntity.badRequest().build();
+        }
 
 
         Integer check = reviewService.duplicationCheck(reviewDTO);
@@ -57,8 +65,6 @@ public class ReviewRestController {
         log.info("reply save start {}", save);
 
 
-        Integer userId = editorService.getUserIdByEditorId(reviewDTO.getEditorId());
-        Integer editorId = reviewDTO.getEditorId();
 
         String nickname = editorService.getNicknameByEditorId(editorId);
 

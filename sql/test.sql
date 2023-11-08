@@ -623,3 +623,7 @@ WHERE p.user_id = #{userId} AND customer_recognize =0
 
 GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
          p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
+
+
+
+
