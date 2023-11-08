@@ -412,4 +412,9 @@ public class AdminController {
         return "admin/adDetailAdmin";
     }
 
+    @GetMapping("/ad-admin/write")
+    public String adWrite() {
+        return "admin/adWrite";
+    }
+
 }

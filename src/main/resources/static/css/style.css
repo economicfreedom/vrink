@@ -517,6 +517,9 @@ iframe{
 .simple-header.for-sticky.sticky > .menu .logout-div > span {
     margin: 25px 0;
 }
+.simple-header.for-sticky.sticky > .menu .go-admin-div > a > span {
+    margin: 25px 0;
+}
 .logout-div > span i {
     font-size: 16px;
     margin-right: 4px;
@@ -5297,6 +5300,7 @@ footer.light-footer .bottom-line a {
 .close-popup,
 .popup-client > span,
 .logout-div > span,
+.go-admin-div > a > span,
 .popup-alarm > span,
 .popup-alarm > div,
 .square-services::before,

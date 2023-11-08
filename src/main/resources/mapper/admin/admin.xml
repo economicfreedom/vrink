@@ -315,7 +315,7 @@
     </update>
 
     <insert id="insertEditorDetailByUserId">
-        INSERT INTO editor_detail(user_id, image)
+        INSERT INTO editor_detail(user_id, thumbnail)
         VALUES(#{userId}, '/images/resource/default_image.gif')
     </insert>
 

@@ -283,6 +283,11 @@
                     id="resetButton"
                     onClick="location.href='/admin/ad-admin?reset=1'">검색초기화
             </button>
+
+            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px; margin-right: -50px; float: right;"
+                    id="writeButton"
+                    onClick="location.href='/admin/ad-admin/write'">배너 등록
+            </button>
         </div>
             <table class="datatable-table table">
                 <tbody id="ad-list-container">
