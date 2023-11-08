@@ -36,7 +36,7 @@
                             <div style="padding-top: 40px; padding-bottom: 40px">
                                 <h4>로그인</h4>
                                 <div class="field">
-                                    <input type="text" class="sign-in-email" placeholder="이메일" value="vrinkteam@gmail.com"/>
+                                    <input type="text" class="sign-in-email" placeholder="이메일" value="admin"/>
                                 </div>
                                 <div class="field">
                                     <input type="password" class="sign-in-password" placeholder="비밀번호"/>
@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <input type="text" placeholder="휴대폰번호" class="phone-input"/>
+                                    <input type="text" placeholder="휴대폰번호" class="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
@@ -159,7 +159,7 @@
                 </div>
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
                 <nav style="float: none; margin: 0 auto; background-color: #ff2929">
-                    <ul style="margin-left: 2px">
+                    <ul style="margin-left: 15px">
 
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="/editor/list" title="">작가</a>

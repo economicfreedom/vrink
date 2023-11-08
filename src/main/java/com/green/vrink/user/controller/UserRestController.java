@@ -96,10 +96,13 @@ public class UserRestController {
 
     // 닉네임 변경
     @PutMapping("/update/nickname/{userId}")
-    public int updateNickname(@PathVariable String userId, @RequestBody Map<String, String> map, Model model) {
+    public int updateNickname(@PathVariable String userId, @RequestBody Map<String, String> map) {
         String nickname = map.get("nickname");
+        int existNickname = userService.findUserByNickname(nickname);
+        if (existNickname == 1) {
+            return -1;
+        }
         int result = userService.updateNickname(userId, nickname);
-
 
         if (result != 1) {
             return 0;
@@ -146,7 +149,10 @@ public class UserRestController {
     @DeleteMapping("/delete/{userId}")
     public int deleteUser(@PathVariable String userId) {
         int result = userService.deleteByUserId(userId);
+        log.info("deleteFlag: {}", result);
         if (result == 1) {
+            userService.updateNickname(userId, "알수없음");
+            session.removeAttribute(Define.USER);
             return result;
         }
         return 0;

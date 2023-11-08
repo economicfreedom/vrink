@@ -34,14 +34,16 @@
 	});
 
 	$('.new-password').change(function () {
-		$('.new-password-check').val('');
 		$('.new-password-check-flag').val('1');
+		if (!passwordValidation($('.new-password').val().trim())) {
+			$('.new-password').val('');
+		}
+
 	});
 
 	$('.new-password-check').change(function () {
 		if ($('.new-password').val().trim() === $('.new-password-check').val().trim()) {
 			$('.new-password-check-flag').val('0');
-			return;
 		}
 	});
 

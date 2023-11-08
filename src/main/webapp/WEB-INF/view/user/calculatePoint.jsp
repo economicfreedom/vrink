@@ -12,7 +12,7 @@
 	                </div>
 	                <div class="field">
 						<div class="check-div">
-							<input type="text" class="point-input" placeholder="신청 금액"/>
+							<input type="text" class="point-input" placeholder="신청 금액" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
 							<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
 						</div>
 	                </div>

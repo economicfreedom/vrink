@@ -7,10 +7,10 @@
 	            <h3>비밀번호 찾기</h3>
 	            <div class="common-sign-up">
 					<div class="field">
-	                    <input type="text" placeholder="아이디" id="email-input" value="vrinkteam@gmail.com"/>
+	                    <input type="text" placeholder="아이디" id="email-input"/>
 	                </div>
 	                <div class="field">
-	                    <input type="text" placeholder="이름" id="name-input" value="엄준식"/>
+	                    <input type="text" placeholder="이름" id="name-input"/>
 	                </div>
 	                <div class="field">
 						<div class="flat-btn-div">
@@ -26,13 +26,22 @@
 	let userId;
 	let newPassword;
 
+	$('#email-input').change(function() {
+		if (!emailValidation($('#email-input').val().trim())) {
+			$('#email-input').val('');
+		}
+	});
+
 	$('#search-password-btn').on('click', function () {
+		if ($('#email-input').val().trim() === '' || $('#name-input').val().trim() === '' ) {
+			alert('모든 값을 입력해주세요.')
+			return;
+		}
 		searchPassword();
-		// changePassword(userId);
 	});
 
 	async function searchPassword() {
-		await fetch('http://localhost/user/send/password-to-email', {
+		await fetch('/user/send/password-to-email', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -44,6 +53,10 @@
 		}).then(response =>
 			response.json()
 		).then(data => {
+			if (data === 0) {
+				alert('존재하지않는 회원입니다.');
+				return;
+			}
 			userId = data;
 			sendNewPassword($('#email-input').val().trim());
 		});
