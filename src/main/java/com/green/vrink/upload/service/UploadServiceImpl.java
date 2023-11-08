@@ -48,7 +48,10 @@ public class UploadServiceImpl implements UploadService {
                 };
             }
             for(int i = 0; i<editorDTO.getDelImage().length; i++) {
-                delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+                if(!editorDTO.getDelImage()[i].equals("")) {
+                    delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+                }
+
             }
         }
         return delImages;
