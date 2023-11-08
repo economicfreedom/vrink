@@ -10,7 +10,7 @@
 	                    <input type="text" placeholder="닉네임" id="nickname-input"/>
 	                </div>
 	                <div class="field">
-	                    <input type="text" placeholder="휴대폰 번호" id="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+	                    <input type="text" placeholder="휴대폰 번호" id="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11"/>
 	                </div>
 	                <div class="field">
 						<div class="flat-btn-div">
