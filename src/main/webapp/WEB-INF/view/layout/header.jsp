@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <input type="text" placeholder="휴대폰번호" class="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                    <input type="text" placeholder="휴대폰번호" class="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
