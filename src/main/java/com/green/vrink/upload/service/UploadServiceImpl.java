@@ -1,11 +1,13 @@
 package com.green.vrink.upload.service;
 
+import com.green.vrink.user.dto.EditorDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,5 +35,22 @@ public class UploadServiceImpl implements UploadService {
         }
 
 
+    }
+
+    @Override
+    public List<String> removeExtractImages(EditorDTO editorDTO) {
+        List<String> delImages = new ArrayList<>();
+        if(editorDTO.getDelImage() != null) {
+            for(int i = 0; i<editorDTO.getDelImage().length; i++) {
+                if(editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("no_face.png")
+                        || editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("default_image.gif")) {
+                    editorDTO.getDelImage()[i] = "";
+                };
+            }
+            for(int i = 0; i<editorDTO.getDelImage().length; i++) {
+                delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+            }
+        }
+        return delImages;
     }
 }
