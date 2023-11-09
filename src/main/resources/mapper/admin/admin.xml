@@ -319,6 +319,7 @@
         VALUES(#{userId}, '/images/resource/default_image.gif')
     </insert>
 
+
     <select id="countEditorDetailByUserId" resultType="integer">
         SELECT count(*)
         FROM editor_detail
@@ -521,5 +522,10 @@
         FROM user
         WHERE enabled_check = 1
     </select>
+
+    <insert id="insertAd">
+        INSERT INTO ad(ad_com_name, main_image, h_image, v_image, price, ad_period, category, is_notice)
+        VALUES (#{adComName}, #{mainImage}, #{hImage}, #{vImage}, #{price}, #{adPeriod}, #{category}, #{isNotice})
+    </insert>
 
 </mapper>

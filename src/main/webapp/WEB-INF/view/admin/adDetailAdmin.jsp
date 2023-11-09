@@ -3,12 +3,15 @@
 
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
-<div style="font-family: 'NanumSquareRound';" class="d-flex justify-content-center">
-    <div class="card-body text-black" style="margin: 200px 0;
-    max-width: 530px;
+<div id="main-card"
+     style="font-family: 'NanumSquareRound'; display: inline-flex; position: relative; left: 30px;"
+     class="justify-content-center">
+    <div class="card-body text-black" style="margin: 130px 0;
+    min-width: 710px;
+    max-width: 710px;
     border: 1px solid #b9b9b9;
     border-radius: 8px;">
-        <div class="d-flex align-items-center mb-3 pb-1" style="
+        <div class="d-flex align-items-center pb-1" style="
         background-color: #212529;
         color: white;
         border-top-right-radius: 6px;
@@ -45,6 +48,21 @@
                 </div>
             </div>
 
+            <div class="form-outline mb-0">
+                <label class="form-label my-0" for="category">위치</label>
+                <div style="display: flex;">
+                    <input type="text" id="category" value="${adDetail.category == 0 ? "메인" : "사이드"}"
+                           class="form-control form-control input-l" readonly="readonly"/>
+                </div>
+            </div>
+
+            <div class="form-outline mb-0">
+                <label class="form-label my-0" for="isNotice">종류</label>
+                <div style="display: flex;">
+                    <input type="text" id="isNotice" value="${adDetail.isNotice == 1 ? "공지사항" : "외부광고"}"
+                           class="form-control form-control input-l" readonly="readonly"/>
+                </div>
+            </div>
 
             <div class="form-outline mb-0" style="display: flex; justify-content: center;">
                 <div class="user-inline">
@@ -60,10 +78,10 @@
                     <div style="display: flex;">
                         <c:choose>
                             <c:when test="${adDetail.status == 0}">
-                                <input type="text" id="status" value="게시중" style="color: cadetblue" class="form-control form-control input-l ms-4" readonly="readonly"/>
+                                <input type="text" id="status" value="게시중" style="color: blue" class="form-control form-control input-l ms-4" readonly="readonly"/>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" id="status" value="비게시" style="color: #173f41" class="form-control form-control input-l ms-4" readonly="readonly"/>
+                                <input type="text" id="status" value="비게시" style="color: red" class="form-control form-control input-l ms-4" readonly="readonly"/>
                             </c:otherwise>
                         </c:choose>
                         <button class="btn btn-secondary btn-block btn-admin ms-1" style="width: 60px;" type="button" onclick="changeApply()">변경</button>
@@ -73,36 +91,38 @@
 
             <input type="hidden" id="adId" value="${adDetail.adId}">
 
-            <div class="pt-1">
+            <div class="pt-1 mt-1">
 
-                <%--                <button class="btn btn-dark btn-lg btn-block"--%>
-                <%--                        style="font-size: 0.8rem;" type="submit">정보수정--%>
-                <%--                </button>--%>
-
-                <button class="btn btn-secondary btn-block btn-admin"
+                <button class="btn btn-secondary btn-block btn-admin mt-2"
                         type="button"
-                        onClick="location.href='/admin/ad-admin?page=${page}'">
+                        onClick="location.href='/admin/ad-admin'">
                     목록보기
                 </button>
+
             </div>
         </div>
+        <script>
+            console.log("${adDetail}");
+        </script>
+<%--            <c:if test="${adDetail.hImage != 'undefined'}">--%>
+<%--              <div class="si-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; display: none;">--%>
+<%--                <img id="h_img" src="${adDetail.hImage}" style="object-fit: cover;">--%>
+<%--              </div>--%>
+<%--            </c:if>--%>
     </div>
 
-    <div class="card-body text-black" style="margin: 200px 0;
-    max-width: 530px;
-    border: 1px solid #b9b9b9;
-    border-radius: 8px;">
-        <div style="
-            width: 100%;
-            height: 100%;
-            border: 1px solid #00000038;
-            position: relative;">
-                    <img src="${adDetail.image}"
-                         alt=""
-                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+<%--    <c:if test="${adDetail.vImage != 'undefined'}">--%>
+<%--        <div class="si-ad" style="margin: 130px 0; max-width: 170px; display: none;">--%>
+<%--            <img id="v_img"--%>
+<%--                 src="${adDetail.vImage}"--%>
+<%--                 style="object-fit: cover; border: 1px solid #b9b9b9; border-radius: 3px;">--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
+    <c:if test="${adDetail.mainImage != 'undefined'}">
+        <div class="ma-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; margin: 130px 0">
+            <img id="ma-img" src="${adDetail.mainImage}" style="object-fit: cover;">
         </div>
-    </div>
-
+    </c:if>
 </div>
 
 <script>

@@ -321,4 +321,9 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.getEditorDateCountWeek();
     }
 
+    @Override
+    public void insertAd(AdminAdDto adminAdDto) {
+        adminRepository.insertAd(adminAdDto);
+    }
+
 }

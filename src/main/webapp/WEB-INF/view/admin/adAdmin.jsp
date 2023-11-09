@@ -427,8 +427,10 @@
                             + '<td><h4>회사이름</h4></td>'
                             + '<td><h4>이미지</h4></td>'
                             + '<td><h4>가격</h4></td>'
-                            + '<td><h4>의뢰일</h4></td>'
                             + '<td><h4>기간</h4></td>'
+                            + '<td><h4>위치</h4></td>'
+                            + '<td><h4>종류</h4></td>'
+                            + '<td><h4>의뢰일</h4></td>'
                             + '</tr>';
                         for (var i = 0; i < adList.length; i++) {
                             var ad = adList[i];
@@ -442,6 +444,37 @@
                                 stt = 1;
                             }
                             let regData = ad.createdAt.substring(0, 16);
+
+                            let m_image = '';
+                            let v_image = '';
+                            let h_image = '';
+
+                            let thisCategory;
+                            let thisNotice;
+
+                            if(ad.category === 0) thisCategory = '<text style="color: purple"><i class="fa-solid fa-house"></i> 메인</text>';
+                            else thisCategory = '<text style="color: #ff5722"><i class="fa-solid fa-ruler-combined"></i> 사이드</text>';
+
+                            if(ad.isNotice === 0) thisNotice = '<text style="color: green"><i class="fa-brands fa-adversal"></i> 외부광고</text>';
+                            else thisNotice = '<text style="color: red"><i class="fa-solid fa-exclamation"></i> 공지사항</text>';
+
+                            if(ad.mainImage !== "undefined" ) {
+                               m_image =  '<img style="width: 75px; height: 75px;" src="' +
+                                   ad.mainImage
+                                   + '">';
+                            }
+
+                            if(ad.vimage !== "undefined") {
+                                v_image =  '<img style="width: 25px; height: 75px;" src="' +
+                                    ad.vimage
+                                    + '">&nbsp;';
+                            }
+
+                            if(ad.himage !== "undefined") {
+                                h_image =  '<img style="width: 75px; height: 25px;" src="' +
+                                    ad.himage
+                                    + '">';
+                            }
 
                             adListHTML += '<tr>'
                                 + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
@@ -458,15 +491,36 @@
                                 + pagination.paging.page
                                 + '&id='
                                 + ad.adId
-                                + '"><img style="width: 75px; height: 75px;" src="'
-                                + ad.image
-                                + '"></a></td>'
+                                + '">'
+                                + m_image + v_image + h_image
+                                + '</a></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='
                                 + ad.adId
                                 + '">'
                                 + ad.price
+                                + '원</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + ad.adPeriod
+                                + '일 남음</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + thisCategory
+                                + '</a></td>'
+                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + ad.adId
+                                + '">'
+                                + thisNotice
                                 + '</a></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
@@ -474,13 +528,6 @@
                                 + ad.adId
                                 + '">'
                                 + regData
-                                + '</a></td>'
-                                + '<td><a href="/admin/ad-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + ad.adId
-                                + '">'
-                                + ad.adPeriod
                                 + '</a></td>'
                                 + '</tr>';
                         }

@@ -78,6 +78,7 @@ public class AdminController {
     }
 
     @GetMapping("/apply-accept")
+    @AdminCheck
     public String applyAccept(@ModelAttribute("paging") PagingDto paging,
                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                               @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
@@ -115,6 +116,7 @@ public class AdminController {
     }
 
     @GetMapping("/freeboard")
+    @AdminCheck
     public String freeBoard(@ModelAttribute("paging") PagingDto paging,
                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                             @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
@@ -408,6 +410,8 @@ public class AdminController {
     @GetMapping("/ad-admin/detail")
     public String adDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
         model.addAttribute("adDetail", adminService.getAdById(id));
+
+        log.info("asd" + adminService.getAdById(id));
 
         return "admin/adDetailAdmin";
     }

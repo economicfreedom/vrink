@@ -79,4 +79,6 @@ public interface AdminRepository {
     List<DateCountDto> getEditorDateCountMonth();
     List<DateCountDto> getEditorDateCountWeek();
 
+    int insertAd(AdminAdDto adminAdDto);
+
 }

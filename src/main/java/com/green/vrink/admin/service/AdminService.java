@@ -108,4 +108,6 @@ public interface AdminService {
     List<DateCountDto> getEditorDateCountSevenDays();
     List<DateCountDto> getEditorDateCountMonth();
     List<DateCountDto> getEditorDateCountWeek();
+
+    void insertAd(AdminAdDto adminAdDto);
 }

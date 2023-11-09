@@ -42,7 +42,7 @@ public class AdminRestController {
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
             required = false, defaultValue = "") String keyword) {
 
-        log.info("판매자 신청 목록 레스트 컨트롤러 호출");
+        log.info("판매자 신청 목록 레스트 컨트롤러 실행");
 
         paging.setPage(page);
         paging.setClassification(classification);
@@ -203,7 +203,7 @@ public class AdminRestController {
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
             required = false, defaultValue = "") String keyword) {
 
-        log.info("자유게시판 관리 목록 레스트 컨트롤러 호출");
+        log.info("자유게시판 관리 목록 레스트 컨트롤러 실행");
 
         paging.setRecordSize(20);
 
@@ -312,7 +312,7 @@ public class AdminRestController {
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
             required = false, defaultValue = "") String keyword) {
 
-        log.info("의뢰게시판 관리 목록 레스트 컨트롤러 호출");
+        log.info("의뢰게시판 관리 목록 레스트 컨트롤러 실행");
 
         paging.setRecordSize(20);
 
@@ -415,7 +415,7 @@ public class AdminRestController {
             Integer suggestId
     ) {
 
-        log.info("의뢰게시판 게시글 삭제 레스트 컨트롤러 호출");
+        log.info("의뢰게시판 게시글 삭제 레스트 컨트롤러 실행");
 
         User user = (User) session.getAttribute("USER");
         int sessionUserId = user.getUserId();
@@ -433,7 +433,7 @@ public class AdminRestController {
             Integer replyId
     ) {
 
-        log.info("의뢰게시판 댓글 삭제 레스트 컨트롤러 호출");
+        log.info("의뢰게시판 댓글 삭제 레스트 컨트롤러 실행");
 
         if (replyId == null) {
             return ResponseEntity.badRequest().build();
@@ -461,7 +461,7 @@ public class AdminRestController {
                                                 @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType,
                                                 @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
-        log.info("관리자 유저 목록 레스트 컨트롤러 호출");
+        log.info("관리자 유저 목록 레스트 컨트롤러 실행");
 
         paging.setPage(page);
         paging.setClassification(classification);
@@ -646,7 +646,7 @@ public class AdminRestController {
                                                     @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType,
                                                     @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
-        log.info("관리자 문의 목록 레스트 컨트롤러 호출");
+        log.info("관리자 문의 목록 레스트 컨트롤러 실행");
 
         paging.setPage(page);
         paging.setClassification(classification);
@@ -801,7 +801,7 @@ public class AdminRestController {
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
             required = false, defaultValue = "") String keyword) {
 
-        log.info("배너광고 목록 레스트 컨트롤러 호출");
+        log.info("배너광고 목록 레스트 컨트롤러 실행");
 
         paging.setPage(page);
         paging.setClassification(classification);
@@ -939,7 +939,7 @@ public class AdminRestController {
     @PostMapping("/change-apply")
     public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number, @RequestParam("userId") Integer userId) throws IOException {
 
-        log.info("승인 상태 변경 컨트롤러 실행");
+        log.info("승인 상태 변경 레스트 컨트롤러 실행");
 
 //        if (accepted == 1) {
 //
@@ -978,9 +978,9 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-ad")
-    public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId, @RequestParam("status") Integer status) throws IOException {
+    public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId, @RequestParam("status") Integer status) {
 
-        log.info("배너 게재 상태 변경 컨트롤러 실행");
+        log.info("배너 게재 상태 변경 레스트 컨트롤러 실행");
 
         if (status == 1) {
             //게시에서 비게시로 바꿀 때
@@ -999,16 +999,26 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-ad-period")
-    public ResponseEntity<Integer> changeAdPeriod(@RequestParam("adId") Integer adId, @RequestParam("adPeriod") Integer adPeriod) throws IOException {
+    public ResponseEntity<Integer> changeAdPeriod(@RequestParam("adId") Integer adId, @RequestParam("adPeriod") Integer adPeriod) {
         
-        log.info("배너 기간 변경 컨트롤러 실행");
+        log.info("배너 기간 변경 레스트 컨트롤러 실행");
 
         log.info("adperi : " + adPeriod);
 
         adminService.changeAdPeriod(adId, adPeriod);
 
         return ResponseEntity.status(HttpStatus.OK).body(200);
-        
+
+    }
+
+    @Transactional
+    @PostMapping("/ad-admin/write")
+    public ResponseEntity<Integer> insertAd(AdminAdDto adminAdDto) {
+
+        log.info("배너 등록 레스트 컨트롤러 실행");
+
+        adminService.insertAd(adminAdDto);
+        return ResponseEntity.status(HttpStatus.OK).body(200);
     }
 
 }
