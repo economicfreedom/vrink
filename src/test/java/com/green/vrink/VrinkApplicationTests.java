@@ -1,10 +1,13 @@
 package com.green.vrink;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @SpringBootTest
 class VrinkApplicationTests {
@@ -12,7 +15,6 @@ class VrinkApplicationTests {
 
     private static final String JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
     private static final String SK = "asdfdd";
-
 
 
     @Test
@@ -147,7 +149,7 @@ class VrinkApplicationTests {
 
 
         }
-          for (int i = 0; i < changedCaseText.length(); i++) {
+        for (int i = 0; i < changedCaseText.length(); i++) {
 
             char c1 = changedCaseText.charAt(i);
             // res 결과 만큼 반복
@@ -199,14 +201,18 @@ class VrinkApplicationTests {
         System.out.println(stringBuffer.toString());
         String a = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ";
         String b = stringBuffer.toString();
-        
-        if (a.equals(b)){
+
+        if (a.equals(b)) {
             System.out.println("같음");
         }
     }
+
     @Test
-    public void asdf(){
+    public void asdf() {
 
     }
+
+
+
 
 }

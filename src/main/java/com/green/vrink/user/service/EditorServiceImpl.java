@@ -180,7 +180,7 @@ public class EditorServiceImpl implements EditorService {
 
         for (RequestListDTO requestDetailDTO : requestListDTO) {
             requestResultDTO.setSumPrice(requestDetailDTO.getPrice());
-            requestResultDTO.setQuantity(requestDetailDTO.getQuantity());
+            requestResultDTO.setSumQuantity(requestDetailDTO.getQuantity());
 
         }
 

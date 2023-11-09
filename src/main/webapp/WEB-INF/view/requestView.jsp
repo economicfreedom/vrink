@@ -260,6 +260,7 @@
 
         $("#cancel").click(function () {
 
+
             fetch('/payment-state/editor-cancel', {
                 method: 'POST',
                 headers: {
@@ -287,7 +288,42 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
         })
-
+        fetch('/payment/authorizedCode', {
+            method: 'POST'
+        }).then(response => response.json())
+            .then(data => {
+                fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken', {
+                    method: 'POST',
+                    headers: {              // Http header
+                        "Content-Type": 'application/json',
+                    },
+                    body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                        imp_key: data.apiKey,
+                        imp_secret: data.apiSecret
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        // 결제 취소
+                        let totalprice = ${detailDTO.price};
+                        let impUid = ${requestDTO.paymentId};
+                        fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel', {
+                            method: 'POST',
+                            headers: {              // Http header
+                                "Content-Type": 'application/json',
+                                "Authorization": data.response.access_token
+                            },
+                            body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                                reason: '환불', // 가맹점 클라이언트로부터 받은 환불사유
+                                imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
+                                amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
+                            })
+                        }).then(response => response.json())
+                            .then(data => {
+                                hide_spinner()
+                                location.reload()
+                            })
+                    })
+            })
 
     })
 </script>

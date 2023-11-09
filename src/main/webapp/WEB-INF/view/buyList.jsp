@@ -171,7 +171,7 @@
                                             ${dto.paymentId}
                                                 ,${dto.editorRecognize}
                                                 ,${dto.customerRecognize}
-                                                ,${dto.point}
+                                                ,${dto.point.replaceAll(",","")}
                                                 )"
                                                 style="margin-bottom: 10px; margin-right: 10px">
                                             구매 확정
@@ -283,7 +283,7 @@
                     console.log(data);
                     console.log(hasNext);
                     data.pageDTOs.forEach(dto => {
-
+                        html += dto.point
                         html += `<li>`
                         html += `    <div class="cart-thumb">`
                         html += `<span><img src="` + dto.image + `" alt=""/></span>`
@@ -304,12 +304,13 @@
                         if (dto.editorRecognize == 1) {
 
                             html += '<button type="button" class="flat-btn" ';
-                            html += ' style="margin-bottom: 10px; margin-right: 10px" onclick(';
-                            html += dto.paymentId;
+                            html += ' style="margin-bottom: 10px; margin-right: 10px" onclick="paymentConfirm('
+                            html += dto.editorId;
+                            html += ','+dto.paymentId;
                             html += ',' + dto.editorRecognize;
                             html += ',' + dto.customerRecognize;
-                            html += ',' + dto.point;
-                            html += ')>';
+                            html += ',' + dto.point.replaceAll(",","");
+                            html += ')">';
                             html += '구매 확정';
                             html += '</button>';
                         }

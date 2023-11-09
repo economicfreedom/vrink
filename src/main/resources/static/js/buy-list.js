@@ -50,8 +50,8 @@ function refundRequest(paymentId) {
 
         forRPayment.css("display", "block");
         reason.css("display", "block");
-        
-        
+
+
         // 이전에 바인딩된 change 이벤트 핸들러를 제거
         reason.off('change').on('change', function () {
             let reasonVal = $(this).val(); // $(this)를 사용하여 현재 변경된 요소를 참조
@@ -227,11 +227,9 @@ function refund(impUid, totalprice) {
 $(document).ready(function () {
 
 
-
-
     $('#keyword').keyup(function (event) {
 
-    let keyword = $("#keyword").val();
+        let keyword = $("#keyword").val();
         if (event.keyCode === 13) {
 
             if (keyword.length <= 0) {
