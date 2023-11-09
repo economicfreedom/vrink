@@ -16,5 +16,8 @@ public class RequestViewDTO {
   private  String email;
   private  String createdAt;
   private  String request;
+  private String state;
+  private byte customerRecognize;
+  private byte editorRecognize;
 
 }

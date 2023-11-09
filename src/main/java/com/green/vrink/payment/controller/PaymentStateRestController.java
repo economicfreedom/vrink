@@ -100,6 +100,33 @@ public class PaymentStateRestController {
         return ResponseEntity.ok(asyncPageDTO);
     }
 
+    @PostMapping("/editor-cancel")
+    public ResponseEntity<?> eCancel(@RequestBody PaymentStateDTO paymentStateDTO) {
+
+        int res = paymentStateService.saveEditorCancel(paymentStateDTO);
+
+        if (res == 0 ){
+            return ResponseEntity.badRequest().build();
+
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/editor-done")
+    public ResponseEntity<?> eDone(@RequestBody PaymentStateDTO paymentStateDTO) {
+
+        int res = paymentStateService.saveEditorCancel(paymentStateDTO);
+
+        if (res == 0 ){
+            return ResponseEntity.badRequest().build();
+
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+
     @Data
     @AllArgsConstructor
     @Builder

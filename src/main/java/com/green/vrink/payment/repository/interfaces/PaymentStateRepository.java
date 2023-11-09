@@ -12,4 +12,7 @@ public interface PaymentStateRepository {
     Byte findEditorRecognizeByPaymentId(Integer paymentId);
 
 
+    void saveEditorCancel(PaymentStateDTO paymentStateDTO);
+
+    void saveEditorDone(PaymentStateDTO paymentStateDTO);
 }

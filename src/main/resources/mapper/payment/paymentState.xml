@@ -15,6 +15,14 @@
             ,#{point} )
 
     </insert>
+    <insert id="saveEditorCancel">
+        INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point,state)
+            VALUE (#{paymentId},#{editorRecognize},#{customerRecognize},#{point},#{state})
+    </insert>
+    <insert id="saveEditorDone">
+        INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point,state)
+            VALUE (#{paymentId},#{editorRecognize},#{customerRecognize},#{point},#{state})
+    </insert>
     <select id="findEditorRecognizeByPaymentId" resultType="java.lang.Byte">
         SELECT editor_recognize
         FROM payment_state

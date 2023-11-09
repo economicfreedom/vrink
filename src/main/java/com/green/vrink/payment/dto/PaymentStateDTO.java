@@ -18,7 +18,7 @@ public class PaymentStateDTO {
     private Integer paymentStateId;
     @Min( value = 1 ,message = "작가 아이디는 필수값 입니다")
     private Integer editorId;
-    @Min( value = 1 ,message = "결제 아이디는 필수값 입니다.")
+    @Min( value = 1 ,message =  "결제 아이디는 필수값 입니다.")
     private Integer paymentId;
     @Min(value = 0 ,message = "작가의 승인 상태는 필수값 입니다.")
     private Byte editorRecognize;

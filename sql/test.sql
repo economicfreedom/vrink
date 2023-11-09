@@ -627,7 +627,7 @@ GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.cr
          p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
 
 
-SELECT p.payment_id,p.name,u.nickname,u.phone,u.email,p.created_at,p.request
+SELECT p.payment_id, p.name, u.nickname, u.phone, u.email, p.created_at, p.request
 FROM payment p
          LEFT JOIN user u on p.user_id = u.user_id
          JOIN (SELECT payment_id, MAX(created_at) as max_created_at
@@ -641,10 +641,70 @@ GROUP BY p.payment_id;
 
 
 
-SELECT * FROM payment;
-SELECT * FROM payment_detail
+SELECT *
+FROM payment;
+SELECT *
+FROM payment_detail
 WHERE payment_id =
 
 DESC payment;
 
-SELECT
+SELECT p.payment_id,
+       p.editor_id,
+       p.name,
+       u.nickname,
+       u.phone,
+       u.email,
+       p.created_at,
+       p.request,
+       (CASE
+            WHEN ps.state = 'payment_done' THEN '진행중'
+            WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+            WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+            ELSE '거래 완료'
+           END) AS state,
+    ifnull(ps.customer_recognize,0) AS customer_recognize
+FROM payment p
+         LEFT JOIN user u on p.user_id = u.user_id
+         JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+               FROM payment_state
+               GROUP BY payment_id) ps_max
+         LEFT JOIN payment_state ps
+                   ON p.payment_id = ps_max.payment_id
+                       AND ps.created_at = ps_max.max_created_at
+WHERE p.payment_id = 56
+GROUP BY p.payment_id;
+
+select * from payment_state;
+
+        SELECT p.payment_id,
+               p.editor_id,
+               p.name,
+               u.nickname,
+               u.phone,
+               u.email,
+               p.created_at,
+               p.request,
+               (CASE
+                    WHEN ps.state = 'payment_done' THEN '진행중'
+                    WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+                    WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+                    ELSE '거래 완료'
+                   END)                         AS state,
+               ifnull(ps.customer_recognize, 0) AS customer_recognize,
+               ps.editor_recognize
+        FROM payment p
+                 LEFT JOIN user u on p.user_id = u.user_id
+                 JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+                       FROM payment_state
+                       GROUP BY payment_id) ps_max
+                 LEFT JOIN payment_state ps
+                           ON p.payment_id = ps_max.payment_id
+                               AND ps.created_at = ps_max.max_created_at
+        WHERE ps.payment_id = 40
+        GROUP BY p.payment_id;
+
+        select * from payment_state
+        where payment_id = 40;
+
+select * from payment_state;

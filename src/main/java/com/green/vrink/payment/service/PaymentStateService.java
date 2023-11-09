@@ -8,5 +8,7 @@ public interface PaymentStateService {
     Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO);
 
 
+    int saveEditorCancel(PaymentStateDTO paymentStateDTO);
 
+    int saveEditorDone(PaymentStateDTO paymentStateDTO);
 }

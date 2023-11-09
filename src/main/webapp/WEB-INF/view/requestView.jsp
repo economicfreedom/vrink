@@ -92,6 +92,24 @@
 
     .total-quantity strong, .total-price strong {
         margin-right: 10px;
+
+
+    }
+
+    .button2 {
+        padding: 10px 20px;
+        background-color: #00A8FF;
+        color: white;
+        text-decoration: none;
+        margin-top: 20px;
+        display: inline-block;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .button2:hover {
+        background-color: #00A0D1;
     }
 </style>
 <div class="inner-head overlap" style="margin-bottom: 5%">
@@ -153,7 +171,7 @@
             <tr>
                 <th>여부</th>
                 <%--                나중에 추가--%>
-                <td>확인중</td>
+                <td>${requestDTO.state}</td>
             </tr>
 
         </table>
@@ -176,9 +194,9 @@
             <tbody>
             <c:forEach items="${detailDTO.requestListDTOS}" var="request">
                 <tr>
-                    <td>${request.options}</td>
-                    <td>${request.quantity}</td>
-                    <td><fmt:formatNumber value="${request.price}" pattern="#,###" />원</td>
+                    <td style="text-align: center;">${request.options}</td>
+                    <td style="text-align: center;">${request.quantity}</td>
+                    <td style="text-align: center;"><fmt:formatNumber value="${request.price}" pattern="#,###"/>원</td>
                 </tr>
             </c:forEach>
 
@@ -192,15 +210,86 @@
             </div>
             <div class="total-price">
                 <strong>총 가격:</strong>
-                <span><fmt:formatNumber value="${detailDTO.price}" pattern="#,###" />원</span>
+                <span><fmt:formatNumber value="${detailDTO.price}" pattern="#,###"/>원</span>
             </div>
         </div>
     </div>
 
     <div class="button-container mb-5">
-        <button class="button">버튼1</button>
 
-        <button class="button">버튼2</button>
+        <c:if test="${requestDTO.editorRecognize == 0}">
+            <button class="button" id="done">의뢰 완료</button>
+        </c:if>
+        <c:if test="${requestDTO.state == '진행중'}">
+            <button class="button2" id="cancel">의뢰 거절</button>
+        </c:if>
+
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+        $("#done").click(function () {
+
+            fetch('/payment-state/editor-done', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    editorId: `${requestDTO.editorId}`,
+                    paymentId: `${requestDTO.paymentId}`,
+                    editorRecognize: 1,
+                    customerRecognize: `${requestDTO.customerRecognize}`,
+                    point: ${detailDTO.price},
+                    state: 'payment_done'
+
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        alert("")
+                    } else {
+                        location.reload()
+                    }
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        })
+
+
+        $("#cancel").click(function () {
+
+            fetch('/payment-state/editor-cancel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    editorId: `${requestDTO.editorId}`,
+                    paymentId: `${requestDTO.paymentId}`,
+                    editorRecognize: 0,
+                    customerRecognize: `${requestDTO.customerRecognize}`,
+                    point: ${detailDTO.price},
+                    state: 'e_cancel'
+
+
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        alert("")
+                    } else {
+                        location.reload()
+
+                    }
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        })
+
+
+    })
+</script>
+
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

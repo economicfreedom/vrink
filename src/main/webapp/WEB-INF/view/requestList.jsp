@@ -100,15 +100,15 @@
 
                 <div style="text-align: right;font-size: 15px">
                     <input type="radio" name="filter" value="all" style="margin-left: 2%;"
-                           ${filter == 'all' ? 'checked':''}
+                    ${filter == 'all' ? 'checked':''}
                            id="all">
                     <label for="all">모두 보기</label>
                     <input type="radio" name="filter" value="ing" style="margin-left: 2%;"
-                           ${filter == 'ing' ? 'checked':''}
+                    ${filter == 'ing' ? 'checked':''}
                            id="ing">
                     <label for="ing">진행중인 작업 보기</label>
                     <input type="radio" name="filter" value="done" style="margin-left: 2%;"
-                           ${filter == 'done' ? 'checked':''}
+                    ${filter == 'done' ? 'checked':''}
                            id="done">
                     <label for="done">완료된 작업 보기</label>
                 </div>
@@ -127,7 +127,11 @@
             <c:forEach items="${list}" var="dto">
                 <tr style="padding: 20">
                     <td class="th-text-center">${dto.paymentId}</td>
-                    <td class="th-text-center">${dto.name}</td>
+                    <td class="th-text-center">
+                        <a href="/editor/request-view/${dto.paymentId}" style="text-decoration: none;color: black">
+                                ${dto.name}
+                        </a>
+                    </td>
                     <td class="th-text-center">${dto.nickname}</td>
                     <td class="th-text-center">${dto.createdAt}</td>
                     <td class="th-text-center">${dto.state}</td>
