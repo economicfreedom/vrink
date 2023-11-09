@@ -299,4 +299,13 @@ GROUP BY p.payment_id
         FROM price
         WHERE editor_id = #{editorId}
     </delete>
+
+    <insert id="insertTag">
+        INSERT INTO editor_tag (editor_id, tag)
+        values (#{editorId}, #{tag})
+    </insert>
+
+    <select id="getTag" resultType="com.green.vrink.user.dto.TagDTO">
+        SELECT * FROM editor_tag WHERE editor_id = #{editorId}
+    </select>
 </mapper>

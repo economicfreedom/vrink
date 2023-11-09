@@ -85,20 +85,24 @@
                             <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
                                 소개 수정하기</div>
                         </c:if>
-                        <c:if test="${not empty editorPrice}">
+
                         <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold;">
                                 가격 옵션</div>
-                        <c:forEach items="${editorPrice}" var="editorPrice">
-                            <div class="d-flex j-around">
-                                <div><h5>${editorPrice.options}</h5></div>
-                                <div><h5>${editorPrice.price}</h5></div>
-                            </div>
-                        </c:forEach>
-                        <c:if test="${editorDetail.editorId != EDITOR_ID}">
-                        <div id="suggest"
-                             style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
-                            작가에게 의뢰하기</div>
+                        <c:if test="${empty editorPrice}">
+                            <div><h5>가격등록이 되지않았습니다.</h5></div>
                         </c:if>
+                        <c:if test="${not empty editorPrice}">
+                            <c:forEach items="${editorPrice}" var="editorPrice">
+                                <div class="d-flex j-around">
+                                    <div><h5>${editorPrice.options}</h5></div>
+                                    <div><h5>${editorPrice.price}</h5></div>
+                                </div>
+                            </c:forEach>
+                            <c:if test="${editorDetail.editorId != EDITOR_ID}">
+                            <div id="suggest"
+                                 style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
+                                작가에게 의뢰하기</div>
+                            </c:if>
                         </c:if>
                     </div>
 

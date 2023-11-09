@@ -76,7 +76,9 @@ public class EditorController {
             return "redirect:/";
         }
         EditorDTO editorDTO = editorService.responseEditorEdit(editorId);
+        String tag = editorService.responseEditorTag(editorId);
         model.addAttribute("editorEdit", editorDTO);
+        model.addAttribute("tag", tag);
         return "user/editorEdit";
     }
 

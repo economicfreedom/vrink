@@ -42,5 +42,5 @@ public interface EditorService {
 	RequestResultDTO getRequestDetailResult(Integer paymentId);
 
 
-
+	String responseEditorTag(Integer editorId);
 }

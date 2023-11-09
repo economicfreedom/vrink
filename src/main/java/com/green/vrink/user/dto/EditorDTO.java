@@ -1,6 +1,9 @@
 package com.green.vrink.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
 public class EditorDTO {
@@ -14,5 +17,6 @@ public class EditorDTO {
 	private String nickname;
 	private Double count;
 	private String delImage[];
+	private String tags[];
 	private String star;
 }

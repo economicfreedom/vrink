@@ -41,17 +41,13 @@ public class UploadServiceImpl implements UploadService {
     public List<String> removeExtractImages(EditorDTO editorDTO) {
         List<String> delImages = new ArrayList<>();
         if(editorDTO.getDelImage() != null) {
-            for(int i = 0; i<editorDTO.getDelImage().length; i++) {
-                if(editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("no_face.png")
-                        || editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("default_image.gif")) {
-                    editorDTO.getDelImage()[i] = "";
-                };
-            }
-            for(int i = 0; i<editorDTO.getDelImage().length; i++) {
-                if(!editorDTO.getDelImage()[i].equals("")) {
-                    delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+            if(editorDTO.getDelImage() != null) {
+                for(int i = 0; i<editorDTO.getDelImage().length; i++) {
+                    if(!editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("no_face.png") ||
+                            !editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("default_image.gif")) {
+                        delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+                    }
                 }
-
             }
         }
         return delImages;

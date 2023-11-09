@@ -63,4 +63,7 @@ public interface UserRepository {
 	List<RequestListDTO> findPaymentDetailByPaymentId(Integer paymentId);
 
 
+    void insertTag(TagDTO tagDTO);
+
+	List<TagDTO> getTag(Integer editorId);
 }
