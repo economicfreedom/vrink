@@ -23,7 +23,7 @@ public class SuggestServiceImpl implements SuggestService{
     }
 
     @Override
-    public Suggest getSuggest(Integer suggestId) {
+    public GetSuggestDto getSuggest(Integer suggestId) {
         return suggestRepository.getSuggest(suggestId);
     }
 
@@ -71,6 +71,11 @@ public class SuggestServiceImpl implements SuggestService{
     @Override
     public List<GetSuggestDto> getSuggestList(Criteria criteria) {
         return suggestRepository.getSuggestList(criteria);
+    }
+
+    @Override
+    public Integer acceptSuggest(Integer suggestId) {
+        return suggestRepository.acceptSuggest(suggestId);
     }
 
 

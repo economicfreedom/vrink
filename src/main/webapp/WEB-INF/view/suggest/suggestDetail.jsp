@@ -6,9 +6,13 @@
     let pageNum = 1;
     $(document).ready(function () {
         $("#reply-add").click(function () {
+            if (Number(`${suggest.state}`) === 1) {
+                alert('이미 제안 수락된 게시물입니다.');
+                location.reload();
+                return;
+            }
             if ($("#reply-content").val().trim().length === 0) {
                 alert("댓글을 입력해주세요.")
-                reply.focus();
                 return;
             }
             addReply();
@@ -31,11 +35,15 @@
             let resultCode = await result.json();
             if(resultCode === 1) {
                 location.reload();
+            } else if (resultCode === 0) {
+                alert("의뢰 게시물에 대한 댓글 작성은 본인 또는 작가만 작성할 수 있습니다.");
             } else {
-                alert('로그인 후 사용가능합니다.');
-                location.reload();
+                alert('로그인 이후 사용가능합니다.');
+                $(".log-in-btn").click()
             }
         }
+
+
 
     })
 
@@ -201,6 +209,30 @@
             });
     }
 
+    async function acceptSuggest(receiverId, nickname) {
+        let result = await fetch('/suggest/accept-suggest/' + `${suggest.suggestId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                receiverId:receiverId,
+                content:`${suggest.nickname}`+ "님이 " + nickname + "님의 제안을 수락했습니다!",
+            })
+        });
+        let resultCode = await result.json();
+        if (resultCode === 1) {
+            alert('의뢰 수락 메세지가 성공적으로 전달되었습니다.');
+            location.reload();
+            return;
+        }
+        alert('잠시 후 다시 시도해주세요');
+
+
+
+    }
+
+
 
 </script>
 
@@ -209,7 +241,7 @@
         <div class="title">
 
             <h1>${suggest.title}</h1>
-            <span> ${writerNickname}</span>
+            <span> ${suggest.nickname}</span>
             <br>
             <small>${suggest.createdAt}</small>
 
@@ -264,13 +296,18 @@
                             <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-`${suggestReply.replyId}`">
                                 <li class="list-group-item custom-list-item" >
                                     <div class="comment-header">
-                                        <strong class="comment-nickname">${suggestReply.nickname}</strong>
+                                        <a href="/editor/editor-detail/${suggestReply.userId}"><strong class="comment-nickname">${suggestReply.nickname}</strong></a>
                                         <span class="comment-date">${suggestReply.createdAt}</span>
                                     </div>
                                     <textarea class="form-control custom-textarea" rows="2"
                                               id="reply-content-${suggestReply.replyId}"
                                               readonly
                                               >${suggestReply.content}</textarea>
+                                    <c:if test="${suggestReply.userId != suggest.userId && not empty USER && suggest.userId == USER.userId}">
+                                        <div style="display: flex; justify-content: flex-end;">
+                                            <input type="button" value="제안 수락" class="suggest-state-btn" id="accept-suggest-btn" style="background-color: #ff2929; padding: 1px 10px" onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
+                                        </div>
+                                    </c:if>
                                     <div class="comment-buttons">
                                         <c:if test="${suggestReply.userId == USER.userId}">
                                             <button class="btn btn-xs btn-default"

@@ -8,6 +8,7 @@ public class GetSuggestDto {
     private int userId;
     private String title;
     private String content;
+    private int state;
     private String createdAt;
     private String nickname;
 }

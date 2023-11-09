@@ -40,7 +40,6 @@ public interface UserRepository {
 	public Integer calculatePoint(CalculatePointDto calculatePointDto);
 	public Integer updatePoint(@Param("userId") Integer userId, @Param("point") Integer point);
     Integer findUserIdByEditorId(Integer editorId);
-
 	void updateEditorPoint(@Param("editorId")Integer editorId, @Param("point") Integer point);
 	List<EditorPriceDTO> findPriceByEditorId(Integer editorId);
     Integer deletePriceByEditorId(Integer editorId);
@@ -61,7 +60,7 @@ public interface UserRepository {
 
 	RequestViewDTO findRequestByPaymentId(Integer paymentId);
 	List<RequestListDTO> findPaymentDetailByPaymentId(Integer paymentId);
-
+	Integer findUserIdBySuggestId(Integer suggestId);
 
     void insertTag(TagDTO tagDTO);
 

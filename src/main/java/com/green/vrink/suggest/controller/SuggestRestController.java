@@ -1,34 +1,34 @@
 package com.green.vrink.suggest.controller;
 
-import com.green.vrink.community.dto.FreeBoardReplyDTO;
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.suggest.dto.*;
-import com.green.vrink.suggest.repository.model.Suggest;
-import com.green.vrink.suggest.repository.model.SuggestReply;
 import com.green.vrink.suggest.service.SuggestService;
-import com.green.vrink.suggest.service.SuggestServiceImpl;
-import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorServiceImpl;
+import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
 import com.green.vrink.util.PageDTO;
-import com.sun.mail.iap.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/suggest")
 @RequiredArgsConstructor
+@Slf4j
 public class SuggestRestController {
 
     private final HttpSession session;
     private final SuggestService suggestService;
+    private final EditorServiceImpl editorService;
+    private final UserService userService;
+    private final MessageService messageService;
 
     @PostMapping("/post")
     public Integer postSuggest(@RequestBody PostSuggestDto postSuggestDto) {
@@ -52,7 +52,7 @@ public class SuggestRestController {
     @DeleteMapping("/delete/{suggestId}")
     public Integer deleteSuggest(@PathVariable Integer suggestId) {
         User user = (User)session.getAttribute(Define.USER);
-        Suggest suggest = suggestService.getSuggest(suggestId);
+        GetSuggestDto suggest = suggestService.getSuggest(suggestId);
 
         if (user == null || suggest == null || user.getUserId() != suggest.getUserId()) {
             return -1;
@@ -67,7 +67,18 @@ public class SuggestRestController {
         if (user == null) {
             return -1;
         }
-
+        Integer editorId = editorService.getEditorIdByUserId(user.getUserId());
+        Integer writerId = userService.findUserIdBySuggestId(postSuggestReplyDto.getSuggestId());
+        log.info("editorId: {}", editorId);
+        log.info("writerId: {}", writerId);
+        log.info("session: {}", user.getUserId());
+        boolean flag = editorId == null;
+        boolean flag2 = writerId.equals(user.getUserId());
+        log.info("flag: {}", flag);
+        log.info("flag2: {}", flag2);
+        if (editorId == null && !writerId.equals(user.getUserId())) {
+            return  0;
+        }
         return suggestService.postSuggestReply(postSuggestReplyDto);
     }
 
@@ -93,7 +104,7 @@ public class SuggestRestController {
     @GetMapping("/more-reply")
     public ResponseEntity<?> more(@RequestParam(name = "suggest-id") Integer suggestId,
                                   @RequestParam(name = "page-num") Integer pageNum) {
-        Suggest suggest = suggestService.getSuggest(suggestId);
+        GetSuggestDto suggest = suggestService.getSuggest(suggestId);
         if (suggest == null) {
             return ResponseEntity.notFound().build();
         }
@@ -112,5 +123,12 @@ public class SuggestRestController {
         asyncPageDTO.setPageDTOs(replyList);
 
         return ResponseEntity.ok().body(asyncPageDTO);
+    }
+
+    @PutMapping("/accept-suggest/{suggestId}")
+    public Integer acceptSuggest(@PathVariable Integer suggestId, @RequestBody AcceptSuggestDto acceptSuggestDto) {
+        int suggestState = suggestService.acceptSuggest(suggestId);
+        messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), acceptSuggestDto.getContent());
+        return suggestState;
     }
 }

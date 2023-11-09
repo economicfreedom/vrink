@@ -147,7 +147,7 @@ public class EditorServiceImpl implements EditorService {
     }
 
     @Override
-    public int getEditorIdByUserId(Integer userId) {
+    public Integer getEditorIdByUserId(Integer userId) {
         return userRepository.findEditorIdByUserId(userId);
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface SuggestRepository {
     Integer postSuggest(PostSuggestDto postSuggestDto);
-    Suggest getSuggest(Integer suggestId);
+    GetSuggestDto getSuggest(Integer suggestId);
     Integer patchSuggest(PatchSuggestDto patchSuggestDto);
     Integer deleteSuggest(Integer suggestId);
     Integer postSuggestReply(PostSuggestReplyDto postSuggestReplyDto);
@@ -21,5 +21,5 @@ public interface SuggestRepository {
     Integer deleteSuggestReply(Integer replyId);
     Integer getTotal(Criteria criteria);
     List<GetSuggestDto> getSuggestList(Criteria criteria);
-
+    Integer acceptSuggest(Integer suggestId);
 }

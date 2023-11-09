@@ -2,23 +2,16 @@ package com.green.vrink.suggest.controller;
 
 import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
-import com.green.vrink.suggest.repository.model.Suggest;
-import com.green.vrink.suggest.repository.model.SuggestReply;
 import com.green.vrink.suggest.service.SuggestService;
-import com.green.vrink.suggest.service.SuggestServiceImpl;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
-import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -42,7 +35,7 @@ public class SuggestController {
 
     @GetMapping("/get/{suggestId}")
     public String getSuggest(@PathVariable int suggestId, Model model) {
-        Suggest suggest = suggestService.getSuggest(suggestId);
+        GetSuggestDto suggest = suggestService.getSuggest(suggestId);
         if (suggest == null) {
             return "main";
         }
@@ -70,7 +63,7 @@ public class SuggestController {
     @GetMapping("/patch/{suggestId}")
     public String patchSuggest(@PathVariable int suggestId, Model model) {
         User user = (User)session.getAttribute(Define.USER);
-        Suggest suggest = suggestService.getSuggest(suggestId);
+        GetSuggestDto suggest = suggestService.getSuggest(suggestId);
 
         if (user == null || suggest == null || user.getUserId() != suggest.getUserId()) {
             return "main";
@@ -105,4 +98,6 @@ public class SuggestController {
 
         return "suggest/suggestList";
     }
+
+
 }

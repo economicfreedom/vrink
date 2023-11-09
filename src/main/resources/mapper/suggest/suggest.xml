@@ -21,6 +21,10 @@
         UPDATE suggest_reply SET suggest_reply.content = #{content} WHERE suggest_reply.reply_id = #{replyId};
     </update>
 
+    <update id="acceptSuggest">
+        UPDATE suggest SET suggest.state = 1 WHERE suggest_id = #{suggestId}
+    </update>
+
     <delete id="deleteSuggest">
         DELETE FROM suggest WHERE suggest.suggest_id = #{suggestId}
     </delete>
@@ -29,8 +33,18 @@
         DELETE FROM suggest_reply WHERE suggest_reply.reply_id = #{suggestId}
     </delete>
 
-    <select id="getSuggest" resultType="com.green.vrink.suggest.repository.model.Suggest">
-        SELECT * FROM suggest WHERE suggest.suggest_id = #{suggestID}
+    <select id="getSuggest" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+             , s.user_id
+             , s.title
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , s.state
+             , u.nickname
+        FROM suggest s
+                 LEFT JOIN user u
+                           ON s.user_id = u.user_id
+        WHERE s.suggest_id = #{suggestID}
     </select>
 
     <select id="getSuggestReplyListBySuggestId"
@@ -76,6 +90,7 @@
              , s.title
              , s.content
              , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , s.state
              , u.nickname
         FROM suggest s
                  LEFT JOIN user u

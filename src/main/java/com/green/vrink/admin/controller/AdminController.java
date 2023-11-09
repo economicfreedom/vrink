@@ -10,6 +10,7 @@ import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
+import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
 import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.service.SuggestService;
@@ -234,7 +235,7 @@ public class AdminController {
     @GetMapping("/suggest-detail")
     public String suggestDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, @RequestParam("nickname") String nickname, Model model) {
 
-        Suggest suggest = suggestService.getSuggest(id);
+        GetSuggestDto suggest = suggestService.getSuggest(id);
 
         if (suggest == null) {
             return "main";

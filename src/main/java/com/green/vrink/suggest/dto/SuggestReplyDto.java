@@ -9,5 +9,6 @@ public class SuggestReplyDto {
     private Integer userId;
     private String content;
     private String createdAt;
+    private Integer editorId;
     private String nickname;
 }

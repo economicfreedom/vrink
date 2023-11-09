@@ -309,6 +309,12 @@
 
     </select>
 
+    <select id="findUserIdBySuggestId" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM suggest
+        WHERE suggest_id = #{suggestId}
+    </select>
+
     <delete id="deletePriceByEditorId">
         DELETE
         FROM price

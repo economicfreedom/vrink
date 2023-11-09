@@ -92,6 +92,7 @@
                     <th>제목</th>
                     <th class="t-center">닉네임</th>
                     <th class="t-center">날짜</th>
+                    <th class="t-center"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -105,6 +106,12 @@
                         </td>
                         <td>${suggest.nickname}</td>
                         <td>${suggest.createdAt}</td>
+                        <c:if test="${0 eq suggest.state}">
+                            <td><input type="button" value="의뢰 중" class="suggest-state-btn" style="background-color: #ff2929; padding: 5px 16px"/></td>
+                        </c:if>
+                        <c:if test="${1 eq suggest.state}">
+                            <td><input type="button" value="의뢰 완료" class="suggest-state-btn" style="background-color: grey; padding: 5px 10px;"/></td>
+                        </c:if>
                     </tr>
                 </c:forEach>
                 </tbody>

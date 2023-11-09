@@ -63,4 +63,8 @@ public class UserService {
 	public Integer findUserIdByEmail(String email) {
 		return userRepository.findUserIdByEmail((email));
 	}
+
+	public Integer findUserIdBySuggestId(Integer suggestId) {
+		return userRepository.findUserIdBySuggestId(suggestId);
+	}
 }

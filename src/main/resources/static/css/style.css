@@ -1741,6 +1741,22 @@ blockquote p {
     border-radius: 3px;
 
 }
+.suggest-state-btn {
+    border: 1px solid transparent;
+    color: #fff;
+    float: left;
+    font-family: Nunito;
+    font-size: 12px;
+    font-weight: bold;
+
+
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
 .flat-btn-div {
     display: flex;
     justify-content: center;
