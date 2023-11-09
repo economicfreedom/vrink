@@ -244,18 +244,24 @@
     <select id="getAllAdList" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad
+        WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="getAllAdListByType" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad
         WHERE status = #{classification}
+        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
     </select>
 
     <select id="getAllAdListByPaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad
+        WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
         LIMIT #{offset}, #{recordSize}
     </select>
@@ -264,6 +270,8 @@
         SELECT *
         FROM ad
         WHERE status = #{classification}
+        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
         LIMIT #{offset}, #{recordSize}
     </select>
@@ -271,12 +279,16 @@
     <select id="countAllAd" resultType="integer">
         SELECT count(*)
         FROM ad
+        WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="countAdByType" resultType="integer">
         SELECT count(*)
         FROM ad
         WHERE status = #{classification}
+        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <update id="changeAd">
@@ -415,7 +427,6 @@
         ]]>
     </select>
 
-
     <select id="getEditorDateCountSevenDays" resultType="com.green.vrink.admin.dto.DateCountDto">
         WITH DateRange AS (
             SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
@@ -505,6 +516,99 @@
         ]]>
     </select>
 
+
+
+    <select id="getDateSumSevenDaysByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        WITH DateRange AS (
+            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
+        FROM (
+            SELECT 0 AS n UNION ALL
+            SELECT 1 UNION ALL
+            SELECT 2 UNION ALL
+            SELECT 3 UNION ALL
+            SELECT 4 UNION ALL
+            SELECT 5 UNION ALL
+            SELECT 6
+            ) AS Numbers
+            )
+
+        SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
+        FROM DateRange
+            LEFT JOIN (
+            SELECT DATE(created_at) AS date, SUM(price) AS count
+            FROM ${tableName}
+            WHERE created_at >= CURDATE() - INTERVAL 7 DAY
+            GROUP BY DATE(created_at)
+            ) AS Data
+        ON DATE(DateRange.date) = Data.date;
+    </select>
+
+    <select id="getDateSumMonthByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH RECURSIVE DateRange AS (
+            SELECT
+                DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
+                LAST_DAY(CURDATE()) AS end_date
+            UNION ALL
+            SELECT
+                DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
+                LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
+            FROM DateRange
+            WHERE start_date < LAST_DAY(CURDATE())
+        )
+
+        SELECT
+            DATE_FORMAT(start_date, '%Y-%m') AS date,
+        IFNULL(SUM(count), 0) AS count
+        FROM DateRange
+            LEFT JOIN (
+            SELECT DATE_FORMAT(created_at, '%Y-%m') AS date, SUM(price) AS count
+            FROM ${tableName}
+            WHERE created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
+            AND created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
+            GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+            ) AS Data
+        ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
+        GROUP BY DATE_FORMAT(start_date, '%Y-%m')
+        ]]>
+    </select>
+
+    <select id="getDateSumWeekByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+        <![CDATA[
+        WITH Weeks AS (
+            SELECT 0 AS week
+            UNION SELECT 1
+            UNION SELECT 2
+            UNION SELECT 3
+            UNION SELECT 4
+            UNION SELECT 5
+            UNION SELECT 6
+            UNION SELECT 7
+            UNION SELECT 8
+            UNION SELECT 9
+            UNION SELECT 10
+            UNION SELECT 11
+        )
+
+        SELECT
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
+    IFNULL(SUM(IFNULL(count, 0)), 0) AS count
+        FROM Weeks
+            LEFT JOIN (
+            SELECT DATE_FORMAT(created_at, '%Y-%u') AS date, SUM(price) AS count
+            FROM ${tableName}
+            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
+            AND created_at <= CURDATE()
+            GROUP BY DATE_FORMAT(created_at, '%Y-%u')
+            ) AS Data
+        ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
+        GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
+        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
+        ]]>
+    </select>
+
+
+
     <select id="countStandardUser" resultType="integer">
         SELECT count(*)
         FROM user
@@ -524,8 +628,8 @@
     </select>
 
     <insert id="insertAd">
-        INSERT INTO ad(ad_com_name, main_image, h_image, v_image, price, ad_period, category, is_notice)
-        VALUES (#{adComName}, #{mainImage}, #{hImage}, #{vImage}, #{price}, #{adPeriod}, #{category}, #{isNotice})
+        INSERT INTO ad(ad_com_name, main_image, hhhh_image, vvvv_image, price, ad_period, category, is_notice)
+        VALUES (#{adComName}, #{mainImage}, #{hhhhImage}, #{vvvvImage}, #{price}, #{adPeriod}, #{category}, #{isNotice})
     </insert>
 
 </mapper>

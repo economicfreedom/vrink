@@ -12,8 +12,8 @@ public class AdminAdDto {
     private Integer adId;
     private String adComName;
     private String mainImage;
-    private String hImage;
-    private String vImage;
+    private String hhhhImage;
+    private String vvvvImage;
     private Integer price;
     private String createdAt;
     private Integer adPeriod;

@@ -40,7 +40,7 @@ public interface AdminService {
     List<AdminSuggestDto> getAllSuggestListByPaging(PagingDto paging);
     AdminSuggestDto getSuggestById(Integer id);
     Integer countAllSuggest();
-    List<AdminAdDto> getAllAdList();
+    List<AdminAdDto> getAllAdList(PagingDto paging);
 
     List<AdminAdDto> getAllAdListByType(String classification);
 
@@ -48,7 +48,7 @@ public interface AdminService {
 
     List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging);
 
-    Integer countAllAd();
+    Integer countAllAd(PagingDto paging);
 
     Integer countAdByType(PagingDto paging);
 
@@ -108,6 +108,9 @@ public interface AdminService {
     List<DateCountDto> getEditorDateCountSevenDays();
     List<DateCountDto> getEditorDateCountMonth();
     List<DateCountDto> getEditorDateCountWeek();
+    List<DateCountDto> getDateSumSevenDaysByTableName(String tableName);
+    List<DateCountDto> getDateSumWeekByTableName(String tableName);
+    List<DateCountDto> getDateSumMonthByTableName(String tableName);
 
     void insertAd(AdminAdDto adminAdDto);
 }

@@ -122,8 +122,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminAdDto> getAllAdList() {
-        return adminRepository.getAllAdList();
+    public List<AdminAdDto> getAllAdList(PagingDto paging) {
+        return adminRepository.getAllAdList(paging);
     }
 
     @Override
@@ -142,8 +142,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer countAllAd() {
-        return adminRepository.countAllAd();
+    public Integer countAllAd(PagingDto paging) {
+        return adminRepository.countAllAd(paging);
     }
 
     @Override
@@ -319,6 +319,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<DateCountDto> getEditorDateCountWeek() {
         return adminRepository.getEditorDateCountWeek();
+    }
+
+    @Override
+    public List<DateCountDto> getDateSumSevenDaysByTableName(String tableName) {
+        return adminRepository.getDateSumSevenDaysByTableName(tableName);
+    }
+
+    @Override
+    public List<DateCountDto> getDateSumWeekByTableName(String tableName) {
+        return adminRepository.getDateSumWeekByTableName(tableName);
+    }
+
+    @Override
+    public List<DateCountDto> getDateSumMonthByTableName(String tableName) {
+        return adminRepository.getDateSumMonthByTableName(tableName);
     }
 
     @Override

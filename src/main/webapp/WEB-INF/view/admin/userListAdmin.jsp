@@ -90,7 +90,7 @@
     .tab--user {
         margin-top: 8px;
         margin-left: 24px;
-        margin-bottom: 0px;
+        margin-bottom: 0;
         padding: 0;
         overflow: hidden;
     }
@@ -363,7 +363,6 @@
                                                                  value="${pagination.paging.recordSize}">
             </div>
         </div>
-
     </form>
 </div>
 <script>

@@ -19,11 +19,13 @@
     .t-head {
         background-color: #ececec;
     }
+
     .table td {
         padding: 1px !important;
         vertical-align: baseline !important;
         padding-left: 8px !important;
     }
+
     .card-header {
         padding-left: 23px;
     }
@@ -36,12 +38,8 @@
         padding: 1px;
     }
 
-    td:nth-child(3) {
+    td:nth-child(2) {
         width: 20%;
-    }
-
-    td:nth-child(4) {
-        width: 15%;
     }
 
     td:last-child {
@@ -56,7 +54,6 @@
     td a {
         color: black;
         text-decoration: none !important;
-        margin-left: 15px;
     }
 
     h4 {
@@ -67,8 +64,15 @@
     .classification {
         display: inline-block;
         font-weight: bold;
-        padding: 8px 10px;
-        padding-left: 8px !important;
+        padding: 8px 0;
+    }
+
+    .classification2 {
+        display: inline-block;
+    }
+
+    .classification3 {
+        display: inline-block;
     }
 
     .write-btn {
@@ -86,8 +90,9 @@
     }
 
     .tab--ad {
-        margin-top: 15px;
+        margin-top: 8px;
         margin-left: 24px;
+        margin-bottom: 0;
         padding: 0;
         overflow: hidden;
     }
@@ -219,29 +224,71 @@
 <div class="card m-4">
     <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 배너 목록</h3></div>
 
-        <ul class="tab--ad">
-            <c:choose>
-                <c:when test="${uClassification == '전체' or empty uClassification}">
-                    <li class="active" data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="0"><a href="#">게시중</a></li>
-                    <li data-classification="1"><a href="#">비게시</a></li>
-                </c:when>
-                <c:when test="${uClassification == '0'}">
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li class="active" data-classification="0"><a href="#">게시중
-                    </a></li>
-                    <li data-classification="1"><a href="#">비게시</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="0"><a href="#">게시중</a></li>
-                    <li class="active" data-classification="1"><a href="#">비게시</a></li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
+    <ul class="tab--ad cl1">
+        <c:choose>
+            <c:when test="${uClassification == '전체' or empty uClassification}">
+                <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="1"><a href="#">게시중</a></li>
+                <li data-classification="0"><a href="#">비게시</a></li>
+            </c:when>
+            <c:when test="${uClassification == '1'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification="1"><a href="#">게시중
+                </a></li>
+                <li data-classification="0"><a href="#">비게시</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="1"><a href="#">게시중</a></li>
+                <li class="active" data-classification="0"><a href="#">비게시</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+
+    <ul class="tab--ad cl2">
+        <c:choose>
+            <c:when test="${uClassification2 == '전체' or empty uClassification2}">
+                <li class="active" data-classification2="전체"><a href="#">전체</a></li>
+                <li data-classification2="0"><a href="#">메인</a></li>
+                <li data-classification2="1"><a href="#">사이드</a></li>
+            </c:when>
+            <c:when test="${uClassification2 == '0'}">
+                <li data-classification2="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification2="0"><a href="#">메인
+                </a></li>
+                <li data-classification2="1"><a href="#">사이드</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification2="전체"><a href="#">전체</a></li>
+                <li data-classification2="0"><a href="#">메인</a></li>
+                <li class="active" data-classification2="1"><a href="#">사이드</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+
+    <ul class="tab--ad cl3">
+        <c:choose>
+            <c:when test="${uClassification3 == '전체' or empty uClassification3}">
+                <li class="active" data-classification3="전체"><a href="#">전체</a></li>
+                <li data-classification3="0"><a href="#">외부광고</a></li>
+                <li data-classification3="1"><a href="#">공지사항</a></li>
+            </c:when>
+            <c:when test="${uClassification3 == '0'}">
+                <li data-classification3="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification3="0"><a href="#">외부광고
+                </a></li>
+                <li data-classification3="1"><a href="#">공지사항</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification3="전체"><a href="#">전체</a></li>
+                <li data-classification3="0"><a href="#">외부광고</a></li>
+                <li class="active" data-classification3="1"><a href="#">공지사항</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 
     <form style="width: 95%;" action="#" name="pageForm">
-        <div class="mx-4 mb-2">
+        <div class="mt-2 mx-4">
             <select name="searchType"
                     id="searchType"
                     class="datatable-selector"
@@ -284,15 +331,17 @@
                     onClick="location.href='/admin/ad-admin?reset=1'">검색초기화
             </button>
 
-            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px; margin-right: -50px; float: right;"
+            <button class="btn btn-secondary btn-block btn-admin"
+                    type="button"
+                    style="position: relative; top: -1px; margin-right: -50px; float: right;"
                     id="writeButton"
                     onClick="location.href='/admin/ad-admin/write'">배너 등록
             </button>
         </div>
-            <table class="datatable-table table">
-                <tbody id="ad-list-container">
-                </tbody>
-            </table>
+        <table class="datatable-table table">
+            <tbody id="ad-list-container">
+            </tbody>
+        </table>
         <div class="paging">
             <div class="text-center clearfix">
                 <ul class="pagination" id="pagination--a">
@@ -318,7 +367,6 @@
                 <input type="hidden" id="page" name="page" value="${pagination.paging.page}"> <input type="hidden"
                                                                                                      name="recordSize"
                                                                                                      value="${pagination.paging.recordSize}">
-
             </div>
         </div>
     </form>
@@ -332,7 +380,7 @@
             type   : "POST",
             url    : "/admin/change-ad",
             data   : {
-                "adId" : adId,
+                "adId"  : adId,
                 "status": status
             },
             success: function (data) {
@@ -353,17 +401,18 @@
 
             setupPaginationEventHandlers();
 
-            loadads(`${uClassification}`,
+            loadads(`${uClassification}`, `${uClassification2}`, `${uClassification3}`,
                 `${pagination.paging.page}`, `${uSearchType}`,
                 `${uKeyword}`);
 
-            let classification2 = `${uClassification}`;
+            let classifi = `${uClassification}`;
+            let classifi2 = `${uClassification2}`;
+            let classifi3 = `${uClassification3}`;
 
             $('#searchButton').on(
                 'click',
                 function () {
-                    console.log(classification2);
-                    loadads(classification2, undefined, $(
+                    loadads(classifi, classifi2, classifi3, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -377,25 +426,47 @@
 
             $("#keyword").on("keyup", function (key) {
                 if (key.keyCode == 13) {
-                    console.log(classification2);
-                    loadads(classification2, undefined, $(
+                    loadads(classifi, classifi2, classifi3, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 }
             });
 
-            $('.tab--ad li').click(
-                function () {
-                    classification2 = $(this).data(
-                        'classification');
-                    console.log(classification2);
-                    $('.tab--ad li').removeClass('active');
-                    $(this).addClass('active');
+        $('.cl2 li').click(
+            function () {
+                classifi2 = $(this).data(
+                    'classification2');
+                $('.cl2 li').removeClass('active');
+                $(this).addClass('active');
 
-                    loadads(classification2, undefined, $(
-                        '#searchType').val(), $('#keyword')
-                        .val());
-                });
+                loadads(classifi, classifi2, classifi3, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
+            });
+
+        $('.cl3 li').click(
+            function () {
+                classifi3 = $(this).data(
+                    'classification3');
+                $('.cl3 li').removeClass('active');
+                $(this).addClass('active');
+
+                loadads(classifi, classifi2, classifi3, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
+            });
+
+        $('.cl1 li').click(
+            function () {
+                classifi = $(this).data(
+                    'classification');
+                $('.cl1 li').removeClass('active');
+                $(this).addClass('active');
+
+                loadads(classifi, classifi2, classifi3, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
+            });
 
             function setupPaginationEventHandlers() {
                 $(document).on('click', '.pagination li a',
@@ -403,17 +474,19 @@
                         e.preventDefault();
                         const value = $(this).data('page');
                         // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
-                        loadads($('.tab--ad li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
+                        loadads($('.tab--ad li.active').data('classification'), $('.cl2 li.active').data('classification2'), $('.cl3 li.active').data('classification3'), value, $('#searchType').val(), $('#keyword').val());
                     });
             }
 
 
-            function loadads(classification, page, searchType, keyword) {
+            function loadads(classification, classification2, classification3, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
                     url    : '/admin/ad-admin/classification',
                     data   : {
                         classification: classification,
+                        classification2: classification2,
+                        classification3: classification3,
                         page          : page,
                         searchType    : searchType,
                         keyword       : keyword
@@ -425,7 +498,7 @@
                         var adListHTML = '<tr class="t-head">'
                             + '<td><h4>상태</h4></td>'
                             + '<td><h4>회사이름</h4></td>'
-                            + '<td><h4>이미지</h4></td>'
+                            + '<td style="width: 140px;"><h4>이미지</h4></td>'
                             + '<td><h4>가격</h4></td>'
                             + '<td><h4>기간</h4></td>'
                             + '<td><h4>위치</h4></td>'
@@ -436,12 +509,12 @@
                             var ad = adList[i];
                             let stt = 0;
 
-                            if (ad.status === 0) {
+                            if (ad.status === 1) {
                                 ad.status = '<text style="color: blue"><i class="fa-solid fa-signs-post"></i> 게시중</text>';
-                                stt = 0;
+                                stt = 1;
                             } else {
                                 ad.status = '<text style="color: red"><i class="fa-regular fa-circle-xmark"></i> 비게시</text>';
-                                stt = 1;
+                                stt = 0;
                             }
                             let regData = ad.createdAt.substring(0, 16);
 
@@ -452,29 +525,41 @@
                             let thisCategory;
                             let thisNotice;
 
-                            if(ad.category === 0) thisCategory = '<text style="color: purple"><i class="fa-solid fa-house"></i> 메인</text>';
+                            if (ad.category === 0) thisCategory = '<text style="color: purple"><i class="fa-solid fa-house"></i> 메인</text>';
                             else thisCategory = '<text style="color: #ff5722"><i class="fa-solid fa-ruler-combined"></i> 사이드</text>';
 
-                            if(ad.isNotice === 0) thisNotice = '<text style="color: green"><i class="fa-brands fa-adversal"></i> 외부광고</text>';
+                            if (ad.isNotice === 0) thisNotice = '<text style="color: green"><i class="fa-brands fa-adversal"></i> 외부광고</text>';
                             else thisNotice = '<text style="color: red"><i class="fa-solid fa-exclamation"></i> 공지사항</text>';
 
-                            if(ad.mainImage !== "undefined" ) {
-                               m_image =  '<img style="width: 75px; height: 75px;" src="' +
-                                   ad.mainImage
-                                   + '">';
-                            }
-
-                            if(ad.vimage !== "undefined") {
-                                v_image =  '<img style="width: 25px; height: 75px;" src="' +
-                                    ad.vimage
-                                    + '">&nbsp;';
-                            }
-
-                            if(ad.himage !== "undefined") {
-                                h_image =  '<img style="width: 75px; height: 25px;" src="' +
-                                    ad.himage
+                            if (ad.mainImage !== "undefined" && ad.category === 0) {
+                                m_image = '<img style="width: 75px; height: 50px; border: 1px solid #535353; position: relative; left: 29px;" src="' +
+                                    ad.mainImage
                                     + '">';
+                            } else m_image = '';
+
+                            if (ad.vvvvImage !== "undefined" && ad.category === 1) {
+                                v_image = '<img style="width: 25px; height: 75px; border: 1px solid #535353; position: relative; left: 14px;" src="' +
+                                    ad.vvvvImage
+                                    + '">&nbsp;';
+                            } else v_image = '';
+
+                            if (ad.hhhhImage !== "undefined" && ad.category === 1) {
+                                h_image = '<img style="width: 75px; height: 30px; border: 1px solid #535353; position: relative; left: 14px;" src="' +
+                                    ad.hhhhImage
+                                    + '">';
+                            } else h_image = '';
+
+                            let ad_com_name;
+
+                            if (ad.adComName === "Vrink") {
+                                ad_com_name = '<text style="color: hotpink"><i class="fa-solid fa-circle-chevron-down"></i></i> Vrink</text>';
+                            } else {
+                                ad_com_name = ad.adComName;
                             }
+
+                            let ad_price = (ad.price).toLocaleString('ko-KR') + "원";
+                            if (ad_price === "0원") ad_price = '<text style="color: red"><i class="fa-solid fa-exclamation"></i></i> 공지사항</text>';
+
 
                             adListHTML += '<tr>'
                                 + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
@@ -485,7 +570,7 @@
                                 + '&id='
                                 + ad.adId
                                 + '">'
-                                + ad.adComName
+                                + ad_com_name
                                 + '</a></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
@@ -499,8 +584,8 @@
                                 + '&id='
                                 + ad.adId
                                 + '">'
-                                + ad.price
-                                + '원</a></td>'
+                                + ad_price
+                                + '</a></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='
@@ -508,20 +593,20 @@
                                 + '">'
                                 + ad.adPeriod
                                 + '일 남음</a></td>'
-                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + '<td><p class="classification2"><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='
                                 + ad.adId
                                 + '">'
                                 + thisCategory
-                                + '</a></td>'
-                                + '<td><a href="/admin/ad-admin/detail?page='
+                                + '</a></p></td>'
+                                + '<td><p class="classification3"><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='
                                 + ad.adId
                                 + '">'
                                 + thisNotice
-                                + '</a></td>'
+                                + '</a></p></td>'
                                 + '<td><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='
@@ -539,7 +624,7 @@
                         }
                         for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                             paginationHTML += '<li class="'
-                                + (pagination.paging.page == num ? 'page-item active mx-1'
+                                + (pagination.paging.page === num ? 'page-item active mx-1'
                                     : 'page-item mx-1')
                                 + '"><a class="page-list" href="#" data-page="' + num + '">'
                                 + num + '</a></li>';
@@ -576,6 +661,10 @@
         dropdownButton.textContent = selectedItem;
         let classification = document.querySelector('#classification');
         classification.value = selectedItem;
+        let classification2 = document.querySelector('#classification2');
+        classification2.value = selectedItem;
+        let classification3 = document.querySelector('#classification3');
+        classification3.value = selectedItem;
     }
 
 </script>

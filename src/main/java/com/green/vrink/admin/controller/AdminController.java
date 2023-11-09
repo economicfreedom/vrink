@@ -58,6 +58,13 @@ public class AdminController {
         model.addAttribute("suggestSevenDate", adminService.getDateCountSevenDaysByTableName("suggest"));
         model.addAttribute("suggestWeekDate", adminService.getDateCountWeekByTableName("suggest"));
         model.addAttribute("suggestMonthDate", adminService.getDateCountMonthByTableName("suggest"));
+        model.addAttribute("bannerSevenDate", adminService.getDateCountSevenDaysByTableName("ad"));
+        model.addAttribute("bannerWeekDate", adminService.getDateCountWeekByTableName("ad"));
+        model.addAttribute("bannerMonthDate", adminService.getDateCountMonthByTableName("ad"));
+
+        model.addAttribute("bannerPriceSevenDate", adminService.getDateSumSevenDaysByTableName("ad"));
+        model.addAttribute("bannerPriceWeekDate", adminService.getDateSumWeekByTableName("ad"));
+        model.addAttribute("bannerPriceMonthDate", adminService.getDateSumMonthByTableName("ad"));
 
         model.addAttribute("editorSevenDate", adminService.getEditorDateCountSevenDays());
         model.addAttribute("editorWeekDate", adminService.getEditorDateCountWeek());
@@ -274,15 +281,11 @@ public class AdminController {
     @GetMapping("/user")
     public String userAdmin(@ModelAttribute("paging") PagingDto paging,
                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                            @RequestParam(value = "classification2", required = false, defaultValue = "전체")
-                            String classification2,
-                            @RequestParam(value = "classification3", required = false, defaultValue = "전체")
-                            String classification3,
-                            @RequestParam(value = "searchType", required = false, defaultValue = "전체")
-                            String searchType,
+                            @RequestParam(value = "classification2", required = false, defaultValue = "전체") String classification2,
+                            @RequestParam(value = "classification3", required = false, defaultValue = "전체") String classification3,
+                            @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType,
                             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
-                            Model model) {
+                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
 
         log.info("유저 관리 페이지 컨트롤러 호출");
 
@@ -375,6 +378,8 @@ public class AdminController {
     @GetMapping("/ad-admin")
     public String adAdmin(@ModelAttribute("paging") PagingDto paging,
                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                          @RequestParam(value = "classification2", required = false, defaultValue = "전체") String classification2,
+                          @RequestParam(value = "classification3", required = false, defaultValue = "전체") String classification3,
                           @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
                           Model model) {
 
@@ -382,6 +387,8 @@ public class AdminController {
 
         if (reset.equals("1")) {
             session.removeAttribute("uClassification");
+            session.removeAttribute("uClassification2");
+            session.removeAttribute("uClassification3");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
             session.removeAttribute("nowPage");
@@ -393,11 +400,15 @@ public class AdminController {
         }
 
         paging.setPage(page);
+        if (classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
+        if (classification3.equals("전체")) paging.setClassification3("3");
+        else paging.setClassification3(classification3);
 
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
 
-        int count = adminService.countAllAd();
+        int count = adminService.countAllAd(paging);
         pagination.setArticleTotalCount(count);
 
         List<AdminAdDto> adminAdList = adminService.getAllAdListByPaging(paging);

@@ -795,20 +795,28 @@ public class AdminRestController {
 
     @GetMapping("/ad-admin/classification")
     @ResponseBody
-    public ClassificationDto adClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
-            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+    public ClassificationDto adClassification(@ModelAttribute("paging") PagingDto paging,
+                                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                              @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification,
+                                              @RequestParam(value = "classification2", required = false, defaultValue = "전체") String classification2,
+                                              @RequestParam(value = "classification3", required = false, defaultValue = "전체") String classification3,
+                                              @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType,
+                                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
         log.info("배너광고 목록 레스트 컨트롤러 실행");
 
         paging.setPage(page);
         paging.setClassification(classification);
+        if (classification2.equals("전체")) paging.setClassification2("3");
+        else paging.setClassification2(classification2);
+        if (classification3.equals("전체")) paging.setClassification3("3");
+        else paging.setClassification3(classification3);
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
 
         session.setAttribute("uClassification", classification);
+        session.setAttribute("uClassification2", classification2);
+        session.setAttribute("uClassification3", classification3);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
         session.setAttribute("nowPage", page);
@@ -816,7 +824,7 @@ public class AdminRestController {
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
         ClassificationDto classificationDto = new ClassificationDto();
-        pagination.setArticleTotalCount(adminService.countAllAd());
+        pagination.setArticleTotalCount(adminService.countAllAd(paging));
 
         //분류가 전체일 떄
         if (classification.equals("전체")) {
@@ -830,7 +838,7 @@ public class AdminRestController {
                 List<AdminAdDto> lastAdminAdDtoList = new ArrayList<>();
                 List<AdminAdDto> finalAdminAdDtoList = new ArrayList<>();
 
-                adDtoList = adminService.getAllAdList();
+                adDtoList = adminService.getAllAdList(paging);
 
                 if (searchType.equals("회사이름")) {
                     for (AdminAdDto adDto : adDtoList) {
@@ -881,8 +889,6 @@ public class AdminRestController {
             pagination.setArticleTotalCount(adminService.countAdByType(paging));
 
             if (!keyword.isEmpty()) {
-
-                log.info("키워드 : " + keyword);
 
                 List<AdminAdDto> lastAdminAdDtoList = new ArrayList<>();
                 List<AdminAdDto> finalAdminAdDtoList = new ArrayList<>();

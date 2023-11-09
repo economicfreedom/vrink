@@ -30,11 +30,11 @@ public interface AdminRepository {
     AdminSuggestDto getSuggestById(Integer id);
     Integer countAllSuggest();
 
-    List<AdminAdDto> getAllAdList();
+    List<AdminAdDto> getAllAdList(PagingDto paging);
     List<AdminAdDto> getAllAdListByType(String classification);
     List<AdminAdDto> getAllAdListByPaging(PagingDto paging);
     List<AdminAdDto> getAllAdListByTypePaging(PagingDto paging);
-    Integer countAllAd();
+    Integer countAllAd(PagingDto paging);
     Integer countAdByType(PagingDto paging);
     AdminAdDto getAdById(Integer id);
 
@@ -78,6 +78,9 @@ public interface AdminRepository {
     List<DateCountDto> getEditorDateCountSevenDays();
     List<DateCountDto> getEditorDateCountMonth();
     List<DateCountDto> getEditorDateCountWeek();
+    List<DateCountDto> getDateSumSevenDaysByTableName(String tableName);
+    List<DateCountDto> getDateSumWeekByTableName(String tableName);
+    List<DateCountDto> getDateSumMonthByTableName(String tableName);
 
     int insertAd(AdminAdDto adminAdDto);
 

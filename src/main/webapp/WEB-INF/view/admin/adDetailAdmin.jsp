@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
 <div id="main-card"
-     style="font-family: 'NanumSquareRound'; display: inline-flex; position: relative; left: 30px;"
+     style="font-family: 'NanumSquareRound'; display: inline-flex; position: relative; left: ${adDetail.category == 0 ? 30 : 350}px;"
      class="justify-content-center">
     <div class="card-body text-black" style="margin: 130px 0;
     min-width: 710px;
@@ -51,7 +51,7 @@
             <div class="form-outline mb-0">
                 <label class="form-label my-0" for="category">위치</label>
                 <div style="display: flex;">
-                    <input type="text" id="category" value="${adDetail.category == 0 ? "메인" : "사이드"}"
+                    <input type="text" id="category" style="color: ${adDetail.category == 0 ? "purple" : "#ff5722"};" value="${adDetail.category == 0 ? "메인" : "사이드"}"
                            class="form-control form-control input-l" readonly="readonly"/>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <div class="form-outline mb-0">
                 <label class="form-label my-0" for="isNotice">종류</label>
                 <div style="display: flex;">
-                    <input type="text" id="isNotice" value="${adDetail.isNotice == 1 ? "공지사항" : "외부광고"}"
+                    <input type="text" id="isNotice" style="color: ${adDetail.isNotice == 1 ? "red" : "green"};" value="${adDetail.isNotice == 1 ? "공지사항" : "외부광고"}"
                            class="form-control form-control input-l" readonly="readonly"/>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     <label class="form-label my-0 ms-4" for="status">상태</label>
                     <div style="display: flex;">
                         <c:choose>
-                            <c:when test="${adDetail.status == 0}">
+                            <c:when test="${adDetail.status == 1}">
                                 <input type="text" id="status" value="게시중" style="color: blue" class="form-control form-control input-l ms-4" readonly="readonly"/>
                             </c:when>
                             <c:otherwise>
@@ -104,23 +104,32 @@
         <script>
             console.log("${adDetail}");
         </script>
-<%--            <c:if test="${adDetail.hImage != 'undefined'}">--%>
-<%--              <div class="si-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; display: none;">--%>
-<%--                <img id="h_img" src="${adDetail.hImage}" style="object-fit: cover;">--%>
-<%--              </div>--%>
-<%--            </c:if>--%>
+            <c:if test="${adDetail.hhhhImage != 'undefined'}">
+              <div class="si-ad" style="border: 1px solid #b9b9b9; border-radius: 3px;">
+                <img id="h_img" src="${adDetail.hhhhImage}" style="object-fit: fill;
+                            border: 1px solid #b9b9b9;
+                            border-radius: 3px;
+                            width: 707px;
+                            height: 320px;">
+              </div>
+            </c:if>
     </div>
 
-<%--    <c:if test="${adDetail.vImage != 'undefined'}">--%>
-<%--        <div class="si-ad" style="margin: 130px 0; max-width: 170px; display: none;">--%>
-<%--            <img id="v_img"--%>
-<%--                 src="${adDetail.vImage}"--%>
-<%--                 style="object-fit: cover; border: 1px solid #b9b9b9; border-radius: 3px;">--%>
-<%--        </div>--%>
-<%--    </c:if>--%>
+    <c:if test="${adDetail.vvvvImage != 'undefined'}">
+        <div class="si-ad" style="margin: 130px 0; max-width: 170px;">
+            <img id="v_img"
+                 src="${adDetail.vvvvImage}"
+                 style="    object-fit: fill;
+                            border: 1px solid #b9b9b9;
+                            border-radius: 3px;
+                            width: 170px;
+                            height: 512px;">
+        </div>
+    </c:if>
+
     <c:if test="${adDetail.mainImage != 'undefined'}">
         <div class="ma-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; margin: 130px 0">
-            <img id="ma-img" src="${adDetail.mainImage}" style="object-fit: cover;">
+            <img id="ma-img" src="${adDetail.mainImage}" style="object-fit: fill; height: 510px; width: 870px;">
         </div>
     </c:if>
 </div>

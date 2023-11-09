@@ -94,18 +94,18 @@
             </div>
         </div>
         <div class="si-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; display: none;">
-            <img id="h_img" src="/images/ad_hori.png" style="object-fit: cover;">
+            <img id="h_img" src="/images/ad_hori.png" style="object-fit: fill;">
         </div>
     </div>
 
     <div class="si-ad" style="margin: 130px 0; max-width: 170px; display: none;">
         <img id="v_img"
              src="/images/ad_verti.png"
-             style="object-fit: cover; border: 1px solid #b9b9b9; border-radius: 3px;">
+             style="object-fit: fill; border: 1px solid #b9b9b9; border-radius: 3px;">
     </div>
 
     <div class="ma-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; margin: 130px 0">
-        <img id="ma-img" src="/images/ad_main.png" style="object-fit: cover;">
+        <img id="ma-img" src="/images/ad_main.png" style="object-fit: fill;">
     </div>
 </div>
 
@@ -236,8 +236,8 @@
         let formData = new FormData();
         formData.append("adComName", adComNameInput);
         formData.append("mainImage", mainBannerURL);
-        formData.append("hImage", hBannerURL);
-        formData.append("vImage", vBannerURL);
+        formData.append("hhhhImage", hBannerURL);
+        formData.append("vvvvImage", vBannerURL);
         formData.append("price", priceInput);
         formData.append("adPeriod", adPeriodInput);
         formData.append("category", category);
@@ -266,8 +266,20 @@
         $("#is-notice").change(function () {
             if($("#is-notice").is(":checked")) {
                 isNotice = 1;
+                $("#price").val(0);
+                $("#price").prop("readonly", true);
+                $("#price").css("background", "#d7d7d7");
+                $("#ad-com-name").val('Vrink');
+                $("#ad-com-name").prop("readonly", true);
+                $("#ad-com-name").css("background", "#d7d7d7");
             } else {
                 isNotice = 0;
+                $("#price").val('');
+                $("#price").prop("readonly", false);
+                $("#price").css("background", "white");
+                $("#ad-com-name").val('');
+                $("#ad-com-name").prop("readonly", false);
+                $("#ad-com-name").css("background", "white");
             }
         });
 
