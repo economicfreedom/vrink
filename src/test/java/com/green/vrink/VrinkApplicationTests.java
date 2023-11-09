@@ -1,13 +1,27 @@
 package com.green.vrink;
 
+
+import org.apache.tomcat.jni.Time;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
+
+import org.openqa.selenium.WebDriver;
+
 import org.springframework.boot.test.context.SpringBootTest;
 
+
+import java.io.IOException;
 import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 
 @SpringBootTest
 class VrinkApplicationTests {
@@ -15,6 +29,10 @@ class VrinkApplicationTests {
 
     private static final String JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
     private static final String SK = "asdfdd";
+
+    private WebDriver driver;
+    public static String WEB_DRIVER_ID = "webdriver.chrome.driver";
+    public static String WEB_DRIVER_PATH = "C:\\PSG\\tools\\chromedriver.exe";
 
 
     @Test
@@ -212,7 +230,49 @@ class VrinkApplicationTests {
 
     }
 
+    @Test
+    public void virtube() throws InterruptedException {
+        List<String> imageList = new ArrayList<>();
+        List<String> channelList = new ArrayList<>();
+        List<String> subList = new ArrayList<>();
+        Document doc = null;
+        try {
+            // URL을 사용하여 HTML 가져오기
+            String url = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-daily";
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Elements channels = doc.select(".name__label");
+        Elements images = doc.select(".profile-image > picture > img");
 
+        for(Element channel : channels) {
+            channelList.add(channel.text());
 
+            String url2 = channel.attr("href");
+            try {
+                doc = Jsoup.connect("https://playboard.co"+url2).get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // 구독자 수 5번째부터 에러남
+            Element subscribe = doc.select(".stats--clickable > ul > li.num").first();
+            subList.add(subscribe.text());
+            System.out.println(subscribe);
+            Thread.sleep(3000);
+        }
+
+        for(Element image : images) {
+            imageList.add(image.attr("data-src"));
+        }
+
+        // 채널명
+        System.out.println(channelList);
+        // 구독자 수
+        System.out.println(subList);
+        // 이미지 링크
+        System.out.println(imageList);
+    }
 
 }

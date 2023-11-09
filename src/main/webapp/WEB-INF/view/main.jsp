@@ -20,6 +20,11 @@
         color: #5f5f5f
     }
 
+    .youtb-list-th {
+        height: 45px;
+        background: #fafafa;
+    }
+
     .h-advertise {
         display: none;
     }
@@ -135,19 +140,21 @@
         <div class="row mt-5">
             <div class="col-sm-6 mt-5">
                 <div class="heading1">
-                    <h2>인기 버튜버 순위</h2>
+                    <h2>의뢰 게시판</h2>
                 </div>
                 <table class="w-full t-center">
                     <colgroup>
                         <col width="10%">
                         <col width="40%">
                         <col width="25%">
+                        <col width="25%">
                     </colgroup>
                     <thead>
                     <tr class="board-list-th">
-                        <th class="t-center">순위</th>
-                        <th>채널명</th>
+                        <th class="t-center">번호</th>
+                        <th>제목</th>
                         <th class="t-center">닉네임</th>
+                        <th class="t-center">날짜</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -159,6 +166,7 @@
                                    style="text-decoration: none; color: black"><span>
                                         제목</span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
                             <td>${board.nickname}</td>
+                            <td>${board.createdAt}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -196,6 +204,32 @@
                             <td>${board.createdAt}</td>
                         </tr>
                         </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+                <table class="w-full t-center">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="30%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                        <tr class="youtb-list-th">
+                            <th class="t-center">순위</th>
+                            <th class="t-center"></th>
+                            <th class="t-center">채널명</th>
+                            <th class="t-center">구독자수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="board-list-tr">
+                            <td>1</td>
+                            <td style='background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FnVFtn%2FbtqyyxkWDEW%2F9TsNkGzvaLGxklbQCj3NHK%2Fimg.png')"></td>
+                            <td>룰루</td>
+                            <td>1,000,000,000</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
