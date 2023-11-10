@@ -37,10 +37,52 @@
         SELECT ed.editor_id
              , ed.user_id
              , ed.profile_image
-             , u.nickname
+             , u_editor.nickname
+             , (SELECT COUNT(*) FROM follow f_sub WHERE f_sub.editor_id = ed.editor_id) AS count
         FROM follow f
-                 LEFT JOIN user u ON u.user_id = f.user_id
-                 LEFT JOIN editor_detail ed ON f.editor_id = ed.editor_id
-        WHERE u.user_id = #{userId}
+            LEFT JOIN user u_user ON u_user.user_id = f.user_id
+            LEFT JOIN editor_detail ed ON f.editor_id = ed.editor_id
+            LEFT JOIN user u_editor ON u_editor.user_id = ed.user_id
+        WHERE u_user.user_id = #{userId}
+        GROUP BY ed.editor_id, ed.user_id, ed.profile_image, u_editor.nickname
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(editor_id) FROM follow
+        <if test="type == ''">
+            WHERE user_id LIKE #{userId}
+        </if>
+        <if test="type == 'all'">
+            WHERE user_id LIKE #{userId}
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="findAllByCriteria" resultType="com.green.vrink.follow.dto.GetFollowEditorDto">
+        SELECT ed.editor_id
+             , ed.user_id
+             , ed.profile_image
+             , u_editor.nickname
+             , (SELECT COUNT(*) FROM follow f_sub WHERE f_sub.editor_id = ed.editor_id) AS count
+        FROM follow f
+            LEFT JOIN user u_user ON u_user.user_id = f.user_id
+            LEFT JOIN editor_detail ed ON f.editor_id = ed.editor_id
+            LEFT JOIN user u_editor ON u_editor.user_id = ed.user_id
+
+        <if test="type == '' ">
+            WHERE u_user.user_id = #{userId}
+        </if>
+        <if test="type == 'all' ">
+            WHERE u_user.user_id = #{userId}
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+
+
+        GROUP BY ed.editor_id, ed.user_id, ed.profile_image, u_editor.nickname
+        ORDER BY f.created_at DESC
+        LIMIT #{offset},#{countPerPage}
     </select>
 </mapper>

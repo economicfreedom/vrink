@@ -8,4 +8,5 @@ public class GetFollowEditorDto {
     private Integer userId;
     private String profileImage;
     private String nickname;
+    private Integer count;
 }

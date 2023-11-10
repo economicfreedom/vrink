@@ -27,6 +27,7 @@ public class Criteria {
 	private String type;
 	private String orderBy;
 	private String filter;
+	private Integer userId;
 	public int getOffset() {
     return (this.pageNum - 1) * this.countPerPage;
 }

@@ -16,11 +16,12 @@
 </style>
 <script>
     $(document).ready(function () {
+
         $("#search").click(function () {
             let type = $("#type").val();
             let keyword = $("#keyword").val();
             $('#paginationFlag').val('0');
-            location.href = "/suggest/list?keyword=" + keyword + "&type=" + type;
+            location.href = "/follow/follow-list?keyword=" + keyword + "&type=" + type;
         });
         $("#keyword").keypress(function (event) {
             console.log($('#paginationFlag').val());
@@ -28,7 +29,7 @@
                 let type = $("#type").val();
                 let keyword = $("#keyword").val();
                 $('#paginationFlag').val('0');
-                location.href = "/suggest/list?type=" + type + "&keyword=" + keyword;
+                location.href = "/sfollow/follow-list?type=" + type + "&keyword=" + keyword;
             }
         });
         $('#pagination').on('click', 'a', function (e) {
@@ -40,6 +41,8 @@
             document["page-form"].keyword.value = $("#keyword").val();
             document["page-form"].submit();
         }); // end of #pagination
+
+
     })
 </script>
 <div class="container mt-5">
@@ -59,6 +62,7 @@
                 </div>
                 <div>
                     <select style="height:26px" name="type" id="type">
+                        <option value="all" ${pageDTO.cri.type == 'all' ? 'selected' : ''}>모두</option>
                         <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
                     </select>
                     <input type="text" size="15" id="keyword"
@@ -78,20 +82,21 @@
                 </colgroup>
                 <thead>
                 <tr class="youtb-list-th">
-                    <th class="t-center">일간 순위</th>
                     <th class="t-center"></th>
-                    <th>채널명</th>
-                    <th class="t-center">구독자수</th>
+                    <th class="t-center"></th>
+                    <th>활동명</th>
+                    <th class="t-center">팔로우</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${dailyList}" var="daily" varStatus="step">
+                <c:forEach items="${followEditor}" var="followEditor">
                     <tr class="youtb-list-tr">
-                        <td>${step.count}</td>
+                        <td></td>
                         <td>
-                            <div><a href="${daily.link}"><img src="${daily.thumbnail}" width="50%"></a></div></td>
-                        <td class="t-left"><a href="${daily.link}" target="_blank">${daily.channel}</a></td>
-                        <td>${daily.subscribe}</td>
+                            <div><a href=""><img src="${followEditor.profileImage}" width="80%" height=""></a></div>
+                        </td>
+                        <td class="t-left"><a href="#" >${followEditor.nickname}</a></td>
+                        <td>${followEditor.count} 명</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -99,7 +104,7 @@
         </div>
     </div>
 
-    <form action="/suggest/list" name="page-form">
+    <form action="/follow/follow-list" name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 
             <c:if test="${pageDTO.prev}">

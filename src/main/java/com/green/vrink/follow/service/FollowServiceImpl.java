@@ -1,8 +1,10 @@
 package com.green.vrink.follow.service;
 
 import com.green.vrink.follow.dto.FollowDto;
+import com.green.vrink.follow.dto.GetFollowEditorDto;
 import com.green.vrink.follow.repository.interfaces.FollowRepository;
 import com.green.vrink.follow.repository.model.Follow;
+import com.green.vrink.util.Criteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +37,15 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public Integer isFollow(FollowDto followDto) {
         return followRepository.isFollow(followDto);
+    }
+
+    @Override
+    public List<GetFollowEditorDto> getFollowEditorList(Criteria criteria) {
+        return followRepository.findAllByCriteria(criteria);
+    }
+
+    @Override
+    public Integer getTotal(Criteria criteria) {
+        return followRepository.getTotal(criteria);
     }
 }
