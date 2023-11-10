@@ -5,6 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
+
 public class Payment {
     private Integer paymentId;
     private Integer userId;

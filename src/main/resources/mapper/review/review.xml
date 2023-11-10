@@ -66,4 +66,8 @@
         order by count desc
         LIMIT 4;
     </select>
+    <select id="isTableExists" resultType="java.lang.Boolean">
+        SELECT 'true' FROM review_count
+        WHERE editor_id = #{editorId} AND user_id =#{userId}
+    </select>
 </mapper>

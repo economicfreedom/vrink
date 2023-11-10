@@ -248,8 +248,9 @@
     <div class="row ">
         <div class="title">
             <div style="background-color:grey; border:grey solid 1px; border-radius: 2px;">
-                <a href="/board/board-list" style="color: grey; text-decoration: none; text-decoration-color: grey; "><h2
-                        style="color: white; margin-left: 6px">자유 게시판</h2></a>
+                <a href="/board/board-list" style="color: grey; text-decoration: none; text-decoration-color: grey; ">
+                    <h2
+                            style="color: white; margin-left: 6px">자유 게시판</h2></a>
             </div>
             <div style="float: right; margin-top: 2px">
                 <select style="height:26px" name="type" id="type">
@@ -323,7 +324,7 @@
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
                             <ul class="list-group custom-list-group" style="margin-top:5px" id="reply-${reply.replyId}">
-                                <li class="list-group-item custom-list-item">
+                                <li class="list-group-item custom-list-item" style="margin-top: 30px;">
                                     <div class="comment-header">
                                         <strong class="comment-nickname">${reply.nickname}</strong>
                                         <span class="comment-date">${reply.createdAt}</span>
@@ -419,6 +420,7 @@
         justify-content: space-between;
     }
 </style>
+
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
 

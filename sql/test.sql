@@ -708,3 +708,14 @@ select * from payment_state;
         where payment_id = 40;
 
 select * from payment_state;
+
+select * from payment;
+
+CREATE TABLE `review_count` (
+	`count_id`	int	NOT NULL primary key auto_increment,
+	`user_id`	int	NOT NULL references user(user_id),
+	`editor_id`	int	NOT NULL references  editor_detail(editor_id),
+	`count`	int	NOT NULL	DEFAULT 0	COMMENT '리뷰 작성 가능 회수'
+);
+
+desc review_count;

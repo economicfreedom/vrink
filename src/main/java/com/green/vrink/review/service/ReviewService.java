@@ -16,4 +16,6 @@ public interface ReviewService {
     void delete(Integer reviewId);
 
     List<ReviewCountDTO> getList();
+
+
 }

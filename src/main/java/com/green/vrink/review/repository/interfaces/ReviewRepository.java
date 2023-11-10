@@ -4,6 +4,7 @@ import com.green.vrink.review.dto.ReviewCountDTO;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.repository.model.Review;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public interface ReviewRepository {
 
     Integer reviewSave(Review review);
+
     Integer reviewDuplicCheck(Review review);
 
 
@@ -21,4 +23,9 @@ public interface ReviewRepository {
     Integer findUserIdByReviewId(Integer reviewId);
 
     List<ReviewCountDTO> findByAll();
+
+    boolean isTableExists(
+             @Param("userId") Integer userId
+            , @Param("editorId") Integer editorId);
+
 }

@@ -111,6 +111,41 @@
     .button2:hover {
         background-color: #00A0D1;
     }
+
+    .layer-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        margin: -30px 0 0 -30px;
+    }
+
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 8px solid #f3f3f3; /* Light grey */
+        border-top: 8px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spinner 2s linear infinite;
+    }
+
+    @keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 <div class="inner-head overlap" style="margin-bottom: 5%">
     <div data-velocity="-.2"
@@ -217,10 +252,12 @@
 
     <div class="button-container mb-5">
 
-        <c:if test="${requestDTO.editorRecognize == 0}">
+        <c:if test="${requestDTO.editorRecognize == 0
+                        && requestDTO.state == '진행중'}">
             <button class="button" id="done">의뢰 완료</button>
         </c:if>
-        <c:if test="${requestDTO.state == '진행중'}">
+        <c:if test="${requestDTO.state == '진행중' &&
+         (requestDTO.editorRecognize == 0 &&  requestDTO.customerRecognize == 0)}">
             <button class="button2" id="cancel">의뢰 거절</button>
         </c:if>
 
@@ -259,8 +296,10 @@
 
 
         $("#cancel").click(function () {
-
-
+            let totalPrice = `${detailDTO.price}`
+            var impUid = '';
+            let paymentId = `${requestDTO.paymentId}`
+            show_spinner()
             fetch('/payment-state/editor-cancel', {
                 method: 'POST',
                 headers: {
@@ -269,63 +308,83 @@
                 body: JSON.stringify({
                     editorId: `${requestDTO.editorId}`,
                     paymentId: `${requestDTO.paymentId}`,
-                    editorRecognize: 0,
+                    editorRecognize: 2,
                     customerRecognize: `${requestDTO.customerRecognize}`,
                     point: ${detailDTO.price},
                     state: 'e_cancel'
-
 
                 })
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert("")
                     } else {
-                        location.reload()
+
+                        fetch('/payment/cancel/' + paymentId, {
+                            method: 'GET',
+                        }).then(response => response.json())
+                            .then(data => {
+                                refund(data.impUid, data.totalPrice)
+                            })
 
                     }
                 })
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
+
         })
-        fetch('/payment/authorizedCode', {
-            method: 'POST'
-        }).then(response => response.json())
-            .then(data => {
-                fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken', {
-                    method: 'POST',
-                    headers: {              // Http header
-                        "Content-Type": 'application/json',
-                    },
-                    body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-                        imp_key: data.apiKey,
-                        imp_secret: data.apiSecret
-                    })
-                }).then(response => response.json())
-                    .then(data => {
-                        // 결제 취소
-                        let totalprice = ${detailDTO.price};
-                        let impUid = ${requestDTO.paymentId};
-                        fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel', {
-                            method: 'POST',
-                            headers: {              // Http header
-                                "Content-Type": 'application/json',
-                                "Authorization": data.response.access_token
-                            },
-                            body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-                                reason: '환불', // 가맹점 클라이언트로부터 받은 환불사유
-                                imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
-                                amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
-                            })
-                        }).then(response => response.json())
-                            .then(data => {
-                                hide_spinner()
-                                location.reload()
-                            })
-                    })
-            })
+
 
     })
+
+    function refund(impUid, totalprice) {
+
+
+        fetch('/payment/authorizedCode', {
+        method: 'POST'
+    }).then(response => response.json())
+        .then(data => {
+            fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken', {
+                method: 'POST',
+                headers: {              // Http header
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                    imp_key: data.apiKey,
+                    imp_secret: data.apiSecret
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    // 결제 취소
+                    fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel', {
+                        method: 'POST',
+                        headers: {              // Http header
+                            "Content-Type": 'application/json',
+                            "Authorization": data.response.access_token
+                        },
+                        body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                            reason: '환불', // 가맹점 클라이언트로부터 받은 환불사유
+                            imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
+                            amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            hide_spinner()
+                            location.reload()
+                        })
+                })
+        })
+    }
+
+    function show_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'block';
+    }
+
+    function hide_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'none';
+    }
 </script>
+<div class="layer-popup" style="display: none;">
+    <div class="spinner"></div>
+</div>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

@@ -61,6 +61,7 @@
         SUBSTRING(u.phone, 4, 4), '-',
         SUBSTRING(u.phone, 8)
         ) AS  phone
+        ,p.name
 
 
         FROM payment_state ps
@@ -73,11 +74,14 @@
         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
         LEFT JOIN user u ON ed.user_id = u.user_id
         WHERE p.user_id = #{userId} AND customer_recognize =0
+
         <if test="cri.keyword != null">
             AND u.nickname LIKE CONCAT('%',#{cri.keyword},'%')
         </if>
         GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname,
         p.editor_id, p.user_id, ed.thumbnail, ps.state, p.payment_id
+        ORDER BY p.payment_id DESC
+
         LIMIT #{cri.offset}
         , #{cri.countPerPage}
     </select>
