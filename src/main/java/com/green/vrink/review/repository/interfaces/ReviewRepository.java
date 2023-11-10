@@ -24,8 +24,15 @@ public interface ReviewRepository {
 
     List<ReviewCountDTO> findByAll();
 
-    boolean isTableExists(
+    Integer isTableExists(
              @Param("userId") Integer userId
             , @Param("editorId") Integer editorId);
 
+    void insertReviewCount(@Param("userId") Integer userId, @Param("editorId") Integer editorId);
+
+    void addReviewCount(@Param("userId") Integer userId, @Param("editorId") Integer editorId);
+
+    Integer findCountByUserIdAndEditorId(@Param("userId") Integer userId, @Param("editorId") Integer editorId);
+
+    void minusCount(@Param("userId") Integer userId, @Param("editorId") Integer editorId);
 }

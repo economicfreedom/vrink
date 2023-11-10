@@ -24,6 +24,11 @@ public class ReviewServiceImpl implements ReviewService {
                 .count(reviewDTO.getCount())
                 .build();
 
+        replyRepository.minusCount(reviewDTO.getUserId(), reviewDTO.getEditorId());
+
+        Integer i = replyRepository.reviewSave(entity);
+
+
 
         return replyRepository.reviewSave(entity);
     }
@@ -60,5 +65,21 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewCountDTO> getList() {
         return replyRepository.findByAll();
+    }
+
+    @Override
+    public boolean hasReviewCount(Integer userId, int editorId) {
+
+        Integer tableExists = replyRepository.isTableExists(userId, editorId);
+
+        Integer count = replyRepository.findCountByUserIdAndEditorId(userId, editorId);
+
+        if (tableExists != null){
+            if (count >= 1){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

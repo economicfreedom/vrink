@@ -115,7 +115,7 @@
         <if test="cri.keyword != null">
             AND u.nickname LIKE CONCAT('%',#{cri.keyword},'%')
         </if>
-
+        ORDER BY p.payment_id DESC
     </select>
 
 </mapper>

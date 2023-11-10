@@ -32,13 +32,14 @@ public class RefundRestController {
             RefundDetailRequestDTO refundDetailRequestDTO
             , BindingResult bindingResult
     ) {
-        System.out.println("?");
+
         CustomResponse customResponse = new CustomResponse();
         if (bindingResult.hasErrors()) {
-            log.info("에러 발생");
+
         }
 
         refundService.refundSave(refundDetailRequestDTO);
+        refundDetailRequestDTO.getPaymentId();
 
 
         return ResponseEntity.ok().build();

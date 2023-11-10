@@ -223,7 +223,7 @@
                 </otherwise>
             </choose>
         </if>
-
+        ORDER BY p.payment_id DESC
         LIMIT #{cri.offset}, #{cri.countPerPage}
     </select>
     <select id="findRequestListTotalByCriAndEditorId" resultType="java.lang.Integer">

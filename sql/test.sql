@@ -662,8 +662,8 @@ SELECT p.payment_id,
             WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
             WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
             ELSE '거래 완료'
-           END) AS state,
-    ifnull(ps.customer_recognize,0) AS customer_recognize
+           END)                         AS state,
+       ifnull(ps.customer_recognize, 0) AS customer_recognize
 FROM payment p
          LEFT JOIN user u on p.user_id = u.user_id
          JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
@@ -675,50 +675,68 @@ FROM payment p
 WHERE p.payment_id = 56
 GROUP BY p.payment_id;
 
-select * from payment_state;
+select *
+from payment_state;
 
-        SELECT p.payment_id,
-               p.editor_id,
-               p.name,
-               u.nickname,
-               u.phone,
-               u.email,
-               p.created_at,
-               p.request,
-               (CASE
-                    WHEN ps.state = 'payment_done' THEN '진행중'
-                    WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
-                    WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
-                    ELSE '거래 완료'
-                   END)                         AS state,
-               ifnull(ps.customer_recognize, 0) AS customer_recognize,
-               ps.editor_recognize
-        FROM payment p
-                 LEFT JOIN user u on p.user_id = u.user_id
-                 JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
-                       FROM payment_state
-                       GROUP BY payment_id) ps_max
-                 LEFT JOIN payment_state ps
-                           ON p.payment_id = ps_max.payment_id
-                               AND ps.created_at = ps_max.max_created_at
-        WHERE ps.payment_id = 40
-        GROUP BY p.payment_id;
+SELECT p.payment_id,
+       p.editor_id,
+       p.name,
+       u.nickname,
+       u.phone,
+       u.email,
+       p.created_at,
+       p.request,
+       (CASE
+            WHEN ps.state = 'payment_done' THEN '진행중'
+            WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+            WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+            ELSE '거래 완료'
+           END)                         AS state,
+       ifnull(ps.customer_recognize, 0) AS customer_recognize,
+       ps.editor_recognize
+FROM payment p
+         LEFT JOIN user u on p.user_id = u.user_id
+         JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+               FROM payment_state
+               GROUP BY payment_id) ps_max
+         LEFT JOIN payment_state ps
+                   ON p.payment_id = ps_max.payment_id
+                       AND ps.created_at = ps_max.max_created_at
+WHERE ps.payment_id = 40
+GROUP BY p.payment_id;
 
-        select * from payment_state
-        where payment_id = 40;
+select *
+from payment_state
+where payment_id = 40;
 
-select * from payment_state;
+select *
+from payment_state;
 
-select * from payment;
+select *
+from payment;
 
-CREATE TABLE `review_count` (
-	`count_id`	int	NOT NULL primary key auto_increment,
-	`user_id`	int	NOT NULL references user(user_id),
-	`editor_id`	int	NOT NULL references  editor_detail(editor_id),
-	`count`	int	NOT NULL	DEFAULT 0	COMMENT '리뷰 작성 가능 회수'
+CREATE TABLE `review_count`
+(
+    `count_id`  int NOT NULL primary key auto_increment,
+    `user_id`   int NOT NULL references user (user_id),
+    `editor_id` int NOT NULL references editor_detail (editor_id),
+    `count`     int NOT NULL DEFAULT 0 COMMENT '리뷰 작성 가능 회수'
 );
 
 desc review_count;
+
+select *
+from review_count;
+
+insert into review_count (user_id, editor_id)
+    value (1, 1);
+
+SELECT 1
+FROM review_count
+WHERE editor_id = 1
+  AND user_id = 1;
+
+select * from review_count;
 DESC follow;
 
 SELECT 1 FROM follow

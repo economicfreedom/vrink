@@ -18,4 +18,5 @@ public interface ReviewService {
     List<ReviewCountDTO> getList();
 
 
+    boolean hasReviewCount(Integer userId, int editorId);
 }

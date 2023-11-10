@@ -17,7 +17,7 @@
     </insert>
     <insert id="saveAnswer">
         INSERT INTO answer(q_id, user_id, content)
-            VALUE (#{questionId},#{userId},#{content});
+            VALUE (#{questionId},#{userId},#{content})
     </insert>
     <update id="updateStatus">
         UPDATE question SET
@@ -60,6 +60,8 @@
         ORDER BY created_at DESC
             LIMIT #{cri.offset}
                , #{cri.countPerPage}
+        ORDER BY q_id DESC
+
 
     </select>
     <select id="findByAnswerByQuestionId" resultType="com.green.vrink.qna.dto.AnswerDTO">

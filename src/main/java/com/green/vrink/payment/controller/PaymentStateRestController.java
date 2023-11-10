@@ -1,13 +1,13 @@
 package com.green.vrink.payment.controller;
 
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.payment.dto.BuyResponseDTO;
 import com.green.vrink.payment.dto.PaymentStateDTO;
 import com.green.vrink.payment.service.PaymentService;
 import com.green.vrink.payment.service.PaymentStateService;
-import com.green.vrink.util.AsyncPageDTO;
-import com.green.vrink.util.Criteria;
-import com.green.vrink.util.LoginCheck;
-import com.green.vrink.util.PageDTO;
+import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorService;
+import com.green.vrink.util.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class PaymentStateRestController {
 
     private final PaymentService paymentService;
     private final PaymentStateService paymentStateService;
-
+    private final HttpSession httpSession;
+    private final MessageService messageService;
+    private final EditorService editorService;
 
     @PostMapping("/save-customer-confirm")
     @LoginCheck
@@ -55,6 +58,8 @@ public class PaymentStateRestController {
 
         }
 
+        User user = (User) httpSession.getAttribute(Define.USER);
+        paymentStateDTO.setUserId(user.getUserId());
         Integer res = paymentStateService.saveCustomerConfirm(paymentStateDTO);
 
         if (res == 0) {
@@ -64,6 +69,15 @@ public class PaymentStateRestController {
 
             );
         }
+
+        Integer editorUserId =
+                editorService.getUserIdByEditorId(
+                        paymentStateDTO.getEditorId()
+                );
+
+        messageService.sendMessageAndSaveSpecificPage(editorUserId
+                , "작가님 거래가 정상적으로 완료 되었습니다."
+                , "/request-view/" + paymentStateDTO.getPaymentId());
 
 
         return ResponseEntity.ok().build();
@@ -105,10 +119,21 @@ public class PaymentStateRestController {
 
         int res = paymentStateService.saveEditorCancel(paymentStateDTO);
 
-        if (res == 0 ){
+
+        if (res == 0) {
             return ResponseEntity.badRequest().build();
 
         }
+        Integer paymentId = paymentStateDTO.getPaymentId();
+
+        Integer userId = paymentStateDTO.getUserId();
+        String url = "/payment/payment-list?payment-id="
+                + paymentId + "&user-id="
+                + userId;
+
+        messageService.sendMessageAndSaveSpecificPage(userId
+                , "요청하신 의뢰가 취소 되었습니다."
+                , url);
 
         return ResponseEntity.ok().build();
     }
@@ -118,10 +143,19 @@ public class PaymentStateRestController {
 
         int res = paymentStateService.saveEditorCancel(paymentStateDTO);
 
-        if (res == 0 ){
+        if (res == 0) {
             return ResponseEntity.badRequest().build();
 
         }
+        Integer paymentId = paymentStateDTO.getPaymentId();
+
+        Integer userId = paymentStateDTO.getUserId();
+        String url = "/payment/buy-list";
+
+
+        messageService.sendMessageAndSaveSpecificPage(userId
+                , "작가님이 의뢰를 완료 했습니다. 확인해주세요."
+                , url);
 
         return ResponseEntity.ok().build();
     }

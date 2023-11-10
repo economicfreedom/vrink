@@ -30,6 +30,6 @@ public class PaymentStateDTO {
     private String state;
 
     private String createdAt;
-
+    private Integer userId;
 
 }

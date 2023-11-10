@@ -7,6 +7,7 @@ import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.Check;
+import com.green.vrink.util.Define;
 import com.green.vrink.util.LoginCheck;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,22 +34,28 @@ public class ReviewRestController {
     private final MessageService messageService;
     private final EditorService editorService;
     private final UserService userService;
+
     @PostMapping("/save")
     @LoginCheck
     public ResponseEntity<?> replySave(@Valid @RequestBody ReviewDTO reviewDTO, BindingResult bindingResult) {
-
+        
+        
         if (bindingResult.hasErrors()){
+            log.info("유효성 에러");
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
 
             return ResponseEntity.badRequest().body(defaultMessage);
         }
 
+        User user = (User) httpSession.getAttribute(Define.USER);
+
         int editorId = reviewDTO.getEditorId();
         int userIdByEditorId = editorService
                               .getUserIdByEditorId(editorId);
+        Integer userId = user.getUserId();
 
-        Integer userId = editorService.getUserIdByEditorId(reviewDTO.getEditorId());
         if (userId == userIdByEditorId){
+            log.info("같은 유저");
             return ResponseEntity.badRequest().build();
         }
 
@@ -60,7 +67,15 @@ public class ReviewRestController {
 //            return ResponseEntity.badRequest().build();
 //        }
 
+        log.info("if 문 start === > ");
+        
+        boolean hasReviewCount = reviewService.hasReviewCount(userId, editorId);
+        if (!hasReviewCount){
+            return ResponseEntity.badRequest().body("댓글을 작성하실 수 없습니다.");
+        }
+        log.info("if 문 done === > ");
         Integer save = reviewService.save(reviewDTO);
+
 
         log.info("reply save start {}", save);
 
@@ -71,7 +86,7 @@ public class ReviewRestController {
         String message = nickname+"작가님 리뷰가 달렸어요!";
         String url = "/editor/editor-detail/"+reviewDTO.getEditorId();
 
-        messageService.sendMessageAndSaveSpecificPage(userId,message,url);
+        messageService.sendMessageAndSaveSpecificPage(userIdByEditorId,message,url);
         return ResponseEntity.ok().build();
     }
 

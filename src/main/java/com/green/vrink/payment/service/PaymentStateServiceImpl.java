@@ -3,6 +3,7 @@ package com.green.vrink.payment.service;
 import com.green.vrink.payment.dto.PaymentStateDTO;
 import com.green.vrink.payment.repository.interfaces.PaymentRepository;
 import com.green.vrink.payment.repository.interfaces.PaymentStateRepository;
+import com.green.vrink.review.repository.interfaces.ReviewRepository;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,8 @@ public class PaymentStateServiceImpl implements PaymentStateService {
     private final PaymentStateRepository paymentStateRepository;
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
+
 
     @Override
     public Integer saveCustomerConfirm(PaymentStateDTO paymentStateDTO) {
@@ -33,6 +36,22 @@ public class PaymentStateServiceImpl implements PaymentStateService {
 
         log.info("포인트 {}", paymentStateDTO.getPoint());
         paymentStateRepository.saveCustomerConfirm(paymentStateDTO);
+        Integer tableExists = reviewRepository
+                .isTableExists(paymentStateDTO.getUserId()
+                        , paymentStateDTO.getEditorId());
+
+        if (tableExists==null) {
+            reviewRepository.insertReviewCount(
+                    paymentStateDTO.getUserId()
+                    , paymentStateDTO.getEditorId()
+            );
+        } else {
+            reviewRepository.addReviewCount(
+                    paymentStateDTO.getUserId()
+                    , paymentStateDTO.getEditorId()
+            );
+        }
+
         return 1;
     }
 
