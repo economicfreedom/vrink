@@ -521,7 +521,6 @@
                                     + '">'
                                     + user.phone
                                     + '</a></td>'
-                                    + '</a></td>'
                                     + '<td><a href="/admin/user/detail?page='
                                     + pagination.paging.page
                                     + '&id='

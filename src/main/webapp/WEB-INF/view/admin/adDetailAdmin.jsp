@@ -104,7 +104,7 @@
         <script>
             console.log("${adDetail}");
         </script>
-            <c:if test="${adDetail.hhhhImage != 'undefined'}">
+            <c:if test="${adDetail.hhhhImage != 'undefined' && adDetail.category == 1}">
               <div class="si-ad" style="border: 1px solid #b9b9b9; border-radius: 3px;">
                 <img id="h_img" src="${adDetail.hhhhImage}" style="object-fit: fill;
                             border: 1px solid #b9b9b9;
@@ -115,7 +115,7 @@
             </c:if>
     </div>
 
-    <c:if test="${adDetail.vvvvImage != 'undefined'}">
+    <c:if test="${adDetail.vvvvImage != 'undefined' && adDetail.category == 1}">
         <div class="si-ad" style="margin: 130px 0; max-width: 170px;">
             <img id="v_img"
                  src="${adDetail.vvvvImage}"
@@ -127,7 +127,7 @@
         </div>
     </c:if>
 
-    <c:if test="${adDetail.mainImage != 'undefined'}">
+    <c:if test="${adDetail.mainImage != 'undefined' && adDetail.category == 0}">
         <div class="ma-ad" style="border: 1px solid #b9b9b9; border-radius: 3px; margin: 130px 0">
             <img id="ma-img" src="${adDetail.mainImage}" style="object-fit: fill; height: 510px; width: 870px;">
         </div>

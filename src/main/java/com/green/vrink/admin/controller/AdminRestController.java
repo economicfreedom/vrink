@@ -982,6 +982,216 @@ public class AdminRestController {
 //        }
     }
 
+    @GetMapping("/payment-admin/classification")
+    @ResponseBody
+    public ClassificationDto paymentAdminClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
+            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
+            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
+            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
+            required = false, defaultValue = "") String keyword) {
+
+        log.info("결제 목록 레스트 컨트롤러 실행");
+
+        paging.setPage(page);
+        paging.setClassification(classification);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        log.info("page : " + page);
+        log.info("keyword : " + keyword);
+        log.info("searchType : " + searchType);
+
+        session.setAttribute("uClassification", classification);
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.countAllAdminPayment());
+
+        //분류가 전체일 떄
+        if (classification.equals("전체")) {
+
+            List<AdminPaymentDto> adminPaymentDtoList = adminService.getAllAdminPaymentListByPaging(paging);
+
+            if (!keyword.isEmpty()) {
+
+                log.info("키워드 : 전체");
+
+                List<AdminPaymentDto> lastAdminPaymentDtoList = new ArrayList<>();
+                List<AdminPaymentDto> finalAdminPaymentDtoList = new ArrayList<>();
+
+                adminPaymentDtoList = adminService.getAllAdminPaymentList();
+
+                if (searchType.equals("내용")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getName().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("구매자")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getCustomerNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("판매자")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getEditorNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("imp_uid")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getImpUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("merchant_uid")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getMerchantUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("가격")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("요구사항")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getRequest().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getName().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getCustomerNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getEditorNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getImpUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getMerchantUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getRequest().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastAdminPaymentDtoList.size());
+                for (int i = (page - 1) * 10; i < Math.min((page - 1) * 10 + 10, lastAdminPaymentDtoList.size()); i++) {
+                    finalAdminPaymentDtoList.add(lastAdminPaymentDtoList.get(i));
+                }
+                adminPaymentDtoList = finalAdminPaymentDtoList;
+            }
+
+            classificationDto.setAdminPaymentList(adminPaymentDtoList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+        //분류값이 있을 때
+        else {
+
+            List<AdminPaymentDto> adminPaymentDtoList = adminService.getAllAdminPaymentListByTypePaging(paging);
+            pagination.setArticleTotalCount(adminService.countAdminPaymentByType(paging));
+
+            if (!keyword.isEmpty()) {
+
+                log.info("키워드 : " + keyword);
+
+                List<AdminPaymentDto> lastAdminPaymentDtoList = new ArrayList<>();
+                List<AdminPaymentDto> finalAdminPaymentDtoList = new ArrayList<>();
+
+                adminPaymentDtoList = adminService.getAllAdminPaymentListByType(classification);
+
+                if (searchType.equals("내용")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getName().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("구매자")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getCustomerNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("판매자")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getEditorNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("imp_uid")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getImpUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("merchant_uid")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getMerchantUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("가격")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else if (searchType.equals("요구사항")) {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getRequest().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                } else {
+                    for (AdminPaymentDto adminPaymentDto : adminPaymentDtoList) {
+                        if (adminPaymentDto.getName().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getCustomerNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getEditorNickname().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getImpUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getMerchantUid().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        } else if (adminPaymentDto.getRequest().contains(keyword)) {
+                            lastAdminPaymentDtoList.add(adminPaymentDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastAdminPaymentDtoList.size());
+                for (int i = (page - 1) * 10; i < Math.min((page - 1) * 10 + 10, lastAdminPaymentDtoList.size()); i++) {
+                    finalAdminPaymentDtoList.add(lastAdminPaymentDtoList.get(i));
+                }
+                adminPaymentDtoList = finalAdminPaymentDtoList;
+
+            }
+
+            paging.setClassification(classification);
+            classificationDto.setAdminPaymentList(adminPaymentDtoList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+    }
+
     @Transactional
     @PostMapping("/change-ad")
     public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId, @RequestParam("status") Integer status) {

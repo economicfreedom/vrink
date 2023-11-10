@@ -20,5 +20,6 @@ public class ClassificationDto {
 	List<QuestionDTO> questionList;
 	List<AdminAdDto> adList;
 	List<AdminSuggestDto> suggestList;
+	List<AdminPaymentDto> adminPaymentList;
 	Pagination pagination;
 }

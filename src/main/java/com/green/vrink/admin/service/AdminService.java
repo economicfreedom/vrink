@@ -1,9 +1,6 @@
 package com.green.vrink.admin.service;
 
-import com.green.vrink.admin.dto.AdminAdDto;
-import com.green.vrink.admin.dto.AdminApplyDto;
-import com.green.vrink.admin.dto.DateCountDto;
-import com.green.vrink.admin.dto.PagingDto;
+import com.green.vrink.admin.dto.*;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
@@ -102,15 +99,23 @@ public interface AdminService {
     int countEditorUser();
     int countEnabledUser();
 
-    List<DateCountDto> getDateCountSevenDaysByTableName(String tableName);
-    List<DateCountDto> getDateCountWeekByTableName(String tableName);
-    List<DateCountDto> getDateCountMonthByTableName(String tableName);
-    List<DateCountDto> getEditorDateCountSevenDays();
-    List<DateCountDto> getEditorDateCountMonth();
-    List<DateCountDto> getEditorDateCountWeek();
-    List<DateCountDto> getDateSumSevenDaysByTableName(String tableName);
-    List<DateCountDto> getDateSumWeekByTableName(String tableName);
-    List<DateCountDto> getDateSumMonthByTableName(String tableName);
+    List<DateCountDto> getDateCustomSevenDaysByTableNameValueWhen(String tableName, String value, String when);
+    List<DateCountDto> getDateCustomWeekByTableNameValueWhen(String tableName, String value, String when);
+    List<DateCountDto> getDateCustomMonthByTableNameValueWhen(String tableName, String value, String when);
+
+    List<AdminPaymentDto> getAllAdminPaymentList();
+    List<AdminPaymentDto> getAllAdminPaymentListByType(String classification);
+    List<AdminPaymentDto> getAllAdminPaymentListByPaging(PagingDto paging);
+    List<AdminPaymentDto> getAllAdminPaymentListByTypePaging(PagingDto paging);
+
+    int countAllAdminPayment();
+    int countAdminPaymentByType(PagingDto paging);
 
     void insertAd(AdminAdDto adminAdDto);
+
+    List<AdminPaymentDetailDto> getAdminPaymentDetailsById(Integer id);
+    List<AdminPaymentStateDto> getAdminPaymentStatesById(Integer id);
+
+    AdminPaymentDto getAdminPaymentDtoById(Integer id);
+
 }

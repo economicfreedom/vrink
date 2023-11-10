@@ -96,7 +96,6 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/admin/user?reset=1">회원 목록</a>
                             <a class="nav-link" href="/admin/apply-accept?reset=1">판매자 신청 목록</a>
-                            <a class="nav-link" href="#">결제 목록</a>
                         </nav>
                     </div>
                     <!-- 게시판  -->
@@ -119,6 +118,11 @@
                             <a class="nav-link" href="/admin/suggest?reset=1"">의뢰게시판 관리</a>
                         </nav>
                     </div> <!-- end of 게시판  -->
+
+                    <a class="nav-link collapsed" href="/admin/payment-admin?reset=1">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-coins"></i></div>
+                        결제 목록
+                    </a>
 
                     <a class="nav-link collapsed" href="/admin/question?reset=1">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user-pen"></i></div>

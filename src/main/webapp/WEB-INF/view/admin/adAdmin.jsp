@@ -560,6 +560,9 @@
                             let ad_price = (ad.price).toLocaleString('ko-KR') + "원";
                             if (ad_price === "0원") ad_price = '<text style="color: red"><i class="fa-solid fa-exclamation"></i></i> 공지사항</text>';
 
+                            let ad_period;
+                            if(ad.adPeriod === 0) ad_period = '<text style="color: #b1b1b1;"> 만료됨</text>'
+                            else ad_period = ad.adPeriod + '일 남음';
 
                             adListHTML += '<tr>'
                                 + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
@@ -591,8 +594,8 @@
                                 + '&id='
                                 + ad.adId
                                 + '">'
-                                + ad.adPeriod
-                                + '일 남음</a></td>'
+                                + ad_period
+                                + '</a></td>'
                                 + '<td><p class="classification2"><a href="/admin/ad-admin/detail?page='
                                 + pagination.paging.page
                                 + '&id='

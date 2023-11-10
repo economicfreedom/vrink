@@ -292,53 +292,68 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<DateCountDto> getDateCountSevenDaysByTableName(String tableName) {
-        return adminRepository.getDateCountSevenDaysByTableName(tableName);
+    public List<DateCountDto> getDateCustomSevenDaysByTableNameValueWhen(String tableName, String value, String when) {
+        return adminRepository.getDateCustomSevenDaysByTableNameValueWhen(tableName, value, when);
     }
 
     @Override
-    public List<DateCountDto> getDateCountWeekByTableName(String tableName) {
-        return adminRepository.getDateCountWeekByTableName(tableName);
+    public List<DateCountDto> getDateCustomWeekByTableNameValueWhen(String tableName, String value, String when) {
+        return adminRepository.getDateCustomWeekByTableNameValueWhen(tableName, value, when);
     }
 
     @Override
-    public List<DateCountDto> getDateCountMonthByTableName(String tableName) {
-        return adminRepository.getDateCountMonthByTableName(tableName);
+    public List<DateCountDto> getDateCustomMonthByTableNameValueWhen(String tableName, String value, String when) {
+        return adminRepository.getDateCustomMonthByTableNameValueWhen(tableName, value, when);
     }
 
     @Override
-    public List<DateCountDto> getEditorDateCountSevenDays() {
-        return adminRepository.getEditorDateCountSevenDays();
+    public List<AdminPaymentDto> getAllAdminPaymentList() {
+        return adminRepository.getAllAdminPaymentList();
     }
 
     @Override
-    public List<DateCountDto> getEditorDateCountMonth() {
-        return adminRepository.getEditorDateCountMonth();
+    public List<AdminPaymentDto> getAllAdminPaymentListByType(String classification) {
+        return adminRepository.getAllAdminPaymentListByType(classification);
     }
 
     @Override
-    public List<DateCountDto> getEditorDateCountWeek() {
-        return adminRepository.getEditorDateCountWeek();
+    public List<AdminPaymentDto> getAllAdminPaymentListByPaging(PagingDto paging) {
+        return adminRepository.getAllAdminPaymentListByPaging(paging);
     }
 
     @Override
-    public List<DateCountDto> getDateSumSevenDaysByTableName(String tableName) {
-        return adminRepository.getDateSumSevenDaysByTableName(tableName);
+    public List<AdminPaymentDto> getAllAdminPaymentListByTypePaging(PagingDto paging) {
+        return adminRepository.getAllAdminPaymentListByTypePaging(paging);
     }
 
     @Override
-    public List<DateCountDto> getDateSumWeekByTableName(String tableName) {
-        return adminRepository.getDateSumWeekByTableName(tableName);
+    public int countAllAdminPayment() {
+        return adminRepository.countAllAdminPayment();
     }
 
     @Override
-    public List<DateCountDto> getDateSumMonthByTableName(String tableName) {
-        return adminRepository.getDateSumMonthByTableName(tableName);
+    public int countAdminPaymentByType(PagingDto paging) {
+        return adminRepository.countAdminPaymentByType(paging);
     }
 
     @Override
     public void insertAd(AdminAdDto adminAdDto) {
         adminRepository.insertAd(adminAdDto);
+    }
+
+    @Override
+    public List<AdminPaymentDetailDto> getAdminPaymentDetailsById(Integer id) {
+        return adminRepository.getAdminPaymentDetailsById(id);
+    }
+
+    @Override
+    public List<AdminPaymentStateDto> getAdminPaymentStatesById(Integer id) {
+        return adminRepository.getAdminPaymentStatesById(id);
+    }
+
+    @Override
+    public AdminPaymentDto getAdminPaymentDtoById(Integer id) {
+        return adminRepository.getAdminPaymentDtoById(id);
     }
 
 }

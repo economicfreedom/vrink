@@ -103,13 +103,13 @@
                         font-size: 13px;
                         color: #666666;"
                     >: ${standardNum}명</span>
-                    <span style="left: 90.5px;
+                    <span style="left: 83px;
                         top: 48px;
                         position: relative;
                         font-size: 13px;
                         color: #666666;"
                     >: ${editorNum}명</span>
-                    <span style="left: 49.5px;
+                    <span style="left: 26px;
                         top: 70px;
                         position: relative;
                         font-size: 13px;
@@ -245,9 +245,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 
 <%--			<h3 class="mt-4">공연/전시 정보</h3>--%>
@@ -1294,7 +1291,7 @@
     }
 
     // ------------------------------------- 배너 게시 차트 일/주/월 --------------------------------------
-    
+
     // ------------------------------------- 배너 수입 차트 일/주/월 --------------------------------------
 
     const bannerPriceSeven = document.getElementById('banner-price-seven');
@@ -1309,31 +1306,55 @@
                 '${date.date}',
                 </c:forEach>
             ],
-            datasets: [{
-                label          : ' 일별 배너광고 수입',
-                data           : [
-                    <c:forEach items="${bannerPriceSevenDate}" var="date">
-                    '${date.count}',
-                    </c:forEach>
-                ],
-                borderColor    : [
-                    'rgb(243,84,112)',
-                ],
-                borderWidth    : 3
-            }, {
-                label          : ' 일별 배너광고 수입 평균',
-                data           : [
-                    <c:forEach items="${bannerPriceSevenDate}" var="date" varStatus="status">
-                        <c:set var="denominator" value="${bannerSevenDate[status.index].count}" />
-                        <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
+            datasets: [
+                {
+                    label      : ' 일별 배너광고 수입 합계',
+                    data       : [
+                        <c:forEach items="${bannerPriceSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(243,84,112)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 배너광고 수입 평균',
+                    data       : [
+                        <c:forEach items="${bannerPriceSevenDate}" var="date" varStatus="status">
+                           <c:set var="denominator" value="${bannerSevenDate[status.index].count}" />
+                           <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
                         '${result}',
-                    </c:forEach>
-                ],
-                borderColor    : [
-                    'rgb(58,85,239)',
-                ],
-                borderWidth    : 3
-            }]
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(58,85,239)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 배너광고 수입 최고액',
+                    data       : [
+                        <c:forEach items="${bannerMaxSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(216,42,255)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 배너광고 수입 표준편차',
+                    data       : [
+                        <c:forEach items="${bannerStdSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(23,201,36)',
+                    ],
+                    borderWidth: 3
+                }
+            ]
         },
         options: {
             scales: {
@@ -1376,31 +1397,55 @@
                         '${date.date}',
                         </c:forEach>
                     ],
-                    datasets: [{
-                        label          : ' 주별 배너광고 수입',
-                        data           : [
-                            <c:forEach items="${bannerPriceWeekDate}" var="date">
-                            '${date.count}',
-                            </c:forEach>
-                        ],
-                        borderColor    : [
-                            'rgb(243,84,112)',
-                        ],
-                        borderWidth    : 3
-                    }, {
-                        label          : ' 주별 배너광고 수입 평균',
-                        data           : [
-                            <c:forEach items="${bannerPriceWeekDate}" var="date" varStatus="status">
+                    datasets: [
+                        {
+                            label      : ' 주별 배너광고 수입 합계',
+                            data       : [
+                                <c:forEach items="${bannerPriceWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(243,84,112)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 배너광고 수입 평균',
+                            data       : [
+                                <c:forEach items="${bannerPriceWeekDate}" var="date" varStatus="status">
                                 <c:set var="denominator" value="${bannerWeekDate[status.index].count}" />
                                 <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
                                 '${result}',
-                            </c:forEach>
-                        ],
-                        borderColor    : [
-                            'rgb(58,85,239)',
-                        ],
-                        borderWidth    : 3
-                    }]
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(58,85,239)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 배너광고 수입 최고액',
+                            data       : [
+                                <c:forEach items="${bannerMaxWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(216,42,255)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 배너광고 수입 표준편차',
+                            data       : [
+                                <c:forEach items="${bannerStdWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(23,201,36)',
+                            ],
+                            borderWidth: 3
+                        }
+                    ]
                 },
                 options: {
                     scales: {
@@ -1432,34 +1477,58 @@
                 data   : {
                     labels  : [
                         <c:forEach items="${bannerPriceMonthDate}" var="date">
-                           '${date.date}',
+                        '${date.date}',
                         </c:forEach>
                     ],
-                    datasets: [{
-                        label          : ' 월별 배너광고 수입',
-                        data           : [
-                            <c:forEach items="${bannerPriceMonthDate}" var="date">
-                              '${date.count}',
-                            </c:forEach>
-                        ],
-                        borderColor    : [
-                            'rgb(243,84,112)',
-                        ],
-                        borderWidth    : 3
-                    }, {
-                        label          : ' 월별 배너광고 수입 평균',
-                        data           : [
-                            <c:forEach items="${bannerPriceMonthDate}" var="date" varStatus="status">
+                    datasets: [
+                        {
+                            label      : ' 월별 배너광고 수입 합계',
+                            data       : [
+                                <c:forEach items="${bannerPriceMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(243,84,112)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 배너광고 수입 평균',
+                            data       : [
+                                <c:forEach items="${bannerPriceMonthDate}" var="date" varStatus="status">
                                 <c:set var="denominator" value="${bannerMonthDate[status.index].count}" />
                                 <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
                                 '${result}',
-                            </c:forEach>
-                        ],
-                        borderColor    : [
-                            'rgb(58,85,239)',
-                        ],
-                        borderWidth    : 3
-                    }]
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(58,85,239)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 배너광고 수입 최고액',
+                            data       : [
+                                <c:forEach items="${bannerMaxMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(216,42,255)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 배너광고 수입 표준편차',
+                            data       : [
+                                <c:forEach items="${bannerStdMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(23,201,36)',
+                            ],
+                            borderWidth: 3
+                        }
+                    ]
                 },
                 options: {
                     scales: {

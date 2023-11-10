@@ -1,9 +1,6 @@
 package com.green.vrink.admin.controller;
 
-import com.green.vrink.admin.dto.AdminAdDto;
-import com.green.vrink.admin.dto.AdminApplyDto;
-import com.green.vrink.admin.dto.Pagination;
-import com.green.vrink.admin.dto.PagingDto;
+import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
@@ -12,7 +9,6 @@ import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
-import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.suggest.service.SuggestService;
 import com.green.vrink.util.AdminCheck;
 import com.green.vrink.util.Criteria;
@@ -49,30 +45,38 @@ public class AdminController {
     public String main(Model model) {
         log.info("관리자 페이지 메인 컨트롤러 실행");
 
-        model.addAttribute("userSevenDate", adminService.getDateCountSevenDaysByTableName("user"));
-        model.addAttribute("userWeekDate", adminService.getDateCountWeekByTableName("user"));
-        model.addAttribute("userMonthDate", adminService.getDateCountMonthByTableName("user"));
-        model.addAttribute("freeBoardSevenDate", adminService.getDateCountSevenDaysByTableName("community"));
-        model.addAttribute("freeBoardWeekDate", adminService.getDateCountWeekByTableName("community"));
-        model.addAttribute("freeBoardMonthDate", adminService.getDateCountMonthByTableName("community"));
-        model.addAttribute("suggestSevenDate", adminService.getDateCountSevenDaysByTableName("suggest"));
-        model.addAttribute("suggestWeekDate", adminService.getDateCountWeekByTableName("suggest"));
-        model.addAttribute("suggestMonthDate", adminService.getDateCountMonthByTableName("suggest"));
-        model.addAttribute("bannerSevenDate", adminService.getDateCountSevenDaysByTableName("ad"));
-        model.addAttribute("bannerWeekDate", adminService.getDateCountWeekByTableName("ad"));
-        model.addAttribute("bannerMonthDate", adminService.getDateCountMonthByTableName("ad"));
+        model.addAttribute("userSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("user", "count(*)", "created_at"));
+        model.addAttribute("userWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("user", "count(*)", "created_at"));
+        model.addAttribute("userMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("user", "count(*)", "created_at"));
+        model.addAttribute("freeBoardSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("community", "count(*)", "created_at"));
+        model.addAttribute("freeBoardWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("community", "count(*)", "created_at"));
+        model.addAttribute("freeBoardMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("community", "count(*)", "created_at"));
+        model.addAttribute("suggestSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("suggest", "count(*)", "created_at"));
+        model.addAttribute("suggestWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("suggest", "count(*)", "created_at"));
+        model.addAttribute("suggestMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("suggest", "count(*)", "created_at"));
+        model.addAttribute("bannerSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "count(*)", "created_at"));
+        model.addAttribute("bannerWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "count(*)", "created_at"));
+        model.addAttribute("bannerMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "count(*)", "created_at"));
 
-        model.addAttribute("bannerPriceSevenDate", adminService.getDateSumSevenDaysByTableName("ad"));
-        model.addAttribute("bannerPriceWeekDate", adminService.getDateSumWeekByTableName("ad"));
-        model.addAttribute("bannerPriceMonthDate", adminService.getDateSumMonthByTableName("ad"));
+        model.addAttribute("bannerPriceSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "sum(price)", "created_at"));
+        model.addAttribute("bannerPriceWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "sum(price)", "created_at"));
+        model.addAttribute("bannerPriceMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "sum(price)", "created_at"));
 
-        model.addAttribute("editorSevenDate", adminService.getEditorDateCountSevenDays());
-        model.addAttribute("editorWeekDate", adminService.getEditorDateCountWeek());
-        model.addAttribute("editorMonthDate", adminService.getEditorDateCountMonth());
+        model.addAttribute("editorSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("user", "count(*)", "editor_created_at"));
+        model.addAttribute("editorWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("user", "count(*)", "editor_created_at"));
+        model.addAttribute("editorMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("user", "count(*)", "editor_created_at"));
 
         model.addAttribute("standardNum", adminService.countStandardUser());
         model.addAttribute("editorNum", adminService.countEditorUser());
         model.addAttribute("enabledNum", adminService.countEnabledUser());
+
+        model.addAttribute("bannerMaxSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "max(price)", "created_at"));
+        model.addAttribute("bannerMaxWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "max(price)", "created_at"));
+        model.addAttribute("bannerMaxMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "max(price)", "created_at"));
+
+        model.addAttribute("bannerStdSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "std(price)", "created_at"));
+        model.addAttribute("bannerStdWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "std(price)", "created_at"));
+        model.addAttribute("bannerStdMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "std(price)", "created_at"));
 
         return "/admin/main";
     }
@@ -240,7 +244,10 @@ public class AdminController {
     }
 
     @GetMapping("/suggest-detail")
-    public String suggestDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, @RequestParam("nickname") String nickname, Model model) {
+    public String suggestDetail(@ModelAttribute("page") int page,
+                                @RequestParam("id") int id,
+                                @RequestParam("nickname") String nickname,
+                                Model model) {
 
         GetSuggestDto suggest = suggestService.getSuggest(id);
 
@@ -272,7 +279,7 @@ public class AdminController {
 
         model.addAttribute("suggest", adminSuggestDto);
         model.addAttribute("suggestReply", replyList);
-        model.addAttribute("next",next);
+        model.addAttribute("next", next);
         model.addAttribute("replyCount", replyCount);
 
         return "admin/suggestDetail";
@@ -285,7 +292,8 @@ public class AdminController {
                             @RequestParam(value = "classification3", required = false, defaultValue = "전체") String classification3,
                             @RequestParam(value = "searchType", required = false, defaultValue = "전체") String searchType,
                             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset, Model model) {
+                            @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                            Model model) {
 
         log.info("유저 관리 페이지 컨트롤러 호출");
 
@@ -422,15 +430,57 @@ public class AdminController {
     @GetMapping("/ad-admin/detail")
     public String adDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
         model.addAttribute("adDetail", adminService.getAdById(id));
-
-        log.info("asd" + adminService.getAdById(id));
-
         return "admin/adDetailAdmin";
     }
 
     @GetMapping("/ad-admin/write")
     public String adWrite() {
         return "admin/adWrite";
+    }
+
+    @GetMapping("/payment-admin")
+    @AdminCheck
+    public String paymentAdmin(@ModelAttribute("paging") PagingDto paging,
+                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                              @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                              Model model) {
+
+        log.info("결제 목록 컨트롤러 호출");
+
+        if (reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
+        }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored) {
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllAdminPayment();
+        pagination.setArticleTotalCount(count);
+
+        List<AdminPaymentDto> adminPaymentList = adminService.getAllAdminPaymentListByPaging(paging);
+
+        model.addAttribute("adminPaymentList", adminPaymentList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/paymentAdmin";
+    }
+
+    @GetMapping("/payment-admin/detail")
+    public String paymentAdminDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
+        model.addAttribute("adminPaymentDetailList", adminService.getAdminPaymentDetailsById(id));
+        model.addAttribute("adminPaymentStateList", adminService.getAdminPaymentStatesById(id));
+        model.addAttribute("adminPayment", adminService.getAdminPaymentDtoById(id));
+        return "admin/paymentDetailAdmin";
     }
 
 }

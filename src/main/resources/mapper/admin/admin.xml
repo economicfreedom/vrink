@@ -20,24 +20,27 @@
         INNER JOIN user ON apply.user_id = user.user_id
     </select>
 
-    <select id="getAllAdminApplyListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+    <select id="getAllAdminApplyListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
         INNER JOIN user ON apply.user_id = user.user_id
         ORDER BY apply.apply_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
-    <select id="getAllAdminApplyListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+    <select id="getAllAdminApplyListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
         INNER JOIN user ON apply.user_id = user.user_id
         WHERE apply.accepted = #{classification}
         ORDER BY apply.apply_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
-    <select id="getAllAdminApplyListByType" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.admin.dto.AdminApplyDto">
+    <select id="getAllAdminApplyListByType" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
         INNER JOIN user ON apply.user_id = user.user_id
@@ -62,36 +65,36 @@
     </select>
 
     <select id="getFreeboardById" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id)AS count
         FROM community c
-        LEFT JOIN user u ON c.user_id = u.user_id
-        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+            LEFT JOIN user u
+        ON c.user_id = u.user_id
+            LEFT JOIN community_reply cr ON c.community_id = cr.community_id
         WHERE c.community_id = #{id}
         GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
     </select>
 
     <select id="getAllFreeboardList" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id)AS count
         FROM community c
-        LEFT JOIN user u ON c.user_id = u.user_id
-        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+            LEFT JOIN user u
+        ON c.user_id = u.user_id
+            LEFT JOIN community_reply cr ON c.community_id = cr.community_id
         GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
     </select>
 
     <select id="getAllFreeboardListByPaging" resultType="com.green.vrink.community.dto.FreeBoardDTO">
-        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id )AS count
+        SELECT c.community_id, c.user_id, title, c.content, c.created_at, nickname, count(cr.community_id)AS count
         FROM community c
-        LEFT JOIN user u ON c.user_id = u.user_id
-        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+            LEFT JOIN user u
+        ON c.user_id = u.user_id
+            LEFT JOIN community_reply cr ON c.community_id = cr.community_id
         GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
         ORDER BY community_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
-
-
-
 
     <select id="countAllSuggest" resultType="integer">
         SELECT count(*)
@@ -99,9 +102,10 @@
     </select>
 
     <select id="getSuggestById" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
         FROM suggest s
-            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN user u
+        ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
         WHERE s.suggest_id = #{id}
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
@@ -109,61 +113,92 @@
     </select>
 
     <select id="getAllSuggestList" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
         FROM suggest s
-            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN user u
+        ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
     </select>
 
     <select id="getAllSuggestListByPaging" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id )AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
         FROM suggest s
-            LEFT JOIN user u ON s.user_id = u.user_id
+            LEFT JOIN user u
+        ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
             LIMIT #{offset}, #{recordSize}
     </select>
 
-<!--    <if test="type == 'nickname'">-->
-<!--        WHERE nickname LIKE CONCAT('%',#{keyword},'%')-->
-<!--    </if>-->
-
-
     <select id="getAllQuestion" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
+        SELECT q_id,
+               q.user_id,
+               content,
+               q.created_at,
+               type,
+               title,
+               q.email,
+               u.nickname,
+               q.status
         FROM question q
-        LEFT JOIN user u ON q.user_id = u.user_id
+                 LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
     </select>
 
-    <select id="getAllQuestionPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
+    <select id="getAllQuestionPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id,
+               q.user_id,
+               content,
+               q.created_at,
+               type,
+               title,
+               q.email,
+               u.nickname,
+               q.status
         FROM question q
-        LEFT JOIN user u ON q.user_id = u.user_id
+                 LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (status = #{classification2} OR #{classification2} NOT IN (0, 1))
         ORDER BY q_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
-    <select id="getAllQuestionByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
+    <select id="getAllQuestionByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id,
+               q.user_id,
+               content,
+               q.created_at,
+               type,
+               title,
+               q.email,
+               u.nickname,
+               q.status
         FROM question q
-        LEFT JOIN user u ON q.user_id = u.user_id
+                 LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (type = #{classification})
-        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
         ORDER BY q_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllQuestionByType" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
+        SELECT q_id,
+               q.user_id,
+               content,
+               q.created_at,
+               type,
+               title,
+               q.email,
+               u.nickname,
+               q.status
         FROM question q
-        LEFT JOIN user u ON q.user_id = u.user_id
+                 LEFT JOIN user u ON q.user_id = u.user_id
         WHERE (type = #{classification})
-        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
         ORDER BY q_id DESC
     </select>
 
@@ -177,67 +212,79 @@
         SELECT count(*)
         FROM question
         WHERE (type = #{classification})
-        AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (status = #{classification2} OR #{classification2} NOT IN (0, 1))
     </select>
 
     <select id="getQuestionById" resultType="com.green.vrink.qna.dto.QuestionDTO">
-        SELECT q_id, q.user_id, content, q.created_at, type, title, q.email, u.nickname, q.status
+        SELECT q_id,
+               q.user_id,
+               content,
+               q.created_at,
+               type,
+               title,
+               q.email,
+               u.nickname,
+               q.status
         FROM question q
-        LEFT JOIN user u ON q.user_id = u.user_id
+                 LEFT JOIN user u ON q.user_id = u.user_id
         WHERE q_id = #{id}
     </select>
 
-
-
     <select id="getAllUser" resultType="com.green.vrink.user.repository.model.User">
-        SELECT * FROM user
-        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
-    </select>
-
-    <select id="getAllUserPaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
         SELECT *
         FROM user
         WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
-        ORDER BY user_id DESC
-        LIMIT #{offset}, #{recordSize}
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
-    <select id="getAllUserByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto" resultType="com.green.vrink.user.repository.model.User">
+    <select id="getAllUserPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        FROM user
+        WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+        ORDER BY user_id DESC
+            LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllUserByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.user.repository.model.User">
         SELECT *
         FROM user
         WHERE (editor = #{classification})
-        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY user_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllUserByType" resultType="com.green.vrink.user.repository.model.User">
         SELECT *
         FROM user
         WHERE (editor = #{classification})
-        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY user_id DESC
     </select>
 
     <select id="userTotalCount" resultType="int">
-        SELECT count(*) FROM user
+        SELECT count(*)
+        FROM user
         WHERE (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="userTotalCountClassification" resultType="int">
-        SELECT count(*) FROM user
+        SELECT count(*)
+        FROM user
         WHERE (editor = #{classification})
-        AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (enabled_check = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (level = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="getUserById" resultType="com.green.vrink.user.repository.model.User">
-        SELECT * from user
+        SELECT *
+        from user
         WHERE user_id = #{id}
     </select>
 
@@ -245,15 +292,15 @@
         SELECT *
         FROM ad
         WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="getAllAdListByType" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad
         WHERE status = #{classification}
-        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
     </select>
 
@@ -261,34 +308,34 @@
         SELECT *
         FROM ad
         WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllAdListByTypePaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad
         WHERE status = #{classification}
-        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
         ORDER BY ad_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="countAllAd" resultType="integer">
         SELECT count(*)
         FROM ad
         WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="countAdByType" resultType="integer">
         SELECT count(*)
         FROM ad
         WHERE status = #{classification}
-        AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
-        AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
+          AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
+          AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <update id="changeAd">
@@ -304,7 +351,8 @@
     </update>
 
     <select id="getAdById" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT * from ad
+        SELECT *
+        from ad
         WHERE ad_id = #{id}
     </select>
 
@@ -322,13 +370,14 @@
 
     <update id="updateUserEditorById">
         UPDATE user
-        SET editor = 'editor', editor_created_at = now()
+        SET editor            = 'editor',
+            editor_created_at = now()
         WHERE user_id = #{userId}
     </update>
 
     <insert id="insertEditorDetailByUserId">
         INSERT INTO editor_detail(user_id, thumbnail)
-        VALUES(#{userId}, '/images/resource/default_image.gif')
+        VALUES (#{userId}, '/images/resource/default_image.gif')
     </insert>
 
 
@@ -338,9 +387,8 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="getDateCountSevenDaysByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
-        WITH DateRange AS (
-            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
+    <select id="getDateCustomSevenDaysByTableNameValueWhen" resultType="com.green.vrink.admin.dto.DateCountDto">
+        WITH DateRange AS (SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
         FROM (
             SELECT 0 AS n UNION ALL
             SELECT 1 UNION ALL
@@ -355,270 +403,94 @@
         SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
         FROM DateRange
             LEFT JOIN (
-            SELECT DATE(created_at) AS date, COUNT(*) AS count
+            SELECT DATE (${when}) AS date, ${value} AS count
             FROM ${tableName}
-            WHERE created_at >= CURDATE() - INTERVAL 7 DAY
-            GROUP BY DATE(created_at)
+            WHERE ${when} >= CURDATE() - INTERVAL 7 DAY
+            GROUP BY DATE (${when})
             ) AS Data
-        ON DATE(DateRange.date) = Data.date;
+        ON DATE (DateRange.date) = Data.date
     </select>
 
-    <select id="getDateCountMonthByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
+    <select id="getDateCustomWeekByTableNameValueWhen" resultType="com.green.vrink.admin.dto.DateCountDto">
         <![CDATA[
-        WITH RECURSIVE DateRange AS (
-        SELECT
-        DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
-        LAST_DAY(CURDATE()) AS end_date
-        UNION ALL
-        SELECT
-        DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
-        LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
-        FROM DateRange
-        WHERE start_date < LAST_DAY(CURDATE())
-        )
+        WITH Weeks AS (SELECT 0 AS week
+                       UNION
+                       SELECT 1
+                       UNION
+                       SELECT 2
+                       UNION
+                       SELECT 3
+                       UNION
+                       SELECT 4
+                       UNION
+                       SELECT 5
+                       UNION
+                       SELECT 6
+                       UNION
+                       SELECT 7
+                       UNION
+                       SELECT 8
+                       UNION
+                       SELECT 9
+                       UNION
+                       SELECT 10
+                       UNION
+                       SELECT 11)
 
-        SELECT
-        DATE_FORMAT(start_date, '%Y-%m') AS date,
-        IFNULL(SUM(count), 0) AS count
-        FROM DateRange
-        LEFT JOIN (
-        SELECT DATE_FORMAT(created_at, '%Y-%m') AS date, COUNT(*) AS count
-        FROM ${tableName}
-        WHERE created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
-        AND created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
-        GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-        ) AS Data
-        ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
-        GROUP BY DATE_FORMAT(start_date, '%Y-%m')
-        ]]>
-    </select>
-
-    <select id="getDateCountWeekByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
-        <![CDATA[
-        WITH Weeks AS (
-            SELECT 0 AS week
-            UNION SELECT 1
-            UNION SELECT 2
-            UNION SELECT 3
-            UNION SELECT 4
-            UNION SELECT 5
-            UNION SELECT 6
-            UNION SELECT 7
-            UNION SELECT 8
-            UNION SELECT 9
-            UNION SELECT 10
-            UNION SELECT 11
-        )
-
-        SELECT
-            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
+        SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
     IFNULL(SUM(IFNULL(count, 0)), 0) AS count
         FROM Weeks
             LEFT JOIN (
-            SELECT DATE_FORMAT(created_at, '%Y-%u') AS date, COUNT(*) AS count
+            SELECT DATE_FORMAT(${when}, '%Y-%u') AS date, ${value} AS count
             FROM ${tableName}
-            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
-            AND created_at <= CURDATE()
-            GROUP BY DATE_FORMAT(created_at, '%Y-%u')
+            WHERE ${when} >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
+            AND ${when} <= CURDATE()
+            GROUP BY DATE_FORMAT(${when}, '%Y-%u')
             ) AS Data
         ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
         GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
-        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
+        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
         ]]>
     </select>
 
-    <select id="getEditorDateCountSevenDays" resultType="com.green.vrink.admin.dto.DateCountDto">
-        WITH DateRange AS (
-            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
-        FROM (
-            SELECT 0 AS n UNION ALL
-            SELECT 1 UNION ALL
-            SELECT 2 UNION ALL
-            SELECT 3 UNION ALL
-            SELECT 4 UNION ALL
-            SELECT 5 UNION ALL
-            SELECT 6
-            ) AS Numbers
-            )
-
-        SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
-        FROM DateRange
-            LEFT JOIN (
-            SELECT DATE(editor_created_at) AS date, COUNT(*) AS count
-            FROM user
-            WHERE editor_created_at >= CURDATE() - INTERVAL 7 DAY
-            GROUP BY DATE(editor_created_at)
-            ) AS Data
-        ON DATE(DateRange.date) = Data.date;
-    </select>
-
-    <select id="getEditorDateCountMonth" resultType="com.green.vrink.admin.dto.DateCountDto">
+    <select id="getDateCustomMonthByTableNameValueWhen" resultType="com.green.vrink.admin.dto.DateCountDto">
         <![CDATA[
-        WITH RECURSIVE DateRange AS (
-            SELECT
-                DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
-                LAST_DAY(CURDATE()) AS end_date
-            UNION ALL
-            SELECT
-                DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
-                LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
-            FROM DateRange
-            WHERE start_date < LAST_DAY(CURDATE())
-        )
+        WITH RECURSIVE DateRange
+                           AS (SELECT DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
+                                      LAST_DAY(CURDATE())                                                        AS end_date
+                               UNION ALL
+                               SELECT DATE_ADD(start_date, INTERVAL 1 MONTH)           AS start_date,
+                                      LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
+                               FROM DateRange
+                               WHERE start_date < LAST_DAY(CURDATE()))
 
-        SELECT
-            DATE_FORMAT(start_date, '%Y-%m') AS date,
+        SELECT DATE_FORMAT(start_date, '%Y-%m') AS date,
         IFNULL(SUM(count), 0) AS count
         FROM DateRange
             LEFT JOIN (
-            SELECT DATE_FORMAT(editor_created_at, '%Y-%m') AS date, COUNT(*) AS count
-            FROM user
-            WHERE editor_created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
-            AND editor_created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
-            GROUP BY DATE_FORMAT(editor_created_at, '%Y-%m')
+            SELECT DATE_FORMAT(${when}, '%Y-%m') AS date, ${value} AS count
+            FROM ${tableName}
+            WHERE ${when} >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
+            AND ${when} < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
+            GROUP BY DATE_FORMAT(${when}, '%Y-%m')
             ) AS Data
         ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
         GROUP BY DATE_FORMAT(start_date, '%Y-%m')
         ]]>
     </select>
-
-    <select id="getEditorDateCountWeek" resultType="com.green.vrink.admin.dto.DateCountDto">
-        <![CDATA[
-        WITH Weeks AS (
-            SELECT 0 AS week
-            UNION SELECT 1
-            UNION SELECT 2
-            UNION SELECT 3
-            UNION SELECT 4
-            UNION SELECT 5
-            UNION SELECT 6
-            UNION SELECT 7
-            UNION SELECT 8
-            UNION SELECT 9
-            UNION SELECT 10
-            UNION SELECT 11
-        )
-
-        SELECT
-            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
-    IFNULL(SUM(IFNULL(count, 0)), 0) AS count
-        FROM Weeks
-            LEFT JOIN (
-            SELECT DATE_FORMAT(editor_created_at, '%Y-%u') AS date, COUNT(*) AS count
-            FROM user
-            WHERE editor_created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
-            AND editor_created_at <= CURDATE()
-            GROUP BY DATE_FORMAT(editor_created_at, '%Y-%u')
-            ) AS Data
-        ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
-        GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
-        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
-        ]]>
-    </select>
-
-
-
-    <select id="getDateSumSevenDaysByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
-        WITH DateRange AS (
-            SELECT (CURDATE() - INTERVAL 6 DAY) + INTERVAL n DAY AS date
-        FROM (
-            SELECT 0 AS n UNION ALL
-            SELECT 1 UNION ALL
-            SELECT 2 UNION ALL
-            SELECT 3 UNION ALL
-            SELECT 4 UNION ALL
-            SELECT 5 UNION ALL
-            SELECT 6
-            ) AS Numbers
-            )
-
-        SELECT DATE_FORMAT(DateRange.date, '%m-%d') AS date, IFNULL(count, 0) AS count
-        FROM DateRange
-            LEFT JOIN (
-            SELECT DATE(created_at) AS date, SUM(price) AS count
-            FROM ${tableName}
-            WHERE created_at >= CURDATE() - INTERVAL 7 DAY
-            GROUP BY DATE(created_at)
-            ) AS Data
-        ON DATE(DateRange.date) = Data.date;
-    </select>
-
-    <select id="getDateSumMonthByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
-        <![CDATA[
-        WITH RECURSIVE DateRange AS (
-            SELECT
-                DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 11 MONTH)), INTERVAL 1 DAY) AS start_date,
-                LAST_DAY(CURDATE()) AS end_date
-            UNION ALL
-            SELECT
-                DATE_ADD(start_date, INTERVAL 1 MONTH) AS start_date,
-                LAST_DAY(DATE_ADD(start_date, INTERVAL 1 MONTH)) AS end_date
-            FROM DateRange
-            WHERE start_date < LAST_DAY(CURDATE())
-        )
-
-        SELECT
-            DATE_FORMAT(start_date, '%Y-%m') AS date,
-        IFNULL(SUM(count), 0) AS count
-        FROM DateRange
-            LEFT JOIN (
-            SELECT DATE_FORMAT(created_at, '%Y-%m') AS date, SUM(price) AS count
-            FROM ${tableName}
-            WHERE created_at >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY) - INTERVAL 12 MONTH
-            AND created_at < DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)
-            GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-            ) AS Data
-        ON DATE_FORMAT(start_date, '%Y-%m') = Data.date
-        GROUP BY DATE_FORMAT(start_date, '%Y-%m')
-        ]]>
-    </select>
-
-    <select id="getDateSumWeekByTableName" resultType="com.green.vrink.admin.dto.DateCountDto">
-        <![CDATA[
-        WITH Weeks AS (
-            SELECT 0 AS week
-            UNION SELECT 1
-            UNION SELECT 2
-            UNION SELECT 3
-            UNION SELECT 4
-            UNION SELECT 5
-            UNION SELECT 6
-            UNION SELECT 7
-            UNION SELECT 8
-            UNION SELECT 9
-            UNION SELECT 10
-            UNION SELECT 11
-        )
-
-        SELECT
-            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d') AS date,
-    IFNULL(SUM(IFNULL(count, 0)), 0) AS count
-        FROM Weeks
-            LEFT JOIN (
-            SELECT DATE_FORMAT(created_at, '%Y-%u') AS date, SUM(price) AS count
-            FROM ${tableName}
-            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 11 WEEK)
-            AND created_at <= CURDATE()
-            GROUP BY DATE_FORMAT(created_at, '%Y-%u')
-            ) AS Data
-        ON DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%Y-%u') = Data.date
-        GROUP BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d')
-        ORDER BY DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL week WEEK), '%m-%d');
-        ]]>
-    </select>
-
-
 
     <select id="countStandardUser" resultType="integer">
         SELECT count(*)
         FROM user
-        WHERE editor = 'standard' AND enabled_check = 0
+        WHERE editor = 'standard'
+          AND enabled_check = 0
     </select>
 
     <select id="countEditorUser" resultType="integer">
         SELECT count(*)
         FROM user
-        WHERE editor = 'editor' AND enabled_check = 0
+        WHERE editor = 'editor'
+          AND enabled_check = 0
     </select>
 
     <select id="countEnabledUser" resultType="integer">
@@ -631,5 +503,130 @@
         INSERT INTO ad(ad_com_name, main_image, hhhh_image, vvvv_image, price, ad_period, category, is_notice)
         VALUES (#{adComName}, #{mainImage}, #{hhhhImage}, #{vvvvImage}, #{price}, #{adPeriod}, #{category}, #{isNotice})
     </insert>
+
+    <select id="getAllAdminPaymentList" resultType="com.green.vrink.admin.dto.AdminPaymentDto">
+        SELECT
+            payment.*,
+            customer.nickname AS customerNickname,
+            editor.nickname AS editorNickname,
+            ps.state,
+            ps.payment_state_id
+        FROM payment
+                 LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN user AS editor ON e.user_id = editor.user_id
+                 LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
+        WHERE
+                (ps.payment_state_id, ps.payment_id) IN (
+                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                FROM payment_state
+                GROUP BY payment_id
+            )
+        ORDER BY ps.payment_state_id DESC
+    </select>
+
+    <select id="getAllAdminPaymentListByType" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminPaymentDto">
+        SELECT
+            payment.*,
+            customer.nickname AS customerNickname,
+            editor.nickname AS editorNickname,
+            ps.state,
+            ps.payment_state_id
+        FROM payment
+                 LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN user AS editor ON e.user_id = editor.user_id
+                 LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
+        WHERE
+                (ps.payment_state_id, ps.payment_id) IN (
+                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                FROM payment_state
+                GROUP BY payment_id
+            ) AND state = #{classification}
+        ORDER BY ps.payment_state_id DESC
+    </select>
+
+    <select id="getAllAdminPaymentListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminPaymentDto">
+        SELECT
+            payment.*,
+            customer.nickname AS customerNickname,
+            editor.nickname AS editorNickname,
+            ps.state,
+            ps.payment_state_id
+        FROM payment
+                 LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN user AS editor ON e.user_id = editor.user_id
+                 LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
+        WHERE
+                (ps.payment_state_id, ps.payment_id) IN (
+                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                FROM payment_state
+                GROUP BY payment_id
+            )
+        ORDER BY ps.payment_state_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllAdminPaymentListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminPaymentDto">
+        SELECT
+            payment.*,
+            customer.nickname AS customerNickname,
+            editor.nickname AS editorNickname,
+            ps.state,
+            ps.payment_state_id
+        FROM payment
+                 LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN user AS editor ON e.user_id = editor.user_id
+                 LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
+        WHERE
+                (ps.payment_state_id, ps.payment_id) IN (
+                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                FROM payment_state
+                GROUP BY payment_id
+            ) AND state = #{classification}
+        ORDER BY ps.payment_state_id DESC
+            LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="countAllAdminPayment" resultType="integer">
+        SELECT count(*)
+        FROM payment
+    </select>
+
+    <select id="countAdminPaymentByType" resultType="integer">
+        SELECT count(*)
+        FROM payment
+        LEFT JOIN payment_state as ps ON payment.payment_id = ps.payment_id
+        WHERE state = #{classification}
+    </select>
+
+    <select id="getAdminPaymentDetailsById" resultType="com.green.vrink.admin.dto.AdminPaymentDetailDto">
+        SELECT *
+        FROM payment_detail
+        WHERE payment_id = #{id}
+    </select>
+
+    <select id="getAdminPaymentStatesById" resultType="com.green.vrink.admin.dto.AdminPaymentStateDto">
+        SELECT state, created_at
+        FROM payment_state
+        WHERE payment_id = #{id}
+    </select>
+
+    <select id="getAdminPaymentDtoById" resultType="com.green.vrink.admin.dto.AdminPaymentDto">
+        SELECT
+            payment.*,
+            customer.nickname AS customerNickname,
+            editor.nickname AS editorNickname
+        FROM payment
+            LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+            LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+            LEFT JOIN user AS editor ON e.user_id = editor.user_id
+        WHERE payment_id = #{id}
+    </select>
 
 </mapper>
