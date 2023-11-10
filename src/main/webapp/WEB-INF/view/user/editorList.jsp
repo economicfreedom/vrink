@@ -77,6 +77,9 @@
 
     }
 
+
+
+
 </script>
 <style>
     .customLook-list {
@@ -155,7 +158,13 @@
                 <div class="row mb-5 text-right">
                     <div class="col-sm-12">
                         <input type="text" name="basic" class="customLook-list" value="${tag}">
-                        <input type="text" id="search-box" placeholder="검색어를 입력하세요.">
+                        <select id="type" name="type">
+                            <option value="nickname">닉네임</option>
+                            <option value="tag">태그</option>
+                        </select>
+                        <input type="text" id="keyword" placeholder="검색어를 입력하세요.">
+                        <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
+                             id="search">
                     </div>
                 </div>
                 <div class="portfolio-mini-sec">
@@ -204,8 +213,22 @@
     });
 
     $('.tagify__tag-text').parent().on('click',function(){
-        console.log($(this).text())
-        $('#search-box').val($(this).text())
+        let keyword = $(this).text();
+        let type = 'tag'
+        location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
     })
+
+    $("#search").on('click',function () {
+        let keyword = $("#keyword").val();
+        let type = $('#type').val();
+        location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
+    });
+
+    $("#keyword").keypress(function (event) {
+        if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
+            let keyword = $("#keyword").val();
+            location.href = "/editor/list?keyword=" + keyword;
+        }
+    });
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

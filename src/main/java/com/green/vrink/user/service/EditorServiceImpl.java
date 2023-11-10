@@ -49,7 +49,7 @@ public class EditorServiceImpl implements EditorService {
     @Transactional
     @Override
     public Integer requestEditorEdit(EditorDTO editorDTO) {
-        if (editorDTO.getTags().length != 0) {
+        if (editorDTO.getTags() != null) {
             userRepository.deleteTagByEditorId(editorDTO.getEditorId());
             TagDTO tagDTO = new TagDTO();
             tagDTO.setEditorId(editorDTO.getEditorId());

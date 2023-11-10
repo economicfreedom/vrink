@@ -71,7 +71,7 @@ public class EditorRestController {
     @PostMapping("/editor-edit")
     public ResponseEntity<?> editorEditProc(EditorDTO editorDTO) {
         List<String> delImages = uploadService.removeExtractImages(editorDTO);
-
+        log.info("삭제할 이미지!!!!!!! {}", delImages);
         editorService.requestEditorEdit(editorDTO);
     	return ResponseEntity.ok().build();
     }

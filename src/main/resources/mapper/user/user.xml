@@ -71,6 +71,11 @@
               LEFT JOIN user u
           ON e.user_id = u.user_id
               LEFT JOIN review r ON e.editor_id = r.editor_id
+          <if test="type == 'tag'">
+              LEFT JOIN editor_tag et
+              ON e.editor_id = et.editor_id
+              WHERE et.tag LIKE CONCAT('%',#{keyword},'%')
+          </if>
           GROUP BY e.editor_id, profile_image, introduce, nickname
           LIMIT #{offset},#{countPerPage}
 

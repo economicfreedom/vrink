@@ -113,10 +113,14 @@ public class EditorController {
     }
 
     @GetMapping("/list")
-    public String editorList(Model model) {
+    public String editorList(Model model,
+                             @RequestParam(name = "keyword",defaultValue = "") String keyword,
+                             @RequestParam(name = "type",defaultValue = "") String type) {
         Criteria cri = new Criteria();
         cri.setPageNum(1);
         cri.setCountPerPage(6);
+        cri.setKeyword(keyword);
+        cri.setType(type);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         Integer total = editorService.getTotal();
