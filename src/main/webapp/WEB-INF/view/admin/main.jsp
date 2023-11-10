@@ -128,6 +128,66 @@
 
 </div>
 
+<h3 class="mt-4"><i class="fa-solid fa-sack-dollar"></i> 사이트 수익</h3>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Revenue Total</li>
+</ol>
+
+<div class="row">
+
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fa-solid fa-chart-column"></i>
+                    Banner Count
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cBannerSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cBannerWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cBannerMonth()">월별</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="width: 600px; height: 300px; margin: 0 auto">
+                    <canvas id="banner-seven"></canvas>
+                    <canvas id="banner-week"></canvas>
+                    <canvas id="banner-month"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fa-solid fa-chart-column"></i>
+                    Banner Revenue
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceMonth()">월별</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="width: 600px; height: 300px; margin: 0 auto">
+                    <canvas id="banner-price-seven"></canvas>
+                    <canvas id="banner-price-week"></canvas>
+                    <canvas id="banner-price-month"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 <h3 class="mt-4"><i class="fa-solid fa-clipboard-list"></i> 게시판 정보</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Community Information</li>
@@ -187,64 +247,7 @@
 </div>
 
 
-<h3 class="mt-4"><i class="fa-solid fa-sack-dollar"></i> 사이트 수익</h3>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Revenue Total</li>
-</ol>
 
-<div class="row">
-
-    <div class="col-xl-6">
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fa-solid fa-chart-column"></i>
-                    Banner Count
-                </div>
-                <div class="btn-group" role="group" aria-label="카테고리 선택">
-                    <button type="button" class="btn btn-secondary" onclick="cBannerSeven()">일별</button>
-                    <span class="btn-divider" style=""></span>
-                    <button type="button" class="btn btn-secondary" onclick="cBannerWeek()">주별</button>
-                    <span class="btn-divider" style=""></span>
-                    <button type="button" class="btn btn-secondary" onclick="cBannerMonth()">월별</button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div style="width: 600px; height: 300px; margin: 0 auto">
-                    <canvas id="banner-seven"></canvas>
-                    <canvas id="banner-week"></canvas>
-                    <canvas id="banner-month"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-6">
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fa-solid fa-chart-column"></i>
-                    Banner Revenue
-                </div>
-                <div class="btn-group" role="group" aria-label="카테고리 선택">
-                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceSeven()">일별</button>
-                    <span class="btn-divider" style=""></span>
-                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceWeek()">주별</button>
-                    <span class="btn-divider" style=""></span>
-                    <button type="button" class="btn btn-secondary" onclick="cBannerPriceMonth()">월별</button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div style="width: 600px; height: 300px; margin: 0 auto">
-                    <canvas id="banner-price-seven"></canvas>
-                    <canvas id="banner-price-week"></canvas>
-                    <canvas id="banner-price-month"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 
 <%--			<h3 class="mt-4">공연/전시 정보</h3>--%>
