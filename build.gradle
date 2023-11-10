@@ -61,7 +61,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    implementation 'org.seleniumhq.selenium:selenium-java:4.4.0'
 }
 
 tasks.named('test') {

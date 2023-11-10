@@ -1,6 +1,8 @@
 package com.green.vrink;
 
 
+import com.green.vrink.main.RankDTO;
+import com.green.vrink.main.repository.interfaces.MainRepository;
 import org.apache.tomcat.jni.Time;
 
 import org.jsoup.Jsoup;
@@ -9,17 +11,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
-import org.openqa.selenium.WebDriver;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 
 
 import java.io.IOException;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -27,13 +27,10 @@ import java.util.concurrent.TimeUnit;
 class VrinkApplicationTests {
 
 
+    @Autowired
+    private MainRepository mainRepository;
     private static final String JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
     private static final String SK = "asdfdd";
-
-    private WebDriver driver;
-    public static String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static String WEB_DRIVER_PATH = "C:\\PSG\\tools\\chromedriver.exe";
-
 
     @Test
     void contextLoads() {
@@ -231,14 +228,45 @@ class VrinkApplicationTests {
     }
 
     @Test
-    public void virtube() throws InterruptedException {
+    public void daily() {
+        String dailyUrl = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-monthly";
+        Map<String, List<String>> daily = crawling(dailyUrl);
+        RankDTO rank = new RankDTO();
+        rank.setDivision("monthly");
+        for (int i = 0; i < 10; i++) {
+            rank.setChannel(daily.get("channel").get(i));
+            rank.setThumbnail(daily.get("thumbnail").get(i));
+            rank.setSubscribe(daily.get("subscribe").get(i));
+            rank.setLink("https://www.youtube.com/results?search_query=" + daily.get("channel").get(i));
+            mainRepository.insertDailyRank(rank);
+        }
+    }
+
+    @Test
+    public void virtube() {
+        String dailyUrl = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-daily";
+//        String weeklyUrl = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-weekly";
+//        String monthlyUrl = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-monthly";
+
+        Map<String, List<String>> daily = crawling(dailyUrl);
+//        Map<String, List<String>> weekly = crawling(weeklyUrl);
+//        Map<String, List<String>> monthly = crawling(monthlyUrl);
+
+        for(int i = 0; i < 14; i++) {
+            System.out.println(daily.get("채널명").get(i));
+            System.out.println(daily.get("구독자").get(i));
+            System.out.println(daily.get("썸네일").get(i));
+        }
+
+    }
+    @Test
+    public Map<String, List<String>> crawling(String url){
         List<String> imageList = new ArrayList<>();
         List<String> channelList = new ArrayList<>();
         List<String> subList = new ArrayList<>();
+        Map<String, List<String>> listMap = new HashMap<>();
         Document doc = null;
         try {
-            // URL을 사용하여 HTML 가져오기
-            String url = "https://playboard.co/youtube-ranking/most-popular-v-tuber-channels-in-south-korea-daily";
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -249,30 +277,25 @@ class VrinkApplicationTests {
         for(Element channel : channels) {
             channelList.add(channel.text());
 
-            String url2 = channel.attr("href");
             try {
-                doc = Jsoup.connect("https://playboard.co"+url2).get();
+                doc = Jsoup.connect("https://playboard.co/search?q="+channel.text()).get();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // 구독자 수 5번째부터 에러남
-            Element subscribe = doc.select(".stats--clickable > ul > li.num").first();
-            subList.add(subscribe.text());
-            System.out.println(subscribe);
-            Thread.sleep(3000);
+            Element subscribe = doc.select(".simple-scores > li").first();
+            subList.add(subscribe.text().replace(" 구독,",""));
         }
 
         for(Element image : images) {
             imageList.add(image.attr("data-src"));
         }
 
-        // 채널명
-        System.out.println(channelList);
-        // 구독자 수
-        System.out.println(subList);
-        // 이미지 링크
-        System.out.println(imageList);
+        listMap.put("subscribe", subList);
+        listMap.put("thumbnail", imageList);
+        listMap.put("channel", channelList);
+
+        return listMap;
     }
 
 }

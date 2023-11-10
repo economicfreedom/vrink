@@ -50,6 +50,7 @@ public class EditorServiceImpl implements EditorService {
     @Override
     public Integer requestEditorEdit(EditorDTO editorDTO) {
         if (editorDTO.getTags().length != 0) {
+            userRepository.deleteTagByEditorId(editorDTO.getEditorId());
             TagDTO tagDTO = new TagDTO();
             tagDTO.setEditorId(editorDTO.getEditorId());
             for (int i = 0; i < editorDTO.getTags().length; i++) {
@@ -199,13 +200,30 @@ public class EditorServiceImpl implements EditorService {
             if (tag.size() == (i+1)) {
             stringBuffer.append(tagDTO.getTag());
             }else {
-
             stringBuffer.append(tagDTO.getTag()).append(",");
             }
 
         }
 
 
+        return stringBuffer.toString();
+    }
+
+    @Override
+    public String responseRandomTag() {
+        List<TagDTO> tag = userRepository.getRandomTag();
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < tag.size(); i++) {
+            TagDTO tagDTO = tag.get(i);
+            tagDTO.getTag();
+
+            if (tag.size() == (i+1)) {
+                stringBuffer.append(tagDTO.getTag());
+            }else {
+                stringBuffer.append(tagDTO.getTag()).append(",");
+            }
+
+        }
         return stringBuffer.toString();
     }
 }

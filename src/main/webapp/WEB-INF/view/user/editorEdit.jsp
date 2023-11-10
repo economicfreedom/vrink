@@ -189,7 +189,9 @@ style.css에 합칠예정
 	var input = document.querySelector('input[name=basic]');
 
 	// initialize Tagify on the above input node reference
-	var tagify = new Tagify(input);
+	var tagify = new Tagify(input, {
+		maxTags : 10
+	});
 
 // 태그가 추가되면 이벤트 발생
 tagify.on('add', function() {

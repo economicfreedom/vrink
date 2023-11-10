@@ -43,4 +43,6 @@ public interface EditorService {
 
 
 	String responseEditorTag(Integer editorId);
+
+	String responseRandomTag();
 }

@@ -38,9 +38,11 @@ public class PaymentRestController {
 
     @GetMapping("/cancel/{payment-id}")
     public Payment cancel(@PathVariable("payment-id") Integer paymentId) {
+
         log.info(paymentId.toString());
         Payment payment = paymentServiceImpl.responseCancelData(paymentId);
         log.info("payment {} ",payment);
+
         return paymentServiceImpl.responseCancelData(paymentId);
     }
 

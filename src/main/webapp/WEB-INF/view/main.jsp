@@ -25,6 +25,22 @@
         background: #fafafa;
     }
 
+    .youtb-list-tr {
+        border-bottom: 1px solid #f2f2f2;
+        height: 30px;
+        color: #5f5f5f;
+    }
+
+    .youtb-list-tr img{
+        padding: 5px;
+        border-radius: 100%;
+        cursor: pointer;
+    }
+
+    .youtb-list-tr a{
+        color: #5f5f5f;
+    }
+
     .h-advertise {
         display: none;
     }
@@ -43,10 +59,51 @@
 
     }
 
-.more-link {
-    position: absolute;right: 20px;top: 45px;
-}
+    .more-link {
+        position: absolute;right: 20px;top: 45px;
+    }
 
+    .more-link > a {
+        color: #5f5f5f;
+    }
+
+    .weekly {
+        display: none;
+    }
+
+    .monthly {
+        display: none;
+    }
+
+    .radio-custom {
+        display: inline-block;
+        border-radius: 5px;
+        box-shadow: 0 0 0 1px grey inset;
+        right: 14.5px;
+    }
+    .radio-custom label {
+        margin-bottom: 0px;
+
+
+    }
+
+    /* 숨겨진 라디오 버튼 스타일링 */
+    input[type="radio"] {
+        display: none;
+    }
+
+    input[type="radio"] + label {
+        font-size: 15px;
+        padding: 4px;
+        border-radius: 4px;
+        cursor: pointer;
+
+    }
+
+    input[type="radio"]:checked + label {
+        background-color: #ff2929;
+        color: white;
+    }
 </style>
 <section class="block">
     <div class="container">
@@ -138,9 +195,99 @@
             </div>
         </div>
         <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="heading1">
+                    <h2>버튜버 인기 순위</h2>
+                    <span class="more-link radio-custom"><input type="radio" id="daily" name="period" checked><label for="daily">일간</label> <input type="radio" id="weekly" name="period"><label for="weekly">주간</label> <input type="radio" id="monthly" name="period"><label for="monthly">월간</label> </span>
+                </div>
+                <table class="w-full t-center daily">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="50%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                    <tr class="youtb-list-th">
+                        <th class="t-center">일간 순위</th>
+                        <th class="t-center"></th>
+                        <th>채널명</th>
+                        <th class="t-center">구독자수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${dailyList}" var="daily" varStatus="step">
+                        <tr class="youtb-list-tr">
+                            <td>${step.count}</td>
+                            <td>
+                                <div><a href="${daily.link}"><img src="${daily.thumbnail}" width="50%"></a></div></td>
+                            <td class="t-left"><a href="${daily.link}" target="_blank">${daily.channel}</a></td>
+                            <td>${daily.subscribe}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <table class="w-full t-center weekly">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="50%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                    <tr class="youtb-list-th">
+                        <th class="t-center">주간 순위</th>
+                        <th class="t-center"></th>
+                        <th>채널명</th>
+                        <th class="t-center">구독자수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${weeklyList}" var="weekly" varStatus="step">
+                        <tr class="youtb-list-tr">
+                            <td>${step.count}</td>
+                            <td>
+                                <div><a href="${weekly.link}"><img src="${weekly.thumbnail}" width="50%"></a></div></td>
+                            <td class="t-left"><a href="${weekly.link}" target="_blank">${weekly.channel}</a></td>
+                            <td>${weekly.subscribe}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <table class="w-full t-center monthly">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="50%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                    <tr class="youtb-list-th">
+                        <th class="t-center">월간 순위</th>
+                        <th class="t-center"></th>
+                        <th>채널명</th>
+                        <th class="t-center">구독자수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${monthlyList}" var="monthly" varStatus="step">
+                        <tr class="youtb-list-tr">
+                            <td>${step.count}</td>
+                            <td>
+                                <div><a href="${monthly.link}"><img src="${monthly.thumbnail}" width="50%"></a></div></td>
+                            <td class="t-left"><a href="${monthly.link}" target="_blank">${monthly.channel}</a></td>
+                            <td>${monthly.subscribe}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-5">
             <div class="col-sm-6 mt-5">
                 <div class="heading1">
                     <h2>의뢰 게시판</h2>
+                    <span class="more-link"><a href="/suggest/list">더보기</a></span>
                 </div>
                 <table class="w-full t-center">
                     <colgroup>
@@ -158,15 +305,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${boardList}" var="board">
+                    <c:forEach items="${suggestList}" var="suggest">
                         <tr class="board-list-tr">
-                            <td>${board.communityId}</td>
+                            <td>${suggest.suggestId}</td>
                             <td class="t-left">
-                                <a href="/board/read/${board.communityId}"
+                                <a href="/suggest/get/${suggest.suggestId}"
                                    style="text-decoration: none; color: black"><span>
-                                        제목</span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
-                            <td>${board.nickname}</td>
-                            <td>${board.createdAt}</td>
+                                        </span> <span style="color:#ff2929"> ${suggest.title}</span></a></td>
+                            <td>${suggest.nickname}</td>
+                            <td>${suggest.createdAt}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -199,37 +346,11 @@
                             <td class="t-left">
                                 <a href="/board/read/${board.communityId}"
                                    style="text-decoration: none; color: black"><span>
-                                        제목</span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
+                                        </span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
                             <td>${board.nickname}</td>
                             <td>${board.createdAt}</td>
                         </tr>
                         </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm-3">
-                <table class="w-full t-center">
-                    <colgroup>
-                        <col width="20%">
-                        <col width="20%">
-                        <col width="30%">
-                        <col width="30%">
-                    </colgroup>
-                    <thead>
-                        <tr class="youtb-list-th">
-                            <th class="t-center">순위</th>
-                            <th class="t-center"></th>
-                            <th class="t-center">채널명</th>
-                            <th class="t-center">구독자수</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="board-list-tr">
-                            <td>1</td>
-                            <td style='background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FnVFtn%2FbtqyyxkWDEW%2F9TsNkGzvaLGxklbQCj3NHK%2Fimg.png')"></td>
-                            <td>룰루</td>
-                            <td>1,000,000,000</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -245,6 +366,14 @@
         arrows : true,
         prevArrow: '<button class="slide-arrow prev-arrow"><</button>',
         nextArrow: '<button class="slide-arrow next-arrow">></button>'
+    })
+
+    $("input[name='period']").change(function(){
+        $('.daily').hide();
+        $('.weekly').hide();
+        $('.monthly').hide();
+
+        $('.'+$(this).attr("id")).show();
     })
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

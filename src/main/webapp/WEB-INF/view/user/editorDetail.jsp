@@ -2,7 +2,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
-
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 
 <style>
@@ -34,6 +35,60 @@
         pointer-events: none;
         text-shadow: -1px 0 #b67f5f, 0 1px #b67f5f, 1px 0 #b67f5f, 0 -1px #b67f5f;
     }
+
+    .customLook-detail {
+        --tag-bg: grey;
+        --tag-hover: #ce0078;
+        --tag-text-color: #fff;
+        --tags-border-color: silver;
+        --tag-text-color--edit: #111;
+        --tag-remove-bg: var(--tag-hover);
+        --tag-pad: 0.6em 1em;
+        --tag-inset-shadow-size: 2.0em;
+        --tag-remove-btn-bg--hover: black;
+        display: inline-block;
+        min-width: 0;
+        border:none;
+
+    }
+    .customLook-detail .tagify__tag {
+        margin-top: 0;
+    }
+    .customLook-detail .tagify__tag > div {
+        border-radius: 25px;
+    }
+
+    .customLook-detail .tagify__tag__removeBtn {
+        opacity: 0;
+        transform: translateX(-6px) scale(0.5);
+        margin-left: -3ch;
+        transition: 0.12s;
+    }
+
+    .customLook-detail + button {
+        color: #0052bf;
+        font: bold 1.4em/1.65 Arial;
+        border: 0;
+        background: none;
+        box-shadow: 0 0 0 2px inset currentColor;
+        border-radius: 50%;
+        width: 1.65em;
+        height: 1.65em;
+        cursor: pointer;
+        outline: none;
+        transition: 0.1s ease-out;
+        margin: 0 0 0 5px;
+        vertical-align: top;
+    }
+    .customLook-detail + button:hover {
+        box-shadow: 0 0 0 5px inset currentColor;
+    }
+
+    .tagify__tag>div>* {
+        white-space: nowrap;
+    }
+
+
 </style>
 <section class="block">
     <div class="container">
@@ -80,6 +135,7 @@
                     </div>
                     <h4>${editorDetail.nickname}작가</h4>
                     <h5>${editorDetail.introduce}</h5>
+                    <input type="text" name="basic" class="customLook-detail" value="${tag}">
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
                             <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
@@ -405,6 +461,19 @@
 </script>
 <script>
     $(document).ready(function () {
+        var input = document.querySelector('input[name=basic]');
+
+
+        var tagify = new Tagify(input,{
+            userInput : false,
+            hooks: {
+                beforeRemoveTag: function () {
+                    return new Promise((resolve, reject) => {
+                        reject();
+                    })
+                }
+            }
+        });
 
         $("#report").click(function () {
             fetch('/report/report-board', {

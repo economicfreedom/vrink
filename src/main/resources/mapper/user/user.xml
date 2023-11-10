@@ -329,5 +329,13 @@
     <select id="getTag" resultType="com.green.vrink.user.dto.TagDTO">
         SELECT * FROM editor_tag WHERE editor_id = #{editorId}
     </select>
+
+    <delete id="deleteTagByEditorId">
+        DELETE FROM editor_tag WHERE editor_id = #{editorId}
+    </delete>
+
+    <select id="getRandomTag" resultType="com.green.vrink.user.dto.TagDTO">
+        SELECT * FROm editor_tag ORDER BY RAND() limit 7;
+    </select>
 </mapper>
 

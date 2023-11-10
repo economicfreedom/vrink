@@ -65,4 +65,8 @@ public interface UserRepository {
     void insertTag(TagDTO tagDTO);
 
 	List<TagDTO> getTag(Integer editorId);
+
+    void deleteTagByEditorId(Integer editorId);
+
+	List<TagDTO> getRandomTag();
 }

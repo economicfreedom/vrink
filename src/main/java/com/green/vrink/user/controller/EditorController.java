@@ -59,7 +59,8 @@ public class EditorController {
         log.info("morph : {}", morph);
         model.addAttribute("morph", morph);
 
-
+        String tag = editorService.responseEditorTag(editorId);
+        model.addAttribute("tag",tag);
         return "user/editorDetail";
     }
 
@@ -126,6 +127,8 @@ public class EditorController {
         asyncPageDTO.setHasNext(1, pageDTO.getEndPage());
         model.addAttribute("list", editorDTO);
         model.addAttribute("next", asyncPageDTO.isHasNext());
+        String tag = editorService.responseRandomTag();
+        model.addAttribute("tag", tag);
         return "user/editorList";
     }
 
