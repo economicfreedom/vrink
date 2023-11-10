@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.follow.repository.interfaces.FollowRepository">
+
+    <insert id="follow">
+        INSERT INTO follow (user_id, editor_id)
+        SELECT #{userId}, #{editorId}
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM follow
+                WHERE user_id = #{userId} AND editor_id = #{editorId}
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM editor_detail
+                WHERE editor_id = #{editorId}
+            )
+    </insert>
+
+    <delete id="unFollow">
+        DELETE FROM follow WHERE user_id = #{userId} AND editor_id = #{editorId}
+    </delete>
+
+    <select id="getFollowListByUserId" resultType="com.green.vrink.follow.repository.model.Follow">
+        SELECT * FROM follow WHERE user_id = #{userId}
+    </select>
+
+    <select id="isFollow" resultType="java.lang.Integer">
+        SELECT COUNT(follow_id) FROM follow WHERE user_id = #{userId} AND editor_id = #{editorId}
+    </select>
+
+    <select id="countFollower" resultType="java.lang.Integer">
+        SELECT COUNT(editor_id) FROM follow WHERE editor_id = #{editorId}
+    </select>
+</mapper>

@@ -283,7 +283,7 @@
                             <textarea class="form-control" rows="3" placeholder="댓글을 작성해주세요"
                                       id="reply-content"></textarea>
                             <button type="submit" class="btn btn-default btn-black pull-right"
-                                    style=" background-color: black; color: whitesmoke"
+                                    style=" background-color: black; color: whitesmoke; margin-top: 15px"
                                     id="reply-add">
                                 등록
                             </button>

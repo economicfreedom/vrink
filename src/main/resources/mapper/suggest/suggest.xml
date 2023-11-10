@@ -98,4 +98,51 @@
         ORDER BY s.created_at desc
             LIMIT #{offset}, #{countPerPage}
     </select>
+
+    <select id="findAllByCriteria" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+        , s.user_id
+        , s.title
+        , s.content
+        , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+        , s.state
+        , u.nickname
+        ,count(sr.suggest_id )AS count
+
+        FROM suggest s
+        LEFT JOIN user u ON s.user_id = u.user_id
+        LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+
+
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'all'">
+            WHERE state LIKE 0 OR 1
+        </if>
+        <if test="type == 'inProgress'">
+            WHERE state LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE state LIKE 1
+        </if>
+
+        GROUP BY s.suggest_id, s.user_id, s.title, s.content, s.created_at, u.nickname, s.state
+
+        ORDER BY created_at DESC
+
+        LIMIT #{offset},#{countPerPage}
+    </select>
+
+
 </mapper>

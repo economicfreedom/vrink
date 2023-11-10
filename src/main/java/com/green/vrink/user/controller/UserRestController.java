@@ -124,9 +124,11 @@ public class UserRestController {
     // 비밀번호 변경
     @PutMapping(value = "/update/password/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public int updatePassword(@PathVariable Integer userId, @RequestBody Map<String, String> map) {
-        log.info("main: {}", map);
+        User user = (User) session.getAttribute(Define.USER);
+        if (user == null) {
+            return 0;
+        }
         String password = map.get("password");
-        log.info("password: {}", password);
 
         int result = userService.updatePassword(userId, passwordEncoder.encode(password));
 
@@ -148,6 +150,10 @@ public class UserRestController {
     // 회원 탈퇴
     @DeleteMapping("/delete/{userId}")
     public int deleteUser(@PathVariable String userId) {
+        User user = (User) session.getAttribute(Define.USER);
+        if (user == null) {
+            return 0;
+        }
         int result = userService.deleteByUserId(userId);
         log.info("deleteFlag: {}", result);
         if (result == 1) {

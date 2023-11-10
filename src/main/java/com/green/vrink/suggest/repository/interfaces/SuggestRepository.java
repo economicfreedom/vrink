@@ -22,4 +22,5 @@ public interface SuggestRepository {
     Integer getTotal(Criteria criteria);
     List<GetSuggestDto> getSuggestList(Criteria criteria);
     Integer acceptSuggest(Integer suggestId);
+    List<GetSuggestDto> findAllByCriteria(Criteria criteria);
 }

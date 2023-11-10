@@ -97,7 +97,7 @@
                 <div class="heading3">
                     <h3>작가 소개</h3>
                 </div>
-                <h3>${editorDetail.nickname}작가 포트폴리오</h3>
+                <h3>${editorDetail.nickname} 작가 포트폴리오</h3>
 
             </div>
         </div>
@@ -118,22 +118,26 @@
                 <div class="t-center" style="border: 1px solid #343434;">
                     <div class="p-2 d-flex j-around" style="gap: 10rem;">
 
-                        <div style="font-size: 25px; cursor: pointer" id="report">
-                            &#128680;
-                        </div>
+                        <c:if test="${USER.userId != editorDetail.userId}">
+                            <div style="font-size: 25px; cursor: pointer" id="report">
+                                <i class="fa fa-exclamation" style="color: #ff4d4d;"></i>
+                            </div>
+                            <div style="font-size: 25px; cursor: pointer" id="like">
+                                <i id="heart" class="fa fa-heart" style="color: grey;"></i>
+                                <input type="hidden" id="likeFlag" value="" />
+                            </div>
+                        </c:if>
 
-                        <div style="font-size: 25px; cursor: pointer" id="like">
-                            &#128151;
-                        </div>
 
 
                     </div>
+
 
                     <div class="circle-profile-area">
                         <img class="circle-profile" alt=""
                              src="${editorDetail.profileImage}">
                     </div>
-                    <h4>${editorDetail.nickname}작가</h4>
+                    <h4>${editorDetail.nickname}</h4>
                     <h5>${editorDetail.introduce}</h5>
                     <input type="text" name="basic" class="customLook-detail" value="${tag}">
                     <div>
@@ -475,6 +479,8 @@
             }
         });
 
+        isFollow();
+
         $("#report").click(function () {
             fetch('/report/report-board', {
                 method: 'POST',
@@ -490,7 +496,7 @@
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert("이미 요청된 신고입니다.")
+                        alert("이미 " + `${editorDetail.nickname}` + "님을 신고하셨습니다." );
                     } else {
                         alert("정상적으로 신고 되었습니다.")
                     }
@@ -551,6 +557,9 @@
 
         })
 
+        $('#like').on('click', function () {
+           follow();
+        });
 
     })
 
@@ -573,6 +582,56 @@
             .catch(error => console.error('Error:', error));
 
 
+    }
+
+    function follow() {
+        fetch('/follow/new-follow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify ({
+                userId: `${USER.userId}`,
+                editorId: `${editorDetail.editorId}`
+            })
+        })
+        .then(response => response.json()
+        )
+        .then(data => {
+            if(data.code === 200) {
+                $('#likeFlag').val(1);
+                $('#heart').css('color', '#ff2929');
+            } else {
+                $('#likeFlag').val(0);
+                $('#heart').css('color', 'grey');
+            }
+            // location.reload();
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    function isFollow() {
+        fetch('/follow/is-follow', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                userId: `${USER.userId}`,
+                editorId: `${editorDetail.editorId}`
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data === 1) {
+                    $('#likeFlag').val(data);
+                    $('#heart').css('color', '#ff2929');
+                }
+            })
+            .catch(error => console.log(error));
     }
 
 </script>

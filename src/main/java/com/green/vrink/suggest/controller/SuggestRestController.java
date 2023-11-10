@@ -127,6 +127,10 @@ public class SuggestRestController {
 
     @PutMapping("/accept-suggest/{suggestId}")
     public Integer acceptSuggest(@PathVariable Integer suggestId, @RequestBody AcceptSuggestDto acceptSuggestDto) {
+        User user = (User)session.getAttribute(Define.USER);
+        if (user == null) {
+            return 0;
+        }
         int suggestState = suggestService.acceptSuggest(suggestId);
         messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), acceptSuggestDto.getContent());
         return suggestState;

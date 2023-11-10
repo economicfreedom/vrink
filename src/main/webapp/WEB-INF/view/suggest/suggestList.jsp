@@ -21,33 +21,36 @@
 
     $(document).ready(function () {
         $("#search").click(function () {
-
             let type = $("#type").val();
             let keyword = $("#keyword").val();
-            alert(type)
-            alert(keyword)
-            location.href = "/board/board-list?keyword=" + keyword + "&type=" + type;
-
+            $('#paginationFlag').val('0');
+            location.href = "/suggest/list?keyword=" + keyword + "&type=" + type;
         });
         $("#keyword").keypress(function (event) {
+            console.log($('#paginationFlag').val());
             if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
                 let type = $("#type").val();
                 let keyword = $("#keyword").val();
-
-
-                location.href = "/board/board-list?type=" + type + "&keyword=" + keyword;
+                $('#paginationFlag').val('0');
+                location.href = "/suggest/list?type=" + type + "&keyword=" + keyword;
             }
         });
         $('#pagination').on('click', 'a', function (e) {
             e.preventDefault();
             const value = $(this).data('page-num');
-            console.log(value);
 
             document["page-form"]["page-num"].value = value;
             document["page-form"].type.value = $("select[name='type']").val();
+            document["page-form"].type.value = $("select[name='state']").val();
             document["page-form"].keyword.value = $("#keyword").val();
             document["page-form"].submit();
         }); // end of #pagination
+        $('#state').on('change', function () {
+            let type = $(this).val();
+            console.log(document["page-form"].type.value = $("select[name='state']").val());
+            $('paginationFlag').val(1);
+            location.href = "/suggest/list?type=" + type;
+        });
     })
 </script>
 <div class="container mt-5">
@@ -56,7 +59,7 @@
             <div class="d-flex mb-3" style="justify-content: space-between;">
                 <div>
                     <c:if test="${pageDTO.cri.keyword != ''}">
-                        <h2 style="color: grey">${pageDTO.cri.keyword}(${suggestListCount})</h2>
+                        <h2 style="color: grey">${pageDTO.cri.keyword}</h2>
                     </c:if>
 
                     <c:if test="${pageDTO.cri.keyword == ''}">
@@ -79,6 +82,7 @@
 
                 </div>
             </div>
+            <input type="hidden" id="paginationFlag" value="0" />
             <table class="w-full t-center">
                 <colgroup>
                     <col width="10%">
@@ -92,7 +96,13 @@
                     <th>제목</th>
                     <th class="t-center">닉네임</th>
                     <th class="t-center">날짜</th>
-                    <th class="t-center"></th>
+                    <th class="t-center" style="margin-right: 5px">
+                        <select style="height:26px" name="state" id="state">
+                            <option value="all"  ${pageDTO.cri.type == 'all' ? 'selected' : ''}>모두</option>
+                            <option value="inProgress"  ${pageDTO.cri.type == 'inProgress' ? 'selected' : ''}>의뢰중</option>
+                            <option value="complete" ${pageDTO.cri.type == 'complete' ? 'selected' : ''}>의뢰완료</option>
+                        </select>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>

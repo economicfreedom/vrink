@@ -70,7 +70,7 @@ public class SuggestServiceImpl implements SuggestService{
 
     @Override
     public List<GetSuggestDto> getSuggestList(Criteria criteria) {
-        return suggestRepository.getSuggestList(criteria);
+        return suggestRepository.findAllByCriteria(criteria);
     }
 
     @Override
