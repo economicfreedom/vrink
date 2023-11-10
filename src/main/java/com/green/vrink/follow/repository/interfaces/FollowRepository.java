@@ -1,6 +1,7 @@
 package com.green.vrink.follow.repository.interfaces;
 
 import com.green.vrink.follow.dto.FollowDto;
+import com.green.vrink.follow.dto.GetFollowEditorDto;
 import com.green.vrink.follow.repository.model.Follow;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,5 @@ public interface FollowRepository {
     List<Follow> getFollowListByUserId(Integer userId);
     Integer isFollow(FollowDto followDto);
     Integer countFollower(Integer editorId);
+    List<GetFollowEditorDto> getFollowEditorByUserId(Integer userId);
 }

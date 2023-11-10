@@ -210,7 +210,7 @@
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
                                 <li id="only-editor"><a href="/editor/calculate/point" title="">정산</a></li>
-                                <li><a href="event-single.html" title="">관심 작가</a></li>
+                                <li><a href="/follow/follow-list/${USER.userId}" title="">관심 작가</a></li>
                                 <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
                         </li>

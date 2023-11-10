@@ -32,4 +32,15 @@
     <select id="countFollower" resultType="java.lang.Integer">
         SELECT COUNT(editor_id) FROM follow WHERE editor_id = #{editorId}
     </select>
+
+    <select id="getFollowEditorByUserId" resultType="com.green.vrink.follow.dto.GetFollowEditorDto">
+        SELECT ed.editor_id
+             , ed.user_id
+             , ed.profile_image
+             , u.nickname
+        FROM follow f
+                 LEFT JOIN user u ON u.user_id = f.user_id
+                 LEFT JOIN editor_detail ed ON f.editor_id = ed.editor_id
+        WHERE u.user_id = #{userId}
+    </select>
 </mapper>
