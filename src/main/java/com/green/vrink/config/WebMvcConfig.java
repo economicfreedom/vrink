@@ -41,8 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         };
 
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns(authRequiredPaths)
-                .excludePathPatterns("/login", "/public/**");
+                .addPathPatterns(authRequiredPaths);
     }
 
     @Bean
