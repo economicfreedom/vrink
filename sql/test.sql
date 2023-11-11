@@ -742,3 +742,4 @@ DESC follow;
 SELECT 1 FROM follow
 WHERE user_id = 1111 AND editor_id = 4;
 
+SELECT * FROM payment_state;

@@ -279,7 +279,7 @@
                     editorRecognize: 1,
                     customerRecognize: `${requestDTO.customerRecognize}`,
                     point: ${detailDTO.price},
-                    state: 'payment_done'
+                    state: 'hand_over'
 
                 })
             })
