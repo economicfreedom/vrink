@@ -27,10 +27,8 @@ public class FreeBoardRestController {
     private final FreeBoardService freeBoardService;
     private final HttpSession httpSession;
     private final MessageService messageService;
-//    private final Check check;
 
     @PostMapping("/write")
-    @LoginCheck
     public ResponseEntity<?> write(@Valid @RequestBody FreeBoardDTO freeBoardDTO) {
         isNull("test");
         User user = (User) httpSession.getAttribute("USER");
@@ -48,7 +46,7 @@ public class FreeBoardRestController {
     }
 
     @DeleteMapping("/del/{community-id}")
-    @LoginCheck
+
     public ResponseEntity<?> delete(
             @PathVariable("community-id")
             Integer communityId
@@ -64,7 +62,6 @@ public class FreeBoardRestController {
     }
 
     @PutMapping("/update")
-//    @LoginCheck
     public ResponseEntity<?> update(
             @Valid @RequestBody FreeBoardDTO freeBoardDTO, BindingResult bindingResult) {
 

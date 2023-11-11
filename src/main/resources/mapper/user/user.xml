@@ -189,6 +189,7 @@
         WHEN ps.state = 'payment_done' THEN '진행중'
         WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
         WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+        WHEN ps.state = 'hand_over' THEN '제작 완료'
         ELSE '거래 완료'
         END) AS state
         FROM payment_state ps
@@ -292,6 +293,7 @@
                     WHEN ps.state = 'payment_done' THEN '진행중'
                     WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
                     WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+                   WHEN ps.state = 'hand_over' THEN '제작 완료'
                     ELSE '거래 완료'
                    END)                         AS state,
                ifnull(ps.customer_recognize, 0) AS customer_recognize,

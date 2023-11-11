@@ -77,7 +77,7 @@ public class PaymentStateRestController {
 
         messageService.sendMessageAndSaveSpecificPage(editorUserId
                 , "작가님 거래가 정상적으로 완료 되었습니다."
-                , "/request-view/" + paymentStateDTO.getPaymentId());
+                , "/editor/request-view/" + paymentStateDTO.getPaymentId());
 
 
         return ResponseEntity.ok().build();
@@ -148,8 +148,8 @@ public class PaymentStateRestController {
 
         }
         Integer paymentId = paymentStateDTO.getPaymentId();
-
-        Integer userId = paymentStateDTO.getUserId();
+        User user = (User) httpSession.getAttribute(Define.USER);
+        Integer userId = user.getUserId();
         String url = "/payment/buy-list";
 
 

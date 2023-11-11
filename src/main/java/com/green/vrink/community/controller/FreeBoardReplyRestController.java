@@ -33,7 +33,6 @@ public class FreeBoardReplyRestController {
     private final MessageService messageService;
 
     @PostMapping("/add")
-    @LoginCheck
     public ResponseEntity<?> write(
             @Valid
             @RequestBody
@@ -66,7 +65,6 @@ public class FreeBoardReplyRestController {
     }
 
     @DeleteMapping("/del/{reply-id}")
-    @LoginCheck
     public ResponseEntity<?> del(
             @PathVariable(name = "reply-id")
             Integer replyId
@@ -94,7 +92,6 @@ public class FreeBoardReplyRestController {
     }
 
     @PutMapping("/update")
-    @LoginCheck
     public ResponseEntity<?> update(
             @Valid
             @RequestBody
