@@ -43,11 +43,10 @@ public class UploadServiceImpl implements UploadService {
         if(editorDTO.getDelImage() != null) {
             if(editorDTO.getDelImage() != null) {
                 for(int i = 0; i<editorDTO.getDelImage().length; i++) {
-                    if(!editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("no_face.png") ||
-                            !editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("default_image.gif")) {
-                        log.info("no_face : {} ",editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("no_face.png"));
-                        log.info("default_image : {} ",editorDTO.getDelImage()[i].split("/")[editorDTO.getDelImage()[i].split("/").length-1].equals("default_image.gif"));
-                        delImages.add(editorDTO.getDelImage()[i].replace("/","\\"));
+                    String imageName = editorDTO.getDelImage()[i];
+                    if(!imageName.split("/")[imageName.split("/").length-1].equals("no_face.png") &&
+                            !imageName.split("/")[imageName.split("/").length-1].equals("default_image.gif")) {
+                        delImages.add(imageName.replace("/","\\"));
                     }
                 }
             }

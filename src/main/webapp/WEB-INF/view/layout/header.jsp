@@ -160,7 +160,6 @@
                 <span class="menu-toggle"><i class="fa fa-bars"></i></span>
                 <nav style="float: none; margin: 0 auto; background-color: #ff2929">
                     <ul style="margin-left: 15px">
-
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="/editor/list" title="">작가</a>
                             <ul>
@@ -174,9 +173,6 @@
                                 <c:if test="${not empty EDITOR_ID}">
                                 <li><a href="/editor/editor-price?editor-id=${EDITOR_ID}" title="">가격 설정하기</a></li>
                                 </c:if>
-                                <li><a href="branch3.html" title="">Branch Wide</a></li>
-                                    <a href="http://themeforest.net/item/VRINK-the-multipurpose-responsive-html5-template/14915795?ref=themenum"
-                                       title="">Buy VRINK Now</a></li>
                             </ul>
                         </li>
 
@@ -192,17 +188,6 @@
                                 <li><a href="/board/board-list" title="">보러가기</a></li>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children">
-                            <a class="menu-title" href="#" title="">문의 하기</a>
-                            <ul>
-                                <li><a href="event.html" title="">Event</a></li>
-                                <li><a href="event2.html" title="">Event 2</a></li>
-                                <li><a href="event3.html" title="">Event 3</a></li>
-                                <li><a href="event4.html" title="">Event 4</a></li>
-                                <li><a href="event-single.html" title="">Event Single</a></li>
-                                <li><a href="event-single2.html" title="">Event Single 2</a></li>
-                            </ul>
-                        </li>
                         <li id="my-info-list" class="menu-item-has-children">
                         	<a class="menu-title" href="contact.html" title="">MY PAGE</a>
                             <ul>
@@ -211,7 +196,6 @@
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
                                 <li id="only-editor"><a href="/editor/calculate/point" title="">정산</a></li>
                                 <li><a href="/follow/follow-list/${USER.userId}" title="">관심 작가</a></li>
-                                <li><a href="event-single2.html" title="">Event Single 2</a></li>
                             </ul>
                         </li>
                     </ul>

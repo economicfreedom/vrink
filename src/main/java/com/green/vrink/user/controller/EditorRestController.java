@@ -71,17 +71,23 @@ public class EditorRestController {
     @PostMapping("/editor-edit")
     public ResponseEntity<?> editorEditProc(EditorDTO editorDTO) {
         List<String> delImages = uploadService.removeExtractImages(editorDTO);
-        log.info("삭제할 이미지!!!!!!! {}", delImages);
+        if(delImages != null && !delImages.isEmpty()) {
+            uploadService.imgRemove(delImages);
+        }
         editorService.requestEditorEdit(editorDTO);
     	return ResponseEntity.ok().build();
     }
 
     @GetMapping("/list-more")
     public ResponseEntity<?> listMore(
-            @RequestParam(name = "page-num") Integer pageNum
+            @RequestParam(name = "page-num") Integer pageNum,
+            @RequestParam(name = "keyword",defaultValue = "") String keyword,
+            @RequestParam(name = "type",defaultValue = "") String type
     ){
                 Criteria cri = new Criteria();
         cri.setPageNum(pageNum);
+        cri.setKeyword(keyword);
+        cri.setType(type);
         cri.setCountPerPage(6);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);

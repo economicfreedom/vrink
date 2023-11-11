@@ -133,6 +133,7 @@ public class EditorController {
         model.addAttribute("next", asyncPageDTO.isHasNext());
         String tag = editorService.responseRandomTag();
         model.addAttribute("tag", tag);
+        model.addAttribute("pageDTO",pageDTO);
         return "user/editorList";
     }
 

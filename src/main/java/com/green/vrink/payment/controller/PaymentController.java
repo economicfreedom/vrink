@@ -36,7 +36,7 @@ public class PaymentController {
     private final HttpSession httpSession;
     private final PaymentService paymentService;
 
-    @LoginCheck
+
     @GetMapping("/payment-page")
     public String payment(@RequestParam("editor-id") Integer editorId, Model model) {
         User user = (User) session.getAttribute(Define.USER);
@@ -46,7 +46,7 @@ public class PaymentController {
         return "payment/paymentPage";
     }
 
-    @LoginCheck
+
     @GetMapping("/payment-list")
     public String paymentList(@RequestParam("payment-id") Integer paymentId, @RequestParam("user-id") Integer userId, Model model) {
         User user = (User) session.getAttribute(Define.USER);

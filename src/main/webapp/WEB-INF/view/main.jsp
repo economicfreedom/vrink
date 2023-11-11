@@ -76,28 +76,33 @@
     }
 
     .radio-custom {
-        display: inline-block;
-        border-radius: 5px;
-        box-shadow: 0 0 0 1px grey inset;
-        right: 14.5px;
+        position: absolute;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background: #fafafa;
+        left: 15px;
+        top: 47px;
     }
     .radio-custom label {
         margin-bottom: 0px;
-
-
     }
 
+    .radio-custom #daily + label{
+        border-top-left-radius: 4px;
+    }
+
+    .radio-custom #monthly + label {
+        border-top-right-radius: 4px;
+    }
     /* 숨겨진 라디오 버튼 스타일링 */
     input[type="radio"] {
         display: none;
     }
 
     input[type="radio"] + label {
-        font-size: 15px;
+        font-size: 13px;
         padding: 4px;
-        border-radius: 4px;
         cursor: pointer;
-
     }
 
     input[type="radio"]:checked + label {
@@ -139,6 +144,7 @@
                 <div class="heading4">
                     <h2>인기 작가들</h2>
                 </div>
+
                 <div class="gallery-sec">
                     <div class="row">
                         <c:forEach items="${reviewList}" var="review">
@@ -185,7 +191,7 @@
                             <td class="t-left">
                                 <a href="/board/read/${board.communityId}"
                                    style="text-decoration: none; color: black"><span>
-                                        제목</span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
+                                        </span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
                             <td>${board.nickname}</td>
                             <td>${board.createdAt}</td>
                         </tr>
@@ -198,7 +204,14 @@
             <div class="col-sm-12">
                 <div class="heading1">
                     <h2>버튜버 인기 순위</h2>
-                    <span class="more-link radio-custom"><input type="radio" id="daily" name="period" checked><label for="daily">일간</label> <input type="radio" id="weekly" name="period"><label for="weekly">주간</label> <input type="radio" id="monthly" name="period"><label for="monthly">월간</label> </span>
+                    <span class="radio-custom">
+                        <input type="radio" id="daily" name="period" checked>
+                        <label for="daily">일간</label>
+                        <input type="radio" id="weekly" name="period">
+                        <label for="weekly">주간</label>
+                        <input type="radio" id="monthly" name="period">
+                        <label for="monthly">월간</label>
+                    </span>
                 </div>
                 <table class="w-full t-center daily">
                     <colgroup>
@@ -220,7 +233,7 @@
                         <tr class="youtb-list-tr">
                             <td>${step.count}</td>
                             <td>
-                                <div><a href="${daily.link}"><img src="${daily.thumbnail}" width="50%"></a></div></td>
+                                <div><a href="${daily.link}" target="_blank"><img src="${daily.thumbnail}" width="50%"></a></div></td>
                             <td class="t-left"><a href="${daily.link}" target="_blank">${daily.channel}</a></td>
                             <td>${daily.subscribe}</td>
                         </tr>
@@ -247,7 +260,7 @@
                         <tr class="youtb-list-tr">
                             <td>${step.count}</td>
                             <td>
-                                <div><a href="${weekly.link}"><img src="${weekly.thumbnail}" width="50%"></a></div></td>
+                                <div><a href="${weekly.link}" target="_blank"><img src="${weekly.thumbnail}" width="50%"></a></div></td>
                             <td class="t-left"><a href="${weekly.link}" target="_blank">${weekly.channel}</a></td>
                             <td>${weekly.subscribe}</td>
                         </tr>
@@ -274,7 +287,7 @@
                         <tr class="youtb-list-tr">
                             <td>${step.count}</td>
                             <td>
-                                <div><a href="${monthly.link}"><img src="${monthly.thumbnail}" width="50%"></a></div></td>
+                                <div><a href="${monthly.link}" target="_blank"><img src="${monthly.thumbnail}" width="50%"></a></div></td>
                             <td class="t-left"><a href="${monthly.link}" target="_blank">${monthly.channel}</a></td>
                             <td>${monthly.subscribe}</td>
                         </tr>

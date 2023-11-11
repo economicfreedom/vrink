@@ -88,7 +88,9 @@
         white-space: nowrap;
     }
 
-
+    .tagify__input {
+        display: none;
+    }
 </style>
 <section class="block">
     <div class="container">
@@ -113,6 +115,9 @@
                     크게 보러 가기</a>
                     </div>
                     </c:if>
+                <c:if test="${editorDetail.content == null}">
+                    <div class="block t-center">아직 자기소개를 작성하지 않았습니다</div>
+                </c:if>
             </div>
             <div class="col-sm-3">
                 <div class="t-center" style="border: 1px solid #343434;">

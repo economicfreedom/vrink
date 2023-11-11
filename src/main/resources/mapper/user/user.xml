@@ -76,6 +76,9 @@
               ON e.editor_id = et.editor_id
               WHERE et.tag LIKE CONCAT('%',#{keyword},'%')
           </if>
+          <if test="type == 'nickname'">
+              WHERE u.nickname LIKE CONCAT('%',#{keyword},'%')
+          </if>
           GROUP BY e.editor_id, profile_image, introduce, nickname
           LIMIT #{offset},#{countPerPage}
 
@@ -342,7 +345,7 @@
     </delete>
 
     <select id="getRandomTag" resultType="com.green.vrink.user.dto.TagDTO">
-        SELECT * FROm editor_tag ORDER BY RAND() limit 7;
+        SELECT DISTINCT(tag) FROM editor_tag ORDER BY RAND() limit 7;
     </select>
 </mapper>
 

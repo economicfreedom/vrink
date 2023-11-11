@@ -57,11 +57,9 @@
                  LEFT JOIN user u
                            ON u.user_id = q.user_id
         WHERE q.user_id = #{userId}
-        ORDER BY created_at DESC
+        ORDER BY created_at DESC, q_id DESC
             LIMIT #{cri.offset}
                , #{cri.countPerPage}
-        ORDER BY q_id DESC
-
 
     </select>
     <select id="findByAnswerByQuestionId" resultType="com.green.vrink.qna.dto.AnswerDTO">

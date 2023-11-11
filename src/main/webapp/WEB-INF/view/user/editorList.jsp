@@ -18,15 +18,23 @@
 
         if ((scrollHeight - scrollPosition) / scrollHeight < 0.10 && hasNext) {
             console.log("스크롤이 페이지의 90% 이상 도달했습니다!");
-            fetchListMore();
+            fetchListMore('${pageDTO.cri.type}','${pageDTO.cri.keyword}');
 
 
         }
     }
 
-    function fetchListMore() {
+    function fetchListMore(type, keyword) {
         pageNum++;
-        const url = `/editor/list-more?page-num=` + pageNum;
+        if (type == null) {
+            type = '';
+        }
+
+        if (keyword == null) {
+            keyword = '';
+        }
+
+        const url = `/editor/list-more?page-num=` + pageNum + "&type=" + type + "&keyword=" + keyword;
         var html = '';
         fetch(url, {
             method: 'GET',
@@ -102,6 +110,7 @@
     }
     .customLook-list .tagify__tag > div {
         border-radius: 25px;
+        cursor: pointer;
     }
 
     .customLook-list .tagify__tag__removeBtn {
@@ -159,10 +168,10 @@
                     <div class="col-sm-12">
                         <input type="text" name="basic" class="customLook-list" value="${tag}">
                         <select id="type" name="type">
-                            <option value="nickname">닉네임</option>
-                            <option value="tag">태그</option>
+                            <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
+                            <option value="tag" ${pageDTO.cri.type == 'tag' ? 'selected' : ''}>태그</option>
                         </select>
-                        <input type="text" id="keyword" placeholder="검색어를 입력하세요.">
+                        <input type="text" id="keyword" placeholder="검색어를 입력하세요." value="${pageDTO.cri.keyword}">
                         <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
                              id="search">
                     </div>

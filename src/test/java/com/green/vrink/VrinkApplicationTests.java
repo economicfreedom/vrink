@@ -1,6 +1,8 @@
 package com.green.vrink;
 
 
+import com.green.vrink.main.RankDTO;
+import com.green.vrink.main.repository.interfaces.MainRepository;
 import org.apache.tomcat.jni.Time;
 
 import org.jsoup.Jsoup;
@@ -9,8 +11,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
-import org.openqa.selenium.WebDriver;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 
@@ -18,9 +20,7 @@ import org.springframework.context.annotation.Bean;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -33,7 +33,6 @@ class VrinkApplicationTests {
     private static final String JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
     private static final String SK = "asdfdd";
 
-    private WebDriver driver;
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver";
     public static String WEB_DRIVER_PATH = "C:\\PSG\\tools\\chromedriver.exe";
 
