@@ -38,6 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 "/board/del",
                 "/board/update",
                 "/review/**",
+                "/report/**"
         };
 
         registry.addInterceptor(authInterceptor)
