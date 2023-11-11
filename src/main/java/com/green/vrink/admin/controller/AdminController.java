@@ -202,13 +202,19 @@ public class AdminController {
     public String suggest(@ModelAttribute("paging") PagingDto paging,
                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                           @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                          @RequestParam(value = "classification", required = false, defaultValue = "전체")
+                              String classification,
                           Model model) {
 
         log.info("의뢰게시판 목록 컨트롤러 호출");
 
         paging.setRecordSize(10);
 
+        if (classification.equals("전체")) paging.setClassification("3");
+        else paging.setClassification(classification);
+
         if (reset.equals("1")) {
+            session.removeAttribute("uClassification");
             session.removeAttribute("uSearchType");
             session.removeAttribute("uKeyword");
             session.removeAttribute("nowPage");
@@ -224,7 +230,7 @@ public class AdminController {
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
 
-        int count = adminService.countAllSuggest();
+        int count = adminService.countAllSuggest(paging);
         pagination.setArticleTotalCount(count);
 
         List<AdminSuggestDto> adminSuggestDtoList = adminService.getAllSuggestListByPaging(paging);
@@ -261,6 +267,7 @@ public class AdminController {
                 .content(suggest.getContent())
                 .createdAt(suggest.getCreatedAt())
                 .nickname(nickname)
+                .state(suggest.getState())
                 .count(0)
                 .build();
 

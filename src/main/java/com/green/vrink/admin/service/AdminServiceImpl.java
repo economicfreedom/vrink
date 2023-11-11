@@ -102,8 +102,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminSuggestDto> getAllSuggestList() {
-        return adminRepository.getAllSuggestList();
+    public List<AdminSuggestDto> getAllSuggestList(PagingDto paging) {
+        return adminRepository.getAllSuggestList(paging);
     }
 
     @Override
@@ -117,8 +117,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer countAllSuggest() {
-        return adminRepository.countAllSuggest();
+    public Integer countAllSuggest(PagingDto paging) {
+        return adminRepository.countAllSuggest(paging);
     }
 
     @Override

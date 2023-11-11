@@ -33,10 +33,10 @@ public interface AdminService {
     FreeBoardDTO getFreeboardById(Integer id);
 
     Integer countAllFreeboard();
-    List<AdminSuggestDto> getAllSuggestList();
+    List<AdminSuggestDto> getAllSuggestList(PagingDto paging);
     List<AdminSuggestDto> getAllSuggestListByPaging(PagingDto paging);
     AdminSuggestDto getSuggestById(Integer id);
-    Integer countAllSuggest();
+    Integer countAllSuggest(PagingDto paging);
     List<AdminAdDto> getAllAdList(PagingDto paging);
 
     List<AdminAdDto> getAllAdListByType(String classification);

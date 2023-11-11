@@ -99,10 +99,11 @@
     <select id="countAllSuggest" resultType="integer">
         SELECT count(*)
         FROM suggest
+        WHERE (state = #{classification} OR #{classification} NOT IN (0, 1))
     </select>
 
     <select id="getSuggestById" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
@@ -113,21 +114,23 @@
     </select>
 
     <select id="getAllSuggestList" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+        WHERE (s.state = #{classification} OR #{classification} NOT IN (0, 1))
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
     </select>
 
     <select id="getAllSuggestListByPaging" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+        WHERE (s.state = #{classification} OR #{classification} NOT IN (0, 1))
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
             LIMIT #{offset}, #{recordSize}

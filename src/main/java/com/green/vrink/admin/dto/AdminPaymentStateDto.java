@@ -10,6 +10,6 @@ import lombok.*;
 public class AdminPaymentStateDto {
 
     private String state;
-    private String created_at;
+    private String createdAt;
 
 }

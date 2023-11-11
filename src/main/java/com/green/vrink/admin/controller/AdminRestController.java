@@ -310,16 +310,20 @@ public class AdminRestController {
     public ClassificationDto suggestClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
             required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
             required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+            required = false, defaultValue = "") String keyword, @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
 
         log.info("의뢰게시판 관리 목록 레스트 컨트롤러 실행");
 
         paging.setRecordSize(20);
 
+        if (classification.equals("전체")) paging.setClassification("3");
+        else paging.setClassification(classification);
+
         paging.setPage(page);
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
 
+        session.setAttribute("uClassification", classification);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
         session.setAttribute("nowPage", page);
@@ -327,7 +331,7 @@ public class AdminRestController {
         Pagination pagination = new Pagination();
         pagination.setPaging(paging);
         ClassificationDto classificationDto = new ClassificationDto();
-        pagination.setArticleTotalCount(adminService.countAllSuggest());
+        pagination.setArticleTotalCount(adminService.countAllSuggest(paging));
 
         List<AdminSuggestDto> suggestDtoList = adminService.getAllSuggestListByPaging(paging);
 
@@ -336,7 +340,7 @@ public class AdminRestController {
             List<AdminSuggestDto> lastAdminSuggestDtoList = new ArrayList<>();
             List<AdminSuggestDto> finalAdminSuggestDtoList = new ArrayList<>();
 
-            suggestDtoList = adminService.getAllSuggestList();
+            suggestDtoList = adminService.getAllSuggestList(paging);
 
             if (searchType.equals("아이디")) {
                 for (AdminSuggestDto suggestDto : suggestDtoList) {
@@ -1216,7 +1220,7 @@ public class AdminRestController {
     @Transactional
     @PostMapping("/change-ad-period")
     public ResponseEntity<Integer> changeAdPeriod(@RequestParam("adId") Integer adId, @RequestParam("adPeriod") Integer adPeriod) {
-        
+
         log.info("배너 기간 변경 레스트 컨트롤러 실행");
 
         log.info("adperi : " + adPeriod);

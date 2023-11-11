@@ -333,6 +333,7 @@
 <script>
 
     function changeApply(applyId, accepted, number, userId) {
+        show_spinner();
 
         $.ajax({
             type   : "POST",
@@ -345,14 +346,18 @@
             },
             success: function (data) {
                 if (data === 200) {
+                    hide_spinner();
                     window.location.href = "/admin/apply-accept";
                 } else if (data === 400) {
+                    hide_spinner();
                     alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
                 } else {
+                    hide_spinner();
                     alert('에러 읍니다.');
                 }
             }
             , error: function () {
+                hide_spinner();
                 alert('서버 에러입니다.');
             }
         });
@@ -525,5 +530,55 @@
     }
 
 </script>
+
+<%--로딩 스피너--%>
+
+<style>
+    .layer-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        margin: -30px 0 0 -30px;
+    }
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 8px solid #f3f3f3; /* Light grey */
+        border-top: 8px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spinner 2s linear infinite;
+    }
+    @keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<script>
+    function show_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'block';
+    }
+    function hide_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'none';
+    }
+</script>
+<div class="layer-popup" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
+<%--로딩 스피너--%>
 
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp" %>

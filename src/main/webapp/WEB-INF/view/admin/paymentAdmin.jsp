@@ -19,11 +19,13 @@
     .t-head {
         background-color: #ececec;
     }
+
     .table td {
         padding: 1px !important;
         vertical-align: baseline !important;
         padding-left: 8px !important;
     }
+
     .card-header {
         padding-left: 23px;
     }
@@ -41,7 +43,7 @@
     }
 
     td:nth-child(5) {
-        width: 20%;
+        width: 15%;
     }
 
     td:last-child {
@@ -238,45 +240,58 @@
 <div class="card m-4">
     <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 결제 목록</h3></div>
 
-        <ul class="tab--adminPayment">
-            <c:choose>
-                <c:when test="${uClassification == '전체' or empty uClassification}">
-                    <li class="active" data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="payment_done"><a href="#">결제 완료</a></li>
-                    <li data-classification="trade_done"><a href="#">거래 완료</a></li>
-                    <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
-                    <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
-                </c:when>
-                <c:when test="${uClassification == 'payment_done'}">
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li class="active" data-classification="payment_done"><a href="#">결제 완료</a></li>
-                    <li data-classification="trade_done"><a href="#">거래 완료</a></li>
-                    <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
-                    <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
-                </c:when>
-                <c:when test="${uClassification == 'trade_done'}">
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="payment_done"><a href="#">결제 완료</a></li>
-                    <li class="active" data-classification="trade_done"><a href="#">거래 완료</a></li>
-                    <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
-                    <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
-                </c:when>
-                <c:when test="${uClassification == 'c_cancel'}">
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="payment_done"><a href="#">결제 완료</a></li>
-                    <li data-classification="trade_done"><a href="#">거래 완료</a></li>
-                    <li class="active" data-classification="c_cancel"><a href="#">구매자 취소</a></li>
-                    <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li data-classification="전체"><a href="#">전체</a></li>
-                    <li data-classification="payment_done"><a href="#">결제 완료</a></li>
-                    <li data-classification="trade_done"><a href="#">거래 완료</a></li>
-                    <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
-                    <li class="active" data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
+    <ul class="tab--adminPayment">
+        <c:choose>
+            <c:when test="${uClassification == '전체' or empty uClassification}">
+                <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:when>
+            <c:when test="${uClassification == 'payment_done'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:when>
+            <c:when test="${uClassification == 'hand_over'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li class="active" data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:when>
+            <c:when test="${uClassification == 'trade_done'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li class="active" data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:when>
+            <c:when test="${uClassification == 'c_cancel'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li class="active" data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="payment_done"><a href="#">결제 완료</a></li>
+                <li data-classification="hand_over"><a href="#">인계 완료</a></li>
+                <li data-classification="trade_done"><a href="#">거래 완료</a></li>
+                <li data-classification="c_cancel"><a href="#">구매자 취소</a></li>
+                <li class="active" data-classification="admin_cancel"><a href="#">관리자 취소</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 
     <form style="width: 95%;" action="#" name="pageForm">
         <div class="mx-4 mb-2">
@@ -377,10 +392,10 @@
                     onClick="location.href='/admin/payment-admin?reset=1'">검색초기화
             </button>
         </div>
-            <table class="datatable-table table">
-                <tbody id="adminPayment-list-container">
-                </tbody>
-            </table>
+        <table class="datatable-table table">
+            <tbody id="adminPayment-list-container">
+            </tbody>
+        </table>
         <div class="paging">
             <div class="text-center clearfix">
                 <ul class="pagination" id="pagination--a">
@@ -420,10 +435,10 @@
             type   : "POST",
             url    : "/admin/change-payment",
             data   : {
-                "paymentId" : paymentId,
-                "accepted": accepted,
-                "number"  : number,
-                "userId" : userId
+                "paymentId": paymentId,
+                "accepted" : accepted,
+                "number"   : number,
+                "userId"   : userId
             },
             success: function (data) {
                 if (data === 200) {
@@ -443,207 +458,207 @@
 
     $(document).ready(function () {
 
-            setupPaginationEventHandlers();
+        setupPaginationEventHandlers();
 
-            loadAdminPayments(`${uClassification}`,
-                `${pagination.paging.page}`, `${uSearchType}`,
-                `${uKeyword}`);
+        loadAdminPayments(`${uClassification}`,
+            `${pagination.paging.page}`, `${uSearchType}`,
+            `${uKeyword}`);
 
-            let classification2 = `${uClassification}`;
+        let classification2 = `${uClassification}`;
 
-            $('#searchButton').on(
-                'click',
-                function () {
-                    console.log(classification2);
-                    loadAdminPayments(classification2, undefined, $(
-                        '#searchType').val(), $('#keyword')
-                        .val());
-                });
-
-            $('input[type="text"]').keydown(function (key) {
-                if (key.keyCode === 13) {
-                    key.preventDefault();
-                }
+        $('#searchButton').on(
+            'click',
+            function () {
+                loadAdminPayments(classification2, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
             });
 
-            $("#keyword").on("keyup", function (key) {
-                if (key.keyCode == 13) {
-                    console.log(classification2);
-                    loadAdminPayments(classification2, undefined, $(
-                        '#searchType').val(), $('#keyword')
-                        .val());
-                }
-            });
-
-            $('.tab--adminPayment li').click(
-                function () {
-                    classification2 = $(this).data(
-                        'classification');
-                    console.log(classification2);
-                    $('.tab--adminPayment li').removeClass('active');
-                    $(this).addClass('active');
-
-                    loadAdminPayments(classification2, undefined, $(
-                        '#searchType').val(), $('#keyword')
-                        .val());
-                });
-
-            function setupPaginationEventHandlers() {
-                $(document).on('click', '.pagination li a',
-                    function (e) {
-                        e.preventDefault();
-                        const value = $(this).data('page');
-                        // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
-                        loadAdminPayments($('.tab--adminPayment li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
-                    });
+        $('input[type="text"]').keydown(function (key) {
+            if (key.keyCode === 13) {
+                key.preventDefault();
             }
-
-
-            function loadAdminPayments(classification, page, searchType, keyword) {
-                $.ajax({
-                    type   : 'GET',
-                    url    : '/admin/payment-admin/classification',
-                    data   : {
-                        classification: classification,
-                        page          : page,
-                        searchType    : searchType,
-                        keyword       : keyword
-                    }, // 페이지 번호와 카테고리 정보를 전달합니다.
-                    success: function (data) {
-
-                        var adminPaymentList = data.adminPaymentList;
-                        var pagination = data.pagination;
-                        var adminPaymentListHTML = '<tr class="t-head">'
-                            + '<td><h4>진행상황</h4></td>'
-                            + '<td><h4>구매자</h4></td>'
-                            + '<td><h4>판매자</h4></td>'
-                            + '<td><h4>내용</h4></td>'
-                            + '<td><h4>요구사항</h4></td>'
-                            + '<td><h4>총 가격</h4></td>'
-                            + '<td><h4>imp_uid</h4></td>'
-                            + '<td><h4>merchant_uid</h4></td>'
-                            + '<td><h4>결제날짜</h4></td>'
-                            + '</tr>';
-                        for (var i = 0; i < adminPaymentList.length; i++) {
-                            var adminPayment = adminPaymentList[i];
-                            let button;
-
-                            if (adminPayment.state === 'payment_done') {
-                                adminPayment.state = '<text style="color: blue">결제 완료</text>';
-                                button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="cancel(' + adminPayment.editorId + ',' + adminPayment.paymentId + ',' + adminPayment.totalPrice + ')">취소</button></td>'
-                            } else if (adminPayment.state === 'trade_done') {
-                                adminPayment.state = '<text style="color: cadetblue">거래 완료 <i class="fa-solid fa-circle-check"></text>';
-                                button = '</td>';
-                            } else if (adminPayment.state === 'c_cancel') {
-                                adminPayment.state = '<text style="color: lightgray">구매자 취소 <i class="fa-solid fa-ban"></i></text>';
-                                button = '</td>';
-                            } else {
-                                adminPayment.state = '<text style="color: #ff6363">관리자 취소 <i class="fa-solid fa-screwdriver-wrench"></i></i></text>';
-                                button = '</td>';
-                            }
-                            let regData = adminPayment.createdAt.substring(0, 20);
-
-                            adminPayment.totalPrice = (adminPayment.totalPrice).toLocaleString('ko-KR') + "원";
-                            if(adminPayment.request === null) adminPayment.request = "없음";
-                            else if(adminPayment.request === "") adminPayment.request = "없음";
-
-                            adminPaymentListHTML += '<tr>'
-                                + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
-                                + adminPayment.state
-                                + button
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '"><text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> '
-                                + adminPayment.customerNickname
-                                + '</text></a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '"><text style="color: red"><i class="fa-solid fa-coins"></i> '
-                                + adminPayment.editorNickname
-                                + '</text></a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '">'
-                                + adminPayment.name
-                                + '</a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '">'
-                                + adminPayment.request
-                                + '</a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '">'
-                                + adminPayment.totalPrice
-                                + '</a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '">'
-                                + adminPayment.impUid
-                                + '</a></td>'
-                                + '<td><a href="/admin/payment-admin/detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + adminPayment.paymentId
-                                + '">'
-                                + adminPayment.merchantUid
-                                + '</a></td>'
-                                + '<td>'
-                                + regData
-                                + '</td>'
-                                + '</tr>';
-                        }
-                        var paginationHTML = '';
-                        if (pagination.prev) {
-                            paginationHTML += '<li class="page-item"><a class="page-list" href="#" data-page="'
-                                + (pagination.beginPage - 1)
-                                + '">Prev</a></li>';
-                        }
-                        for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
-                            paginationHTML += '<li class="'
-                                + (pagination.paging.page === num ? 'page-item active mx-1'
-                                    : 'page-item mx-1')
-                                + '"><a class="page-list" href="#" data-page="' + num + '">'
-                                + num + '</a></li>';
-                        }
-                        if (pagination.next) {
-                            paginationHTML += '<li class="page-item"><a class="page-list" href="#" data-page="'
-                                + (pagination.endPage + 1)
-                                + '">Next</a></li>';
-                        }
-                        $('#adminPayment-list-container').html(
-                            adminPaymentListHTML);
-                        $('#pagination--a').html(
-                            paginationHTML);
-                    },
-                    error  : function (error) {
-                        console.error('오류 발생:', error);
-                    }
-                });
-            }
-
-            $('#pagination').on('click', 'a', function (e) {
-                e.preventDefault();
-                console.log($(this));
-                const value = $(this).data('page');
-                console.log(value);
-                document.pageForm.page.value = value;
-                document.pageForm.submit();
-            });
-
         });
+
+        $("#keyword").on("keyup", function (key) {
+            if (key.keyCode == 13) {
+                loadAdminPayments(classification2, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
+            }
+        });
+
+        $('.tab--adminPayment li').click(
+            function () {
+                classification2 = $(this).data(
+                    'classification');
+                $('.tab--adminPayment li').removeClass('active');
+                $(this).addClass('active');
+
+                loadAdminPayments(classification2, undefined, $(
+                    '#searchType').val(), $('#keyword')
+                    .val());
+            });
+
+        function setupPaginationEventHandlers() {
+            $(document).on('click', '.pagination li a',
+                function (e) {
+                    e.preventDefault();
+                    const value = $(this).data('page');
+                    // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
+                    loadAdminPayments($('.tab--adminPayment li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
+                });
+        }
+
+
+        function loadAdminPayments(classification, page, searchType, keyword) {
+            $.ajax({
+                type   : 'GET',
+                url    : '/admin/payment-admin/classification',
+                data   : {
+                    classification: classification,
+                    page          : page,
+                    searchType    : searchType,
+                    keyword       : keyword
+                }, // 페이지 번호와 카테고리 정보를 전달합니다.
+                success: function (data) {
+
+                    var adminPaymentList = data.adminPaymentList;
+                    var pagination = data.pagination;
+                    var adminPaymentListHTML = '<tr class="t-head">'
+                        + '<td><h4>진행상황</h4></td>'
+                        + '<td><h4>구매자</h4></td>'
+                        + '<td><h4>판매자</h4></td>'
+                        + '<td><h4>내용</h4></td>'
+                        + '<td><h4>요구사항</h4></td>'
+                        + '<td><h4>총 가격</h4></td>'
+                        + '<td><h4>imp_uid</h4></td>'
+                        + '<td><h4>merchant_uid</h4></td>'
+                        + '<td><h4>결제날짜</h4></td>'
+                        + '</tr>';
+                    for (var i = 0; i < adminPaymentList.length; i++) {
+                        var adminPayment = adminPaymentList[i];
+                        let button;
+
+                        if (adminPayment.state === 'payment_done') {
+                            adminPayment.state = '<text style="color: blue">결제 완료 <i class="fa-regular fa-credit-card"></i></text>';
+                            button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="cancel(' + adminPayment.editorId + ',' + adminPayment.paymentId + ',' + adminPayment.totalPrice + ')">취소</button></td>'
+                        } else if (adminPayment.state === 'hand_over') {
+                            adminPayment.state = '<text style="color: red">인계 완료 <i class="fa-solid fa-right-left"></i></text>';
+                            button = '</td>';
+                        } else if (adminPayment.state === 'trade_done') {
+                            adminPayment.state = '<text style="color: cadetblue">거래 완료 <i class="fa-solid fa-circle-check"></i></text>';
+                            button = '</td>';
+                        } else if (adminPayment.state === 'c_cancel') {
+                            adminPayment.state = '<text style="color: lightskyblue">구매자 취소 <i class="fa-solid fa-ban"></i></text>';
+                            button = '</td>';
+                        } else {
+                            adminPayment.state = '<text style="color: #7c7a5b">관리자 취소 <i class="fa-solid fa-screwdriver-wrench"></i></text>';
+                            button = '</td>';
+                        }
+                        let regData = adminPayment.createdAt.substring(0, 20);
+
+                        adminPayment.totalPrice = (adminPayment.totalPrice).toLocaleString('ko-KR') + "원";
+                        if (adminPayment.request === null) adminPayment.request = "없음";
+                        else if (adminPayment.request === "") adminPayment.request = "없음";
+
+                        adminPaymentListHTML += '<tr>'
+                            + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
+                            + adminPayment.state
+                            + button
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '"><text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> '
+                            + adminPayment.customerNickname
+                            + '</text></a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '"><text style="color: red"><i class="fa-solid fa-coins"></i> '
+                            + adminPayment.editorNickname
+                            + '</text></a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '">'
+                            + adminPayment.name
+                            + '</a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '">'
+                            + adminPayment.request
+                            + '</a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '">'
+                            + adminPayment.totalPrice
+                            + '</a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '">'
+                            + adminPayment.impUid
+                            + '</a></td>'
+                            + '<td><a href="/admin/payment-admin/detail?page='
+                            + pagination.paging.page
+                            + '&id='
+                            + adminPayment.paymentId
+                            + '">'
+                            + adminPayment.merchantUid
+                            + '</a></td>'
+                            + '<td>'
+                            + regData
+                            + '</td>'
+                            + '</tr>';
+                    }
+                    var paginationHTML = '';
+                    if (pagination.prev) {
+                        paginationHTML += '<li class="page-item"><a class="page-list" href="#" data-page="'
+                            + (pagination.beginPage - 1)
+                            + '">Prev</a></li>';
+                    }
+                    for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
+                        paginationHTML += '<li class="'
+                            + (pagination.paging.page === num ? 'page-item active mx-1'
+                                : 'page-item mx-1')
+                            + '"><a class="page-list" href="#" data-page="' + num + '">'
+                            + num + '</a></li>';
+                    }
+                    if (pagination.next) {
+                        paginationHTML += '<li class="page-item"><a class="page-list" href="#" data-page="'
+                            + (pagination.endPage + 1)
+                            + '">Next</a></li>';
+                    }
+                    $('#adminPayment-list-container').html(
+                        adminPaymentListHTML);
+                    $('#pagination--a').html(
+                        paginationHTML);
+                },
+                error  : function (error) {
+                    console.error('오류 발생:', error);
+                }
+            });
+        }
+
+        $('#pagination').on('click', 'a', function (e) {
+            e.preventDefault();
+            console.log($(this));
+            const value = $(this).data('page');
+            console.log(value);
+            document.pageForm.page.value = value;
+            document.pageForm.submit();
+        });
+
+    });
 
     function selectItem(selectedItem) {
         let dropdownButton = document.querySelector('.dropdown-btn');
@@ -662,37 +677,48 @@
 
 
     function cancel(editorId, paymentId, totalPrice) {
-        show_spinner()
-        fetch('/payment-state/editor-cancel', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                editorId: editorId,
-                paymentId: paymentId,
-                editorRecognize: 3,
-                customerRecognize: 3,
-                point: totalPrice,
-                state: 'admin_cancel'
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                } else {
+        Swal.fire({
+            title             : "정말 취소처리 하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                show_spinner();
+                fetch('/payment-state/editor-cancel', {
+                    method : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body   : JSON.stringify({
+                        editorId         : editorId,
+                        paymentId        : paymentId,
+                        editorRecognize  : 3,
+                        customerRecognize: 3,
+                        point            : totalPrice,
+                        state            : 'admin_cancel'
+                    })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                        } else {
 
-                    fetch('/payment/cancel/' + paymentId, {
-                        method: 'GET',
-                    }).then(response => response.json())
-                        .then(data => {
-                            refund(data.impUid, data.totalPrice)
-                        })
+                            fetch('/payment/cancel/' + paymentId, {
+                                method: 'GET',
+                            }).then(response => response.json())
+                                .then(data => {
+                                    refund(data.impUid, data.totalPrice)
+                                })
 
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function refund(impUid, totalprice) {
@@ -701,27 +727,27 @@
         }).then(response => response.json())
             .then(data => {
                 fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken', {
-                    method: 'POST',
+                    method : 'POST',
                     headers: {              // Http header
                         "Content-Type": 'application/json',
                     },
-                    body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-                        imp_key: data.apiKey,
+                    body   : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                        imp_key   : data.apiKey,
                         imp_secret: data.apiSecret
                     })
                 }).then(response => response.json())
                     .then(data => {
                         // 결제 취소
                         fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel', {
-                            method: 'POST',
+                            method : 'POST',
                             headers: {              // Http header
-                                "Content-Type": 'application/json',
+                                "Content-Type" : 'application/json',
                                 "Authorization": data.response.access_token
                             },
-                            body: JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-                                reason: '환불', // 가맹점 클라이언트로부터 받은 환불사유
+                            body   : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+                                reason : '환불', // 가맹점 클라이언트로부터 받은 환불사유
                                 imp_uid: impUid, // imp_uid를 환불 `unique key`로 입력
-                                amount: totalprice // 가맹점 클라이언트로부터 받은 환불금액
+                                amount : totalprice // 가맹점 클라이언트로부터 받은 환불금액
                             })
                         }).then(response => response.json())
                             .then(data => {

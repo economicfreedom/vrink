@@ -11,6 +11,14 @@
         margin-top: 20px;
     }
 
+    p {
+        font-size: 14px;
+    }
+
+    a {
+        font-size: 14px;
+    }
+
     .tab--user li {
         margin-right: 8px !important;
         width: 112px !important;

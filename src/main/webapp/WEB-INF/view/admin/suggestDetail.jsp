@@ -98,7 +98,7 @@
 </script>
 
 <div class="card m-4">
-    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 의뢰게시판 상세</h3></div>
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 의뢰게시판 상세 ${suggest.state == 1 ? '<text style="color: grey; font-size: 25px;">[의뢰 완료 <i class="fa-solid fa-circle-check"></i>]</text>' : '<text style="color: grey; font-size: 25px;">[의뢰 대기]</text>'}</h3></div>
     <%--    <div class="container" style="margin: 50px auto;border: 1px solid black;">--%>
     <div class="row" style="margin: 10px;">
         <div class="title">

@@ -21,7 +21,12 @@
         vertical-align: baseline !important;
         padding-left: 8px !important;
     }
-
+    .classification {
+        display: inline-block;
+        font-weight: bold;
+        padding: 8px 10px;
+        padding-left: 0 !important;
+    }
     .card-header {
         padding-left: 23px;
     }
@@ -34,11 +39,11 @@
         padding: 1px;
     }
 
-    td:nth-child(3) {
+    td:nth-child(4) {
         width: 20%;
     }
 
-    td:nth-child(4) {
+    td:nth-child(5) {
         width: 15%;
     }
 
@@ -73,6 +78,11 @@
         padding: 5px 0 20px 22px;
         margin: 30px;
         border-bottom: 1px solid #535353;
+    }
+
+    .tab--suggest li {
+        margin-right: 8px !important;
+        width: 112px !important;
     }
 
     .tab--suggest {
@@ -138,6 +148,7 @@
     .tab--suggest li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
+        border-radius: 10px;
     }
 
     .tab--suggest li.active a {
@@ -201,8 +212,28 @@
 
     <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 의뢰게시판 관리</h3></div>
 
+    <ul class="tab--suggest">
+        <c:choose>
+            <c:when test="${uClassification == '전체' or empty uClassification}">
+                <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="0"><a href="#">의뢰 대기</a></li>
+                <li data-classification="1"><a href="#">의뢰 완료</a></li>
+            </c:when>
+            <c:when test="${uClassification == '0'}">
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li class="active" data-classification="0"><a href="#">의뢰 대기</a></li>
+                <li data-classification="1"><a href="#">의뢰 완료</a></li>
+            </c:when>
+            <c:otherwise>
+                <li data-classification="전체"><a href="#">전체</a></li>
+                <li data-classification="0"><a href="#">의뢰 대기</a></li>
+                <li class="active" data-classification="1"><a href="#">의뢰 완료</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+
     <form style="width: 96%;" action="#" name="pageForm">
-        <div class="mx-4 mb-2 mt-3">
+        <div class="mx-4 mb-2">
             <select name="searchType"
                     id="searchType"
                     class="datatable-selector"
@@ -286,13 +317,15 @@
 
             setupPaginationEventHandlers();
 
-            loadsuggests(`${pagination.paging.page}`, `${uSearchType}`,
+            loadsuggests(`${uClassification}`, `${pagination.paging.page}`, `${uSearchType}`,
                 `${uKeyword}`);
+
+            let classification2 = `${uClassification}`;
 
             $('#searchButton').on(
                 'click',
                 function () {
-                    loadsuggests(undefined, $(
+                    loadsuggests(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -306,7 +339,7 @@
 
             $("#keyword").on("keyup", function (key) {
                 if (key.keyCode == 13) {
-                    loadsuggests(undefined, $(
+                    loadsuggests(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 }
@@ -314,10 +347,13 @@
 
             $('.tab--suggest li').click(
                 function () {
+                    classification2 = $(this).data(
+                        'classification');
+
                     $('.tab--suggest li').removeClass('active');
                     $(this).addClass('active');
 
-                    loadsuggests(undefined, $(
+                    loadsuggests(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
                         .val());
                 });
@@ -328,16 +364,17 @@
                         e.preventDefault();
                         const value = $(this).data('page');
                         // 페이지네이션 버튼 클릭 시 서버로 해당 페이지 번호와 카테고리를 전달합니다.
-                        loadsuggests(value, $('#searchType').val(), $('#keyword').val());
+                        loadsuggests($('.tab--suggest li.active').data('classification'), value, $('#searchType').val(), $('#keyword').val());
                     });
             }
 
 
-            function loadsuggests(page, searchType, keyword) {
+            function loadsuggests(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
                     url    : '/admin/suggest/classification',
                     data   : {
+                        classification: classification,
                         page      : page,
                         searchType: searchType,
                         keyword   : keyword
@@ -350,6 +387,7 @@
                         var pagination = data.pagination;
                         var suggestListHTML = '<tr class="t-head">'
                             + '<td><h4>글번호</h4></td>'
+                            + '<td><h4>상태</h4></td>'
                             + '<td><h4>아이디</h4></td>'
                             + '<td><h4>제목</h4></td>'
                             + '<td><h4>내용</h4></td>'
@@ -357,6 +395,9 @@
                             + '</tr>';
                         for (var i = 0; i < suggestList.length; i++) {
                             var suggest = suggestList[i];
+
+                            if(suggest.state === 1) suggest.state = '<text style="color: lightgray">의뢰 완료 <i class="fa-solid fa-circle-check"></i></text>';
+                            else suggest.state = '의뢰 대기';
 
                             let regData = suggest.createdAt.substring(0, 16);
 
@@ -370,6 +411,16 @@
                                 + suggest.nickname
                                 + '">'
                                 + suggest.suggestId
+                                + '</a></td>'
+                                + '<td><p class="classification" style="min-width: 70px;">'
+                                + '<a href="/admin/suggest-detail?page='
+                                + pagination.paging.page
+                                + '&id='
+                                + suggest.suggestId
+                                + '&nickname='
+                                + suggest.nickname
+                                + '">'
+                                + suggest.state
                                 + '</a></td>'
                                 + '<td>'
                                 + '<a href="/admin/suggest-detail?page='
@@ -417,7 +468,7 @@
                         }
                         for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                             paginationHTML += '<li class="'
-                                + (pagination.paging.page == num ? 'page-item active mx-1'
+                                + (pagination.paging.page === num ? 'page-item active mx-1'
                                     : 'page-item mx-1')
                                 + '"><a class="page-list" href="#" data-page="' + num + '">'
                                 + num + '</a></li>';

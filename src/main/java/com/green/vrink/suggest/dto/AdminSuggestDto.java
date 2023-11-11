@@ -14,5 +14,6 @@ public class AdminSuggestDto {
     private String content;
     private String createdAt;
     private String nickname;
+    private int state;
     private int count;
 }
