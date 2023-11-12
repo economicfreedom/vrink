@@ -2,6 +2,7 @@ package com.green.vrink.admin.service;
 
 import com.green.vrink.admin.dto.*;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.user.repository.model.User;
@@ -115,7 +116,15 @@ public interface AdminService {
 
     List<AdminPaymentDetailDto> getAdminPaymentDetailsById(Integer id);
     List<AdminPaymentStateDto> getAdminPaymentStatesById(Integer id);
-
     AdminPaymentDto getAdminPaymentDtoById(Integer id);
+
+    List<NoticeDto> getAllNoticeList(PagingDto paging);
+    List<NoticeDto> getAllNoticeListByPaging(PagingDto paging);
+    NoticeDto getNoticeById(Integer id);
+    Integer countAllNotice(PagingDto paging);
+    void deleteNoticeById(Integer id);
+
+    void insertNotice(NoticeDto noticeDto);
+    void updateNotice(NoticeDto noticeDto);
 
 }

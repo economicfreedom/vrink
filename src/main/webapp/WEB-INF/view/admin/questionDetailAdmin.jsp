@@ -108,7 +108,10 @@
             $("#submit").click(function () {
                 let content = $("#summernote").val();
                 if (content.length <= 0) {
-                    alert("내용을 입력해주세요.")
+                    Swal.fire({
+                        icon: "error",
+                        title: "내용을 입력해주세요",
+                    });
                     $("#summernote").focus();
                     return;
                 }

@@ -8,34 +8,59 @@
     let pageNum = 1;
 
     function deleteBoard(id) {
-        fetch('/admin/suggest/del/' + id, {
-            method: 'DELETE',
-        })
-            .then(response => {
-                if (!response.ok) {
-                    alert("에러입니다");
-                } else {
-                    alert("게시글이 삭제 되었습니다.");
-                    location.href = "/admin/suggest";
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/admin/suggest/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "에러입니다",
+                            });
+                        } else {
+                            location.href = "/admin/suggest";
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function deleteReply(id) {
-        fetch('/admin/suggest-reply/del/' + id, {
-            method: 'DELETE',
-        })
-            .then(response => {
-                if (!response.ok) {
-                } else {
-                    alert("댓글이 삭제 되었습니다.");
-                    $("#reply-" + id).remove();
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/admin/suggest-reply/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                        } else {
+                            $("#reply-" + id).remove();
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function more() {

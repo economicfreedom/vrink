@@ -3,6 +3,7 @@ package com.green.vrink.admin.service;
 import com.green.vrink.admin.dto.*;
 import com.green.vrink.admin.repository.interfaces.AdminRepository;
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.user.repository.model.User;
@@ -354,6 +355,41 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminPaymentDto getAdminPaymentDtoById(Integer id) {
         return adminRepository.getAdminPaymentDtoById(id);
+    }
+
+    @Override
+    public List<NoticeDto> getAllNoticeList(PagingDto paging) {
+        return adminRepository.getAllNoticeList(paging);
+    }
+
+    @Override
+    public List<NoticeDto> getAllNoticeListByPaging(PagingDto paging) {
+        return adminRepository.getAllNoticeListByPaging(paging);
+    }
+
+    @Override
+    public NoticeDto getNoticeById(Integer id) {
+        return adminRepository.getNoticeById(id);
+    }
+
+    @Override
+    public Integer countAllNotice(PagingDto paging) {
+        return adminRepository.countAllNotice(paging);
+    }
+
+    @Override
+    public void deleteNoticeById(Integer id) {
+        adminRepository.deleteNoticeById(id);
+    }
+
+    @Override
+    public void insertNotice(NoticeDto noticeDto) {
+        adminRepository.insertNotice(noticeDto);
+    }
+
+    @Override
+    public void updateNotice(NoticeDto noticeDto) {
+        adminRepository.updateNotice(noticeDto);
     }
 
 }

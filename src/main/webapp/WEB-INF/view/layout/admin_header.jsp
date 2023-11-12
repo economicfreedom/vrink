@@ -117,6 +117,7 @@
                          aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/admin/notice?reset=1"">공지사항 관리</a>
                             <a class="nav-link" href="/admin/freeboard?reset=1">자유게시판 관리</a>
                             <a class="nav-link" href="/admin/suggest?reset=1"">의뢰게시판 관리</a>
                         </nav>

@@ -246,7 +246,10 @@
                 }
             }
             , error: function () {
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "에러입니다",
+                });
             }
         });
     });
@@ -272,7 +275,10 @@
                 }
             }
             , error: function () {
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "에러입니다",
+                });
             }
         });
     });
@@ -293,7 +299,7 @@
             showCancelButton  : true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor : "#d33",
-            confirmButtonText : "취소"
+            confirmButtonText : "취소처리"
         }).then((result) => {
             if (result.isConfirmed) {
                 show_spinner();
@@ -366,6 +372,20 @@
                     })
             })
     }
+
+    // Swal.fire({
+    //     title             : "정말 취소처리 하시겠습니까?",
+    //     text              : "되돌릴 수 없습니다!",
+    //     icon              : "warning",
+    //     showCancelButton  : true,
+    //     confirmButtonColor: "#3085d6",
+    //     cancelButtonColor : "#d33",
+    //     confirmButtonText : "취소하기"
+    // }).then((result) => {
+    //     if (result.isConfirmed) {
+    //
+    //     }
+    // });
 
     $(document).ready(function () {
 

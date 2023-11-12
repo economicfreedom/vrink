@@ -5,6 +5,7 @@ import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.suggest.service.SuggestService;
@@ -1241,4 +1242,117 @@ public class AdminRestController {
         return ResponseEntity.status(HttpStatus.OK).body(200);
     }
 
+    @GetMapping("/notice/classification")
+    @ResponseBody
+    public ClassificationDto noticeClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
+            required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
+            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
+            required = false, defaultValue = "") String keyword, @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
+
+        log.info("관리자 공지사항 목록 레스트 컨트롤러 실행");
+
+        paging.setRecordSize(20);
+
+        if (classification.equals("전체")) paging.setClassification(null);
+        else paging.setClassification(classification);
+
+        paging.setPage(page);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uClassification", classification);
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.countAllNotice(paging));
+
+        List<NoticeDto> noticeList = adminService.getAllNoticeListByPaging(paging);
+
+        if (!keyword.isEmpty()) {
+
+            List<NoticeDto> lastNoticeList = new ArrayList<>();
+            List<NoticeDto> finalNoticeList = new ArrayList<>();
+
+            noticeList = adminService.getAllNoticeList(paging);
+
+            if (searchType.equals("제목")) {
+                for (NoticeDto noticeDto : noticeList) {
+                    if (noticeDto.getTitle().contains(keyword)) {
+                        lastNoticeList.add(noticeDto);
+                    }
+                }
+            } else if (searchType.equals("내용")) {
+                for (NoticeDto noticeDto : noticeList) {
+                    if (noticeDto.getContent().contains(keyword)) {
+                        lastNoticeList.add(noticeDto);
+                    }
+                }
+            } else {
+                for (NoticeDto noticeDto : noticeList) {
+                    if (noticeDto.getTitle().contains(keyword)) {
+                        lastNoticeList.add(noticeDto);
+                    } else if (noticeDto.getContent().contains(keyword)) {
+                        lastNoticeList.add(noticeDto);
+                    }
+                }
+            }
+
+            pagination.setArticleTotalCount(lastNoticeList.size());
+            for (int i = (page - 1) * 20; i < Math.min((page - 1) * 20 + 20, lastNoticeList.size()); i++) {
+                finalNoticeList.add(lastNoticeList.get(i));
+            }
+            noticeList = finalNoticeList;
+
+        }
+
+        for (NoticeDto noticeDto : noticeList) {
+            if (noticeDto.getContent().contains("<img")) {
+                noticeDto.setContent("이미지 파일 포함");
+            } else {
+                noticeDto.setContent(noticeDto.getContent().replaceAll("<br>", " "));
+            }
+        }
+
+        classificationDto.setNoticeList(noticeList);
+        classificationDto.setPagination(pagination);
+
+        return classificationDto;
+    }
+
+    @Transactional
+    @DeleteMapping("/notice-delete/{id}")
+    public ResponseEntity<Integer> deleteNotice(@PathVariable(name = "id") Integer id) {
+        log.info("공지사항 삭제 레스트 컨트롤러 실행");
+
+        adminService.deleteNoticeById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+
+    }
+
+    @Transactional
+    @PostMapping("/notice-write")
+    public ResponseEntity<Integer> writeNotice(@RequestBody NoticeDto noticeDto) {
+        log.info("공지사항 등록 레스트 컨트롤러 실행");
+
+        adminService.insertNotice(noticeDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+
+    }
+
+    @Transactional
+    @PutMapping("/notice-update")
+    public ResponseEntity<Integer> updateNotice(@RequestBody NoticeDto noticeDto) {
+        log.info("공지사항 수정 레스트 컨트롤러 실행");
+
+        adminService.updateNotice(noticeDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+
+    }
 }

@@ -429,33 +429,6 @@
 
 <script>
 
-    function changeApply(paymentId, accepted, number, userId) {
-
-        $.ajax({
-            type   : "POST",
-            url    : "/admin/change-payment",
-            data   : {
-                "paymentId": paymentId,
-                "accepted" : accepted,
-                "number"   : number,
-                "userId"   : userId
-            },
-            success: function (data) {
-                if (data === 200) {
-                    window.location.href = "/admin/payment-accept";
-                } else if (data === 400) {
-                    alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
-                } else {
-                    alert('에러 읍니다.');
-                }
-            }
-            , error: function () {
-                alert('서버 에러입니다.');
-            }
-        });
-
-    }
-
     $(document).ready(function () {
 
         setupPaginationEventHandlers();
@@ -684,7 +657,7 @@
             showCancelButton  : true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor : "#d33",
-            confirmButtonText : "취소"
+            confirmButtonText : "취소처리"
         }).then((result) => {
             if (result.isConfirmed) {
                 show_spinner();

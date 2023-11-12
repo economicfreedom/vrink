@@ -114,7 +114,10 @@
     $('#main_banner').change(function () {
         let profileInput = $('#main_banner')[0];
         if (!profileInput.files[0].type.match("image.*")) {
-            alert("이미지 파일만 등록해주세요.");
+            Swal.fire({
+                icon: "error",
+                title: "이미지 파일만 등록해주세요",
+            });
             $('#main_banner').val("");
             return;
         }
@@ -130,7 +133,10 @@
     $('#v_banner').change(function () {
         let profileInput = $('#v_banner')[0];
         if (!profileInput.files[0].type.match("image.*")) {
-            alert("이미지 파일만 등록해주세요.");
+            Swal.fire({
+                icon: "error",
+                title: "이미지 파일만 등록해주세요",
+            });
             $('#v_banner').val("");
             return;
         }
@@ -146,7 +152,10 @@
     $('#h_banner').change(function () {
         let profileInput = $('#h_banner')[0];
         if (!profileInput.files[0].type.match("image.*")) {
-            alert("이미지 파일만 등록해주세요.");
+            Swal.fire({
+                icon: "error",
+                title: "이미지 파일만 등록해주세요",
+            });
             $('#h_banner').val("");
             return;
         }
@@ -173,27 +182,42 @@
         let adPeriodInput = $('#ad-period').val();
 
         if(category === 0 && mainBannerInput.files.length === 0) {
-            alert('메인 배너 이미지를 등록해 주세요.');
+            Swal.fire({
+                icon: "error",
+                title: "메인 배너 이미지를 등록해주세요",
+            });
             return;
         } else if(category !== 0 && (vBannerInput.files.length === 0 && hBannerInput.files.length === 0)) {
-            alert('최소 하나의 사이드 배너 이미지를 등록해 주세요');
+            Swal.fire({
+                icon: "error",
+                title: "최소 하나의 사이드 배너 이미지를 등록해 주세요",
+            });
             return;
         }
 
         if(adComNameInput.length === 0) {
-            alert('회사 이름을 입력해주세요.');
+            Swal.fire({
+                icon: "error",
+                title: "회사 이름을 입력해주세요.",
+            });
             $('#ad-com-name').focus();
             return
         }
 
         if(priceInput.length === 0) {
-            alert('가격을 입력해주세요.');
+            Swal.fire({
+                icon: "error",
+                title: "가격을 입력해주세요.",
+            });
             $('#price').focus();
             return
         }
 
         if(adPeriodInput.length === 0) {
-            alert('기간을 입력해주세요.');
+            Swal.fire({
+                icon: "error",
+                title: "기간을 입력해주세요.",
+            });
             $('#ad-period').focus();
             return
         }

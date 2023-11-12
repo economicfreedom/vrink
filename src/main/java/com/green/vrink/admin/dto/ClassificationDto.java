@@ -1,6 +1,7 @@
 package com.green.vrink.admin.dto;
 
 import com.green.vrink.community.dto.FreeBoardDTO;
+import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.qna.dto.QuestionDTO;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.user.repository.model.User;
@@ -21,5 +22,6 @@ public class ClassificationDto {
 	List<AdminAdDto> adList;
 	List<AdminSuggestDto> suggestList;
 	List<AdminPaymentDto> adminPaymentList;
+	List<NoticeDto> noticeList;
 	Pagination pagination;
 }

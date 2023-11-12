@@ -208,7 +208,10 @@
                 }
             }
             , error: function () {
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "에러입니다",
+                });
             }
         });
     });
@@ -234,7 +237,10 @@
                 }
             }
             , error: function () {
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "에러입니다",
+                });
             }
         });
     });

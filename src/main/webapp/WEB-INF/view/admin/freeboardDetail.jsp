@@ -8,33 +8,63 @@
     let pageNum = 1;
 
     function deleteBoard(id) {
-        fetch('/admin/del/' + id, {
-            method: 'DELETE',
-        })
-            .then(response => {
-                if (!response.ok) {
-                    alert("");
-                } else {
-                    location.href = "/admin/freeboard";
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제하기"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/admin/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "에러입니다",
+                            });
+                        } else {
+                            location.href = "/admin/freeboard";
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function deleteReply(id) {
-        fetch('/free-reply/del/' + id, {
-            method: 'DELETE',
-        })
-            .then(response => {
-                if (!response.ok) {
-                } else {
-                    alert("댓글이 삭제 되었습니다.");
-                    $("#reply-" + id).remove();
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제하기"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/free-reply/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "댓글이 삭제되었습니다.",
+                            });
+                            $("#reply-" + id).remove();
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function more() {

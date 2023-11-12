@@ -5,6 +5,7 @@ import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
+import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.qna.service.QnAService;
 import com.green.vrink.suggest.dto.AdminSuggestDto;
 import com.green.vrink.suggest.dto.GetSuggestDto;
@@ -488,6 +489,75 @@ public class AdminController {
         model.addAttribute("adminPaymentStateList", adminService.getAdminPaymentStatesById(id));
         model.addAttribute("adminPayment", adminService.getAdminPaymentDtoById(id));
         return "admin/paymentDetailAdmin";
+    }
+
+
+    @GetMapping("/notice")
+    public String notice(@ModelAttribute("paging") PagingDto paging,
+                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                          @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                          @RequestParam(value = "classification", required = false, defaultValue = "전체")
+                          String classification,
+                          Model model) {
+
+        log.info("의뢰게시판 목록 컨트롤러 호출");
+
+        paging.setRecordSize(10);
+
+        if (classification.equals("전체")) paging.setClassification(null);
+        else paging.setClassification(classification);
+
+        if (reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
+        }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored) {
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllNotice(paging);
+        pagination.setArticleTotalCount(count);
+
+        List<NoticeDto> noticeList = adminService.getAllNoticeListByPaging(paging);
+
+        for (NoticeDto noticeDto : noticeList) {
+            if (noticeDto.getContent().contains("<img")) {
+                noticeDto.setContent("이미지 파일 포함");
+            } else {
+                noticeDto.setContent(noticeDto.getContent().replaceAll("<br>", ""));
+            }
+        }
+
+        model.addAttribute("noticeList", noticeList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/noticeAdmin";
+    }
+
+    @GetMapping("/notice-detail")
+    public String noticeDetail(@ModelAttribute("page") int page, @RequestParam("id") int id, Model model) {
+        model.addAttribute("noticeDetail", adminService.getNoticeById(id));
+        return "admin/noticeDetail";
+    }
+
+    @GetMapping("/notice-write")
+    public String noticeWrite() {
+        return "admin/noticeWrite";
+    }
+
+    @GetMapping("/notice-update")
+    public String noticeUpdate(@RequestParam("id") int id, Model model) {
+        model.addAttribute("noticeDetail", adminService.getNoticeById(id));
+        return "admin/noticeUpdate";
     }
 
 }

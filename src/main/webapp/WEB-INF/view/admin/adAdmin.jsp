@@ -387,11 +387,17 @@
                 if (data === 200) {
                     window.location.href = "/admin/ad-admin";
                 } else {
-                    alert('에러 읍니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "에러입니다",
+                    });
                 }
             }
             , error: function () {
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "에러입니다",
+                });
             }
         });
 

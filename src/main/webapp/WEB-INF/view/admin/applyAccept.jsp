@@ -350,15 +350,24 @@
                     window.location.href = "/admin/apply-accept";
                 } else if (data === 400) {
                     hide_spinner();
-                    alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "사기 계좌로 조회되었습니다. 승인이 불가합니다.",
+                    });
                 } else {
                     hide_spinner();
-                    alert('에러 읍니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "에러 읍니다.",
+                    });
                 }
             }
             , error: function () {
                 hide_spinner();
-                alert('서버 에러입니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "서버 에러 읍니다.",
+                });
             }
         });
 
