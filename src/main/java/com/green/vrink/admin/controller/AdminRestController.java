@@ -50,10 +50,6 @@ public class AdminRestController {
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
 
-        log.info("page : " + page);
-        log.info("keyword : " + keyword);
-        log.info("searchType : " + searchType);
-
         session.setAttribute("uClassification", classification);
         session.setAttribute("uSearchType", searchType);
         session.setAttribute("uKeyword", keyword);
@@ -1001,10 +997,6 @@ public class AdminRestController {
         paging.setClassification(classification);
         paging.setKeyword(keyword);
         paging.setSearchType(searchType);
-
-        log.info("page : " + page);
-        log.info("keyword : " + keyword);
-        log.info("searchType : " + searchType);
 
         session.setAttribute("uClassification", classification);
         session.setAttribute("uSearchType", searchType);

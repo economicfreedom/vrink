@@ -82,14 +82,6 @@ public class AdminController {
         return "/admin/main";
     }
 
-    @GetMapping("/test2")
-    public String test(Model model) {
-        String test1 = test.getTest();
-        model.addAttribute("test", test1);
-
-        return "test";
-    }
-
     @GetMapping("/apply-accept")
     @AdminCheck
     public String applyAccept(@ModelAttribute("paging") PagingDto paging,
