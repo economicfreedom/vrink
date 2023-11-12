@@ -4,6 +4,8 @@ import com.green.vrink.follow.dto.FollowDto;
 import com.green.vrink.follow.dto.GetFollowEditorDto;
 import com.green.vrink.follow.repository.model.Follow;
 import com.green.vrink.follow.service.FollowServiceImpl;
+import com.green.vrink.user.repository.model.User;
+import com.green.vrink.util.Define;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -21,10 +25,16 @@ import java.util.List;
 @Slf4j
 public class FollowRestController {
     private final FollowServiceImpl followService;
+    private final HttpSession session;
 
     @PostMapping("/new-follow")
     public ResponseEntity<?> follow(@RequestBody FollowDto followDto) {
         CustomMessage customMessage = null;
+        User user = (User) session.getAttribute(Define.USER);
+        if (user == null) {
+            customMessage = new CustomMessage("로그인이 필요한 작업입니다.", 401);
+            return ResponseEntity.badRequest().body(customMessage);
+        }
         int result = followService.follow(followDto);
         if (result == 0) {
             customMessage = new CustomMessage("팔로우 할 수 없는 대상입니다.", 400);

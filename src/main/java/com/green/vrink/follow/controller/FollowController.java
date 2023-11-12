@@ -23,7 +23,6 @@ public class FollowController {
                             , @RequestParam(name = "keyword",defaultValue = "") String keyword
                             , @RequestParam(name = "type" ,defaultValue = "") String type
                             , Model model) {
-        System.out.println("hi");
         Criteria criteria = new Criteria();
         criteria.setType(type);
         criteria.setKeyword(keyword);
@@ -32,7 +31,6 @@ public class FollowController {
         criteria.setUserId(userId);
 
         Integer total = followService.getTotal(criteria);
-        System.out.println(total);
         List<GetFollowEditorDto> getFollowEditorList = followService.getFollowEditorList(criteria);
 
         PageDTO pageDTO = new PageDTO();

@@ -1,6 +1,7 @@
 package com.green.vrink.user.repository.interfaces;
 
 import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.model.Calculator;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -69,4 +70,8 @@ public interface UserRepository {
     void deleteTagByEditorId(Integer editorId);
 
 	List<TagDTO> getRandomTag();
+
+	Integer getTotalCount(Criteria criteria);
+
+	List<Calculator> getMyCalList(Criteria criteria);
 }

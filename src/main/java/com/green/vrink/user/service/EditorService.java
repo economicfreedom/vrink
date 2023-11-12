@@ -1,6 +1,7 @@
 package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.model.Calculator;
 import com.green.vrink.util.Criteria;
 
 import java.util.List;
@@ -45,4 +46,7 @@ public interface EditorService {
 	String responseEditorTag(Integer editorId);
 
 	String responseRandomTag();
+
+	Integer getTotal(Criteria criteria);
+	List<Calculator> getMyCalList(Criteria criteria);
 }

@@ -347,5 +347,39 @@
     <select id="getRandomTag" resultType="com.green.vrink.user.dto.TagDTO">
         SELECT DISTINCT(tag) FROM editor_tag ORDER BY RAND() limit 7;
     </select>
+
+    <select id="getMyCalList" resultType="com.green.vrink.user.repository.model.Calculator">
+        SELECT *
+        FROM calculator
+        <if test="type == ''">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'all'">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'inProcess'">
+            WHERE cal_status LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE cal_status LIKE 1
+        </if>
+        ORDER BY created_at DESC
+        LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT count(editor_id) FROM calculator
+        <if test="type == ''">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'all'">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'inProcess'">
+            WHERE cal_status LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE cal_status LIKE 1
+        </if>
+    </select>
 </mapper>
 

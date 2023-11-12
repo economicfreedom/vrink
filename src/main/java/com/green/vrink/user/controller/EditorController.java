@@ -6,6 +6,7 @@ import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
 import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.user.repository.model.Calculator;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.UserService;
@@ -242,5 +243,31 @@ public class EditorController {
 
         return "requestView";
 
+    }
+
+    @GetMapping("/my-cal-list/{editorId}")
+    public String myCalList(@PathVariable(name = "editorId") Integer editorId
+                            ,@RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
+                            ,@RequestParam(name = "type" ,defaultValue = "") String type
+                            ,Model model) {
+        Criteria criteria = new Criteria();
+        criteria.setType(type);
+        criteria.setCountPerPage(10);
+        criteria.setPageNum(pageNum);
+        criteria.setEditorId(editorId);
+
+        Integer total = editorService.getTotal(criteria);
+        log.info("{}", total);
+        List<Calculator> getMyCalList = editorService.getMyCalList(criteria);
+
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCri(criteria);
+        pageDTO.setArticleTotalCount(total);
+
+        model.addAttribute("pageDTO", pageDTO);
+        model.addAttribute("calList", getMyCalList);
+        model.addAttribute("total", total);
+
+        return "user/myCalList";
     }
 }

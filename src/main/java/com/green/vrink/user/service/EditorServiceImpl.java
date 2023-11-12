@@ -2,6 +2,7 @@ package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.user.repository.model.Calculator;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.Define;
 import lombok.RequiredArgsConstructor;
@@ -225,5 +226,15 @@ public class EditorServiceImpl implements EditorService {
 
         }
         return stringBuffer.toString();
+    }
+
+    @Override
+    public Integer getTotal(Criteria criteria) {
+        return userRepository.getTotalCount(criteria);
+    }
+
+    @Override
+    public List<Calculator> getMyCalList(Criteria criteria) {
+        return userRepository.getMyCalList(criteria);
     }
 }

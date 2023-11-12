@@ -6,16 +6,25 @@
 	        <div class="registration-sec">
 	            <h3>정산신청</h3>
 				<p>${newUser.nickname} 작가님 환영합니다!!</p>
-	            <div class="common-sign-up">
-	                <div class="field">
-	                    <input type="text" value="보유 포인트   ${newUser.point }원" readonly="readonly" />
-	                </div>
-	                <div class="field">
-						<div class="check-div">
-							<input type="text" class="point-input" placeholder="신청 금액" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-							<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
+	            	<div class="common-sign-up">
+						<div class="field">
+							<div class="check-div">
+								<input type="text" value="보유 포인트   ${newUser.point }원" readonly="readonly"/>
+								<input type="button" value="정산 내역" class="check-btn" id="get-cal-list-btn" onclick="location.href='/editor/my-cal-list/${EDITOR_ID}'" />
+							</div>
 						</div>
-	                </div>
+						<div class="field">
+							<div class="check-div">
+								<input type="text" class="point-input" placeholder="신청 금액" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+								<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
+							</div>
+						</div>
+						<div class="field">
+							<div style="margin-top: 30px; display: flex; justify-content: flex-end">
+								<a href="/editor/my-cal-list/${EDITOR_ID}">정산내역</a>
+							</div>
+						</div>
+					</div>
 	            </div>
 	    	</div>
     	</div>
