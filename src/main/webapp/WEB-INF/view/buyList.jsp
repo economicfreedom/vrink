@@ -128,115 +128,115 @@
                         <h3>VRINK를 이용해주셔서 감사합니다.</h3>
                         <span>Easy to Customize</span>
                     </div>
-
-                    <div class="coupon" style="float: right;margin-right: 19.3% ;margin-bottom: 20px;">
+                </div>
+                <div class="col-sm-10 col-center">
+                    <div class="coupon" style="float: right;margin-right: 0; margin-bottom: 20px;">
 
                         <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword"
                                value="${keyword == null ? '':keyword}">
                         <button type="submit" class="flat-btn" id="search"><i class="fa fa-search"></i>검색하기</button>
                     </div>
-                </div>
-                <div class="cart-lists">
-                    <ul id="list" style="width: 80%;height: 50%;">
-                        <c:forEach items="${list}" var="dto">
-                            <li>
-                                <div class="cart-thumb">
+                    <div class="cart-lists">
+                        <ul id="list" style="height: 50%;">
+                            <c:forEach items="${list}" var="dto">
+                                <li>
+                                    <div class="cart-thumb">
 
 
-                                        <span>
+                                            <span>
 
-                                            <img src="${dto.image}" alt="작가 이미지"/>
+                                                <img src="${dto.image}" alt="작가 이미지"/>
 
-                                        </span>
+                                            </span>
 
 
-                                    <h3>
-                                        <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
-                                           title="상세보기" style="color: #00A0D1;font-weight: bold">
-                                                ${dto.nickname}</a></h3>
+                                        <h3>
+                                            <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
+                                               title="상세보기" style="color: #00A0D1;font-weight: bold">
+                                                    ${dto.nickname}</a></h3>
 
-                                    <div class="price-cart-item">
-                                        <span style="color: grey; font-size: larger;font-weight: bold"> ${dto.name}</span>
-                                        <br>
-                                        <span style="margin-top: 70px; font-weight: bold">￦${dto.point}</span>
-                                        <span style="color: black; font-size: small"> ${dto.createdAt}</span>
-                                        <span><a
-                                                href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
-                                                title="상세보기" style="color: #00A0D1;font-weight: bold">
-                                            상세 보기</a></span>
+                                        <div class="price-cart-item">
+                                            <span style="color: grey; font-size: larger;font-weight: bold"> ${dto.name}</span>
+                                            <br>
+                                            <span style="margin-top: 70px; font-weight: bold">￦${dto.point}</span>
+                                            <span style="color: black; font-size: small"> ${dto.createdAt}</span>
+                                            <span><a
+                                                    href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
+                                                    title="상세보기" style="color: #00A0D1;font-weight: bold">
+                                                상세 보기</a></span>
+                                        </div>
+
                                     </div>
 
-                                </div>
+                                    <div class="c-input-number">
 
-                                <div class="c-input-number">
+                                        <c:if test="${dto.state ne 'trade_done'}">
+                                            <c:if test="${dto.editorRecognize == 1}">
 
-                                    <c:if test="${dto.state ne 'trade_done'}">
-                                        <c:if test="${dto.editorRecognize == 1}">
+                                                <button type="button" class="flat-btn" onclick="paymentConfirm(
+                                                    ${dto.editorId},
+                                                    ${dto.paymentId}
+                                                        ,${dto.editorRecognize}
+                                                        ,${dto.customerRecognize}
+                                                        ,${dto.point.replaceAll(",","")}
+                                                        )"
+                                                        style="margin-bottom: 10px; margin-right: 10px">
+                                                    구매 확정
+                                                </button>
 
-                                            <button type="button" class="flat-btn" onclick="paymentConfirm(
-                                                ${dto.editorId},
-                                                ${dto.paymentId}
-                                                    ,${dto.editorRecognize}
-                                                    ,${dto.customerRecognize}
-                                                    ,${dto.point.replaceAll(",","")}
-                                                    )"
-                                                    style="margin-bottom: 10px; margin-right: 10px">
-                                                구매 확정
-                                            </button>
+                                            </c:if>
 
+                                            <c:if test="${dto.editorRecognize == 0 && dto.state eq 'payment_done'}">
+                                                <button class="button button2" onclick="refundRequest(${dto.paymentId})"
+                                                        value="0"
+                                                        id="request-refund-${dto.paymentId}">
+                                                    환불 요청
+                                                </button>
+                                                <div class="form-group">
+                                                    <label for="reason-${dto.paymentId}" id="for-r-${dto.paymentId}"
+                                                           style="display: none">환불 사유</label>
+                                                    <select class="form-control"
+                                                            style="display: none"
+                                                            id="reason-${dto.paymentId}">
+                                                        <option value="잘못구입">잘못 구입했습니다.</option>
+                                                        <option value="연락두절">연락이 없어요.</option>
+                                                        <option value="기타">기타</option>
+                                                    </select>
+                                                    <label for="etc-${dto.paymentId}"
+                                                           style="display: none"
+                                                           id="for-e-${dto.paymentId}">기타 사유</label>
+                                                    <input type="text" class="form-control" id="etc-${dto.paymentId}"
+                                                           style="display: none">
+                                                    <button type="button" class="btn btn-primary"
+                                                            style="margin-top: 4px; display: none"
+                                                            onclick="refundOk(${dto.paymentId},${dto.paymentStateId})"
+                                                            id="ok-${dto.paymentId}">
+                                                        확인
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            style="margin-top: 4px; display: none"
+                                                            id="cancel-${dto.paymentId}"
+                                                            onclick="refundCancel(${dto.paymentId})">
+                                                        취소
+                                                    </button>
+                                                </div>
+                                            </c:if>
                                         </c:if>
 
-                                        <c:if test="${dto.editorRecognize == 0 && dto.state eq 'payment_done'}">
-                                            <button class="button button2" onclick="refundRequest(${dto.paymentId})"
-                                                    value="0"
-                                                    id="request-refund-${dto.paymentId}">
-                                                환불 요청
-                                            </button>
-                                            <div class="form-group">
-                                                <label for="reason-${dto.paymentId}" id="for-r-${dto.paymentId}"
-                                                       style="display: none">환불 사유</label>
-                                                <select class="form-control"
-                                                        style="display: none"
-                                                        id="reason-${dto.paymentId}">
-                                                    <option value="잘못구입">잘못 구입했습니다.</option>
-                                                    <option value="연락두절">연락이 없어요.</option>
-                                                    <option value="기타">기타</option>
-                                                </select>
-                                                <label for="etc-${dto.paymentId}"
-                                                       style="display: none"
-                                                       id="for-e-${dto.paymentId}">기타 사유</label>
-                                                <input type="text" class="form-control" id="etc-${dto.paymentId}"
-                                                       style="display: none">
-                                                <button type="button" class="btn btn-primary"
-                                                        style="margin-top: 4px; display: none"
-                                                        onclick="refundOk(${dto.paymentId},${dto.paymentStateId})"
-                                                        id="ok-${dto.paymentId}">
-                                                    확인
-                                                </button>
-                                                <button type="button" class="btn btn-default"
-                                                        style="margin-top: 4px; display: none"
-                                                        id="cancel-${dto.paymentId}"
-                                                        onclick="refundCancel(${dto.paymentId})">
-                                                    취소
-                                                </button>
-                                            </div>
-                                        </c:if>
-                                    </c:if>
+
+                                    </div>
 
 
-                                </div>
+                                    <div class="cart-item-quantity">
+                                        <i class="fa  fa-shopping-basket"></i>
+                                        <span>구매 수량 : ${dto.quantity}</span>
+                                    </div>
 
-
-                                <div class="cart-item-quantity">
-                                    <i class="fa  fa-shopping-basket"></i>
-                                    <span>구매 수량 : ${dto.quantity}</span>
-                                </div>
-
-                            </li>
-                        </c:forEach>
-                    </ul>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
