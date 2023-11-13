@@ -1,9 +1,5 @@
-![로고2](
-// https://github.com/seoyounglee0105/green_airline_project/assets/106488607/45885ada-932d-4640-93a8-4a84d451bb9c 우리주소 넣기
-)
 
-
-
+![KakaoTalk_20231113_180338020](https://github.com/economicfreedom/vrink/assets/35636560/0f2ec704-b830-40ae-b739-5d0cbb84fe4a)
 
 <br>
 
