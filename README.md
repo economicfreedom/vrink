@@ -38,6 +38,7 @@
 
 ### 💻 Back-End
 
+* <img src="https://img.shields.io/badge/OpenJDK-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.8 Amazon Correto
 * <img src="https://img.shields.io/badge/OpenJDK-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 11.0.21 Amazon Correto
 * <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/> : 2.7.17
 * <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/> : 9.0
@@ -46,6 +47,10 @@
 * <img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3
 * <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0.21
 * <img src="https://img.shields.io/badge/SpringSecurityCrypto-6db33f?style=flat&logo=Spring&logoColor=white"/> : 5.7.1
+* <img src="https://img.shields.io/badge/KOMORAN-2980b9?style=flat&logo=&logoColor=white"/> : 3.3.9
+* <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.16.2
+* <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.20
+* <img src="https://img.shields.io/badge/Openai-412991?style=flat&logo=Openai&logoColor=white"/> : 3.5 Turbo
 
   <br>
 
