@@ -6,142 +6,74 @@
 
 <script>
     let pageNum = 1;
-    $(document).ready(function () {
-
-
-        $("#reply-add").click(function () {
-            let reply = $("#reply-content");
-            let content = reply.val();
-
-            if (content.length === 0) {
-                alert("댓글을 입력해주세요.")
-                reply.focus();
-                return;
-            }
-            fetch('/free-reply/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    communityId: ${dto.communityId},
-                    content: content
-
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("")
-                    } else {
-                        location.reload()
-                    }
-                })
-        });
-
-
-    })
-
-    function update(id) {
-
-        location.href = "/board/update-form/" + id;
-    }
 
     function deleteBoard(id) {
-
-        fetch('/admin/del/' + id, {
-            method: 'DELETE',
-
-        })
-
-            .then(response => {
-                if (!response.ok) {
-                    alert("");
-                } else {
-                    location.href = "/admin/freeboard";
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제하기"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/admin/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "에러입니다",
+                            });
+                        } else {
+                            location.href = "/admin/freeboard";
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function deleteReply(id) {
-
-        fetch('/free-reply/del/' + id, {
-            method: 'DELETE',
-
-        })
-
-            .then(response => {
-                if (!response.ok) {
-                } else {
-                    alert("댓글이 삭제 되었습니다.");
-                    $("#reply-" + id).remove();
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
-    }
-
-    function updateReply(id) {
-        let replyArea = $("#reply-" + id);
-        replyArea.attr("readonly", false).css("border", "1px solid black");
-        $("#cancel-" + id).css("display", "inline-block");
-        $("#done-" + id).css("display", "inline-block");
-        $("#update-" + id).css("display", "none");
-        $("#reply-del-" + id).css("display", "none");
-
-    }
-
-    function updateCancel(id, content) {
-        let replyArea = $("#reply-" + id);
-        replyArea.val(content);
-        replyArea.attr("readonly", true).css("border", "none");
-        $("#cancel-" + id).css("display", "none");
-        $("#done-" + id).css("display", "none");
-        $("#update-" + id).css("display", "inline-block");
-        $("#reply-del-" + id).css("display", "inline-block");
-    }
-
-    function updateDone(id) {
-        let reply = $("#reply-" + id);
-        let content = reply.val();
-
-        if (content.length === 0) {
-            alert("댓글을 입력해주세요.")
-            reply.focus();
-            return;
-        }
-        fetch('/free-reply/update', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                replyId: id,
-                content: content
-
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    alert("")
-                } else {
-                    location.reload()
-                }
-            })
-
+        Swal.fire({
+            title             : "정말 삭제하시겠습니까?",
+            text              : "되돌릴 수 없습니다!",
+            icon              : "warning",
+            showCancelButton  : true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "삭제하기"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/free-reply/del/' + id, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "댓글이 삭제되었습니다.",
+                            });
+                            $("#reply-" + id).remove();
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        });
     }
 
     function more() {
         pageNum++;
         const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
         let html = '';
-
 // fetch를 사용한 요청
         fetch(url, {
-            method: 'GET',
+            method : 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -153,7 +85,6 @@
                 return response.json();
             })
             .then(data => {
-
                 // 응답 데이터 처리
                 console.log(data); // 전체 응답 데이터 출력
                 if (!data.hasNext) {
@@ -161,11 +92,10 @@
                 }
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
-
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%"> id="reply-' + reply.replyId +'">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:10px;" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">';
                     html += '<div class="comment-header">';
-                    html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
+                    html += '<strong class="comment-nickname"><a href="/admin/user/detail-nickname?nickname=' + reply.nickname + '">' + reply.nickname + '</a></strong>';
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
@@ -175,7 +105,7 @@
                     html += 'id="reply-' + reply.replyId + '">' + reply.content + '</textarea>';
                     html += '<div class="comment-buttons">';
 
-                    html += '<button class="btn btn-dark btn-block"';
+                    html += '<button class="btn btn-secondary btn-block d-button" style="float:right;"';
                     html += ' onclick="deleteReply(' + reply.replyId + ')"';
                     html += ' id="reply-del-' + reply.replyId + '"';
                     html += '>삭제';
@@ -184,8 +114,6 @@
                     html += '</div>';
                     html += '</li>';
                     html += '</ul>';
-
-
                 });
                 // 다른 필요한 처리를 여기에 추가하세요.
                 $("#reply-container").append(html);
@@ -195,49 +123,50 @@
             });
     }
 
-
 </script>
 
-<div class="container" style="margin: 20px;">
-    <div class="row">
+<div class="card m-4">
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 자유게시판 상세</h3></div>
+    <%--    <div class="container" style="margin: 50px auto;border: 1px solid black;">--%>
+    <div class="row" style="margin: 10px;">
         <div class="title">
-
-            <h1>${dto.title}</h1>
-            <span> ${dto.nickname}</span>
-            <br>
-            <small>${dto.createdAt}</small>
-
-            <button type="button" style="float: right;margin-left: 20px " class="btn btn-dark btn-block"
-                    onclick="deleteBoard(${dto.communityId})">삭제
-            </button>
-
+            <div>
+                <span>작성자 : <a href="/admin/user/detail-nickname?nickname=${dto.nickname}">${dto.nickname}</a></span> <span>작성일 : ${dto.createdAt}</span></div>
+            <div class="my-3">
+                <h2>제목 : ${dto.title}
+                    <button type="button" style="float: right;margin-left: 20px " class="btn btn-secondary btn-block"
+                            onclick="deleteBoard(${dto.communityId})">삭제
+                    </button>
+            </div>
             <hr>
-
 
         </div>
         <div class="content">
             <span>
                 ${dto.content}
             </span>
+            <hr style="margin-bottom: -10px;">
         </div>
         <%--        <hr style="background-color: black;height: 2px">--%>
-        <hr>
+
     </div>
 
-    <div class="row">
+    <div class="row" style="margin: 10px;">
         <div class="col">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">댓글</h3>
                 </div>
                 <div class="panel-body">
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
-                                <li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">
+                            <ul class="list-group custom-list-group"
+                                style="margin-top:10px;"
+                                id="reply-${reply.replyId}">
+                                <li class="list-group-item custom-list-item"
+                                    style="border: 1px solid #00000075; padding: 5px;">
                                     <div class="comment-header">
-                                        <strong class="comment-nickname">${reply.nickname}</strong>
+                                        <strong class="comment-nickname"><a href="/admin/user/detail-nickname?nickname=${reply.nickname}">${reply.nickname}</a></strong>
                                         <span class="comment-date">${reply.createdAt}</span>
                                     </div>
                                     <textarea class="form-control custom-textarea"
@@ -245,7 +174,7 @@
                                               readonly
                                               id="reply-${reply.replyId}">${reply.content}</textarea>
                                     <div class="comment-buttons">
-                                        <button class="btn btn-dark btn-block"
+                                        <button class="btn btn-secondary btn-block d-button"
                                                 onclick="deleteReply(${reply.replyId})"
                                                 id="reply-del-${reply.replyId}"
 
@@ -266,10 +195,8 @@
             </div>
         </div>
     </div>
-
-
 </div>
-
+<%--</div>--%>
 <style>
     .custom-list-group {
         border: none;
@@ -289,7 +216,7 @@
         border: none;
         background-color: transparent;
         box-shadow: none;
-        width: 100%;
+        width: 96%;
         overflow: hidden;
     }
 
@@ -313,6 +240,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .d-button {
+        float: right;
+        margin-top: -35px;
+        font-size: 12px;
+        padding: 5px;
     }
 </style>
 

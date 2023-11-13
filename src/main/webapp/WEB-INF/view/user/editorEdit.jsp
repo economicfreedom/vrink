@@ -4,6 +4,8 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <style>
 /**
@@ -75,6 +77,61 @@ style.css에 합칠예정
   -moz-appearance: none;
   appearance: none;
 }
+
+.customLook {
+	--tag-bg: #0052bf;
+	--tag-hover: #ce0078;
+	--tag-text-color: #fff;
+	--tags-border-color: silver;
+	--tag-text-color--edit: #111;
+	--tag-remove-bg: var(--tag-hover);
+	--tag-pad: 0.6em 1em;
+	--tag-inset-shadow-size: 1.4em;
+	--tag-remove-btn-bg--hover: black;
+	display: inline-block;
+	min-width: 0;
+
+}
+.customLook .tagify__tag {
+	margin-top: 0;
+}
+.customLook .tagify__tag > div {
+	border-radius: 25px;
+}
+
+.customLook .tagify__tag__removeBtn {
+	opacity: 0;
+	transform: translateX(-6px) scale(0.5);
+	margin-left: -3ch;
+	transition: 0.12s;
+}
+.customLook .tagify__tag:hover .tagify__tag__removeBtn {
+	transform: none;
+	opacity: 1;
+	margin-left: -1ch;
+}
+.customLook + button {
+	color: #0052bf;
+	font: bold 1.4em/1.65 Arial;
+	border: 0;
+	background: none;
+	box-shadow: 0 0 0 2px inset currentColor;
+	border-radius: 50%;
+	width: 1.65em;
+	height: 1.65em;
+	cursor: pointer;
+	outline: none;
+	transition: 0.1s ease-out;
+	margin: 0 0 0 5px;
+	vertical-align: top;
+}
+.customLook + button:hover {
+	box-shadow: 0 0 0 5px inset currentColor;
+}
+
+.tagify__tag>div>* {
+	white-space: nowrap;
+}
 </style>
 
 <div class="container">
@@ -86,36 +143,39 @@ style.css에 합칠예정
 			</div>
 			<div class="contact-form">
 			<input id="profileURL" type="hidden" value="${editorEdit.profileImage}">
-			<input id="thumbnailURL" type="hidden" value="${editorEdit.image}">
+			<input id="thumbnailURL" type="hidden" value="${editorEdit.thumbnail}">
 			<input id="vrmURL" type="hidden" value="${editorEdit.vrm}">
 				<div class="editor-div">
 					<div class="row">
-						<div class="col-md-12" style="display: flex; flex-direction:column; align-items:center; margin-top:1rem; gap:2rem">
+						<div class="col-sm-12" style="display: flex; flex-direction:column; align-items:center; margin-top:1rem; gap:2rem">
 							<div class="circle-profile-area"><img class="circle-profile" id="profile-area" alt="" src="${editorEdit.profileImage}"></div>
 							<div class="profile-box">
 								<label for="profile">프로필 사진 변경</label>
 								<input type="file" id="profile">
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<i class="fa fa-at"></i>
 							<textarea name="introduce" id="introduce" class="input-style" placeholder="소개 내용을 입력해주세요.(50자 이내)">${editorEdit.introduce}</textarea>
 						</div>
-						<div class="col-md-12 d-flex j-around">
-							<div class="col-md-6 t-center filebox">
-								<input class="upload-name" id="thumbnail-filename" value="파일선택" disabled="disabled" style="width: 200px;">
+						<div class="col-sm-12 d-flex j-around">
+							<div class="col-sm-6 t-center filebox">
+								<input class="upload-name" id="thumbnail-filename" value="270x520으로 올려주세요." disabled="disabled" style="width: 200px;">
 								<label for="thumbnail">썸네일 업로드</label><input name="thumbnail" type="file" id="thumbnail" class="input-style">
 							</div>
-							<div class="col-md-6 t-center filebox">
+							<div class="col-sm-6 t-center filebox">
 								<input class="upload-name" id="vrm-filename" value="파일선택" disabled="disabled" style="width: 200px;">
 								<label for="vrm">vrm 업로드</label><input name="vrm" type="file" id="vrm" class="input-style">
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
+							<input name="basic" class="customLook" placeholder="해시태그" value="${tag}">
+						</div>
+						<div class="col-sm-12">
 							<i class="fa fa-pencil"></i>
 							<textarea name="editordata" id="editordata" class="input-style summernote"></textarea>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<input type=button class="flat-btn" id="submit" value="작성">
 						</div>
 					</div>
@@ -125,8 +185,18 @@ style.css에 합칠예정
 	</div>
 </div>
 <script>
+	// The DOM element you wish to replace with Tagify
+	var input = document.querySelector('input[name=basic]');
 
+	// initialize Tagify on the above input node reference
+	var tagify = new Tagify(input, {
+		maxTags : 10
+	});
 
+// 태그가 추가되면 이벤트 발생
+tagify.on('add', function() {
+	console.log(tagify.value); // 입력된 태그 정보 객체
+})
 
 $('#profile').change(function(){
 	let profileInput = $('#profile')[0];
@@ -151,6 +221,24 @@ $('#thumbnail').change(function(){
 	     $('#thumbnail').val("");
 		return;
 	}
+
+	// 이미지 파일인 경우
+	var img = new Image();
+	img.src = URL.createObjectURL(thumbnailfile[0].files[0]);
+
+	// 이미지가 로드될 때
+	img.onload = function() {
+		// 너비와 높이 가져오기
+		var width = img.width;
+		var height = img.height;
+
+		if (width !== 270 || height !== 520) {
+			$('#thumbnail').val("");
+			$('#thumbnail-filename').val("270x520으로 올려주세요.");
+			alert('이미지의 크기는 270px x 520px 이어야 합니다.');
+			return
+		}
+	};
 	$('#thumbnail-filename').val(thumbnailfile.val());
 });
 
@@ -177,7 +265,8 @@ $('#submit').on('click',async function() {
 	let profileURL = $('#profileURL').val();
 	let thumbnailURL = $('#thumbnailURL').val();
 	let vrmURL = $('#vrmURL').val();
-	
+	let delImage = [];
+
 	if(introduce.length === 0) {
 		alert('소개 내용을 1자 이상 입력해주세요.');
 		$('#introduce').focus();
@@ -221,14 +310,17 @@ $('#submit').on('click',async function() {
         }
     }
 	if(profileInput.files.length !== 0) {
+		delImage.push(profileURL);
     	profileURL = await uploadImage(profileInput,"/upload-img","user");
 	}
 	
 	if(thumbnailInput.files.length !== 0) {
+		delImage.push(thumbnailURL);
     	thumbnailURL = await uploadImage(thumbnailInput,"/upload-img","user");
 	}
 	
 	if(vrmInput.files.length !== 0) {
+		delImage.push(vrmURL);
 		vrmURL = await uploadImage(vrmInput,"/upload-vrm","vrm");
 	}
 	
@@ -236,9 +328,20 @@ $('#submit').on('click',async function() {
 	formData.append("editorId", "${editorEdit.editorId}");
     formData.append("profileImage", profileURL);
     formData.append("introduce", introduceInput);
-    formData.append("image", thumbnailURL);
+    formData.append("thumbnail", thumbnailURL);
     formData.append("content", editordata);
     formData.append("vrm", vrmURL);
+	if(delImage.length != 0) {
+		console.log(delImage.length)
+		for(i = 0; i < delImage.length; i++)
+		formData.append("delImage", delImage[i]);
+	}
+	if(tagify.value.length != 0) {
+		for(i = 0; i < tagify.value.length; i++) {
+			formData.append("tags", tagify.value[i].value)
+		}
+	}
+
 
     // POST 요청 보내기
     try {

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,8 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function () {
@@ -35,10 +39,10 @@
         });
     </script>
 </head>
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed" style="width: 97%">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="main">Vrink</a>
+    <a class="navbar-brand ps-3" href="/admin/main"><i class="fa-solid fa-hammer"></i> VRINK ADMIN</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i></button>
@@ -59,12 +63,12 @@
                data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
-                <li><a class="dropdown-item" href="/user/sign-out">Logout</a></li>
+<%--                <li><a class="dropdown-item" href="#!">Settings</a></li>--%>
+<%--                <li><a class="dropdown-item" href="#!">Activity Log</a></li>--%>
+<%--                <li>--%>
+<%--                    <hr class="dropdown-divider"/>--%>
+<%--                </li>--%>
+                <li><a class="dropdown-item" onclick="logout();">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -76,8 +80,8 @@
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Main Page</div>
                     <a class="nav-link" href="http://localhost">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Vrink
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-chevron-down"></i></div>
+                        VRINK
                     </a>
                     <div class="sb-sidenav-menu-heading">Admin Menu</div>
                     <a class="nav-link collapsed"
@@ -93,11 +97,8 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="user?reset=1">회원 목록</a>
-<%--                            <a class="nav-link" data-bs-toggle="modal" href="#myModal">판매자 신청 목록</a>--%>
-                            <a class="nav-link" href="apply-accept?reset=1">판매자 신청 목록</a>
-                            <a class="nav-link" href="rentalList">신고 내역 목록</a>
-                            <a class="nav-link" href="bookList">결제 목록</a>
+                            <a class="nav-link" href="/admin/user?reset=1">회원 목록</a>
+                            <a class="nav-link" href="/admin/apply-accept?reset=1">판매자 신청 목록</a>
                         </nav>
                     </div>
                     <!-- 게시판  -->
@@ -116,14 +117,30 @@
                          aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="freeboard?reset=1">자유게시판 관리</a>
-                            <a class="nav-link" href="http://localhost/admin/inquiry/main">의뢰게시판 관리</a>
+                            <a class="nav-link" href="/admin/notice?reset=1"">공지사항 관리</a>
+                            <a class="nav-link" href="/admin/freeboard?reset=1">자유게시판 관리</a>
+                            <a class="nav-link" href="/admin/suggest?reset=1"">의뢰게시판 관리</a>
                         </nav>
                     </div> <!-- end of 게시판  -->
 
-                    <a class="nav-link collapsed" href="http://localhost/admin/user?reset=1">
+                    <a class="nav-link collapsed" href="/admin/calculator-admin?reset=1">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                        정산 목록
+                    </a>
+
+                    <a class="nav-link collapsed" href="/admin/payment-admin?reset=1">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-coins"></i></div>
+                        결제 목록
+                    </a>
+
+                    <a class="nav-link collapsed" href="/admin/question?reset=1">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user-pen"></i></div>
                         고객센터
+                    </a>
+
+                    <a class="nav-link collapsed" href="/admin/ad-admin?reset=1">
+                        <div class="sb-nav-link-icon"><i class="fa-brands fa-adversal"></i></div>
+                        배너 목록
                     </a>
 
                 </div>
@@ -131,24 +148,29 @@
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
                 <c:choose>
-                    <c:when test="${empty user}">
-                        Vrink
+                    <c:when test="${empty USER}">
+                        <i class="fa-solid fa-user-gear"></i> Vrink
                     </c:when>
                     <c:otherwise>
-                        ${user.username}
+                        <i class="fa-solid fa-user-gear"></i> ${USER.nickname}
                     </c:otherwise>
                 </c:choose>
             </div>
         </nav>
     </div>
-    <!-- Modal -->
-    <%--    <div class="modal fade" id="myModal" role="dialog">--%>
-    <%--        <div class="modal-dialog">--%>
-    <%--            <div class="modal-content">--%>
-    <%--                modal--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
+
+    <script>
+
+        async function logout() {
+            try {
+                await fetch("http://localhost/user/log-out");
+                location.href = "http://localhost";
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+    </script>
 
     <div id="layoutSidenav_content">
         <main>

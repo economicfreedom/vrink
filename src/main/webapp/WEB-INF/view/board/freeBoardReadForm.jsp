@@ -26,7 +26,8 @@
                     userId: `${USER.userId}`,
                     communityId: `${dto.communityId}`,
                     content: content,
-                    nickname:`${USER.nickname}`
+                    nickname: `${USER.nickname}`,
+                    title: $("#title").val()
 
                 })
             })
@@ -39,6 +40,25 @@
                 })
         });
 
+
+        $("#search").click(function () {
+            let type = $("#type").val();
+            let keyword = $("#keyword").val();
+
+            let url = "/board/board-list?type=" + type + "&keyword=" + keyword;
+
+            location.href = url;
+
+        });
+        $("#keyword").keypress(function (event) {
+            if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
+                let type = $("#type").val();
+                let keyword = $("#keyword").val();
+
+                let url = "/board/board-list?type=" + type + "&keyword=" + keyword;
+                location.href = url;
+            }
+        });
 
     })
 
@@ -60,6 +80,7 @@
                 } else {
                     location.href = "/board/board-list";
                 }
+
             })
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
@@ -108,8 +129,8 @@
     }
 
     function updateDone(id) {
-let replyArea = $("#reply-content-" + id);
-let content = replyArea.val();
+        let replyArea = $("#reply-content-" + id);
+        let content = replyArea.val();
 
         if (content.length === 0) {
             alert("댓글을 입력해주세요.")
@@ -122,11 +143,12 @@ let content = replyArea.val();
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userId:`${USER.userId}`,
+                userId: `${USER.userId}`,
                 communityId: ${dto.communityId},
                 replyId: id,
                 content: content,
-                nickname:`${USER.nickname}`
+                nickname: `${USER.nickname}`
+
 
             })
         })
@@ -168,14 +190,14 @@ let content = replyArea.val();
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
 
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId +'">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:5px" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
-                    html += '<textarea class="form-control custom-textarea" id="reply-content-'+reply.replyId+'"';
+                    html += '<textarea class="form-control custom-textarea" id="reply-content-' + reply.replyId + '"';
                     html += ' rows="2"';
                     html += ' readonly ';
                     html += '>' + reply.content + '</textarea>';
@@ -221,11 +243,33 @@ let content = replyArea.val();
 
 </script>
 
-<div class="container">
-    <div class="row">
-        <div class="title">
+<div class="container mt-5">
 
-            <h1>${dto.title}</h1>
+    <div class="row ">
+        <div class="title">
+            <div style="background-color:grey; border:grey solid 1px; border-radius: 2px;">
+                <a href="/board/board-list" style="color: grey; text-decoration: none; text-decoration-color: grey; ">
+                    <h2
+                            style="color: white; margin-left: 6px">자유 게시판</h2></a>
+            </div>
+            <div style="float: right; margin-top: 2px">
+                <select style="height:26px" name="type" id="type">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="tc">게시글+내용</option>
+                    <option value="nickname">닉네임</option>
+                </select>
+                <input type="text" size="15" id="keyword">
+                <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
+                     id="search">
+
+            </div>
+
+
+            <hr style="margin-top: 30px ;border: black solid 2px;">
+
+
+            <h3 id="title">${dto.title}</h3>
             <span> ${dto.nickname}</span>
             <br>
             <small>${dto.createdAt}</small>
@@ -279,8 +323,8 @@ let content = replyArea.val();
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
                         <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
-                                <li class="list-group-item custom-list-item" >
+                            <ul class="list-group custom-list-group" style="margin-top:5px" id="reply-${reply.replyId}">
+                                <li class="list-group-item custom-list-item" style="margin-top: 30px;">
                                     <div class="comment-header">
                                         <strong class="comment-nickname">${reply.nickname}</strong>
                                         <span class="comment-date">${reply.createdAt}</span>
@@ -289,7 +333,7 @@ let content = replyArea.val();
                                               rows="2"
                                               id="reply-content-${reply.replyId}"
                                               readonly
-                                              >${reply.content}</textarea>
+                                    >${reply.content}</textarea>
                                     <div class="comment-buttons">
                                         <c:if test="${reply.userId == USER.userId}">
                                             <button class="btn btn-xs btn-default"
@@ -376,6 +420,7 @@ let content = replyArea.val();
         justify-content: space-between;
     }
 </style>
+
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
 

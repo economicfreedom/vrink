@@ -6,32 +6,37 @@
 	        <div class="registration-sec">
 	            <h3>정산신청</h3>
 				<p>${newUser.nickname} 작가님 환영합니다!!</p>
-	            <div class="common-sign-up">
-					<input type="hidden" class="my-user-id" value="${newUser.userId}">
-	                <div class="field">
-	                    <input type="text" value="보유 포인트   ${newUser.point }원" readonly="readonly" />
-						<input type="hidden" class="my-point" value="${newUser.point }" readonly="readonly" />
-	                </div>
-	                <div class="field">
-						<div class="email-check-div">
-							<input type="text" class="point-input" placeholder="신청 금액"/>
-							<input type="button" value="정산 신청" class="calculate-point-btn" id="email-btn"/>
+	            	<div class="common-sign-up">
+						<div class="field">
+							<div class="check-div">
+								<input type="text" value="보유 포인트   ${newUser.point }원" readonly="readonly"/>
+								<input type="button" value="정산 내역" class="check-btn" id="get-cal-list-btn" onclick="location.href='/editor/my-cal-list/${EDITOR_ID}'" />
+							</div>
 						</div>
-	                </div>
+						<div class="field">
+							<div class="check-div">
+								<input type="text" class="point-input" placeholder="신청 금액" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+								<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
+							</div>
+						</div>
+					</div>
 	            </div>
-	    </div>
+	    	</div>
     	</div>
     </div>
 </div>
 <script type="text/javascript">
 
-	$('.calculate-point-btn').on('click', function () {
+	$('#calculate-point-btn').on('click', function () {
+		let pointInput = $('.point-input').val();
+
 		if($('.point-input').val().trim() === null || $('.point-input').val().trim() === 0) {
+
 			alert('정산 금액을 입력해주세요');
 			$('.point-input').val('');
 			return;
 		}
-		if ($('.my-point').val() < $('.point-input').val()) {
+		if (Number(`${newUser.point}`) < Number(pointInput)) {
 			alert('보유 포인트 보다 많은 포인트를 정산 신청할 수 없습니다.');
 			$('.point-input').val('');
 			return;
@@ -46,7 +51,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				userId: $('.my-user-id').val().trim(),
+				userId: `${USER.userId}`,
 				point: $('.point-input').val().trim()
 			})
 		}).then(response => {

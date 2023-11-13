@@ -2,6 +2,7 @@ package com.green.vrink.community.controller;
 
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.LoginCheck;
@@ -25,10 +26,9 @@ public class FreeBoardRestController {
 
     private final FreeBoardService freeBoardService;
     private final HttpSession httpSession;
-//    private final Check check;
+    private final MessageService messageService;
 
     @PostMapping("/write")
-    @LoginCheck
     public ResponseEntity<?> write(@Valid @RequestBody FreeBoardDTO freeBoardDTO) {
         isNull("test");
         User user = (User) httpSession.getAttribute("USER");
@@ -46,7 +46,7 @@ public class FreeBoardRestController {
     }
 
     @DeleteMapping("/del/{community-id}")
-    @LoginCheck
+
     public ResponseEntity<?> delete(
             @PathVariable("community-id")
             Integer communityId
@@ -62,7 +62,6 @@ public class FreeBoardRestController {
     }
 
     @PutMapping("/update")
-//    @LoginCheck
     public ResponseEntity<?> update(
             @Valid @RequestBody FreeBoardDTO freeBoardDTO, BindingResult bindingResult) {
 

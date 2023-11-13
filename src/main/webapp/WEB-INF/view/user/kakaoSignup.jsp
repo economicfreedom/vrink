@@ -22,15 +22,20 @@
 	                    <input type="hidden" class="kakao-name-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
-	                    <input type="text" placeholder="닉네임" class="kakao-nickname-input" value="${nickname }" readonly="readonly"/>
-	                    <input type="hidden" class="kakao-nickname-check-flag" value="1"/>
+						<div class="check-div">
+							<input type="text" placeholder="닉네임" class="kakao-nickname-input"/>
+							<input type="button" value="중복확인" class="check-btn" id="nickname-check-btn"/>
+							<input type="hidden" class="kakao-nickname-check-flag" value="1"/>
+						</div>
 	                </div>
 	                <div class="field">
 	                    <input type="text" placeholder="휴대폰번호" class="kakao-phone-input"/>
 	                    <input type="hidden" class="kakao-phone-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
-			            <input type="button" value="회원가입" id="kakao-sign-up-btn" class="flat-btn"/>
+						<div class="flat-btn-div">
+			            	<input type="button" value="회원가입" id="kakao-sign-up-btn" class="flat-btn"/>
+						</div>
 	                </div>
 	            </div>
 	    </div>
@@ -54,6 +59,24 @@
 	    }
 	    $('.kakao-password-check-flag').val('0');
 	});
+
+	$('#nickname-check-btn').on('click', function () {
+		let nickname = $('.nickname-input').val().trim();
+		nicknameCheck(nickname);
+	});
+
+	async function nicknameCheck(nickname) {
+		let result = await fetch('http://localhost/user/check-nickname/' + nickname);
+		let resultCode = await result.json();
+		if (resultCode !== 0) {
+			alert('이미 사용 중인 닉네임입니다.');
+			$('.nickname-input').val('');
+			$('.nickname-check-flag').val('1');
+			return;
+		}
+		alert('사용 가능한 닉네임입니다.');
+		$('.nickname-check-flag').val('0');
+	}
 	
 	$('#kakao-sign-up-btn').on('click', function () {
         if ($('.kakao-email-input').val().trim() == '' || $('.kakao-password-input').val().trim() == '' || $('.kakao-name-input').val().trim() == ''
@@ -72,11 +95,11 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: $('.kakao-email-input').val(),
-                password: $('.kakao-password-input').val(),
-                name: $('.kakao-name-input').val(),
-                nickname: $('.kakao-nickname-input').val(),
-                phone: $('.kakao-phone-input').val()
+                email: `${email}`,
+                password: $('.kakao-password-input').val().trim(),
+                name: $('.kakao-name-input').val().trim(),
+                nickname: `${nickname}`,
+                phone: $('.kakao-phone-input').val().trim()
             })
         })
             .then(response => {
@@ -93,6 +116,7 @@
             )
             .catch(error => console.error('Error:', error));
     });
+
 </script>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

@@ -1,15 +1,17 @@
 package com.green.vrink.community.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FreeBoardDTO {
 
 
@@ -24,4 +26,5 @@ public class FreeBoardDTO {
     private String createdAt;
     @NotBlank(message = "유저 닉네임의 값은 필수 입니다.")
     private String nickname;
+    private Integer count;
 }

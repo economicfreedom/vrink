@@ -17,8 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class FreeBoardReplyServiceImpl implements FreeBoardReplyService {
+
     private final Converter<FreeBoardReplyDTO, FreeBoardReply> converter;
+
     private final FreeBoardReplyRepository freeBoardReplyRepository;
+
     @Transactional
     @Override
     public Integer create(FreeBoardReplyDTO freeBoardReply) {

@@ -49,7 +49,7 @@
                     <h2 class="mb-0">문의</h2>
 
                 </div>
-                <div>
+                <div class="flat-btn-div">
                     <button class="flat-btn" style="font-size: 12px;" onclick="href()">문의 하기</button>
                 </div>
             </div>

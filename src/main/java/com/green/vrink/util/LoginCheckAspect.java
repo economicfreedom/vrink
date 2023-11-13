@@ -20,7 +20,6 @@ public class LoginCheckAspect {
         HttpSession session = attr.getRequest().getSession(false);
 
         User user = (User) session.getAttribute("USER");
-        System.out.println();
         if (user == null) {
             return ResponseEntity.badRequest().body("로그인이 필요한 서비스입니다");
         }

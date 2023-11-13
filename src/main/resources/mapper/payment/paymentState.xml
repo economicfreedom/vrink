@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.payment.repository.interfaces.PaymentStateRepository">
+    <insert id="saveCustomerConfirm">
+
+        INSERT INTO payment_state( payment_id
+                                 , editor_recognize
+                                 , customer_recognize
+                                 , state
+                                 , point)
+            value ( #{paymentId}
+            ,#{editorRecognize}
+            ,#{customerRecognize}
+            ,#{state}
+            ,#{point} )
+
+    </insert>
+    <insert id="saveEditorCancel">
+        INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point,state)
+            VALUE (#{paymentId},#{editorRecognize},#{customerRecognize},#{point},#{state})
+    </insert>
+    <insert id="saveEditorDone">
+        INSERT INTO payment_state(payment_id, editor_recognize, customer_recognize, point,state)
+            VALUE (#{paymentId},#{editorRecognize},#{customerRecognize},#{point},#{state})
+    </insert>
+    <select id="findEditorRecognizeByPaymentId" resultType="java.lang.Byte">
+        SELECT editor_recognize
+        FROM payment_state
+        WHERE created_at = (SELECT MAX(created_at)
+                            FROM payment_state
+                            where payment_id = #{paymentId})
+    </select>
+
+</mapper>

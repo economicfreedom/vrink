@@ -44,9 +44,14 @@ mybatis:
     - classpath:mapper/**/**.xml
   configuration:
     map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 org:
   zerock:
     upload:
       path: \src\main\resources\static
 
+# MyBatis 로그 설정 (선택 사항)
+#logging:
+#  level:
+#    org.mybatis.spring: debug

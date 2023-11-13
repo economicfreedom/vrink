@@ -13,7 +13,11 @@ jQuery(document).ready(function(){
 	});
 
 	$('.menu-toggle').on("click", function(){
-		$(".menu nav").slideToggle();
+		$(".menu nav").slideToggle(function () {
+			if ($(".menu nav").css("display") === "none") {
+				$(".menu nav").css("display", "");
+			}
+		});
 	});
 
 	// Get Header Height //

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.follow.repository.interfaces.FollowRepository">
+
+    <insert id="follow">
+        INSERT INTO follow (user_id, editor_id)
+        SELECT #{userId}, #{editorId}
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM follow
+                WHERE user_id = #{userId} AND editor_id = #{editorId}
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM editor
+                WHERE editor_id = #{editorId}
+            )
+    </insert>
+
+    <delete id="unFollow">
+        DELETE FROM follow WHERE user_id = #{userId} AND editor_id = #{editorId}
+    </delete>
+
+    <select id="getFollowListByUserId" resultType="com.green.vrink.follow.repository.model.Follow">
+        SELECT * FROM follow WHERE user_id = #{userId}
+    </select>
+
+    <select id="isFollow" resultType="java.lang.Integer">
+        SELECT COUNT(follow_id) FROM follow WHERE user_id = #{userId} AND editor_id = #{editorId}
+    </select>
+
+    <select id="countFollower" resultType="java.lang.Integer">
+        SELECT COUNT(editor_id) FROM follow WHERE editor_id = #{editorId}
+    </select>
+
+    <select id="getFollowEditorByUserId" resultType="com.green.vrink.follow.dto.GetFollowEditorDto">
+        SELECT ed.editor_id
+             , ed.user_id
+             , ed.profile_image
+             , u_editor.nickname
+             , (SELECT COUNT(*) FROM follow f_sub WHERE f_sub.editor_id = ed.editor_id) AS count
+        FROM follow f
+            LEFT JOIN user u_user ON u_user.user_id = f.user_id
+            LEFT JOIN editor ed ON f.editor_id = ed.editor_id
+            LEFT JOIN user u_editor ON u_editor.user_id = ed.user_id
+        WHERE u_user.user_id = #{userId}
+        GROUP BY ed.editor_id, ed.user_id, ed.profile_image, u_editor.nickname
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(f.user_id)
+        FROM follow f
+        LEFT JOIN user u
+        ON u.user_id = f.user_id
+        <if test="type == ''">
+            WHERE f.user_id LIKE #{userId}
+        </if>
+        <if test="type == 'all'">
+            WHERE f.user_id LIKE #{userId}
+        </if>
+        <if test="type == 'nickname'">
+            WHERE u.nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="findAllByCriteria" resultType="com.green.vrink.follow.dto.GetFollowEditorDto">
+        SELECT ed.editor_id
+             , ed.user_id
+             , ed.profile_image
+             , u_editor.nickname
+             , (SELECT COUNT(*) FROM follow f_sub WHERE f_sub.editor_id = ed.editor_id) AS count
+        FROM follow f
+            LEFT JOIN user u_user ON u_user.user_id = f.user_id
+            LEFT JOIN editor ed ON f.editor_id = ed.editor_id
+            LEFT JOIN user u_editor ON u_editor.user_id = ed.user_id
+
+        <if test="type == '' ">
+            WHERE u_user.user_id = #{userId}
+        </if>
+        <if test="type == 'all' ">
+            WHERE u_user.user_id = #{userId}
+        </if>
+        <if test="type == 'nickname'">
+            WHERE u_editor.nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+
+
+        GROUP BY ed.editor_id, ed.user_id, ed.profile_image, u_editor.nickname
+        ORDER BY f.created_at DESC
+        LIMIT #{offset},#{countPerPage}
+    </select>
+</mapper>

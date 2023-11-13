@@ -1,6 +1,7 @@
 package com.green.vrink.user.service;
 
 import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.model.Calculator;
 import com.green.vrink.util.Criteria;
 
 import java.util.List;
@@ -16,9 +17,36 @@ public interface EditorService {
 	List<EditorDTO> getList(Criteria cri);
 
 	Integer getTotal();
-	
-	Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO);
-	Integer findEditorId(Integer userId);
+
+    Integer requestEditorPrice(EditorPriceListDTO editorPriceListDTO);
+
+    Integer findEditorId(Integer userId);
 	Integer calculatePoint(CalculatePointDto calculatePointDto);
 	Integer updatePoint(Integer userId, Integer point);
+
+    Integer getUserIdByEditorId(Integer editorId);
+	String getNicknameByEditorId(Integer editorId);
+
+	List<EditorPriceDTO> responsePrice(Integer editorId);
+
+    Integer requestEditorPriceEdit(EditorPriceListDTO editorPriceListDTO);
+
+    Integer getEditorIdByUserId(Integer userId);
+
+	List<RequestDetailDTO> getRequestList(Criteria cri, int editorId);
+
+	int getRequestListTotal(Criteria cri,Integer editorId);
+
+	RequestViewDTO getRequestByPaymentId(Integer paymentId);
+	List<RequestDetailDTO> getRequestDetailListById(Integer paymentId);
+
+	RequestResultDTO getRequestDetailResult(Integer paymentId);
+
+
+	String responseEditorTag(Integer editorId);
+
+	String responseRandomTag();
+
+	Integer getTotal(Criteria criteria);
+	List<Calculator> getMyCalList(Criteria criteria);
 }

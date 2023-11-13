@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class ErrorHandler implements ErrorController {
 //    @GetMapping("/error")
-//
+
 //    public String handleError(HttpServletRequest request) {
-//
+
 //        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 //
 //
@@ -37,5 +37,5 @@ public class ErrorHandler implements ErrorController {
 //
 //        return"500";
 //}
-    }
-
+//    }
+}

@@ -354,6 +354,7 @@ iframe{
 .simple-header.for-sticky.sticky > .menu .logo {
     padding: 25px 0;
 }
+
 .logo {
     float: left;
     padding: 38px 0 42px;
@@ -486,6 +487,90 @@ iframe{
     letter-spacing: 0.3px;
 
 }
+.logout-div {
+    float: right;
+    margin-left: 65px;
+}
+.logout-div > span {
+    background: #FF2929 none repeat scroll 0 0;
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+
+    color: #ffffff;
+    float: left;
+    font-family: Nunito;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+    margin: 39px 0;
+    padding: 13px 30px;
+    cursor: pointer;
+}
+.logout-div > span:hover{
+    background: #ffffff;
+    color: #ff2929;
+}
+.simple-header.for-sticky.sticky > .menu .logout-div > span {
+    margin: 25px 0;
+}
+.simple-header.for-sticky.sticky > .menu .go-admin-div > a > span {
+    margin: 25px 0;
+}
+.logout-div > span i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+.log-out-btn {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+
+
+.go-admin-div {
+    float: right;
+    margin-left: 65px;
+}
+.go-admin-div span {
+    background: #FF2929 none repeat scroll 0 0;
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+
+    color: #ffffff;
+    float: left;
+    font-family: Nunito;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+    margin: 39px 0;
+    padding: 13px 30px;
+    cursor: pointer;
+}
+.go-admin-div span:hover{
+    background: #ffffff;
+    color: #ff2929;
+}
+.simple-header.for-sticky.sticky > .menu .go-admin-div > span {
+    margin: 25px 0;
+}
+.go-admin-div span i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+.go-admin-btn {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+
 .popup-client {
     float: right;
     margin-left: 65px;
@@ -1207,7 +1292,7 @@ aside .widget:first-child {
     width: 100%;
 }
 .heading1 > h2 {
-    color: #ffffff;
+    /*color: #ffffff;*/
     float: left;
     font-family: Nunito;
     font-size: 21px;
@@ -1656,22 +1741,36 @@ blockquote p {
     border-radius: 3px;
 
 }
+.status-btn {
+    border: 1px solid transparent;
+    color: #fff;
+    float: left;
+    font-family: Nunito;
+    font-size: 12px;
+    font-weight: bold;
+
+
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+.flat-btn-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
 .btn-div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.email-check-div {
+.check-div {
 	display: flex;
 }
- #auth-email-div {
-	display: flex;
- }
-.email-input {
-	/*display: inline;
-	box-sizing: border-box;*/
-}
-#email-btn {
+.check-btn {
 	background-color: #ff2929;
 	margin-top: 16px;
 	height: 58px;
@@ -1694,6 +1793,7 @@ blockquote p {
 }
 
 .signUp-btn {
+    width: 300px;
 	border: 1px solid transparent;
     color: #fff;
     float: left;
@@ -3743,7 +3843,6 @@ blockquote p {
     padding: 0;
 }
 .account-user {
-    background-image: url("http://placehold.it/484x858");
     background-size: cover;
     float: left;
     height: 100%;
@@ -4013,6 +4112,10 @@ header.white .menu nav > ul > li:hover > a {
 }
 
 header.white .popup-client > span:hover {
+    background: #333333;
+    color: #ffffff !important;
+}
+header.white .logout-div > span:hover {
     background: #333333;
     color: #ffffff !important;
 }
@@ -5212,6 +5315,8 @@ footer.light-footer .bottom-line a {
 .gallery-detail > a,
 .close-popup,
 .popup-client > span,
+.logout-div > span,
+.go-admin-div > a > span,
 .popup-alarm > span,
 .popup-alarm > div,
 .square-services::before,
@@ -5407,7 +5512,9 @@ p {
 .w-full {
 	width: 100%;
 }
-
+.h-full {
+    height: 100%;
+}
 .p-block {
 	padding:45px 0;
 }
@@ -5436,6 +5543,11 @@ p {
 .d-flex.j-around {
 	justify-content: space-around;
 }
+
+.d-flex.j-evenly {
+    justify-content: space-evenly;
+}
+
 
 .contact-form > form {
     float: left;
@@ -5540,5 +5652,14 @@ p {
 .note-image-input.form-control-file.note-form-control.note-input::file-selector-button:hover {
     background: rgb(77,77,77);
     color: #fff;
- } 
+ }
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.find-link {
+    color: #4e4e4e;
+}
 /* psg end */

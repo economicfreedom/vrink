@@ -13,12 +13,21 @@
 <script>
 
     $(document).ready(function () {
-        document.querySelector('.terms-container').addEventListener('scroll', function () {
-            const container = document.querySelector('.terms-container');
-            if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-                $("#apply").attr("disabled",false);
+        let container = document.querySelector('.terms-container');
+
+
+        $('.terms-container').on('scroll', function () {
+            let $this = $(this);
+            let scrollPosition = $this.scrollTop() + $this.innerHeight();
+            let nearBottom = $this[0].scrollHeight - scrollPosition;
+            let offset = 10; // 1px의 오차를 허용합니다.
+
+            if (nearBottom < offset) {
+                $("#apply").prop("disabled", false);
             }
         });
+
+
         $("#submit").click(function () {
 
             let val = $("#apply").is(":checked")
@@ -66,7 +75,7 @@
                 },
                 error: function (res) {
                     console.log(res);
-                    alert("알러트")
+                    alert("실패하였습니다.")
                 }
 
             })

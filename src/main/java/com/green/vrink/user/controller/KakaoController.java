@@ -15,12 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.vrink.user.dto.KakaoSignInDto;
@@ -42,7 +40,6 @@ public class KakaoController {
 	
 	@GetMapping("/sign-in")
 	public String getKakaoUserInfo(String code, Model model) throws ParseException {
-	    System.out.println("OAuth Code : "+code);
 	    //////////////////////Token 정보 요청//////////////////////
 	    try {
 	        URL url = new URL("https://kauth.kakao.com/oauth/token");
@@ -76,8 +73,7 @@ public class KakaoController {
 	            if (br != null)
 	                br.close();
 	        }
-	        System.out.println("result : " + result);
-	        
+
 	        ObjectMapper mapper = new ObjectMapper();
 	        String access_token = mapper.readValue(result, KakaoSignInDto.class).getAccess_token();
 	        
@@ -86,7 +82,6 @@ public class KakaoController {
 	        conn.setRequestMethod("POST");
 	        conn.setDoOutput(true);
 	        conn.setRequestProperty("Authorization", "Bearer "+access_token);
-	        System.out.println(conn.getURL());
 
 	        line = ""; result = "";
 	        try {
@@ -100,8 +95,7 @@ public class KakaoController {
 	            if (br != null)
 	                br.close();
 	        }
-	        System.out.println("result user : " + result);
-	        
+
 	        JSONParser jsonParser = new JSONParser();
 	        Object object = jsonParser.parse(result);
 	        JSONObject jsonObject = (JSONObject)object;
@@ -112,19 +106,15 @@ public class KakaoController {
 	        String email = jsonObject.get("email").toString();
 	        
 	        if (userRepository.checkEmail(email) == null) {
-	        	object = jsonParser.parse(jsonObject.get("profile").toString());
-	        	jsonObject = (JSONObject)object;
+//	        	object = jsonParser.parse(jsonObject.get("profile").toString());
+//	        	jsonObject = (JSONObject)object;
 	        	
-	        	String nickname = jsonObject.get("nickname").toString();
-	        	String profileImage = jsonObject.get("profile_image_url").toString();
-	        	
-	        	System.out.println(email);
-	        	System.out.println(nickname);
-	        	System.out.println(profileImage);
+//	        	String nickname = jsonObject.get("nickname").toString();
+//	        	String profileImage = jsonObject.get("profile_image_url").toString();
 	        	
 	        	model.addAttribute("email", email);
-	        	model.addAttribute("profileImage", profileImage);
-	        	model.addAttribute("nickname", nickname);
+//	        	model.addAttribute("profileImage", profileImage);
+//	        	model.addAttribute("nickname", nickname);
 
 	        	return "/user/kakaoSignup";
 			}
@@ -135,7 +125,7 @@ public class KakaoController {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	    return "/user/applyForm";
+	    return "main";
 	    //////////////////////Token 정보 요청 끝//////////////////////
 	}
 }

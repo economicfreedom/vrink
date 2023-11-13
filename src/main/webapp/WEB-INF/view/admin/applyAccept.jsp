@@ -4,10 +4,28 @@
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
 <style>
-    table {
+    .table {
         /* 	width: 100%; */
         border-collapse: collapse;
-        margin-left: 30px;
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+
+    .tab--adminApply li {
+        margin-right: 8px !important;
+        width: 112px !important;
+    }
+
+    .t-head {
+        background-color: #ececec;
+    }
+    .table td {
+        padding: 1px !important;
+        vertical-align: baseline !important;
+        padding-left: 8px !important;
+    }
+    .card-header {
+        padding-left: 23px;
     }
 
     p {
@@ -28,26 +46,23 @@
 
     td:last-child {
         text-align: right;
+        padding-right: 10px !important;
     }
 
     td {
         vertical-align: middle;
     }
 
-    td a {
-        color: black;
-        text-decoration: none !important;
-        margin-left: 15px;
-    }
-
     h4 {
-        padding-left: 8px;
+        margin-top: 5px;
+        font-size: 20px;
     }
 
     .classification {
         display: inline-block;
         font-weight: bold;
         padding: 8px 10px;
+        padding-left: 8px !important;
     }
 
     .write-btn {
@@ -65,9 +80,9 @@
     }
 
     .tab--adminApply {
-        margin-left: 30px;
-        padding: 0 0 1px 1px;
-        margin-bottom: 30px;
+        margin-top: 15px;
+        margin-left: 24px;
+        padding: 0;
         overflow: hidden;
     }
 
@@ -111,6 +126,7 @@
         height: calc(100% - 1px);
         border: 1px solid #e5e5e5;
         content: "";
+        border-radius: 9px;
     }
 
     .tab--adminApply::after {
@@ -126,6 +142,7 @@
     .tab--adminApply li.active {
         border: 2px solid #222;
         border-top: 1px solid #222;
+        border-radius: 10px;
     }
 
     .tab--adminApply li.active a {
@@ -193,140 +210,158 @@
 <%--<c:forEach items="${adminApplyList}" var="dto">--%>
 <%--    <h1>${dto.nickname}</h1>--%>
 <%--</c:forEach>--%>
+<div class="card m-4">
+    <div class="card-header"><h3><i class="fa-solid fa-clipboard-check"></i> 판매자 신청 목록</h3></div>
 
-<h1 class="title--adminApply">판매자 신청 목록</h1>
-<ul class=tab--adminApply>
-    <c:choose>
-        <c:when test="${uClassification == '전체' or empty uClassification}">
-            <li class="active" data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="0"><a href="#">승인 대기</a></li>
-            <li data-classification="1"><a href="#">승인됨</a></li>
-
-        </c:when>
-        <c:when test="${uClassification == '0'}">
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li class="active" data-classification="0"><a href="#">승인 대기
-            </a></li>
-            <li data-classification="1"><a href="#">승인됨</a></li>
-        </c:when>
-        <c:otherwise>
-            <li data-classification="전체"><a href="#">전체</a></li>
-            <li data-classification="0"><a href="#">승인 대기</a></li>
-            <li class="active" data-classification="1"><a href="#">승인됨</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-
-<form style="width: 90%;" action="#" name="pageForm">
-    <div class="mt-2 mx-4">
-        <select name="searchType" id="searchType">
+        <ul class="tab--adminApply">
             <c:choose>
-                <c:when test="${uSearchType == '사기이력'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력" selected>사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
+                <c:when test="${uClassification == '전체' or empty uClassification}">
+                    <li class="active" data-classification="전체"><a href="#">전체</a></li>
+                    <li data-classification="0"><a href="#">승인 대기</a></li>
+                    <li data-classification="1"><a href="#">승인됨</a></li>
+
                 </c:when>
-                <c:when test="${uSearchType == '은행이름'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름" selected>은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:when>
-                <c:when test="${uSearchType == '계좌번호'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호" selected>계좌번호</option>
-                    <option value="닉네임">닉네임</option>
-                </c:when>
-                <c:when test="${uSearchType == '닉네임'}">
-                    <option value="전체">전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임" selected>닉네임</option>
+                <c:when test="${uClassification == '0'}">
+                    <li data-classification="전체"><a href="#">전체</a></li>
+                    <li class="active" data-classification="0"><a href="#">승인 대기
+                    </a></li>
+                    <li data-classification="1"><a href="#">승인됨</a></li>
                 </c:when>
                 <c:otherwise>
-                    <option value="전체" selected>전체</option>
-                    <option value="사기이력">사기이력</option>
-                    <option value="은행이름">은행이름</option>
-                    <option value="계좌번호">계좌번호</option>
-                    <option value="닉네임">닉네임</option>
+                    <li data-classification="전체"><a href="#">전체</a></li>
+                    <li data-classification="0"><a href="#">승인 대기</a></li>
+                    <li class="active" data-classification="1"><a href="#">승인됨</a></li>
                 </c:otherwise>
             </c:choose>
+        </ul>
 
-        </select> <input type="text" id="keyword" name="keyword"
-                         value="${uKeyword}">
-        <button class="btn btn-dark btn-block" type="button"
-                id="searchButton">검색
-        </button>
-        <button class="btn btn-dark btn-block" type="button"
-                id="resetButton"
-                onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
-        </button>
-    </div>
+    <form style="width: 95%;" action="#" name="pageForm">
+        <div class="mx-4 mb-2">
+            <select name="searchType"
+                    id="searchType"
+                    class="datatable-selector"
+                    style="padding-left: 1.125rem; padding-right: 2.125rem;">
+                <c:choose>
+                    <c:when test="${uSearchType == '사기이력'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력" selected>사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '은행이름'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름" selected>은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '계좌번호'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호" selected>계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:when>
+                    <c:when test="${uSearchType == '닉네임'}">
+                        <option value="전체">전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임" selected>닉네임</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="전체" selected>전체</option>
+                        <option value="사기이력">사기이력</option>
+                        <option value="은행이름">은행이름</option>
+                        <option value="계좌번호">계좌번호</option>
+                        <option value="닉네임">닉네임</option>
+                    </c:otherwise>
+                </c:choose>
 
-    <table class="table">
-        <tbody id="adminApply-list-container">
-        </tbody>
-    </table>
-    <div class="paging">
-        <div class="text-center clearfix">
-            <ul class="pagination" id="pagination--a">
-                <c:if test="${pagination.prev}">
-                    <li class="page-item "><a class="page-list" href="#"
-                                              data-page="${pagination.beginPage-1}">Prev</a></li>
-                </c:if>
-
-                <c:forEach var="num" begin="${pagination.beginPage}"
-                           end="${pagination.endPage}">
-                    <li
-                            class="${pagination.paging.page == num ? 'age-item active' : ''} page-item"><a
-                            class="page-list" href="#" data-page="${num}">${num}</a></li>
-                </c:forEach>
-
-                <c:if test="${pagination.next}">
-                    <li class="page-item"><a class="page-list" href="#"
-                                             data-page="${pagination.endPage+1}">Next</a></li>
-                </c:if>
-            </ul>
-
-            <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-            <input type="hidden" id="page" name="page" value="${pagination.paging.page}"> <input type="hidden"
-                                                                                                 name="recordSize"
-                                                                                                 value="${pagination.paging.recordSize}">
-
+            </select> <input type="text" id="keyword" name="keyword" class="datatable-input"
+                             placeholder="검색어를 입력해주세요" value="${uKeyword}">
+            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px;"
+                    id="searchButton">검색
+            </button>
+            <button class="btn btn-secondary btn-block btn-admin" type="button" style="position: relative; top: -1px;"
+                    id="resetButton"
+                    onClick="location.href='/admin/apply-accept?reset=1'">검색초기화
+            </button>
         </div>
-    </div>
-</form>
+            <table class="datatable-table table">
+                <tbody id="adminApply-list-container">
+                </tbody>
+            </table>
+        <div class="paging">
+            <div class="text-center clearfix">
+                <ul class="pagination" id="pagination--a">
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item "><a class="page-list" href="#"
+                                                  data-page="${pagination.beginPage-1}">Prev</a></li>
+                    </c:if>
 
+                    <c:forEach var="num" begin="${pagination.beginPage}"
+                               end="${pagination.endPage}">
+                        <li
+                                class="${pagination.paging.page == num ? 'page-item active mx-1' : 'mx-1'} page-item"><a
+                                class="page-list" href="#" data-page="${num}">${num}</a></li>
+                    </c:forEach>
+
+                    <c:if test="${pagination.next}">
+                        <li class="page-item"><a class="page-list" href="#"
+                                                 data-page="${pagination.endPage+1}">Next</a></li>
+                    </c:if>
+                </ul>
+
+                <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+                <input type="hidden" id="page" name="page" value="${pagination.paging.page}"> <input type="hidden"
+                                                                                                     name="recordSize"
+                                                                                                     value="${pagination.paging.recordSize}">
+
+            </div>
+        </div>
+    </form>
+</div>
 
 <script>
 
-    function changeApply(applyId, accepted ,number) {
+    function changeApply(applyId, accepted, number, userId) {
+        show_spinner();
 
         $.ajax({
-            type : "POST",
-            url : "/admin/change-apply",
-            data : {
+            type   : "POST",
+            url    : "/admin/change-apply",
+            data   : {
                 "applyId" : applyId,
-                "accepted" : accepted,
-                "number" : number
+                "accepted": accepted,
+                "number"  : number,
+                "userId" : userId
             },
-            success : function(data){
+            success: function (data) {
                 if (data === 200) {
+                    hide_spinner();
                     window.location.href = "/admin/apply-accept";
-                } else if(data === 400) {
-                    alert('사기 계좌로 조회되었습니다. 승인이 불가합니다.');
+                } else if (data === 400) {
+                    hide_spinner();
+                    Swal.fire({
+                        icon: "error",
+                        title: "사기 계좌로 조회되었습니다. 승인이 불가합니다.",
+                    });
                 } else {
-                    alert('에러 읍니다.');
+                    hide_spinner();
+                    Swal.fire({
+                        icon: "error",
+                        title: "에러 읍니다.",
+                    });
                 }
             }
-            ,error: function(){
-                alert('서버 에러입니다.');
+            , error: function () {
+                hide_spinner();
+                Swal.fire({
+                    icon: "error",
+                    title: "서버 에러 읍니다.",
+                });
             }
         });
 
@@ -351,14 +386,14 @@
                         .val());
                 });
 
-            $('input[type="text"]').keydown(function(key) {
+            $('input[type="text"]').keydown(function (key) {
                 if (key.keyCode === 13) {
                     key.preventDefault();
-                };
+                }
             });
 
-            $("#keyword").on("keyup",function(key){
-                if(key.keyCode==13) {
+            $("#keyword").on("keyup", function (key) {
+                if (key.keyCode == 13) {
                     console.log(classification2);
                     loadadminApplys(classification2, undefined, $(
                         '#searchType').val(), $('#keyword')
@@ -390,7 +425,6 @@
             }
 
 
-
             function loadadminApplys(classification, page, searchType, keyword) {
                 $.ajax({
                     type   : 'GET',
@@ -405,35 +439,37 @@
 
                         var adminApplyList = data.adminApplyList;
                         var pagination = data.pagination;
-                        var adminApplyListHTML = '<tr>'
+                        var adminApplyListHTML = '<tr class="t-head">'
                             + '<td><h4>신청상태</h4></td>'
                             + '<td><h4>사기이력</h4></td>'
                             + '<td><h4>은행이름</h4></td>'
                             + '<td><h4>계좌번호</h4></td>'
-                            + '<td><h4>유저이름</h4></td>'
+                            + '<td><h4>아이디</h4></td>'
                             + '<td><h4>신청날짜</h4></td>'
                             + '</tr>';
                         for (var i = 0; i < adminApplyList.length; i++) {
                             var adminApply = adminApplyList[i];
                             let acct = 0;
+                            let button;
 
                             if (adminApply.accepted === 0) {
-                                adminApply.accepted = '승인 대기';
+                                adminApply.accepted = '<text style="color: cadetblue">승인 대기</text>';
                                 acct = 0;
-                            }
-                            else {
-                                adminApply.accepted = '승인됨';
+                                button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ',' + adminApply.userId + ')">승인</button></td>'
+                            } else {
+                                adminApply.accepted = '<text style="color: #173f41">승인됨 <i class="fa-solid fa-circle-check"></i></text>';
                                 acct = 1;
+                                button = '</td>';
                             }
-                            let regData = adminApply.createdAt.substring(0,10);
+                            let regData = adminApply.createdAt.substring(0, 10);
                             let cheating;
 
-                            if(adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
+                            if (adminApply.cheater === '이력 없음') cheating = '<td>' + adminApply.cheater + '</td>'
                             else cheating = '<th><a target="_blank" style="text-decoration: none; color: red;" href="https://web.joongna.com/fraud/result?inputValue=' + adminApply.number + '&type=account_number">' + adminApply.cheater + '</a></th>'
                             adminApplyListHTML += '<tr>'
-                                + '<td><p class="classification" style="min-width: 100px">'
+                                + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
                                 + adminApply.accepted
-                                + '</p> <button class="btn btn-dark btn-block" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ')">변경</button></td>'
+                                + button
                                 + cheating
                                 + '<td>'
                                 + adminApply.name
@@ -442,8 +478,11 @@
                                 + adminApply.number
                                 + '</td>'
                                 + '<td>'
+                                + '<a href="/admin/user/detail-nickname?nickname='
                                 + adminApply.nickname
-                                + '</td>'
+                                + '">'
+                                + adminApply.nickname
+                                + '</a></td>'
                                 + '<td>'
                                 + regData
                                 + '</td>'
@@ -457,8 +496,8 @@
                         }
                         for (var num = pagination.beginPage; num <= pagination.endPage; num++) {
                             paginationHTML += '<li class="'
-                                + (pagination.paging.page == num ? 'page-item active'
-                                    : 'page-item')
+                                + (pagination.paging.page == num ? 'page-item active mx-1'
+                                    : 'page-item mx-1')
                                 + '"><a class="page-list" href="#" data-page="' + num + '">'
                                 + num + '</a></li>';
                         }
@@ -498,4 +537,54 @@
 
 </script>
 
-<%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>
+<%--로딩 스피너--%>
+
+<style>
+    .layer-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        margin: -30px 0 0 -30px;
+    }
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 8px solid #f3f3f3; /* Light grey */
+        border-top: 8px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spinner 2s linear infinite;
+    }
+    @keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<script>
+    function show_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'block';
+    }
+    function hide_spinner() {
+        document.getElementsByClassName('layer-popup')[0].style.display = 'none';
+    }
+</script>
+<div class="layer-popup" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
+<%--로딩 스피너--%>
+
+<%@ include file="/WEB-INF/view/layout/admin_footer.jsp" %>

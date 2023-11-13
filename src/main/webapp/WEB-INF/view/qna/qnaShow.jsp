@@ -9,8 +9,16 @@
 <div class="container">
     <div class="row">
         <div class="title">
+            <div style="background-color:grey; border:grey solid 1px;border-radius: 2px; margin-top: 14px">
+                <a href="/qna/list" style="color: grey; text-decoration: none; text-decoration-color: grey; ">
+                    <h2
+                            style="color: white; margin-left: 6px">문의 게시판</h2></a>
+            </div>
 
-            <h1><c:choose>
+
+            <hr style="border: black solid 1px;margin-bottom: 100px; margin-top: 23px">
+            <br>
+            <h3><c:choose>
                 <c:when test="${dto.status == 0}">
                     [답변 대기] ${dto.title}
                 </c:when>
@@ -19,9 +27,7 @@
                 </c:otherwise>
             </c:choose>
 
-            </h1>
-
-            <br>
+            </h3>
             <small>${dto.createdAt}</small>
 
             <hr>
@@ -34,13 +40,13 @@
             </span>
         </div>
         <c:if test="${answer != null}">
-            <hr style="background-color: black;height: 2px">
+
         </c:if>
 
     </div>
     <h1>
         <c:choose>
-        <c:when test="${answer == null}">
+        <c:when test="${answer == null && USER.level == 1}">
         <hr>
 
         <div class="container">
@@ -49,34 +55,40 @@
                 <div class="col-sm-8 col-center">
                     <div class="contact-form">
                         <div class="editor-div">
-                            <div class="title ">
-                                <span>답변 작성</span>
-                            </div>
+                                <%--                            <div class="title ">--%>
+                                <%--                                <span style="font-size: 2px">답변 작성</span>--%>
+                                <%--                            </div>--%>
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-pencil"></i>`
                                     <textarea name="editordata" id="editordata"
                                               class="input-style summernote"></textarea>
 
                                 </div>
                                 <div class="col-md-12">
-                                    <input type=button class="flat-btn" id="submit" value="작성">
+                                    <div class="flat-btn-div">
+                                        <input type=button class="flat-btn" id="submit" value="작성">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                    <%--                            <hr style="border: #ff2929 solid 1px;">--%>
+
             </div>
+
         </div>
         </c:when>
         <c:otherwise>
 
         <div class="row">
-            <div class="title">
-                답변 내용
-                <small>${answer.createdAt}</small>
-            </div>
+
+                <%--            <span style="font-size: 20px;"> 답변 내용</span>--%>
+                <%--            <br>--%>
+                <%--            <small style="font-size: 12px">${answer.createdAt}</small>--%>
+
 
             <hr>
             <div class="content">

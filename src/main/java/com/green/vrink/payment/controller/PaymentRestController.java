@@ -1,20 +1,18 @@
 package com.green.vrink.payment.controller;
 
 
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.payment.dto.AutorizedCodeDTO;
-import com.green.vrink.payment.dto.PriceDTO;
+import com.green.vrink.payment.dto.PaymentDTO;
 import com.green.vrink.payment.dto.ValidationDTO;
 import com.green.vrink.payment.repository.model.Payment;
 import com.green.vrink.payment.service.PaymentServiceImpl;
+import com.green.vrink.user.service.EditorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/payment")
@@ -22,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentRestController {
     private final PaymentServiceImpl paymentServiceImpl;
-
+    private final MessageService messageService;
+    private final EditorService editorService;
     @PostMapping("/validation")
     public ResponseEntity<?> complete(ValidationDTO validationDTO) {
-
 
         Boolean validation = paymentServiceImpl.validationPrice(validationDTO);
 
@@ -33,7 +31,6 @@ public class PaymentRestController {
             return ResponseEntity.ok().build();
         }
         else {
-            cancel();
             return ResponseEntity.badRequest().build();
         }
     }
@@ -43,16 +40,33 @@ public class PaymentRestController {
         return paymentServiceImpl.responseCode();
     }
 
-    @PostMapping("/cancel")
-    public ResponseEntity<?> cancel() {
+    @GetMapping("/cancel/{payment-id}")
+    public Payment cancel(@PathVariable("payment-id") Integer paymentId) {
 
-        return ResponseEntity.ok().build();
+        log.info(paymentId.toString());
+        Payment payment = paymentServiceImpl.responseCancelData(paymentId);
+        log.info("payment {} ",payment);
+
+        return paymentServiceImpl.responseCancelData(paymentId);
     }
 
     @PostMapping("/payment-done")
-    public ResponseEntity<?> PaymentDone(@RequestBody Payment payment) {
-        log.info("여기기기기 {}", payment);
-        paymentServiceImpl.insertPayment(payment);
+    public ResponseEntity<?> PaymentDone(@RequestBody PaymentDTO paymentDTO) {
+        paymentServiceImpl.insertPayment(paymentDTO);
+        Integer userId = paymentDTO.getUserId();
+        String name = paymentDTO.getName();
+        String content = name + "에 대한 결제가 완료 되었습니다.";
+        String userUrl = "/payment/buy-list";
+        messageService.sendMessageAndSaveSpecificPage(userId,content,userUrl);
+        String editorUrl = "/editor/request-list";
+        String editorContent =name+"에 대한 의뢰 요청이 들어왔습니다. 확인해주세요";
+
+
+        Integer editorUserId = editorService
+                .getUserIdByEditorId(paymentDTO.getEditorId());
+        messageService.sendMessageAndSaveSpecificPage(editorUserId,editorContent,editorUrl);
+
+
         return ResponseEntity.ok().build();
     }
 }

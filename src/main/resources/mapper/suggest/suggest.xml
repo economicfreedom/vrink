@@ -7,17 +7,152 @@
         INSERT INTO suggest (user_id, title, content) VALUES (#{userId}, #{title}, #{content})
     </insert>
 
+    <insert id="postSuggestReply">
+        INSERT INTO suggest_reply (suggest_id, user_id, content) VALUES (#{suggestId}, #{userId}, #{content})
+    </insert>
+
     <update id="patchSuggest">
         UPDATE suggest
         SET suggest.title = #{title}, suggest.content = #{content}, suggest.created_at = now()
         WHERE suggest.suggest_id = #{suggestId}
     </update>
 
+    <update id="patchSuggestReply">
+        UPDATE suggest_reply SET suggest_reply.content = #{content} WHERE suggest_reply.reply_id = #{replyId};
+    </update>
+
+    <update id="acceptSuggest">
+        UPDATE suggest SET suggest.state = 1 WHERE suggest_id = #{suggestId}
+    </update>
+
     <delete id="deleteSuggest">
         DELETE FROM suggest WHERE suggest.suggest_id = #{suggestId}
     </delete>
 
-    <select id="getSuggest" resultType="com.green.vrink.suggest.repository.model.Suggest">
-        SELECT * FROM suggest WHERE suggest.suggest_id = #{suggestID};
+    <delete id="deleteSuggestReply">
+        DELETE FROM suggest_reply WHERE suggest_reply.reply_id = #{suggestId}
+    </delete>
+
+    <select id="getSuggest" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+             , s.user_id
+             , s.title
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , s.state
+             , u.nickname
+        FROM suggest s
+                 LEFT JOIN user u
+                           ON s.user_id = u.user_id
+        WHERE s.suggest_id = #{suggestID}
     </select>
+
+    <select id="getSuggestReplyListBySuggestId"
+            resultType="com.green.vrink.suggest.dto.SuggestReplyDto">
+        SELECT s.reply_id
+             , s.suggest_id
+             , s.user_id
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , u.nickname
+        FROM suggest_reply s
+                 LEFT JOIN user u ON s.user_id = u.user_id
+        WHERE suggest_id=#{suggestId}
+        ORDER BY s.created_at DESC
+        LIMIT #{criteria.offset}, #{criteria.countPerPage}
+    </select>
+
+    <select id="getReplyCount" resultType="java.lang.Integer">
+        SELECT count(suggest_id) FROM suggest_reply WHERE suggest_id = #{suggestId}
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(suggest_id) FROM suggest
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') OR
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <select id="getSuggestList" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+             , s.user_id
+             , s.title
+             , s.content
+             , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+             , s.state
+             , u.nickname
+        FROM suggest s
+                 LEFT JOIN user u
+                           ON s.user_id = u.user_id
+        ORDER BY s.created_at desc
+            LIMIT #{offset}, #{countPerPage}
+    </select>
+
+    <select id="findAllByCriteria" resultType="com.green.vrink.suggest.dto.GetSuggestDto">
+        SELECT s.suggest_id
+        , s.user_id
+        , s.title
+        , s.content
+        , DATE_FORMAT(s.created_at, '%y-%m-%d %H:%i') AS created_at
+        , s.state
+        , u.nickname
+        ,count(sr.suggest_id )AS count
+
+        FROM suggest s
+        LEFT JOIN user u ON s.user_id = u.user_id
+        LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
+
+
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'all'">
+            WHERE state LIKE 0 OR 1
+        </if>
+        <if test="type == 'inProgress'">
+            WHERE state LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE state LIKE 1
+        </if>
+
+        GROUP BY s.suggest_id, s.user_id, s.title, s.content, s.created_at, u.nickname, s.state
+
+        ORDER BY created_at DESC
+
+        LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="findStateById" resultType="java.lang.Integer">
+        SELECT state FROM suggest
+        WHERE suggest_id = #{suggestId}
+
+    </select>
+    <select id="findUserIdBySuggestId" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM suggest
+        WHERE suggest_id = #{suggestId}
+    </select>
+
+
 </mapper>

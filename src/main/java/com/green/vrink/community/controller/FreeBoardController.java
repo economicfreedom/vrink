@@ -4,6 +4,9 @@ import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
 import com.green.vrink.community.service.FreeBoardReplyService;
 import com.green.vrink.community.service.FreeBoardService;
+import com.green.vrink.message.service.MessageService;
+import com.green.vrink.notice.dto.NoticeDto;
+import com.green.vrink.notice.service.NoticeService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
 import com.green.vrink.util.Criteria;
@@ -31,20 +34,17 @@ public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
     private final FreeBoardReplyService freeBoardReplyService;
+    private final NoticeService noticeService;
     private final HttpSession httpSession;
+    private final MessageService messageService;
+
 //    private final Check check;
 
 
 
-    @GetMapping("/123")
-    @LoginCheck
-    public String test(){
-        return "board/test";
-    }
 
 
     @GetMapping("/write-form")
-    @LoginCheck
     public String read(Model model) {
 
 
@@ -131,6 +131,14 @@ public class FreeBoardController {
         log.info(cri.toString());
         Integer total = freeBoardService.getTotal(cri);
         List<FreeBoardDTO> list = freeBoardService.pageList(cri);
+
+
+
+        if (pageNum.intValue()==1){
+            List<NoticeDto> noticeList = noticeService.noticeList("community");
+            model.addAttribute("noticeList",noticeList);
+
+        }
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);

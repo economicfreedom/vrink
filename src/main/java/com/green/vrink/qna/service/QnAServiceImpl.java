@@ -57,7 +57,7 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
-    public Integer saveQuestion(AnswerDTO answerDTO) {
+    public Integer saveAnswer(AnswerDTO answerDTO) {
 
         return   qnARepository.saveAnswer(answerDTO);
     }
@@ -69,6 +69,11 @@ public class QnAServiceImpl implements QnAService {
 
     @Override
     public Integer getUserId(Integer questionId) {
+        return qnARepository.findUserIdByQuestionId(questionId);
+    }
+
+    @Override
+    public Integer getUserIdByQuestionId(Integer questionId) {
         return qnARepository.findUserIdByQuestionId(questionId);
     }
 }

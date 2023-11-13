@@ -19,10 +19,12 @@ public interface QnAService {
     List<QuestionDTO> list(Integer userId, Criteria cri);
     AnswerDTO getQuestion(Integer qnaId);
 
-    Integer saveQuestion(AnswerDTO answerDTO);
+    Integer saveAnswer(AnswerDTO answerDTO);
 
     void updateStatus(Integer qnaId);
 
     Integer getUserId(Integer questionId);
+
+    Integer getUserIdByQuestionId(Integer questionId);
 
 }

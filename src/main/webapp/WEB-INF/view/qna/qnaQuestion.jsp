@@ -54,7 +54,9 @@
                             <textarea name="editordata" id="editordata" class="input-style summernote"></textarea>
                         </div>
                         <div class="col-md-12">
-                            <input type=button class="flat-btn" id="submit" value="작성">
+                            <div class="flat-btn-div">
+                                <input type=button class="flat-btn" id="submit" value="작성">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -73,10 +75,12 @@
             let type = $("#type").val();
 
             let json = JSON.stringify({
-                userId: 1,
+                userId: `${USER.userId}`,
                 content: content,
                 title: title,
-                type: type
+                type: type,
+
+                nickname : `${USER.nickname}`
             });
 
             fetch('/qna/save', {
@@ -89,9 +93,10 @@
                 .then(response => {
 
                     if (!response.ok) {
-                        alert("")
+                        console.log(response.json());
+                        alert("실패");
                     } else {
-                        location.href = "/qna/list/"+Number(`${USER.userId}`);
+                        location.href = "/qna/list";
                     }
 
                 })

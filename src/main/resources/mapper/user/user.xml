@@ -2,20 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.green.vrink.user.repository.interfaces.UserRepository">
 
-
     <select id="requestApproval" resultType="java.lang.Integer">
-        insert into apply(user_id, name, number)
-            value (#{userId},#{accountName},#{accountNumber})
+        insert into apply(user_id, name, number, accepted)
+            value (#{userId},#{accountName},#{accountNumber},0)
     </select>
 
     <insert id="signUp">
-    	INSERT INTO user
-		(email, password, name, nickname, phone, created_at)
-		VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
+        INSERT INTO user
+            (email, password, name, nickname, phone, created_at)
+        VALUES (#{email}, #{password}, #{name}, #{nickname}, #{phone}, now())
     </insert>
 
     <select id="checkEmail" resultType="String">
-    	SELECT email FROM user WHERE email = #{email};
+        SELECT email
+        FROM user
+        WHERE email = #{email};
     </select>
     <select id="findUserNicknameById" resultType="java.lang.String">
         SELECT nickname
@@ -25,77 +26,113 @@
     </select>
 
     <insert id="editorWrite">
-    	INSERT INTO editor_detail(user_id, profile_image, introduce, image, content, vrm)
-    	VALUES (#{userId}, #{profileImage}, #{introduce}, #{image}, #{content}, #{vrm})
+        INSERT INTO editor(user_id, profile_image, introduce, thumbnail, content, vrm)
+        VALUES (#{userId}, #{profileImage}, #{introduce}, #{thumbnail}, #{content}, #{vrm})
     </insert>
 
     <select id="findByEditorId" resultType="com.green.vrink.user.dto.EditorDTO">
-        select ed.editor_id, ed.user_id, ed.profile_image, ed.introduce, ed.image, ed.content, ed.vrm, u.nickname
-		from editor_detail ed
-		left join user u
-		on u.user_id = ed.user_id
-		where ed.editor_id = #{editorId};
+
+        SELECT ed.editor_id, ed.user_id, replace(ed.profile_image,"\\",'/') as profile_image,
+               ed.introduce, replace(ed.thumbnail,"\\",'/') as thumbnail, ed.content, replace(ed.vrm,"\\",'/') as vrm, u.nickname
+        FROM editor ed
+        LEFT JOIN user u
+        ON u.user_id = ed.user_id
+        WHERE ed.editor_id = #{editorId};
+
     </select>
 
     <select id="findVrmById" resultType="java.lang.String">
-        SELECT vrm FROM editor_detail
+        SELECT vrm
+        FROM editor
         WHERE editor_id = #{editorId}
     </select>
+
       <select id="findEditorList" resultType="com.green.vrink.user.dto.EditorDTO">
           SELECT e.editor_id,
                  profile_image,
                  introduce,
                  nickname,
                  COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count,
-                 e.image
-          FROM editor_detail e
+                 e.thumbnail,
+                 CASE
+                   WHEN round(avg(r.count)) = 1 THEN '☆'
+                   WHEN round(avg(r.count)) = 2 THEN '★'
+                   WHEN round(avg(r.count)) = 3 THEN '★☆'
+                   WHEN round(avg(r.count)) = 4 THEN '★★'
+                   WHEN round(avg(r.count)) = 5 THEN '★★☆'
+                   WHEN round(avg(r.count)) = 6 THEN '★★★'
+                   WHEN round(avg(r.count)) = 7 THEN '★★★☆'
+                   WHEN round(avg(r.count)) = 8 THEN '★★★★'
+                   WHEN round(avg(r.count)) = 9 THEN '★★★★☆'
+                   WHEN round(avg(r.count)) = 10 THEN '★★★★★'
+                   ELSE ''
+          END AS star
+          FROM editor e
               LEFT JOIN user u
           ON e.user_id = u.user_id
               LEFT JOIN review r ON e.editor_id = r.editor_id
+          <if test="type == 'tag'">
+              LEFT JOIN editor_tag et
+              ON e.editor_id = et.editor_id
+              WHERE et.tag LIKE CONCAT('%',#{keyword},'%')
+          </if>
+          <if test="type == 'nickname'">
+              WHERE u.nickname LIKE CONCAT('%',#{keyword},'%')
+          </if>
           GROUP BY e.editor_id, profile_image, introduce, nickname
           LIMIT #{offset},#{countPerPage}
 
-      </select>
+
+    </select>
     <select id="getTotal" resultType="java.lang.Integer">
         SELECT count(editor_id)
-        FROM editor_detail
+        FROM editor
     </select>
 
 
     <update id="updateByEditorId">
-        UPDATE editor_detail SET
-        profile_image=#{profileImage}, introduce=#{introduce}, image=#{image}, content=#{content}, vrm=#{vrm}
+        UPDATE editor
+        SET profile_image=#{profileImage},
+            introduce=#{introduce},
+            thumbnail=#{thumbnail},
+            content=#{content},
+            vrm=#{vrm}
         WHERE editor_id = #{editorId}
     </update>
 
     <select id="findByEmail" resultType="com.green.vrink.user.repository.model.User">
-    	SELECT *
-		FROM user AS u 
-		WHERE u.email = #{email}
-    </select>	
-    
+        SELECT *
+        FROM user AS u
+        WHERE u.email = #{email}
+    </select>
+
     <update id="updateNickname">
-    	UPDATE user 
-    	SET user.nickname = #{nickname} 
-    	WHERE user_id = #{userId}
+        UPDATE user
+        SET user.nickname = #{nickname}
+        WHERE user_id = #{userId}
     </update>
 
     <update id="updatePassword">
-    	UPDATE user 
-    	SET user.password = #{password} 
-    	WHERE user_id = #{userId}
+        UPDATE user
+        SET user.password = #{password}
+        WHERE user_id = #{userId}
     </update>
-    
+
     <select id="findByUserId" resultType="com.green.vrink.user.repository.model.User">
-    	SELECT *
-		FROM user AS u 
-		WHERE user_id = #{userId}
+        SELECT *
+        FROM user AS u
+        WHERE user_id = #{userId}
     </select>
 
     <select id="findEditorIdByUserId" resultType="java.lang.Integer">
-        select editor_detail.editor_id
-        from editor_detail
-        where user_id = #{userId};
+        SELECT editor.editor_id
+        FROM editor
+        WHERE user_id = #{userId};
+    </select>
+    <select id="findUserIdByEditorId" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM editor
+        WHERE editor_id = #{editorId}
     </select>
 
     <update id="deleteByUserId">
@@ -108,15 +145,245 @@
         SET user.point = #{point}
         WHERE user_id = #{userId}
     </update>
+    <update id="updateEditorPoint">
+        UPDATE user
+        SET point = ifnull(point, 0) + #{point}
+        WHERE user_id = (SELECT user_id
+                         FROM editor
+                         WHERE editor_id = #{editorId})
 
+    </update>
 
     <insert id="insertPrice">
-    	INSERT INTO test_price (editor_id, options, price)
-    	VALUES (#{editorId}, #{option}, #{price})
+        INSERT INTO price (editor_id, options, price)
+        VALUES (#{editorId}, #{options}, #{price})
     </insert>
 
     <insert id="calculatePoint">
-        INSERT INTO calculator (editor_id, cal_price, created_at) VALUES (#{userId}, #{point}, now());
+        INSERT INTO calculator (editor_id, cal_price, created_at)
+        VALUES (#{userId}, #{point}, now());
     </insert>
 
+    <select id="findPriceByEditorId" resultType="com.green.vrink.user.dto.EditorPriceDTO">
+        SELECT *
+        FROM price
+        WHERE editor_id = #{editorId}
+    </select>
+
+    <select id="findUserByNickname" resultType="java.lang.Integer">
+        SELECT count(user.user_id)
+        FROM user
+        WHERE user.nickname = #{nickname}
+    </select>
+
+    <select id="findEmailByNicknameAndPhone" resultType="java.lang.String">
+        SELECT user.email
+        FROM user
+        WHERE user.nickname = #{nickname}
+          AND user.phone = #{phone}
+    </select>
+    <select id="findRequestListByCriAndEditorId" resultType="com.green.vrink.user.dto.RequestDetailDTO">
+        SELECT
+        p.payment_id,
+        p.name,
+        u.nickname,
+        DATE_FORMAT(p.created_at, '%Y-%m-%d') AS created_at,
+        (CASE
+        WHEN ps.state = 'payment_done' THEN '진행중'
+        WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+        WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+        WHEN ps.state = 'hand_over' THEN '제작 완료'
+        ELSE '거래 완료'
+        END) AS state
+        FROM payment_state ps
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN user u ON p.user_id = u.user_id
+        JOIN (
+        SELECT payment_id, MAX(created_at) AS max_created_at
+        FROM payment_state
+        GROUP BY payment_id
+        ) AS ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        WHERE editor_id = #{editorId}
+        <if test="cri.keyword == null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND ps.state = 'payment_done'
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND (ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel')
+                </when>
+            </choose>
+        </if>
+        <if test="cri.keyword != null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND (ps.state = 'payment_done' AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND ((ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel') AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <otherwise>
+                    AND (u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%'))
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY p.payment_id DESC
+        LIMIT #{cri.offset}, #{cri.countPerPage}
+    </select>
+    <select id="findRequestListTotalByCriAndEditorId" resultType="java.lang.Integer">
+        SELECT COUNT(p.payment_id)
+        FROM payment_state ps
+        LEFT JOIN payment p ON ps.payment_id = p.payment_id
+        LEFT JOIN user u ON p.user_id = u.user_id
+        JOIN (
+        SELECT payment_id, MAX(created_at) AS max_created_at
+        FROM payment_state
+        GROUP BY payment_id
+        ) AS ps_max ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
+        WHERE editor_id = #{editorId}
+        <if test="cri.keyword == null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND ps.state = 'payment_done'
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND (ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel')
+                </when>
+            </choose>
+        </if>
+        <if test="cri.keyword != null">
+            <choose>
+                <when test="cri.filter == 'ing'">
+                    AND (ps.state = 'payment_done' AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <when test="cri.filter == 'done'">
+                    AND ((ps.state = 'trade_done' OR ps.state = 'e_cancel' OR ps.state = 'c_cancel') AND (
+                    u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%')))
+                </when>
+                <otherwise>
+                    AND (u.nickname LIKE CONCAT('%', #{cri.keyword}, '%') OR
+                    p.name LIKE CONCAT('%', #{cri.keyword}, '%'))
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <select id="findPasswordByEmailAndName" resultType="java.lang.Integer">
+        SELECT user.user_id FROM user WHERE user.email = #{email} AND user.name = #{name}
+    </select>
+
+    <select id="findUserIdByEmail" resultType="java.lang.Integer">
+        SELECT user_id FROM user WHERE user.email = #{email}
+    </select>
+    <select id="findRequestByPaymentId" resultType="com.green.vrink.user.dto.RequestViewDTO">
+        SELECT p.payment_id,
+               p.editor_id,
+               p.name,
+               u.nickname,
+               u.phone,
+               u.email,
+               p.created_at,
+               p.request,
+               (CASE
+                    WHEN ps.state = 'payment_done' THEN '진행중'
+                    WHEN ps.state = 'c_cancel' THEN '의뢰자 결제 취소'
+                    WHEN ps.state = 'e_cancel' THEN '작가 결제 취소'
+                   WHEN ps.state = 'hand_over' THEN '제작 완료'
+                    ELSE '거래 완료'
+                   END)                         AS state,
+               ifnull(ps.customer_recognize, 0) AS customer_recognize,
+               ps.editor_recognize
+        FROM payment p
+                 LEFT JOIN user u on p.user_id = u.user_id
+                 JOIN (SELECT payment_id, MAX(created_at) AS max_created_at
+                       FROM payment_state
+                       GROUP BY payment_id) ps_max
+                 LEFT JOIN payment_state ps
+                           ON p.payment_id = ps_max.payment_id
+                               AND ps.created_at = ps_max.max_created_at
+        WHERE ps.payment_id = #{paymentId}
+        GROUP BY p.payment_id
+    </select>
+    <select id="findPaymentDetailByPaymentId" resultType="com.green.vrink.user.dto.RequestListDTO">
+        SELECT *
+        FROM payment_detail
+        WHERE payment_id =#{paymentId}
+
+    </select>
+
+    <select id="findUserIdBySuggestId" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM suggest
+        WHERE suggest_id = #{suggestId}
+    </select>
+
+    <delete id="deletePriceByEditorId">
+        DELETE
+        FROM price
+        WHERE editor_id = #{editorId}
+    </delete>
+
+    <insert id="insertTag">
+        INSERT INTO editor_tag (editor_id, tag)
+        values (#{editorId}, #{tag})
+    </insert>
+
+    <select id="getTag" resultType="com.green.vrink.user.dto.TagDTO">
+        SELECT * FROM editor_tag WHERE editor_id = #{editorId}
+    </select>
+
+    <delete id="deleteTagByEditorId">
+        DELETE FROM editor_tag WHERE editor_id = #{editorId}
+    </delete>
+
+    <select id="getRandomTag" resultType="com.green.vrink.user.dto.TagDTO">
+        SELECT DISTINCT(tag) FROM editor_tag ORDER BY RAND() limit 7;
+    </select>
+
+    <select id="getMyCalList" resultType="com.green.vrink.user.repository.model.Calculator">
+        SELECT *
+        FROM calculator
+        <if test="type == ''">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'all'">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'inProcess'">
+            WHERE cal_status LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE cal_status LIKE 1
+        </if>
+        ORDER BY created_at DESC
+        LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT count(editor_id) FROM calculator
+        <if test="type == ''">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'all'">
+            WHERE editor_id LIKE #{editorId}
+        </if>
+        <if test="type == 'inProcess'">
+            WHERE cal_status LIKE 0
+        </if>
+        <if test="type == 'complete'">
+            WHERE cal_status LIKE 1
+        </if>
+    </select>
+
+    <delete id="deleteByEditorId">
+        DELETE FROM editor WHERE editor_id = #{editorId}
+    </delete>
 </mapper>
+

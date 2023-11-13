@@ -25,8 +25,10 @@
                             </textarea>
                         </div>
                         <div class="col-md-12">
-                            <input type=button class="flat-btn" id="submit" onclick="update(${dto.communityId})"
-                                   value="수정">
+                            <div class="flat-btn-div">
+                                <input type=button class="flat-btn" id="submit" onclick="update(${dto.communityId})"
+                                        value="수정">
+                            </div>
                         </div>
                     </div>
                 </div>

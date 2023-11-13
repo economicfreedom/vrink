@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.community.repository.interfaces.FreeBoardRepository">
+
+    <insert id="save">
+        INSERT INTO community(user_id, title, content) value(#{userId},#{title},#{content})
+    </insert>
+    <update id="update">
+        UPDATE community SET
+                             title = #{title},
+                             content = #{content},
+                             created_at = now()
+        WHERE community_id = #{communityId}
+
+    </update>
+    <delete id="delete">
+        DELETE
+        FROM community
+        WHERE community_Id = #{communityId}
+
+
+    </delete>
+    <select id="findById" resultType="com.green.vrink.community.repository.model.FreeBoard">
+        SELECT
+            community_id,
+            user_id,
+            title,
+            content,
+            DATE_FORMAT(created_at, "%Y-%m-%d") AS created_at
+        FROM community
+        WHERE community_id = #{communityId}
+
+    </select>
+    <select id="findUserNicknameById" resultType="java.lang.String">
+
+    </select>
+    <select id="findAllByCri" resultType="com.green.vrink.community.dto.FreeBoardDTO">
+        SELECT c.community_id, c.user_id, title, c.content,
+        DATE_FORMAT(c.created_at, '%y-%m-%d %H:%i') AS created_at,
+         nickname,count(cr.community_id )AS count
+
+        FROM community c
+        LEFT JOIN user u ON c.user_id = u.user_id
+        LEFT JOIN community_reply cr ON c.community_id = cr.community_id
+
+
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
+
+        ORDER BY c.community_id DESC
+
+        LIMIT #{offset},#{countPerPage}
+
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(community_id) FROM community
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'nickname'">
+            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'tc'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="findUserIdByCommunityId" resultType="java.lang.Integer">
+        SELECT user_id FROM community
+        WHERE community_id = #{commuId}
+    </select>
+</mapper>

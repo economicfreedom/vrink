@@ -1,20 +1,26 @@
 package com.green.vrink.user.controller;
 
 
+import com.green.vrink.upload.service.UploadService;
 import com.green.vrink.user.dto.*;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
+import com.green.vrink.user.service.EditorService;
 import com.green.vrink.user.service.EditorServiceImpl;
 
+import com.green.vrink.user.service.UserService;
 import com.green.vrink.util.AsyncPageDTO;
 import com.green.vrink.util.Criteria;
+import com.green.vrink.util.Define;
 import com.green.vrink.util.PageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,8 +28,12 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class EditorRestController {
-    private final EditorServiceImpl editorServiceImpl;
+    private final EditorService editorService;
     private final UserRepository userRepository;
+    private final HttpSession session;
+    private final UploadService uploadService;
+    private final UserService userService;
+
     @PostMapping("/apply-request")
     public ResponseEntity<?> apply(
             @RequestBody ApprovalDTO approvalDTO
@@ -31,13 +41,14 @@ public class EditorRestController {
     ) {
 
 
-//      session.getAttribute("asdf");
+        User user = (User) session.getAttribute(Define.USER);
 
 
-        approvalDTO.setUserId(1);
+
+        approvalDTO.setUserId(user.getUserId());
 
 
-        Integer res =  editorServiceImpl.requestApproval(approvalDTO);
+        Integer res =  editorService.requestApproval(approvalDTO);
 
 
         log.info("Test Dto {}", approvalDTO);
@@ -46,65 +57,60 @@ public class EditorRestController {
         return ResponseEntity.ok().build();
 
     }
-    
+
+    @Transactional
     @PostMapping("/editor-write")
-    public Integer editorWriteProc(EditorWriteDTO editorWriteDTO) {
-    	editorWriteDTO.setUserId(2);
-    	Integer res = editorServiceImpl.requestEditorWrite(editorWriteDTO);
-    	log.info("EditorWriteDTO {}",editorWriteDTO);
-    	return res;
+    public ResponseEntity<?> editorWriteProc(EditorWriteDTO editorWriteDTO) {
+        User user = (User)session.getAttribute(Define.USER);
+        editorWriteDTO.setUserId(user.getUserId());
+        editorService.requestEditorWrite(editorWriteDTO);
+    	return ResponseEntity.ok().build();
     }
-    
+
     @PostMapping("/editor-edit")
-    public Integer editorEidtProc(EditorDTO editorDTO) {
-    	Integer res = editorServiceImpl.requestEditorEdit(editorDTO);
-    	return res;
+    public ResponseEntity<?> editorEditProc(EditorDTO editorDTO) {
+        List<String> delImages = uploadService.removeExtractImages(editorDTO);
+        if(delImages != null && !delImages.isEmpty()) {
+            uploadService.imgRemove(delImages);
+        }
+        editorService.requestEditorEdit(editorDTO);
+    	return ResponseEntity.ok().build();
     }
 
     @GetMapping("/list-more")
     public ResponseEntity<?> listMore(
-            @RequestParam(name = "page-num") Integer pageNum
+            @RequestParam(name = "page-num") Integer pageNum,
+            @RequestParam(name = "keyword",defaultValue = "") String keyword,
+            @RequestParam(name = "type",defaultValue = "") String type
     ){
                 Criteria cri = new Criteria();
         cri.setPageNum(pageNum);
+        cri.setKeyword(keyword);
+        cri.setType(type);
         cri.setCountPerPage(6);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
-        Integer total = editorServiceImpl.getTotal();
+        Integer total = editorService.getTotal();
         pageDTO.setArticleTotalCount(total);
-        List<EditorDTO> editorDTO = editorServiceImpl.getList(cri);
+        List<EditorDTO> editorDTO = editorService.getList(cri);
         AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
         asyncPageDTO.setPageDTOs(editorDTO);
         asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
         return ResponseEntity.ok(asyncPageDTO);
     }
-    
-    @PostMapping("/editor-price") 
-    public ResponseEntity<?> EditorPrice(EditorPriceListDTO editorPriceDTO) {
-    	
-    	editorPriceDTO.setEditorId(10);
-    	editorServiceImpl.requestEditorPrice(editorPriceDTO);
-    	log.info("priceDTO {} ", editorPriceDTO);
-    	return ResponseEntity.ok().build();
-    }
 
     @PostMapping("/calculate/point")
     public ResponseEntity<?> calculatePoint(@RequestBody CalculatePointDto calculatePointDto) {
-        User user = userRepository.findByUserId(calculatePointDto.getUserId());
-        System.out.println("userId: " + user.getUserId());
-        int editorId = editorServiceImpl.findEditorId(calculatePointDto.getUserId());
-        System.out.println("editId: " + editorId);
+        User user = userService.findByUserId(calculatePointDto.getUserId());
+        int editorId = editorService.findEditorId(calculatePointDto.getUserId());
         calculatePointDto.setUserId(editorId);
 
-        int result = editorServiceImpl.calculatePoint(calculatePointDto);
-        System.out.println("result: " + 0);
+        int result = editorService.calculatePoint(calculatePointDto);
         if (result != 1) {
             return ResponseEntity.badRequest().build();
         }
         int balancePoint =  user.getPoint() - calculatePointDto.getPoint();
-        System.out.println("balancePoint: " + balancePoint);
-        int saveChangePoint = editorServiceImpl.updatePoint(user.getUserId(), balancePoint);
-        System.out.println("saveChangePoint: " + saveChangePoint);
+        int saveChangePoint = editorService.updatePoint(user.getUserId(), balancePoint);
 
         if (saveChangePoint != 1) {
             return ResponseEntity.badRequest().build();
@@ -112,5 +118,4 @@ public class EditorRestController {
 
         return ResponseEntity.ok().build();
     }
-    
 }

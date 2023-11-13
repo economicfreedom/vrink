@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.qna.repository.interfaces.QnARepository">
+    <insert id="save">
+
+        INSERT INTO question(user_id, content, type, email,title)
+
+            VALUE (
+            #{userId}
+            ,#{content}
+            ,#{type}
+            ,(SELECT email FROM user WHERE user_id =#{userId})
+            ,#{title}
+
+            )
+
+    </insert>
+    <insert id="saveAnswer">
+        INSERT INTO answer(q_id, user_id, content)
+            VALUE (#{questionId},#{userId},#{content})
+    </insert>
+    <update id="updateStatus">
+        UPDATE question SET
+                       status = 1
+        WHERE q_id = #{questionId}
+    </update>
+    <delete id="deleteById"></delete>
+    <select id="findById" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q.q_id                                AS question_id
+             , q.user_id
+             , q.content
+             , DATE_FORMAT(q.created_at, '%Y-%m-%d') AS created_at
+             , q.type
+             ,q.title
+             ,q.email
+             ,u.nickname
+             , q.status
+        FROM question q
+        LEFT JOIN  user u ON q.user_id = u.user_id
+        WHERE q_id = #{questionId}
+    </select>
+    <select id="findTotalById" resultType="java.lang.Integer">
+        SELECT COUNT(q_id) FROM question
+        WHERE user_id = #{userId}
+    </select>
+    <select id="findAllById" resultType="com.green.vrink.qna.dto.QuestionDTO">
+        SELECT q_id                                AS question_id
+             , q.user_id
+             , content
+             , DATE_FORMAT(q.created_at, '%Y-%m-%d') AS created_at
+             , type
+             , title
+             , q.email
+             , u.nickname
+             , status
+        FROM question q
+                 LEFT JOIN user u
+                           ON u.user_id = q.user_id
+        WHERE q.user_id = #{userId}
+        ORDER BY created_at DESC, q_id DESC
+            LIMIT #{cri.offset}
+               , #{cri.countPerPage}
+
+    </select>
+    <select id="findByAnswerByQuestionId" resultType="com.green.vrink.qna.dto.AnswerDTO">
+        SELECT * FROM answer
+        WHERE q_id = #{questionId}
+    </select>
+    <select id="findUserIdByQuestionId" resultType="java.lang.Integer">
+        SELECT user_id FROM question
+        WHERE q_id = #{questionId}
+    </select>
+
+</mapper>

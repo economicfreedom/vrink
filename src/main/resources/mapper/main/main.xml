@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.vrink.main.repository.interfaces.MainRepository">
+
+    <insert id="insertDailyRank">
+        INSERT INTO youtube_rank (channel, thumbnail, subscribe, division, link)
+        VALUES (#{channel}, #{thumbnail}, #{subscribe}, #{division}, #{link})
+    </insert>
+
+    <select id="findDailyRank" resultType="com.green.vrink.main.RankDTO">
+        SELECT * FROM youtube_rank WHERE division = 'daily'
+    </select>
+    <select id="findWeeklyRank" resultType="com.green.vrink.main.RankDTO">
+        SELECT * FROM youtube_rank WHERE division = 'weekly'
+    </select>
+    <select id="findMonthlyRank" resultType="com.green.vrink.main.RankDTO">
+        SELECT * FROM youtube_rank WHERE division = 'monthly'
+    </select>
+
+    <delete id="deleteDailyRank">
+        DELETE FROM youtube_rank WHERE division = 'daily'
+    </delete>
+    <delete id="deleteWeeklyRank">
+        DELETE FROM youtube_rank WHERE division = 'weekly'
+    </delete>
+    <delete id="deleteMonthlyRank">
+        DELETE FROM youtube_rank WHERE division = 'monthly'
+    </delete>
+</mapper>

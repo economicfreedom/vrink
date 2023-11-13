@@ -1,57 +1,73 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
+<style>
+    .custom-btn {
+        background-color: #ff2929;
+        color: white;
+        border: none;
+
+    }
+
+    .custom-btn:hover {
+        background-color: white;
+        color: #ff2929;
+    }
+</style>
 
 <script>
     let pageNum = 1;
     $(document).ready(function () {
-
-
         $("#reply-add").click(function () {
-            let reply = $("#reply-content");
-            let content = reply.val();
-
-
-            if (content.length === 0) {
-                alert("댓글을 입력해주세요.")
-                reply.focus();
+            if (Number(`${suggest.state}`) === 1) {
+                alert('이미 제안 수락된 게시물입니다.');
+                location.reload();
                 return;
             }
-            fetch('/free-reply/add', {
+            if ($("#reply-content").val().trim().length === 0) {
+                alert("댓글을 입력해주세요.")
+                return;
+            }
+            addReply();
+        });
+
+        async function addReply() {
+            let reply = $("#reply-content");
+            let content = reply.val();
+            let result = await fetch('/suggest/reply/post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    suggestId: `${suggest.suggestId}`,
                     userId: `${USER.userId}`,
-                    communityId: `${dto.communityId}`,
                     content: content,
-                    nickname:`${USER.nickname}`
-
                 })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("로그인후 작성 가능합니다.")
-                    } else {
-                        location.reload()
-                    }
-                })
-        });
+            });
+            let resultCode = await result.json();
+            if (resultCode === 1) {
+                location.reload();
+            } else if (resultCode === 0) {
+                alert("의뢰 게시물에 대한 댓글 작성은 본인 또는 작가만 작성할 수 있습니다.");
+            } else {
+                alert('로그인 이후 사용가능합니다.');
+                $(".log-in-btn").click()
+            }
+        }
 
 
     })
 
     function update(id) {
-        alert("?")
         location.href = "/suggest/patch/" + id;
     }
 
     async function deleteBoard(id) {
 
         let result = await fetch('/suggest/delete/' + id, {
-                                method: 'DELETE',
-                                });
+            method: 'DELETE',
+        });
         let resultCode = await result.json();
         if (resultCode !== 1) {
             alert('잠시 후 시도해주십시오.');
@@ -62,24 +78,19 @@
 
     }
 
-    function deleteReply(id) {
+    async function deleteReply(id) {
 
-        fetch('/free-reply/del/' + id, {
+        let result = await fetch('/suggest/reply/delete/' + id, {
             method: 'DELETE',
-
-        })
-
-            .then(response => {
-                if (!response.ok) {
-
-                } else {
-                    alert("댓글이 삭제 되었습니다.");
-                    $("#reply-" + id).remove();
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
+        });
+        let resultCode = await result.json();
+        if (resultCode == 1) {
+            alert('삭제가 완료되었습니다.');
+            location.reload();
+        } else {
+            alert('삭제할 권한이 없습니다.');
+            location.reload();
+        }
     }
 
     function updateReply(id) {
@@ -92,6 +103,7 @@
 
     }
 
+
     function updateCancel(id, content) {
 
         let replyArea = $("#reply-content-" + id);
@@ -103,42 +115,37 @@
         $("#reply-del-" + id).css("display", "inline-block");
     }
 
-    function updateDone(id) {
-let replyArea = $("#reply-content-" + id);
-let content = replyArea.val();
+    async function updateDone(id) {
+        let replyArea = $("#reply-content-" + id);
+        let content = replyArea.val();
 
         if (content.length === 0) {
             alert("댓글을 입력해주세요.")
             replyArea.focus();
             return;
         }
-        fetch('/free-reply/update', {
+        let result = await fetch('/suggest/reply/patch', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userId:`${USER.userId}`,
-                communityId: `${dto.communityId}`,
                 replyId: id,
                 content: content,
-                nickname:`${USER.nickname}`
-
             })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    alert("")
-                } else {
-                    location.reload()
-                }
-            })
-
+        });
+        let resultCode = await result.json();
+        if (resultCode === 1) {
+            alert("댓글 수정을 완료했습니다.");
+            location.reload();
+        } else {
+            alert("댓글 수정 권한이 없습니다.");
+        }
     }
 
     function more() {
         pageNum++;
-        const url = `/free-reply/more-reply?commu-id=${dto.communityId}&page-num=` + pageNum + `&total=${total}`;
+        const url = `/suggest/more-reply?suggest-id=${suggest.suggestId}&page-num=` + pageNum + `&total=${total}`;
         let html = '';
 
 // fetch를 사용한 요청
@@ -164,14 +171,14 @@ let content = replyArea.val();
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
 
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId +'">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
-                    html += '<textarea class="form-control custom-textarea" id="reply-content-'+reply.replyId+'"';
+                    html += '<textarea class="form-control custom-textarea" id="reply-content-' + reply.replyId + '"';
                     html += ' rows="2"';
                     html += ' readonly ';
                     html += '>' + reply.content + '</textarea>';
@@ -214,6 +221,24 @@ let content = replyArea.val();
             });
     }
 
+    async function acceptSuggest(receiverId, nickname) {
+        let result = await fetch('/suggest/accept-suggest/' + `${suggest.suggestId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                receiverId: receiverId,
+                content: `${suggest.nickname}` + "님이 " + nickname + "님의 제안을 수락했습니다!",
+            })
+        });
+        let resultCode = result.json();
+        alert('의뢰 수락 메세지가 성공적으로 전달되었습니다.');
+        location.reload();
+
+
+    }
+
 
 </script>
 
@@ -222,7 +247,7 @@ let content = replyArea.val();
         <div class="title">
 
             <h1>${suggest.title}</h1>
-            <span> ${writerNickname}</span>
+            <span> ${suggest.nickname}</span>
             <br>
             <small>${suggest.createdAt}</small>
 
@@ -264,7 +289,7 @@ let content = replyArea.val();
                             <textarea class="form-control" rows="3" placeholder="댓글을 작성해주세요"
                                       id="reply-content"></textarea>
                             <button type="submit" class="btn btn-default btn-black pull-right"
-                                    style=" background-color: black; color: whitesmoke"
+                                    style=" background-color: black; color: whitesmoke; margin-top: 15px"
                                     id="reply-add">
                                 등록
                             </button>
@@ -273,38 +298,48 @@ let content = replyArea.val();
 
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
-                        <c:forEach var="reply" items="${list}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-${reply.replyId}">
-                                <li class="list-group-item custom-list-item" >
+                        <c:forEach var="suggestReply" items="${suggestReply}">
+                            <ul class="list-group custom-list-group" style="margin-top:5%"
+                                id="reply-`${suggestReply.replyId}`">
+                                <li class="list-group-item custom-list-item">
                                     <div class="comment-header">
-                                        <strong class="comment-nickname">${reply.nickname}</strong>
-                                        <span class="comment-date">${reply.createdAt}</span>
+                                        <a href="/editor/editor-detail/${suggestReply.userId}"><strong
+                                                class="comment-nickname">${suggestReply.nickname}</strong></a>
+                                        <span class="comment-date">${suggestReply.createdAt}</span>
                                     </div>
-                                    <textarea class="form-control custom-textarea"
-                                              rows="2"
-                                              id="reply-content-${reply.replyId}"
+                                    <textarea class="form-control custom-textarea" rows="2"
+                                              id="reply-content-${suggestReply.replyId}"
                                               readonly
-                                              >${reply.content}</textarea>
+                                    >${suggestReply.content}</textarea>
+                                    <c:if test="${suggestReply.userId != suggest.userId && not empty USER && suggest.userId == USER.userId}">
+                                        <c:if test="${suggest.state == 0}">
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <input type="button" value="제안 수락" class="flat-btn"
+                                                       id="accept-suggest-btn" style="padding: 1px 10px; "
+                                                       onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
+                                            </div>
+                                        </c:if>
+                                    </c:if>
                                     <div class="comment-buttons">
-                                        <c:if test="${reply.userId == USER.userId}">
+                                        <c:if test="${suggestReply.userId == USER.userId}">
                                             <button class="btn btn-xs btn-default"
-                                                    onclick="updateReply(${reply.replyId})"
-                                                    id="update-${reply.replyId}">수정
+                                                    onclick="updateReply(${suggestReply.replyId})"
+                                                    id="update-${suggestReply.replyId}">수정
                                             </button>
                                             <button class="btn btn-xs btn-primary" style="display: none"
-                                                    onclick="updateDone(${reply.replyId})"
-                                                    id="done-${reply.replyId}">완료
+                                                    onclick="updateDone(${suggestReply.replyId})"
+                                                    id="done-${suggestReply.replyId}">완료
 
 
                                             </button>
                                             <button class="btn btn-xs btn-default" style="display: none"
-                                                    onclick="updateCancel( ${reply.replyId}, '${reply.content}' )"
-                                                    id="cancel-${reply.replyId}"
+                                                    onclick="updateCancel( ${suggestReply.replyId}, '${suggestReply.content}' )"
+                                                    id="cancel-${suggestReply.replyId}"
                                             >취소
                                             </button>
                                             <button class="btn btn-xs btn-danger"
-                                                    onclick="deleteReply(${reply.replyId})"
-                                                    id="reply-del-${reply.replyId}"
+                                                    onclick="deleteReply(${suggestReply.replyId})"
+                                                    id="reply-del-${suggestReply.replyId}"
 
                                             >삭제
                                             </button>
@@ -373,4 +408,7 @@ let content = replyArea.val();
 </style>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+
+
+
 

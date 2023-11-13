@@ -2,6 +2,7 @@ package com.green.vrink.community.controller;
 
 
 import com.green.vrink.community.dto.FreeBoardReplyDTO;
+import com.green.vrink.message.service.MessageService;
 import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.*;
 import com.green.vrink.community.service.FreeBoardReplyService;
@@ -24,23 +25,25 @@ import static com.green.vrink.util.Check.isNull;
 @RequiredArgsConstructor
 @Slf4j
 public class FreeBoardReplyRestController {
+
     private final FreeBoardReplyService freeBoardReplyService;
+
     private final HttpSession httpSession;
-//    private final Check check;
+
+    private final MessageService messageService;
 
     @PostMapping("/add")
-    @LoginCheck
     public ResponseEntity<?> write(
             @Valid
             @RequestBody
             FreeBoardReplyDTO freeBoardReplyDTO
-            ,BindingResult bindingResult
+            , BindingResult bindingResult
 
 
     ) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
-            log.error("badrequest message {} ",defaultMessage);
+            log.error("badrequest message {} ", defaultMessage);
             return ResponseEntity.badRequest().body(defaultMessage);
         }
 
@@ -48,11 +51,20 @@ public class FreeBoardReplyRestController {
         log.info("freeBoardReplyDTO {}", freeBoardReplyDTO);
         freeBoardReplyService.create(freeBoardReplyDTO);
 
+        Integer userId = freeBoardReplyService.getUserId(freeBoardReplyDTO.getReplyId());
+        Integer communityId = freeBoardReplyDTO.getCommunityId();
+        String title = freeBoardReplyDTO.getTitle();
+
+        String message = "자유 게시판에 작성하신 " + title + "에 댓글이 달렸어요!";
+
+        String url = "/board/read/" + communityId;
+
+
+        messageService.sendMessageAndSaveSpecificPage(userId, message, url);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/del/{reply-id}")
-    @LoginCheck
     public ResponseEntity<?> del(
             @PathVariable(name = "reply-id")
             Integer replyId
@@ -80,7 +92,6 @@ public class FreeBoardReplyRestController {
     }
 
     @PutMapping("/update")
-    @LoginCheck
     public ResponseEntity<?> update(
             @Valid
             @RequestBody
@@ -91,7 +102,7 @@ public class FreeBoardReplyRestController {
     ) {
         int replyId = freeBoardReplyDTO.getReplyId();
 
-        if (isNull(replyId)){
+        if (isNull(replyId)) {
             return ResponseEntity.badRequest().body("댓글 번호는 필수 값입니다.");
         }
         if (bindingResult.hasErrors()) {

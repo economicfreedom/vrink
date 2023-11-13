@@ -8,10 +8,6 @@ public class Suggest {
     private int userId;
     private String title;
     private String content;
+    private int state;
     private String createdAt;
-
-    public void patchSuggest(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }

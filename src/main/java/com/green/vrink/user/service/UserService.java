@@ -1,15 +1,13 @@
 package com.green.vrink.user.service;
 
+import com.green.vrink.user.dto.FindEmailDto;
+import com.green.vrink.user.dto.FindPasswordDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 //import com.green.vrink.handle.CustomRestfulException;
 import com.green.vrink.user.dto.SignUpDto;
-import com.green.vrink.user.dto.UpdateNicknameDto;
-import com.green.vrink.user.dto.UpdatePasswordDto;
 import com.green.vrink.user.repository.interfaces.UserRepository;
 import com.green.vrink.user.repository.model.User;
 
@@ -29,22 +27,54 @@ public class UserService {
 	}
 	
 	public User signIn(String email) {
-		User user = userRepository.findByEmail(email);
-		return user;
-	}
-	
-	public Integer updateNickname(String userId, String nickname) {
-		int result = userRepository.updateNickname(userId, nickname);
-		return result;
+		return userRepository.findByEmail(email);
 	}
 
-	public Integer updatePassword(String userId, String password) {
-		int result = userRepository.updatePassword(userId, password);
-		return result;
+	@Transactional
+	public Integer updateNickname(String userId, String nickname) {
+		return userRepository.updateNickname(userId, nickname);
+	}
+
+	@Transactional
+	public Integer updatePassword(Integer userId, String password) {
+		return userRepository.updatePassword(userId, password);
 	}
 
 	public Integer deleteByUserId(String userId) {
-		int result = userRepository.deleteByUserId(userId);
-		return result;
+		return userRepository.deleteByUserId(userId);
+	}
+
+	public Integer findUserByNickname(String nickname) {
+		return userRepository.findUserByNickname(nickname);
+	}
+
+	public String findEmailByNicknameAndPhone(FindEmailDto findEmailDto) {
+		return userRepository.findEmailByNicknameAndPhone(findEmailDto);
+	}
+
+	public Integer findPasswordByEmailAndName(FindPasswordDto findPasswordDto) {
+		return userRepository.findPasswordByEmailAndName(findPasswordDto);
+	}
+
+	public User findByUserId(int userId) {
+		return userRepository.findByUserId(userId);
+	}
+
+	public Integer findUserIdByEmail(String email) {
+		return userRepository.findUserIdByEmail((email));
+	}
+
+	public Integer findUserIdBySuggestId(Integer suggestId) {
+		return userRepository.findUserIdBySuggestId(suggestId);
+	}
+
+	public void deleteByEditorId(Integer editorId) {
+		userRepository.deleteByEditorId(editorId);
+	}
+
+    public User getUserByUserId(Integer receiverId) {
+		User user = userRepository.findByUserId(receiverId);
+
+		return user;
 	}
 }

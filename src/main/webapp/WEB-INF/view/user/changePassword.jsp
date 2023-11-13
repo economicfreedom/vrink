@@ -6,23 +6,21 @@
 	        <div class="registration-sec">
 	            <h3>비밀번호 변경</h3>
 	            <div class="common-sign-up">
-					<input type="text" class="my-user-id" value="${USER.userId }" readonly="readonly" />
-	                <div class="field">
-	                    <input type="text" placeholder="현재 비밀번호" class="encoded-password" value="${USER.password }" readonly="readonly" />
-	                </div>
 					<div class="field">
-	                    <input type="text" placeholder="현재 비밀번호" class="my-password-check" value=""/>
-						<input type="text" class="encoded-password-check-flag" value="1"/>
+	                    <input type="password" placeholder="현재 비밀번호" class="my-password-check" value=""/>
+						<input type="hidden" class="encoded-password-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
 	                    <input type="password" placeholder="새로운 비밀번호" class="new-password"/>
 	                </div>
 	                <div class="field">
 	                    <input type="password" placeholder="비밀번호 확인" class="new-password-check"/>
-	                    <input type="text" class="new-password-check-flag" value="1"/>
+	                    <input type="hidden" class="new-password-check-flag" value="1"/>
 	                </div>
 	                <div class="field">
-			            <input type="button" value="변경" id="change-password-btn" class="flat-btn"/>
+						<div class="flat-btn-div">
+				            <input type="button" value="변경" id="change-password-btn" class="flat-btn"/>
+						</div>
 	                </div>
 	            </div>
 	    </div>
@@ -36,14 +34,16 @@
 	});
 
 	$('.new-password').change(function () {
-		$('.new-password-check').val('');
 		$('.new-password-check-flag').val('1');
+		if (!passwordValidation($('.new-password').val().trim())) {
+			$('.new-password').val('');
+		}
+
 	});
 
 	$('.new-password-check').change(function () {
 		if ($('.new-password').val().trim() === $('.new-password-check').val().trim()) {
 			$('.new-password-check-flag').val('0');
-			return;
 		}
 	});
 
@@ -57,7 +57,7 @@
 			alert('새로운 비밀번호가 서로 일치하지않습니다.');
 			return;
 		}
-		changePassword($('.my-user-id').val());
+		changePassword(`${USER.userId}`);
 	});
 
 	async function checkPassword() {
@@ -67,7 +67,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				encodedPassword : $('.encoded-password').val(),
+				encodedPassword : `${USER.password}`,
 				insertPassword : $('.my-password-check').val().trim()
 			})
 		});

@@ -16,7 +16,7 @@
 </style>
 <script>
     function href() {
-        location.href = "/board/write"
+        location.href = "/board/write-form"
     }
 
     $(document).ready(function () {
@@ -28,6 +28,15 @@
             alert(keyword)
             location.href = "/board/board-list?keyword=" + keyword + "&type=" + type;
 
+        });
+        $("#keyword").keypress(function (event) {
+            if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
+                let type = $("#type").val();
+                let keyword = $("#keyword").val();
+
+
+                location.href = "/board/board-list?type=" + type + "&keyword=" + keyword;
+            }
         });
         $('#pagination').on('click', 'a', function (e) {
             e.preventDefault();
@@ -43,27 +52,29 @@
     })
 </script>
 
-<div class="container">
+<div class="container mt-5">
     <div class="row mt-5 mb-5">
         <div class="col-sm-9 col-center">
             <div class="d-flex mb-3" style="justify-content: space-between;">
                 <div>
                     <c:if test="${pageDTO.cri.keyword != ''}">
-                        <span>${pageDTO.cri.keyword}(${total})</span>
+                        <h2 style="color: grey">${pageDTO.cri.keyword}(${total})</h2>
                     </c:if>
 
                     <c:if test="${pageDTO.cri.keyword == ''}">
-                        <span>자유 게시판</span>
+                        <div class="heading1">
+                            <h2 style="color: grey">자유 게시판</h2>
+                        </div>
                     </c:if>
                 </div>
                 <div>
-                    <select style="height:26px" name="type" id="type">
+                    <select style="height:26px" name="type" id="type" class="search-area">
                         <option value="title"  ${pageDTO.cri.type == 'title' ? 'selected' : ''}>제목</option>
                         <option value="content"  ${pageDTO.cri.type == 'content' ? 'selected' : ''}>내용</option>
                         <option value="tc" ${pageDTO.cri.type == 'tc' ? 'selected' : ''}>게시글+내용</option>
                         <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
                     </select>
-                    <input type="text" size="15" id="keyword"
+                    <input class="search-area" type="text" size="15" id="keyword"
                            value="${pageDTO.cri.keyword != '' ? pageDTO.cri.keyword :''}">
                     <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
                          id="search">
@@ -86,13 +97,26 @@
                 </tr>
                 </thead>
                 <tbody>
+
+                <c:forEach items="${noticeList}" var="notice">
+                    <tr class="board-list-tr" style="font-weight: bold">
+                        <td>공지사항</td>
+                        <td class="t-left">
+                            <a href="/notice/${notice.noticeId}"
+                               style="text-decoration: none; color: black"><span>
+                                    ${notice.title}</span> </a></td>
+
+                        <td>관리자</td>
+                        <td>${notice.createdAt}</td>
+                    </tr>
+                </c:forEach>
                 <c:forEach items="${list}" var="board">
                     <tr class="board-list-tr">
                         <td>${board.communityId}</td>
                         <td class="t-left">
                             <a href="/board/read/${board.communityId}"
-                               style="text-decoration: none; color: black">
-                                    ${board.title}</a></td>
+                               style="text-decoration: none; color: black"><span>
+                                    ${board.title}</span> <span style="color:#ff2929"> [${board.count}] </span></a></td>
 
                         <td>${board.nickname}</td>
                         <td>${board.createdAt}</td>
@@ -118,7 +142,7 @@
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 
             <c:if test="${pageDTO.prev}">
-                <li class="disabled"><a href="#"
+                <li class="disabled"><a href="#" style="cursor: pointer"
                                         data-page-num="${pageDTO.beginPage-1}"><span>PREV</span></a>
                 </li>
             </c:if>
