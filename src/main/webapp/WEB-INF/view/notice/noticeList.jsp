@@ -55,7 +55,7 @@
 <div class="container mt-5">
     <div class="row mt-5 mb-5">
         <div class="col-sm-9 col-center">
-            <div class="d-flex mb-3" style="justify-content: space-between;">
+            <div class="d-flex mb-3" style="justify-content: space-between; ">
                 <div>
                     <c:if test="${pageDTO.cri.keyword != ''}">
                         <h2 style="color: grey">${pageDTO.cri.keyword}(${total})</h2>
@@ -79,14 +79,14 @@
 
                 </div>
             </div>
-            <table class="w-full t-center">
+            <table class="w-full t-center" style="font-weight: bold">
                 <colgroup>
                     <col width="10%">
                     <col width="40%">
                     <col width="25%">
                     <col width="25%">
                 </colgroup>
-                <thead>
+                <thead >
                 <tr class="board-list-th">
                     <th class="t-center">번호</th>
                     <th>제목</th>
@@ -119,9 +119,6 @@
     <%--        <li><a href="#" title=""><span>PREV</span></a></li>--%>
     <%--    </ul>--%>
     <c:if test="${USER != null}">
-        <div>
-            <button class="flat-btn" style="font-size: 12px; float: right" onclick="href()">게시글 작성</button>
-        </div>
     </c:if>
     <form action="/notice/notice-list" name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">

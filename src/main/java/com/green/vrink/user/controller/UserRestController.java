@@ -96,8 +96,8 @@ public class UserRestController {
     }
 
     // 닉네임 변경
-    @PutMapping("/update/nickname/{userId}")
-    public int updateNickname(@PathVariable String userId, @RequestBody Map<String, String> map) {
+    @PutMapping("/update/nickname/{user-id}")
+    public int updateNickname(@PathVariable(name = "user-id") String userId, @RequestBody Map<String, String> map) {
         String nickname = map.get("nickname");
         int existNickname = userService.findUserByNickname(nickname);
         if (existNickname == 1) {
@@ -123,8 +123,8 @@ public class UserRestController {
     }
 
     // 비밀번호 변경
-    @PutMapping(value = "/update/password/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public int updatePassword(@PathVariable Integer userId, @RequestBody Map<String, String> map) {
+    @PutMapping(value = "/update/password/{user-id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public int updatePassword(@PathVariable(name = "user-id") Integer userId, @RequestBody Map<String, String> map) {
         User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return 0;
@@ -163,7 +163,7 @@ public class UserRestController {
         }
         log.info("deleteFlag: {}", result);
         if (result == 1) {
-            userService.updateNickname(userId, "알수없음");
+            userService.updateNickname(userId, "알수없음"+userId);
             session.removeAttribute(Define.USER);
             return result;
         }

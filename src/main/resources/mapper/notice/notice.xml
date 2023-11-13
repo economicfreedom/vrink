@@ -5,6 +5,8 @@
         SELECT *
         FROM notice
         WHERE type = #{type}
+        ORDER BY notice_id DESC
+        LIMIT 0,5
     </select>
 
 
@@ -19,7 +21,8 @@
         </if>
     </select>
     <select id="findAllByCriteria" resultType="com.green.vrink.notice.dto.NoticeDto">
-        SELECT * FROM notice
+        SELECT notice_id,title,
+               DATE_FORMAT(created_at, '%y-%m-%d %H:%i') AS created_at FROM notice
         <if test="type == 'title'">
             WHERE title LIKE CONCAT('%',#{keyword},'%')
         </if>

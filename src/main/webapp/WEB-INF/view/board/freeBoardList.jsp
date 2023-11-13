@@ -68,13 +68,13 @@
                     </c:if>
                 </div>
                 <div>
-                    <select style="height:26px" name="type" id="type">
+                    <select style="height:26px" name="type" id="type" class="search-area">
                         <option value="title"  ${pageDTO.cri.type == 'title' ? 'selected' : ''}>제목</option>
                         <option value="content"  ${pageDTO.cri.type == 'content' ? 'selected' : ''}>내용</option>
                         <option value="tc" ${pageDTO.cri.type == 'tc' ? 'selected' : ''}>게시글+내용</option>
                         <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
                     </select>
-                    <input type="text" size="15" id="keyword"
+                    <input class="search-area" type="text" size="15" id="keyword"
                            value="${pageDTO.cri.keyword != '' ? pageDTO.cri.keyword :''}">
                     <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
                          id="search">

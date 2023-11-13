@@ -68,7 +68,12 @@
                     html += '<li><a title="" href="/editor/editor-detail/' + dto.editorId + '"><i'
                     html += ' class="fa fa-search"></i></a></li>'
                     html += '<li><a title="" href="/editor/editor-detail/' + dto.editorId + '"><img'
-                    html += ' src="' + dto.profileImage + '"'
+
+                    let profileImage = dto.profileImage;
+                    if (dto.profileImage.length <= 0 ){
+                        profileImage = '/images/resource/no_face.png';
+                    }
+                    html += ' src="' + profileImage+ '"'
                     html += ' style="border-radius: 100%;width: 100%; height: 100%"></a></li>'
                     html += '</ul>'
                     html += '</div>'
@@ -208,7 +213,7 @@
                                             <li><a title="" href="/editor/editor-detail/${dto.editorId}"><i
                                                     class="fa fa-search"></i></a></li>
                                             <li><a title="" href="/editor/editor-detail/${dto.editorId}"><img
-                                                    src="${dto.profileImage}"
+                                                    src="${dto.profileImage == null ? '/images/resource/no_face.png':dto.profileImage}"
                                                     style="border-radius: 100%;width: 100%; height: 100%"></a></li>
                                         </ul>
                                     </div>

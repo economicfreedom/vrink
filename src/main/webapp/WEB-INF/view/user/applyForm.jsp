@@ -75,7 +75,7 @@
                 },
                 error: function (res) {
                     console.log(res);
-                    alert("알러트")
+                    alert("실패하였습니다.")
                 }
 
             })

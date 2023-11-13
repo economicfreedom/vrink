@@ -75,6 +75,7 @@ public class SuggestServiceImpl implements SuggestService{
 
     @Override
     public Integer acceptSuggest(Integer suggestId) {
+        
         return suggestRepository.acceptSuggest(suggestId);
     }
 

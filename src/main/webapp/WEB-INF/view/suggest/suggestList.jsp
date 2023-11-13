@@ -82,7 +82,7 @@
 
                 </div>
             </div>
-            <input type="hidden" id="paginationFlag" value="0" />
+            <input type="hidden" id="paginationFlag" value="0"/>
             <table class="w-full t-center">
                 <colgroup>
                     <col width="10%">
@@ -99,28 +99,43 @@
                     <th class="t-center" style="margin-right: 5px">
                         <select style="height:26px" name="state" id="state">
                             <option value="all"  ${pageDTO.cri.type == 'all' ? 'selected' : ''}>모두</option>
-                            <option value="inProgress"  ${pageDTO.cri.type == 'inProgress' ? 'selected' : ''}>의뢰중</option>
+                            <option value="inProgress"  ${pageDTO.cri.type == 'inProgress' ? 'selected' : ''}>의뢰중
+                            </option>
                             <option value="complete" ${pageDTO.cri.type == 'complete' ? 'selected' : ''}>의뢰완료</option>
                         </select>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${noticeList}" var="notice">
+                    <tr class="board-list-tr" style="font-weight: bold">
+                        <td>공지사항</td>
+                        <td class="t-left">
+                            <a href="/notice/${notice.noticeId}"
+                               style="text-decoration: none; color: black"><span>
+                                    ${notice.title}</span> </a></td>
+
+                        <td>관리자</td>
+                        <td>${notice.createdAt}</td>
+                    </tr>
+                </c:forEach>
                 <c:forEach items="${suggestList}" var="suggest">
                     <tr class="board-list-tr">
                         <td>${suggest.suggestId}</td>
                         <td class="t-left">
-                            <a href="/suggest/get/${suggest.suggestId} "style="text-decoration: none; color: black">
+                            <a href="/suggest/get/${suggest.suggestId} " style="text-decoration: none; color: black">
                                 <span>${suggest.title}</span>
                             </a>
                         </td>
                         <td>${suggest.nickname}</td>
                         <td>${suggest.createdAt}</td>
                         <c:if test="${0 eq suggest.state}">
-                            <td><input type="button" value="의뢰 중" class="status-btn" style="background-color: #ff2929; padding: 5px 16px"/></td>
+                            <td><input type="button" value="의뢰 중" class="status-btn"
+                                       style="background-color: #ff2929; padding: 5px 16px"/></td>
                         </c:if>
                         <c:if test="${1 eq suggest.state}">
-                            <td><input type="button" value="의뢰 완료" class="status-btn" style="background-color: grey; padding: 5px 10px;"/></td>
+                            <td><input type="button" value="의뢰 완료" class="status-btn"
+                                       style="background-color: grey; padding: 5px 10px;"/></td>
                         </c:if>
                     </tr>
                 </c:forEach>

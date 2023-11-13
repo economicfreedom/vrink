@@ -1,6 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
+<style>
+    .custom-btn{
+        background-color: #ff2929;
+        color:white;
+        border: none;
+
+    }
+    .custom-btn:hover{
+        background-color: white;
+        color: #ff2929;
+    }
+</style>
 
 <script>
     let pageNum = 1;
@@ -305,7 +317,7 @@
                                               >${suggestReply.content}</textarea>
                                     <c:if test="${suggestReply.userId != suggest.userId && not empty USER && suggest.userId == USER.userId}">
                                         <div style="display: flex; justify-content: flex-end;">
-                                            <input type="button" value="제안 수락" class="suggest-state-btn" id="accept-suggest-btn" style="background-color: #ff2929; padding: 1px 10px" onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
+                                            <input  type="button" value="제안 수락" class="flat-btn" id="accept-suggest-btn" style="padding: 1px 10px; " onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
                                         </div>
                                     </c:if>
                                     <div class="comment-buttons">

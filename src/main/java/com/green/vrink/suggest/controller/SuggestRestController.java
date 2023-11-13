@@ -131,6 +131,7 @@ public class SuggestRestController {
         if (user == null) {
             return 0;
         }
+
         int suggestState = suggestService.acceptSuggest(suggestId);
         messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), acceptSuggestDto.getContent());
         return suggestState;

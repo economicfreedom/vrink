@@ -1,5 +1,7 @@
 package com.green.vrink.suggest.controller;
 
+import com.green.vrink.notice.dto.NoticeDto;
+import com.green.vrink.notice.service.NoticeService;
 import com.green.vrink.suggest.dto.GetSuggestDto;
 import com.green.vrink.suggest.dto.SuggestReplyDto;
 import com.green.vrink.suggest.service.SuggestService;
@@ -24,9 +26,11 @@ public class SuggestController {
     private final HttpSession session;
     private final UserRepository userRepository;
     private final SuggestService suggestService;
+    private final NoticeService noticeService;
+
     @GetMapping("/post")
     public String postSuggest() {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return "main";
         }
@@ -51,18 +55,21 @@ public class SuggestController {
 
         List<SuggestReplyDto> replyList = suggestService.getSuggestReplyList(suggestId, cri);
 
+
         boolean next = pageDTO.getEndPage() > 1;
+
 
         model.addAttribute("suggest", suggest);
         model.addAttribute("suggestReply", replyList);
-        model.addAttribute("next",next);
+        model.addAttribute("next", next);
         model.addAttribute("replyCount", replyCount);
 
         return "suggest/suggestDetail";
     }
+
     @GetMapping("/patch/{suggestId}")
     public String patchSuggest(@PathVariable int suggestId, Model model) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         GetSuggestDto suggest = suggestService.getSuggest(suggestId);
 
         if (user == null || suggest == null || user.getUserId() != suggest.getUserId()) {
@@ -75,10 +82,10 @@ public class SuggestController {
     }
 
     @GetMapping("/list")
-    public String getSuggestList(@RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
-                                ,@RequestParam(name = "keyword",defaultValue = "") String keyword
-                                ,@RequestParam(name = "type" ,defaultValue = "") String type
-                                ,Model model) {
+    public String getSuggestList(@RequestParam(name = "page-num", defaultValue = "1") Integer pageNum
+            , @RequestParam(name = "keyword", defaultValue = "") String keyword
+            , @RequestParam(name = "type", defaultValue = "") String type
+            , Model model) {
         Criteria criteria = new Criteria();
         criteria.setType(type);
         criteria.setKeyword(keyword);
@@ -87,7 +94,11 @@ public class SuggestController {
 
         Integer total = suggestService.getTotal(criteria);
         List<GetSuggestDto> suggestList = suggestService.getSuggestList(criteria);
+        if (pageNum.intValue() == 1) {
+            List<NoticeDto> noticeList = noticeService.noticeList("suggest");
+            model.addAttribute("noticeList", noticeList);
 
+        }
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(criteria);
         pageDTO.setArticleTotalCount(total);

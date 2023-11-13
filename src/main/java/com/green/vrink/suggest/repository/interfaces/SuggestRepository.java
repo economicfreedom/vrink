@@ -1,7 +1,6 @@
 package com.green.vrink.suggest.repository.interfaces;
 
 import com.green.vrink.suggest.dto.*;
-import com.green.vrink.suggest.repository.model.Suggest;
 import com.green.vrink.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +22,5 @@ public interface SuggestRepository {
     List<GetSuggestDto> getSuggestList(Criteria criteria);
     Integer acceptSuggest(Integer suggestId);
     List<GetSuggestDto> findAllByCriteria(Criteria criteria);
+    Integer findStateById(Integer suggestId);
 }

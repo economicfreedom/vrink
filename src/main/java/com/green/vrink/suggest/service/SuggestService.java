@@ -20,4 +20,5 @@ public interface SuggestService {
     Integer getTotal(Criteria criteria);
     List<GetSuggestDto> getSuggestList(Criteria criteria);
     Integer acceptSuggest(Integer suggestId);
+
 }

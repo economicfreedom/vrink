@@ -176,7 +176,7 @@
                     <tr class="board-list-th">
                         <th class="t-center">번호</th>
                         <th>제목</th>
-                        <th class="t-center">날짜</th>
+                        <th class="t-center">작성일</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -308,7 +308,7 @@
                         <th class="t-center">번호</th>
                         <th>제목</th>
                         <th class="t-center">닉네임</th>
-                        <th class="t-center">날짜</th>
+                        <th class="t-center">작성일</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -343,7 +343,7 @@
                         <th class="t-center">번호</th>
                         <th>제목</th>
                         <th class="t-center">닉네임</th>
-                        <th class="t-center">날짜</th>
+                        <th class="t-center">작성일</th>
                     </tr>
                     </thead>
                     <tbody>

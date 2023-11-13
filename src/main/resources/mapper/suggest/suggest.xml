@@ -104,7 +104,7 @@
         , s.user_id
         , s.title
         , s.content
-        , DATE_FORMAT(s.created_at, "%Y-%m-%d") AS created_at
+        , DATE_FORMAT(s.created_at, '%y-%m-%d %H:%i') AS created_at
         , s.state
         , u.nickname
         ,count(sr.suggest_id )AS count
@@ -142,6 +142,11 @@
         ORDER BY created_at DESC
 
         LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="findStateById" resultType="java.lang.Integer">
+        SELECT state FROM
+        WHERE
+
     </select>
 
 

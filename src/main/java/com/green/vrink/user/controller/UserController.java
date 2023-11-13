@@ -26,58 +26,64 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController {
 
-	private final UserRepository userRepository;
-	private final HttpSession session;
-	private final UserService userService;
+    private final UserRepository userRepository;
+    private final HttpSession session;
+    private final UserService userService;
 
-	@GetMapping("/sign-in")
-	public String signIn() {
-		// 로그인
-		return "main";
-	}
+    @GetMapping("/sign-in")
+    public String signIn() {
+        // 로그인
+        return "main";
+    }
 
-	@GetMapping("/sign-up")
-	public String goToSignUp() {
-		// 회원가입
-		return "main";
-	}
+    @GetMapping("/sign-up")
+    public String goToSignUp() {
+        // 회원가입
+        return "main";
+    }
 
-	@GetMapping("/my-page")
-	public String goMyPage(Model model) {
-		User user = (User) session.getAttribute(Define.USER);
+    @GetMapping("/my-page")
+    public String goMyPage(Model model) {
+        User user = (User) session.getAttribute(Define.USER);
 
-		if (user == null){
-			return "redirect:/user/sign-in";
-		}
+        if (user == null) {
+            return "redirect:/user/sign-in";
+        }
 
-		User newUser = userService.findByUserId(user.getUserId());
-		model.addAttribute("newUser", newUser);
-		return "user/myPage";
-	}
+        User newUser = userService.findByUserId(user.getUserId());
+        model.addAttribute("newUser", newUser);
+        return "user/myPage";
+    }
 
-	@GetMapping("/change-password")
-	public String goChangeMyPassword(Model model) {
-		User user = (User) session.getAttribute("USER");
+    @GetMapping("/change-password")
+    public String goChangeMyPassword(Model model) {
+        User user = (User) session.getAttribute("USER");
 
-		if (user==null){
-			return "redirect:/user/sign-in";
-		}
+        if (user == null) {
+            return "redirect:/user/sign-in";
+        }
 
-		return "user/changePassword";
-	}
+        return "user/changePassword";
+    }
 
-	@GetMapping("find/email")
-	public String findEmail() {
-		return "user/findEmail";
-	}
-	@GetMapping("find/password")
-	public String findPassword() {
-		return "user/findPassword";
-	}
+    @GetMapping("find/email")
+    public String findEmail() {
+        return "user/findEmail";
+    }
 
-	@GetMapping("/log-out")
-	public void logOut() {
-		session.invalidate();
-	}
+    @GetMapping("find/password")
+    public String findPassword() {
+        return "user/findPassword";
+    }
+
+    @GetMapping("/log-out")
+    public void logOut() {
+
+
+        session.removeAttribute(Define.EDITOR_ID);
+        session.removeAttribute(Define.USER);
+
+
+    }
 
 }
