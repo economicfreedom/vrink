@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.green.vrink.notice.repository.interfaces.NoticeRepository">
+    <select id="findNoticeListByType" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT *
+        FROM notice
+        WHERE type = #{type}
+    </select>
 
 
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(notice_id) FROM notice
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="findAllByCriteria" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT * FROM notice
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+
+        ORDER BY notice_id DESC
+        LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="findByNoticeId" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT * FROM notice WHERE notice_id = #{noticeId}
+    </select>
 </mapper>
