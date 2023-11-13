@@ -156,8 +156,9 @@
             <span><i class="fa fa-bolt"></i></span>
             <h2>의뢰 요청</h2>
             <ul>
-                <li><a href="#" title="">목록</a></li>
-                <li><a href="#" title="">상세보기</a></li>
+                <li><a href="/" title="">홈</a></li>
+                <li><a href="/editor/request-list" title="">목록</a></li>
+                <li>상세보기</li>
             </ul>
         </div>
     </div>

@@ -36,42 +36,50 @@ public class ReviewRestController {
     private final UserService userService;
 
     @PostMapping("/save")
-    @LoginCheck
     public ResponseEntity<?> replySave(@Valid @RequestBody ReviewDTO reviewDTO, BindingResult bindingResult) {
-        
-        
-        if (bindingResult.hasErrors()){
+
+
+        if (bindingResult.hasErrors()) {
             log.info("유효성 에러");
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            CustomMessage customMessage = new CustomMessage(defaultMessage,400);
 
-            return ResponseEntity.badRequest().body(defaultMessage);
+            return ResponseEntity.badRequest().body(customMessage);
         }
 
         User user = (User) httpSession.getAttribute(Define.USER);
 
-        int editorId = reviewDTO.getEditorId();
-        int userIdByEditorId = editorService
-                              .getUserIdByEditorId(editorId);
-        Integer userId = user.getUserId();
+        if (isNull(user)) {
+            CustomMessage customMessage = new CustomMessage(
+                    "로그인후 사용 가능합니다."
+                    , 400);
 
-        if (userId == userIdByEditorId){
-            log.info("같은 유저");
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(customMessage);
         }
 
 
-        Integer check = reviewService.duplicationCheck(reviewDTO);
+        int editorId = reviewDTO.getEditorId();
+        int userIdByEditorId = editorService
+                .getUserIdByEditorId(editorId);
 
-//        if (check != null){
-//            log.info("이미 작성한 작가");
-//            return ResponseEntity.badRequest().build();
-//        }
+        Integer userId = user.getUserId();
+
+        if (userId == userIdByEditorId) {
+            CustomMessage customMessage = new CustomMessage(
+                    "본인 게시글의 리뷰를 작성하실 수 없습니다."
+                    ,  400);
+            return ResponseEntity.badRequest().body(customMessage);
+        }
 
         log.info("if 문 start === > ");
-        
+
         boolean hasReviewCount = reviewService.hasReviewCount(userId, editorId);
-        if (!hasReviewCount){
-            return ResponseEntity.badRequest().body("댓글을 작성하실 수 없습니다.");
+        log.info("hasReviewCount {}", hasReviewCount);
+        if (!hasReviewCount) {
+            CustomMessage customMessage = new CustomMessage(
+                    "구매가 완료된 후 리뷰 작성이 가능합니다."
+                    , 400);
+            return ResponseEntity.badRequest().body(customMessage);
         }
         log.info("if 문 done === > ");
         Integer save = reviewService.save(reviewDTO);
@@ -80,13 +88,12 @@ public class ReviewRestController {
         log.info("reply save start {}", save);
 
 
-
         String nickname = editorService.getNicknameByEditorId(editorId);
 
-        String message = nickname+"작가님 리뷰가 달렸어요!";
-        String url = "/editor/editor-detail/"+reviewDTO.getEditorId();
+        String message = nickname + "작가님 리뷰가 달렸어요!";
+        String url = "/editor/editor-detail/" + reviewDTO.getEditorId();
 
-        messageService.sendMessageAndSaveSpecificPage(userIdByEditorId,message,url);
+        messageService.sendMessageAndSaveSpecificPage(userIdByEditorId, message, url);
         return ResponseEntity.ok().build();
     }
 
@@ -95,15 +102,15 @@ public class ReviewRestController {
     public ResponseEntity<?> replyDelete(@PathVariable(name = "review-id") Integer reviewId) {
         User user = (User) httpSession.getAttribute("USER");
 
-        if (isNull(reviewId)){
+        if (isNull(reviewId)) {
             return ResponseEntity.badRequest().build();
         }
 
         int userId = user.getUserId();
 
         int reviewUserId = reviewService.getReviewUserId(reviewId);
-        log.info("userId : {}",userId);
-        log.info("reviewUser Id : {}",reviewUserId);
+        log.info("userId : {}", userId);
+        log.info("reviewUser Id : {}", reviewUserId);
         if (userId != reviewUserId) {
             return ResponseEntity.badRequest().build();
         }
@@ -119,6 +126,7 @@ public class ReviewRestController {
     @NoArgsConstructor
     private static class CustomMessage {
         private String message;
+        private int code;
     }
 
 }
