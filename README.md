@@ -111,8 +111,8 @@
 
 ## 2️⃣ 프로젝트 개요
 
-* 핵심 기능이 많으며 실무에서 활용할 수 있는 기능이 포함된 것들 중, 예약, 환불, 외부 API를 활용할 수 있는 항공권 예약 사이트로 주제 선정
-* 현행 시스템 벤치마킹 (아시아나 항공, 대한 항공 등)
+* 시대변화에 발맞춰 비즈니스 모델을 충분히 활용할 수 있는 VR 에셋 거래 중계 사이트로 주제 선정
+* 현행 시스템 벤치마킹 (아트머그, 크몽)
 
 <br>
 
@@ -120,24 +120,31 @@
 
 #### Member
 
-* 소셜 로그인 API, 항공권 예매 기능, 결제 및 환불 API
-* 기내 서비스 조회 기능, 서비스 신청 기능, 여행일지 조회 기능
-* 구글 맵 API, 마일리지 숍 구매 기능, 네이버 이메일 SMTP 프로토콜
+* 소셜 로그인 API, 결제 및 환불 API, VRM 조회 기능
+* OpenAI 평가 API, 구글 이메일 SMTP 프로토콜, 버튜버 인기 순위 기능
+* 상품 조회 기능, 게시판 기능, 신고 기능, 문의 기능
+
+#### Customer
+
+* 상품 구매 기능, 작가 팔로우 기능, 개인 의뢰 기능
+
+#### Editor
+
+* 작가 페이지 등록 기능, 상품 등록/판매 기능, 포인트 환전 기능
 
 #### Manager
-* 대시보드 조회, 회원관리, 항공권 관리 및 조회, 서비스 신청 관리 및 조회
-* 여행일지 관리 및 조회, 마일리지 숍 관리 및 조회, 고객센터 관리 및 조회
+* 대시보드 조회, 통계 조회, 회원관리, 판매자 신청 승인, 공지/게시판 관리, 
+* 정산 조회 및 처리, 결제 조회 및 환불처리, 고객문의 답변, 신고 처리, 배너 등록 및 조회
 
 <br>
 
 ## 4️⃣ ERD & 테이블 명세서
-테이블 명세서 : https://docs.google.com/spreadsheets/d/1oaUxJ4CWKrVUvi02h9mYOwBL-raDCLswAQ5Qllws7Xw/edit#gid=0
+테이블 명세서 : https://docs.google.com/spreadsheets/d/1Lrxd3bV0l5KgfyZpKmTONYraU3WzuedwmmR7ZOANyI8/edit#gid=0
 
 <br>
 <br>
 
-![ERD Model](https://github.com/seoyounglee0105/green_airline_project/assets/124985978/3dc47f53-61da-4115-9644-3d19a8e3f185)
-
+![table](https://github.com/economicfreedom/vrink/assets/35636560/40e65e8f-9260-4f9c-9671-52387a49ed8a)
 
 <br>
 <br>
@@ -146,16 +153,9 @@
 ## 5️⃣ SiteMap
 <br>
 
-<table>
-<tr>
- <td>User</td>
- <td>Manager</td>
- </tr>
-<tr>
-<td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/872e19cf-262f-48aa-bd3a-338e88208be6"></td>
-<td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/faa63d99-e44c-49d5-adf1-66d1dff62262"></td>
-</tr>
-</table>
+![image](https://github.com/economicfreedom/vrink/assets/35636560/2f95ba3a-7042-4d0f-9e21-f3c2a1789f39)
+![image](https://github.com/economicfreedom/vrink/assets/35636560/5748c13f-c222-4020-99d7-e76b85d9d6df)
+
 
 <br>
 
