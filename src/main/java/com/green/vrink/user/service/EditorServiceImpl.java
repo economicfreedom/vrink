@@ -93,7 +93,6 @@ public class EditorServiceImpl implements EditorService {
             Integer price = editorPriceListDTO.getPrice()[i];
             priceDTO.setOptions(option);
             priceDTO.setPrice(price);
-            log.info("{}", priceDTO);
             userRepository.insertPrice(priceDTO);
         }
         return 1;
@@ -110,7 +109,6 @@ public class EditorServiceImpl implements EditorService {
             Integer price = editorPriceListDTO.getPrice()[i];
             priceDTO.setOptions(option);
             priceDTO.setPrice(price);
-            log.info("{}", priceDTO);
             userRepository.insertPrice(priceDTO);
         }
         return 1;

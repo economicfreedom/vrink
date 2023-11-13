@@ -83,10 +83,11 @@
 							method:'POST'
 						}).then(response=>response.json())
 								.then(data =>{
-									fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/users/getToken',{
+									fetch('https://proxy.cors.sh/https://api.iamport.kr/users/getToken',{
 										method:'POST',
 										headers : {              // Http header
 											"Content-Type" : 'application/json',
+											'x-cors-api-key': 'temp_5f308d5f08b11d5fd98b779695a0382c'
 										},
 										body : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
 											imp_key : data.apiKey,
@@ -95,10 +96,11 @@
 									}).then(response=>response.json())
 											.then(data => {
 												// 결제 취소
-												fetch('https://cors-anywhere.herokuapp.com/https://api.iamport.kr/payments/cancel',{
+												fetch('https://proxy.cors.sh/https://api.iamport.kr/payments/cancel',{
 													method:'POST',
 													headers : {              // Http header
 														"Content-Type" : 'application/json',
+														'x-cors-api-key': 'temp_5f308d5f08b11d5fd98b779695a0382c',
 														"Authorization": data.response.access_token
 													},
 													body:JSON.stringify({  // 보낼 데이터 (Object , String, Array)

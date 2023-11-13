@@ -56,7 +56,6 @@ public class EditorController {
         List<EditorPriceDTO> editorPrice = editorService.responsePrice(editorId);
         model.addAttribute("editorPrice", editorPrice);
 
-        log.info("editorDetail{}", editorDTO);
         log.info("morph : {}", morph);
         model.addAttribute("morph", morph);
 

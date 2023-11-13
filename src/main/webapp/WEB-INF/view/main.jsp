@@ -114,29 +114,26 @@
     <div class="container">
         <div class="row" style="position: relative">
             <div class="col-sm-10">
-                <div class="banner">
+                <div class="banner col-sm-12">
                     <div>
-                        <img class="img-responsive" src="http://artmug.kr/image/up_img/detail/goods_6239/16646695010_Re.jpg" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner1.webp" alt="">
                     </div>
                     <div>
-                        <img class="img-responsive" src="http://artmug.kr/image/up_img/detail/goods_6239/16552736910_Re.jpg" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner2.webp" alt="">
                     </div>
                     <div>
-                        <img class="img-responsive" src="http://artmug.kr/image/up_img/detail/goods_6239/16630494830_Re.jpg" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner3.webp" alt="">
                     </div>
                     <div>
-                        <img class="img-responsive" src="http://artmug.kr/image/up_img/detail/goods_6239/16756016890_Re.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="img-responsive" src="http://artmug.kr/image/up_img/detail/goods_6239/16765095360_Re.jpg" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner4.webp" alt="">
                     </div>
                 </div>
             </div>
             <div class="col-sm-2 advertise">
-                <img class="img-responsive" src="https://cdn.imweb.me/thumbnail/20200709/64c03a3d5bf6a.png" alt="">
+                <img class="img-responsive" src="/images/resource/banner/sidebanner.webp" alt="">
             </div>
-            <div class="col-sm-12 mt-5 h-advertise" >
-                <img class="img-responsive" src="/images/ad_hori.jpg" alt="">
+            <div class="col-sm-10 mt-5 h-advertise" >
+                <img class="img-responsive" src="/images/resource/banner/sidebannerlong.webp" alt="">
             </div>
         </div>
         <div class="row mt-5">
@@ -167,33 +164,30 @@
             <div class="col-sm-12 mt-5">
                 <div class="heading1">
                     <h2>공지사항</h2>
-                    <span class="more-link"><a href="/board/board-list">더보기</a></span>
+                    <span class="more-link"><a href="/notice/notice-list">더보기</a></span>
                 </div>
                 <table class="w-full t-center">
                     <colgroup>
                         <col width="10%">
-                        <col width="40%">
-                        <col width="25%">
-                        <col width="25%">
+                        <col width="70%">
+                        <col width="20%">
                     </colgroup>
                     <thead>
                     <tr class="board-list-th">
                         <th class="t-center">번호</th>
                         <th>제목</th>
-                        <th class="t-center">닉네임</th>
                         <th class="t-center">날짜</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${boardList}" var="board">
+                    <c:forEach items="${noticeList}" var="notice">
                         <tr class="board-list-tr">
-                            <td>${board.communityId}</td>
+                            <td>${notice.noticeId}</td>
                             <td class="t-left">
-                                <a href="/board/read/${board.communityId}"
+                                <a href="/notice/get/${notice.noticeId}"
                                    style="text-decoration: none; color: black"><span>
-                                        </span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
-                            <td>${board.nickname}</td>
-                            <td>${board.createdAt}</td>
+                                        </span> <span> ${notice.title}</span></a></td>
+                            <td>${notice.createdAt}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -324,7 +318,7 @@
                             <td class="t-left">
                                 <a href="/suggest/get/${suggest.suggestId}"
                                    style="text-decoration: none; color: black"><span>
-                                        </span> <span style="color:#ff2929"> ${suggest.title}</span></a></td>
+                                        </span> <span> ${suggest.title}</span></a></td>
                             <td>${suggest.nickname}</td>
                             <td>${suggest.createdAt}</td>
                         </tr>
@@ -359,7 +353,7 @@
                             <td class="t-left">
                                 <a href="/board/read/${board.communityId}"
                                    style="text-decoration: none; color: black"><span>
-                                        </span> <span style="color:#ff2929"> ${board.title}[${board.count}] </span></a></td>
+                                </span> <span> ${board.title}</span><span style="color: #ff2929">[${board.count}] </span></a></td>
                             <td>${board.nickname}</td>
                             <td>${board.createdAt}</td>
                         </tr>

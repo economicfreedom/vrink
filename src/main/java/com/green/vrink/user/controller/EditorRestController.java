@@ -63,7 +63,6 @@ public class EditorRestController {
     public ResponseEntity<?> editorWriteProc(EditorWriteDTO editorWriteDTO) {
         User user = (User)session.getAttribute(Define.USER);
         editorWriteDTO.setUserId(user.getUserId());
-        log.info("{}", editorWriteDTO);
         editorService.requestEditorWrite(editorWriteDTO);
     	return ResponseEntity.ok().build();
     }

@@ -1,9 +1,13 @@
 package com.green.vrink.main.controller;
 
+import com.green.vrink.admin.dto.PagingDto;
+import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
 import com.green.vrink.community.service.FreeBoardService;
 import com.green.vrink.main.RankDTO;
 import com.green.vrink.main.service.MainService;
+import com.green.vrink.notice.dto.NoticeDto;
+import com.green.vrink.notice.service.NoticeService;
 import com.green.vrink.review.dto.ReviewCountDTO;
 import com.green.vrink.review.dto.ReviewDTO;
 import com.green.vrink.review.service.ReviewService;
@@ -28,6 +32,7 @@ public class MainController {
     private final ReviewService reviewService;
     private final MainService mainService;
     private final SuggestService suggestService;
+    private final NoticeService noticeService;
     @GetMapping("/")
     public String main(Model model){
         Criteria cri = new Criteria();
@@ -39,8 +44,7 @@ public class MainController {
         Integer total = freeBoardService.getTotal(cri);
         List<FreeBoardDTO> boardList = freeBoardService.pageList(cri);
         List<ReviewCountDTO> reviewList = reviewService.getList();
-        log.info("board {}",boardList);
-        log.info("review {}",reviewList);
+
         model.addAttribute("boardList",boardList);
         model.addAttribute("reviewList",reviewList);
 
@@ -55,6 +59,10 @@ public class MainController {
         criteria.setCountPerPage(5);
         List<GetSuggestDto> suggestList = suggestService.getSuggestList(criteria);
         model.addAttribute("suggestList", suggestList);
+
+        List<NoticeDto> noticeList = noticeService.getNoticeList(criteria);
+        model.addAttribute("noticeList",noticeList);
+
         return "main";
     }
 }

@@ -3,4 +3,29 @@
 <mapper namespace="com.green.vrink.notice.repository.interfaces.NoticeRepository">
 
 
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(notice_id) FROM notice
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="findAllByCriteria" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT * FROM notice
+        <if test="type == 'title'">
+            WHERE title LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="type == 'content'">
+            WHERE content LIKE CONCAT('%',#{keyword},'%')
+        </if>
+
+        ORDER BY notice_id DESC
+        LIMIT #{offset},#{countPerPage}
+    </select>
+    <select id="findByNoticeId" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT * FROM notice WHERE notice_id = #{noticeId}
+    </select>
 </mapper>

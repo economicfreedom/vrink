@@ -170,13 +170,19 @@
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="" title="">의뢰 하기</a>
                             <ul>
-                                <li><a href="/suggest/list" title="">의뢰게시판</a></li>
+                                <li><a href="/suggest/list" title="">보러가기</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="#" title="">자유게시판</a>
                             <ul>
                                 <li><a href="/board/board-list" title="">보러가기</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="menu-title" href="#" title="">공지사항</a>
+                            <ul>
+                                <li><a href="/notice/notice-list" title="">보러가기</a></li>
                             </ul>
                         </li>
                         <li id="my-info-list" class="menu-item-has-children">
