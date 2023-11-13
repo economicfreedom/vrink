@@ -1,5 +1,7 @@
 package com.green.vrink.main.controller;
 
+import com.green.vrink.ad.ADService;
+import com.green.vrink.admin.dto.AdminAdDto;
 import com.green.vrink.admin.dto.PagingDto;
 import com.green.vrink.admin.service.AdminService;
 import com.green.vrink.community.dto.FreeBoardDTO;
@@ -33,6 +35,7 @@ public class MainController {
     private final MainService mainService;
     private final SuggestService suggestService;
     private final NoticeService noticeService;
+    private final ADService adService;
     @GetMapping("/")
     public String main(Model model){
         Criteria cri = new Criteria();
@@ -62,6 +65,12 @@ public class MainController {
 
         List<NoticeDto> noticeList = noticeService.getNoticeList(criteria);
         model.addAttribute("noticeList",noticeList);
+
+        List<AdminAdDto> adMainList = adService.getMainAdList();
+        model.addAttribute("adMainList",adMainList);
+
+        List<AdminAdDto> adSideList = adService.getSideAdList();
+        model.addAttribute("adSideList", adSideList);
 
         return "main";
     }

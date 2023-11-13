@@ -115,25 +115,26 @@
         <div class="row" style="position: relative">
             <div class="col-sm-10">
                 <div class="banner col-sm-12">
-                    <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner4.webp" alt="">
-                    </div>
-                    <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner2.webp" alt="">
-                    </div>
-                    <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner3.webp" alt="">
-                    </div>
-                    <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner1.webp" alt="">
-                    </div>
+                    <c:forEach items="${adMainList}" var="ad">
+                        <c:if test="${ad.mainImage != null}">
+                        <div>
+                            <img class="img-responsive" src="${ad.mainImage}" alt="">
+                        </div>
+                        </c:if>
+                    </c:forEach>
                 </div>
             </div>
             <div class="col-sm-2 advertise">
-                <img class="img-responsive" src="/images/resource/banner/sidebanner.webp" alt="">
+                <c:forEach items="${adSideList}" var="ad">
+                    <div>
+                        <img class="img-responsive" src="${ad.vvvvImage}" alt="">
+                    </div>
+                </c:forEach>
             </div>
             <div class="col-sm-10 mt-5 h-advertise" >
-                <img class="img-responsive" src="/images/resource/banner/sidebannerlong.webp" alt="">
+                <div>
+                    <img class="img-responsive" src="/images/resource/banner/sidebannerlong.webp" alt="">
+                </div>
             </div>
         </div>
         <div class="row mt-5">
