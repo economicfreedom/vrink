@@ -213,7 +213,9 @@
                             <ul>
                                 <li><a href="/user/my-page" title="">내 정보</a></li>
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
+                                <li><a href="/payment/buy-list" title="">구매 목록</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
+
                                 <li><a href="/follow/follow-list/${USER.userId}" title="">관심 작가</a></li>
 
                             </ul>
