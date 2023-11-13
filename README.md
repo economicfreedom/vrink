@@ -50,7 +50,6 @@
 * <img src="https://img.shields.io/badge/KOMORAN-2980b9?style=flat&logo=&logoColor=white"/> : 3.3.9
 * <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.16.2
 * <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.20
-* <img src="https://img.shields.io/badge/Openai-412991?style=flat&logo=Openai&logoColor=white"/> : 3.5 Turbo
 
   <br>
 
@@ -66,6 +65,7 @@
 * <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
 * <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.0.4
 * <img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0 CE
+* <img src="https://img.shields.io/badge/Openai-412991?style=flat&logo=Openai&logoColor=white"/> : 3.5 Turbo
 
   <br>
 
