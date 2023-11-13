@@ -68,7 +68,7 @@
 <%--                <li>--%>
 <%--                    <hr class="dropdown-divider"/>--%>
 <%--                </li>--%>
-                <li><a class="dropdown-item" href="/user/sign-out">Logout</a></li>
+                <li><a class="dropdown-item" onclick="logout();">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -158,14 +158,19 @@
             </div>
         </nav>
     </div>
-    <!-- Modal -->
-    <%--    <div class="modal fade" id="myModal" role="dialog">--%>
-    <%--        <div class="modal-dialog">--%>
-    <%--            <div class="modal-content">--%>
-    <%--                modal--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
+
+    <script>
+
+        async function logout() {
+            try {
+                await fetch("http://localhost/user/log-out");
+                location.href = "http://localhost";
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+    </script>
 
     <div id="layoutSidenav_content">
         <main>
