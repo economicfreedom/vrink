@@ -3,52 +3,6 @@
 
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
-
-<%--	                        		파랑 카드 --%>
-<%--	                            <div class="col-xl-3 col-md-6"> --%>
-<%--	                                <div class="card bg-primary text-white mb-4"> --%>
-<%--	                                    <div class="card-body">Primary Card</div> --%>
-<%--	                                    <div class="card-footer d-flex align-items-center justify-content-between"> --%>
-<%--	                                        <a class="small text-white stretched-link" href="#">View Details</a> --%>
-<%--	                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div> --%>
-<%--	                                    </div> --%>
-<%--	                                </div> --%>
-<%--	                            </div> --%>
-
-<%--									노랑 카드 --%>
-<%--	                            <div class="col-xl-3 col-md-6"> --%>
-<%--	                                <div class="card bg-warning text-white mb-4"> --%>
-<%--	                                    <div class="card-body">Warning Card</div> --%>
-<%--	                                    <div class="card-footer d-flex align-items-center justify-content-between"> --%>
-<%--	                                        <a class="small text-white stretched-link" href="#">View Details</a> --%>
-<%--	                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div> --%>
-<%--	                                    </div> --%>
-<%--	                                </div> --%>
-<%--	                            </div> --%>
-
-<%--									초록 카드 --%>
-<%--	                            <div class="col-xl-3 col-md-6"> --%>
-<%--	                                <div class="card bg-success text-white mb-4"> --%>
-<%--	                                    <div class="card-body">Success Card</div> --%>
-<%--	                                    <div class="card-footer d-flex align-items-center justify-content-between"> --%>
-<%--	                                        <a class="small text-white stretched-link" href="#">View Details</a> --%>
-<%--	                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div> --%>
-<%--	                                    </div> --%>
-<%--	                                </div> --%>
-<%--	                            </div> --%>
-
-<%--									빨강 카드 --%>
-<%--	                            <div class="col-xl-3 col-md-6"> --%>
-<%--	                                <div class="card bg-danger text-white mb-4"> --%>
-<%--	                                    <div class="card-body">Danger Card</div> --%>
-<%--	                                    <div class="card-footer d-flex align-items-center justify-content-between"> --%>
-<%--	                                        <a class="small text-white stretched-link" href="#">View Details</a> --%>
-<%--	                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div> --%>
-<%--	                                    </div> --%>
-<%--	                                </div> --%>
-<%--	                            </div> --%>
-
-
 <h3 class="mt-4"><i class="fa-solid fa-users"></i> 사용자 정보</h3>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">User Information</li>
@@ -134,7 +88,6 @@
 </ol>
 
 <div class="row">
-
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -184,7 +137,58 @@
             </div>
         </div>
     </div>
+</div>
 
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fa-solid fa-chart-column"></i>
+                    Calculator Count
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorMonth()">월별</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="width: 600px; height: 300px; margin: 0 auto">
+                    <canvas id="calculator-seven"></canvas>
+                    <canvas id="calculator-week"></canvas>
+                    <canvas id="calculator-month"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fa-solid fa-chart-column"></i>
+                    Calculator Revenue
+                </div>
+                <div class="btn-group" role="group" aria-label="카테고리 선택">
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorPriceSeven()">일별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorPriceWeek()">주별</button>
+                    <span class="btn-divider" style=""></span>
+                    <button type="button" class="btn btn-secondary" onclick="cCalculatorPriceMonth()">월별</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="width: 600px; height: 300px; margin: 0 auto">
+                    <canvas id="calculator-price-seven"></canvas>
+                    <canvas id="calculator-price-week"></canvas>
+                    <canvas id="calculator-price-month"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -245,58 +249,6 @@
         </div>
     </div>
 </div>
-
-
-<%--			<h3 class="mt-4">공연/전시 정보</h3>--%>
-<%--			<ol class="breadcrumb mb-4">--%>
-<%--				<li class="breadcrumb-item active">Recent Show</li>--%>
-<%--			</ol>--%>
-<%--			<div class="card mb-4">--%>
-<%--				<div class="card-header">--%>
-<%--					<i class="fas fa-table me-1"></i>--%>
-<%--					Recent Show--%>
-<%--				</div>--%>
-<%--				<div class="card-body">--%>
-<%--					<table id="showList" style="margin: auto; text-align: center;">--%>
-<%--						<tr style="height: 70px; padding-top: 30px;">--%>
-<%--							<td style="width:10%">no.</td>--%>
-<%--							<td style="width:10%">유형</td>--%>
-<%--							<td style="width:45%">제목</td>--%>
-<%--							<td style="width:35%">날짜</td>--%>
-<%--						</tr>--%>
-<%--						<c:forEach var="li" items="${list}" varStatus="status">--%>
-<%--							<c:if test="${status.count <= 5}">--%>
-<%--								<tr>--%>
-<%--									<td>${li.id}</td>--%>
-<%--									<td>--%>
-<%--										<c:choose>--%>
-<%--											<c:when test="${li.showTypeId1 eq 1}">--%>
-<%--												공연--%>
-<%--											</c:when>--%>
-<%--											<c:when test="${li.showTypeId1 eq 2}">--%>
-<%--												전시--%>
-<%--											</c:when>--%>
-<%--											<c:otherwise>--%>
-<%--												해당 없음 ( ${li.showTypeId1} )--%>
-<%--											</c:otherwise>--%>
-<%--										</c:choose>--%>
-<%--									</td>--%>
-<%--									<td class="titleTd">${li.title}</td>--%>
-<%--									<td>${li.startDate} ~ ${li.endDate}</td>--%>
-<%--								</tr>--%>
-<%--							</c:if>--%>
-<%--							<c:if test="${status.count == 5}">--%>
-<%--								<tr>--%>
-<%--									<td style="width:10%">...</td>--%>
-<%--									<td style="width:10%">...</td>--%>
-<%--									<td style="width:45%">...</td>--%>
-<%--									<td style="width:35%">...</td>--%>
-<%--								</tr>--%>
-<%--							</c:if>--%>
-<%--						</c:forEach>--%>
-<%--					</table>--%>
-<%--				</div>--%>
-<%--			</div>--%>
 
 <script>
     const buyerSeller = document.getElementById('buyer-seller');
@@ -1542,6 +1494,455 @@
     }
 
     // ------------------------------------- 배너 수입 차트 일/주/월 --------------------------------------
+
+
+    // ------------------------------------- 정산 게시 차트 일/주/월 --------------------------------------
+
+    const calculatorSeven = document.getElementById('calculator-seven');
+    let calculatorWeek = null;
+    let calculatorMonth = null;
+
+    new Chart(calculatorSeven, {
+        type   : 'bar',
+        data   : {
+            labels  : [
+                <c:forEach items="${calculatorSevenDate}" var="date">
+                '${date.date}',
+                </c:forEach>
+            ],
+            datasets: [{
+                label          : ' 일별 정산 요청 수',
+                data           : [
+                    <c:forEach items="${calculatorSevenDate}" var="date">
+                    '${date.count}',
+                    </c:forEach>
+                ],
+                backgroundColor: [
+                    <c:forEach var="i" begin="1" end="${calculatorSevenDate.size()}" step="7">
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    </c:forEach>
+                ],
+                borderColor    : [
+                    <c:forEach var="i" begin="1" end="${calculatorSevenDate.size()}" step="7">
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)',
+                    </c:forEach>
+                ],
+                borderWidth    : 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function cCalculatorSeven() {
+        calculatorSeven.style.display = 'block'; // seven 보여주기
+        if (calculatorWeek) {
+            calculatorWeek.style.display = 'none'; // week 숨기기
+        }
+        if (calculatorMonth) {
+            calculatorMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cCalculatorWeek() {
+
+        if (calculatorWeek) {
+            calculatorSeven.style.display = 'none';
+            calculatorWeek.style.display = 'block';
+            if (calculatorMonth) {
+                calculatorMonth.style.display = 'none';
+            }
+        } else {
+            calculatorSeven.style.display = 'none';
+            if (calculatorMonth) {
+                calculatorMonth.style.display = 'none';
+            }
+            calculatorWeek = document.getElementById('calculator-week');
+            new Chart(calculatorWeek, {
+                type   : 'bar',
+                data   : {
+                    labels  : [
+                        <c:forEach items="${calculatorWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label          : ' 주별 정산 요청 수',
+                        data           : [
+                            <c:forEach items="${calculatorWeekDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${calculatorWeekDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor    : [
+                            <c:forEach var="i" begin="1" end="${calculatorWeekDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth    : 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function cCalculatorMonth() {
+
+        if (calculatorMonth) {
+            calculatorSeven.style.display = 'none'; // seven 보여주기
+            if (calculatorWeek) {
+                calculatorWeek.style.display = 'none'; // seven 보여주기
+            }
+            calculatorMonth.style.display = 'block'; // month 숨기기
+        } else {
+            calculatorSeven.style.display = 'none'; // seven 보여주기
+            if (calculatorWeek) {
+                calculatorWeek.style.display = 'none'; // seven 보여주기
+            }
+            calculatorMonth = document.getElementById('calculator-month');
+            new Chart(calculatorMonth, {
+                type   : 'bar',
+                data   : {
+                    labels  : [
+                        <c:forEach items="${calculatorMonthDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [{
+                        label          : ' 월별 정산 요청 수',
+                        data           : [
+                            <c:forEach items="${calculatorMonthDate}" var="date">
+                            '${date.count}',
+                            </c:forEach>
+                        ],
+                        backgroundColor: [
+                            <c:forEach var="i" begin="1" end="${calculatorMonthDate.size()}" step="7">
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            </c:forEach>
+                        ],
+                        borderColor    : [
+                            <c:forEach var="i" begin="1" end="${calculatorMonthDate.size()}" step="7">
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            </c:forEach>
+                        ],
+                        borderWidth    : 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ------------------------------------- 정산 게시 차트 일/주/월 --------------------------------------
+
+    // ------------------------------------- 정산 수입 차트 일/주/월 --------------------------------------
+
+    const calculatorPriceSeven = document.getElementById('calculator-price-seven');
+    let calculatorPriceWeek = null;
+    let calculatorPriceMonth = null;
+
+    new Chart(calculatorPriceSeven, {
+        type   : 'line',
+        data   : {
+            labels  : [
+                <c:forEach items="${calculatorPriceSevenDate}" var="date">
+                '${date.date}',
+                </c:forEach>
+            ],
+            datasets: [
+                {
+                    label      : ' 일별 정산 수입 합계',
+                    data       : [
+                        <c:forEach items="${calculatorPriceSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(243,84,112)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 정산 수입 평균',
+                    data       : [
+                        <c:forEach items="${calculatorPriceSevenDate}" var="date" varStatus="status">
+                        <c:set var="denominator" value="${calculatorSevenDate[status.index].count}" />
+                        <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
+                        '${result}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(58,85,239)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 정산 수입 최고액',
+                    data       : [
+                        <c:forEach items="${calculatorMaxSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(216,42,255)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label      : ' 일별 정산 수입 표준편차',
+                    data       : [
+                        <c:forEach items="${calculatorStdSevenDate}" var="date">
+                        '${date.count}',
+                        </c:forEach>
+                    ],
+                    borderColor: [
+                        'rgb(23,201,36)',
+                    ],
+                    borderWidth: 3
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function cCalculatorPriceSeven() {
+        calculatorPriceSeven.style.display = 'block'; // seven 보여주기
+        if (calculatorPriceWeek) {
+            calculatorPriceWeek.style.display = 'none'; // week 숨기기
+        }
+        if (calculatorPriceMonth) {
+            calculatorPriceMonth.style.display = 'none'; // month 숨기기
+        }
+    }
+
+    function cCalculatorPriceWeek() {
+
+        if (calculatorPriceWeek) {
+            calculatorPriceSeven.style.display = 'none';
+            calculatorPriceWeek.style.display = 'block';
+            if (calculatorPriceMonth) {
+                calculatorPriceMonth.style.display = 'none';
+            }
+        } else {
+            calculatorPriceSeven.style.display = 'none';
+            if (calculatorPriceMonth) {
+                calculatorPriceMonth.style.display = 'none';
+            }
+            calculatorPriceWeek = document.getElementById('calculator-price-week');
+            new Chart(calculatorPriceWeek, {
+                type   : 'line',
+                data   : {
+                    labels  : [
+                        <c:forEach items="${calculatorPriceWeekDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [
+                        {
+                            label      : ' 주별 정산 수입 합계',
+                            data       : [
+                                <c:forEach items="${calculatorPriceWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(243,84,112)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 정산 수입 평균',
+                            data       : [
+                                <c:forEach items="${calculatorPriceWeekDate}" var="date" varStatus="status">
+                                <c:set var="denominator" value="${calculatorWeekDate[status.index].count}" />
+                                <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
+                                '${result}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(58,85,239)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 정산 수입 최고액',
+                            data       : [
+                                <c:forEach items="${calculatorMaxWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(216,42,255)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 주별 정산 수입 표준편차',
+                            data       : [
+                                <c:forEach items="${calculatorStdWeekDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(23,201,36)',
+                            ],
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function cCalculatorPriceMonth() {
+
+        if (calculatorPriceMonth) {
+            calculatorPriceSeven.style.display = 'none'; // seven 보여주기
+            if (calculatorPriceWeek) {
+                calculatorPriceWeek.style.display = 'none'; // seven 보여주기
+            }
+            calculatorPriceMonth.style.display = 'block'; // month 숨기기
+        } else {
+            calculatorPriceSeven.style.display = 'none'; // seven 보여주기
+            if (calculatorPriceWeek) {
+                calculatorPriceWeek.style.display = 'none'; // seven 보여주기
+            }
+            calculatorPriceMonth = document.getElementById('calculator-price-month');
+            new Chart(calculatorPriceMonth, {
+                type   : 'line',
+                data   : {
+                    labels  : [
+                        <c:forEach items="${calculatorPriceMonthDate}" var="date">
+                        '${date.date}',
+                        </c:forEach>
+                    ],
+                    datasets: [
+                        {
+                            label      : ' 월별 정산 수입 합계',
+                            data       : [
+                                <c:forEach items="${calculatorPriceMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(243,84,112)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 정산 수입 평균',
+                            data       : [
+                                <c:forEach items="${calculatorPriceMonthDate}" var="date" varStatus="status">
+                                <c:set var="denominator" value="${calculatorMonthDate[status.index].count}" />
+                                <c:set var="result" value="${denominator ne 0 ? Math.floor(date.count / denominator) : (date.count eq 0 ? 0 : 1)}" />
+                                '${result}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(58,85,239)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 정산 수입 최고액',
+                            data       : [
+                                <c:forEach items="${calculatorMaxMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(216,42,255)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label      : ' 월별 정산 수입 표준편차',
+                            data       : [
+                                <c:forEach items="${calculatorStdMonthDate}" var="date">
+                                '${date.count}',
+                                </c:forEach>
+                            ],
+                            borderColor: [
+                                'rgb(23,201,36)',
+                            ],
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // ------------------------------------- 정산 수입 차트 일/주/월 --------------------------------------
 
 
     new Chart(buyerSeller, {

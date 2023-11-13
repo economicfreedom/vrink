@@ -539,6 +539,7 @@
                             + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
                             + adminPayment.state
                             + button
+                            + '</p></td>'
                             + '<td><a href="/admin/user/detail-nickname?nickname='
                             + adminPayment.customerNickname
                             + '"><text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> '

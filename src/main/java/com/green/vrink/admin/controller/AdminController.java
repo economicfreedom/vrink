@@ -46,38 +46,91 @@ public class AdminController {
     public String main(Model model) {
         log.info("관리자 페이지 메인 컨트롤러 실행");
 
-        model.addAttribute("userSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("user", "count(*)", "created_at"));
-        model.addAttribute("userWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("user", "count(*)", "created_at"));
-        model.addAttribute("userMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("user", "count(*)", "created_at"));
-        model.addAttribute("freeBoardSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("community", "count(*)", "created_at"));
-        model.addAttribute("freeBoardWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("community", "count(*)", "created_at"));
-        model.addAttribute("freeBoardMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("community", "count(*)", "created_at"));
-        model.addAttribute("suggestSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("suggest", "count(*)", "created_at"));
-        model.addAttribute("suggestWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("suggest", "count(*)", "created_at"));
-        model.addAttribute("suggestMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("suggest", "count(*)", "created_at"));
-        model.addAttribute("bannerSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "count(*)", "created_at"));
-        model.addAttribute("bannerWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "count(*)", "created_at"));
-        model.addAttribute("bannerMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "count(*)", "created_at"));
+        model.addAttribute("userSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("user", "count(*)", "created_at"));
+        model.addAttribute("userWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("user", "count(*)", "created_at"));
+        model.addAttribute("userMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("user", "count(*)", "created_at"));
+        model.addAttribute("freeBoardSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("community", "count(*)", "created_at"));
+        model.addAttribute("freeBoardWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("community", "count(*)", "created_at"));
+        model.addAttribute("freeBoardMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("community", "count(*)", "created_at"));
+        model.addAttribute("suggestSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("suggest", "count(*)", "created_at"));
+        model.addAttribute("suggestWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("suggest", "count(*)", "created_at"));
+        model.addAttribute("suggestMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("suggest", "count(*)", "created_at"));
+        model.addAttribute("bannerSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("ad", "count(*)", "created_at"));
+        model.addAttribute("bannerWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("ad", "count(*)", "created_at"));
+        model.addAttribute("bannerMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("ad", "count(*)", "created_at"));
 
-        model.addAttribute("bannerPriceSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "sum(price)", "created_at"));
-        model.addAttribute("bannerPriceWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "sum(price)", "created_at"));
-        model.addAttribute("bannerPriceMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "sum(price)", "created_at"));
+        model.addAttribute("calculatorSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("calculator", "count(*)", "complete_date"));
+        model.addAttribute("calculatorWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("calculator", "count(*)", "complete_date"));
+        model.addAttribute("calculatorMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("calculator", "count(*)", "complete_date"));
 
-        model.addAttribute("editorSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("user", "count(*)", "editor_created_at"));
-        model.addAttribute("editorWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("user", "count(*)", "editor_created_at"));
-        model.addAttribute("editorMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("user", "count(*)", "editor_created_at"));
+        model.addAttribute("editorSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("user", "count(*)", "editor_created_at"));
+        model.addAttribute("editorWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("user", "count(*)", "editor_created_at"));
+        model.addAttribute("editorMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("user", "count(*)", "editor_created_at"));
 
         model.addAttribute("standardNum", adminService.countStandardUser());
         model.addAttribute("editorNum", adminService.countEditorUser());
         model.addAttribute("enabledNum", adminService.countEnabledUser());
 
-        model.addAttribute("bannerMaxSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "max(price)", "created_at"));
-        model.addAttribute("bannerMaxWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "max(price)", "created_at"));
-        model.addAttribute("bannerMaxMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "max(price)", "created_at"));
+        model.addAttribute("bannerPriceSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("ad", "sum(price)", "created_at"));
+        model.addAttribute("bannerPriceWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("ad", "sum(price)", "created_at"));
+        model.addAttribute("bannerPriceMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("ad", "sum(price)", "created_at"));
 
-        model.addAttribute("bannerStdSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen("ad", "std(price)", "created_at"));
-        model.addAttribute("bannerStdWeekDate", adminService.getDateCustomWeekByTableNameValueWhen("ad", "std(price)", "created_at"));
-        model.addAttribute("bannerStdMonthDate", adminService.getDateCustomMonthByTableNameValueWhen("ad", "std(price)", "created_at"));
+        model.addAttribute("bannerMaxSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("ad", "max(price)", "created_at"));
+        model.addAttribute("bannerMaxWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("ad", "max(price)", "created_at"));
+        model.addAttribute("bannerMaxMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("ad", "max(price)", "created_at"));
+
+        model.addAttribute("bannerStdSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("ad", "std(price)", "created_at"));
+        model.addAttribute("bannerStdWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("ad", "std(price)", "created_at"));
+        model.addAttribute("bannerStdMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("ad", "std(price)", "created_at"));
+
+
+        model.addAttribute("calculatorPriceSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("calculator", "sum(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorPriceWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("calculator", "sum(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorPriceMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("calculator", "sum(cal_price-real_cal_price)", "complete_date"));
+
+        model.addAttribute("calculatorMaxSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("calculator", "max(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorMaxWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("calculator", "max(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorMaxMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("calculator", "max(cal_price-real_cal_price)", "complete_date"));
+
+        model.addAttribute("calculatorStdSevenDate", adminService.getDateCustomSevenDaysByTableNameValueWhen
+                ("calculator", "std(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorStdWeekDate", adminService.getDateCustomWeekByTableNameValueWhen
+                ("calculator", "std(cal_price-real_cal_price)", "complete_date"));
+        model.addAttribute("calculatorStdMonthDate", adminService.getDateCustomMonthByTableNameValueWhen
+                ("calculator", "std(cal_price-real_cal_price)", "complete_date"));
 
         return "/admin/main";
     }
@@ -196,7 +249,7 @@ public class AdminController {
                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                           @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
                           @RequestParam(value = "classification", required = false, defaultValue = "전체")
-                              String classification,
+                          String classification,
                           Model model) {
 
         log.info("의뢰게시판 목록 컨트롤러 호출");
@@ -447,9 +500,9 @@ public class AdminController {
     @GetMapping("/payment-admin")
     @AdminCheck
     public String paymentAdmin(@ModelAttribute("paging") PagingDto paging,
-                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                              @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
-                              Model model) {
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                               Model model) {
 
         log.info("결제 목록 컨트롤러 호출");
 
@@ -490,13 +543,62 @@ public class AdminController {
     }
 
 
+    @GetMapping("/calculator-admin")
+    @AdminCheck
+    public String calculatorAdmin(@ModelAttribute("paging") PagingDto paging,
+                                  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                  @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                                  Model model) {
+
+        log.info("결제 목록 컨트롤러 호출");
+
+        if (reset.equals("1")) {
+            session.removeAttribute("uClassification");
+            session.removeAttribute("uSearchType");
+            session.removeAttribute("uKeyword");
+            session.removeAttribute("nowPage");
+        }
+
+        try {
+            page = (int) session.getAttribute("nowPage");
+        } catch (Exception ignored) {
+        }
+
+        paging.setPage(page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+
+        int count = adminService.countAllAdminCalculator();
+        pagination.setArticleTotalCount(count);
+
+        List<AdminCalculatorDto> adminCalculatorList = adminService.getAllAdminCalculatorListByPaging(paging);
+
+        model.addAttribute("adminCalculatorList", adminCalculatorList);
+        model.addAttribute("pagination", pagination);
+
+        return "/admin/calculatorAdmin";
+    }
+
+    @GetMapping("/calculator-admin/detail")
+    public String calculatorAdminDetail(@ModelAttribute("page") int page,
+                                        @RequestParam("id") int id,
+                                        @RequestParam("nickname") String nickname,
+                                        Model model) {
+        model.addAttribute("calculatorDetailOkList", adminService.getAdminCalculatorDetailOkListByEditorId(id));
+        model.addAttribute("calculatorDetailNoList", adminService.getAdminCalculatorDetailNoListByEditorId(id));
+        model.addAttribute("userDto", adminService.getUserByNickname(nickname));
+        return "admin/calculatorDetailAdmin";
+    }
+
+
     @GetMapping("/notice")
     public String notice(@ModelAttribute("paging") PagingDto paging,
-                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                          @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
-                          @RequestParam(value = "classification", required = false, defaultValue = "전체")
-                          String classification,
-                          Model model) {
+                         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                         @RequestParam(value = "reset", required = false, defaultValue = "2") String reset,
+                         @RequestParam(value = "classification", required = false, defaultValue = "전체")
+                         String classification,
+                         Model model) {
 
         log.info("의뢰게시판 목록 컨트롤러 호출");
 

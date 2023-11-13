@@ -1189,6 +1189,166 @@ public class AdminRestController {
         }
     }
 
+
+    @GetMapping("/calculator-admin/classification")
+    @ResponseBody
+    public ClassificationDto calculatorAdminClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
+            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
+            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
+            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
+            required = false, defaultValue = "") String keyword) {
+
+        log.info("결제 목록 레스트 컨트롤러 실행");
+
+        paging.setPage(page);
+        paging.setClassification(classification);
+        paging.setKeyword(keyword);
+        paging.setSearchType(searchType);
+
+        session.setAttribute("uClassification", classification);
+        session.setAttribute("uSearchType", searchType);
+        session.setAttribute("uKeyword", keyword);
+        session.setAttribute("nowPage", page);
+
+        Pagination pagination = new Pagination();
+        pagination.setPaging(paging);
+        ClassificationDto classificationDto = new ClassificationDto();
+        pagination.setArticleTotalCount(adminService.countAllAdminCalculator());
+
+        //분류가 전체일 떄
+        if (classification.equals("전체")) {
+
+            List<AdminCalculatorDto> adminCalculatorDtoList = adminService.getAllAdminCalculatorListByPaging(paging);
+
+            if (!keyword.isEmpty()) {
+
+                log.info("키워드 : 전체");
+
+                List<AdminCalculatorDto> lastAdminCalculatorDtoList = new ArrayList<>();
+                List<AdminCalculatorDto> finalAdminCalculatorDtoList = new ArrayList<>();
+
+                adminCalculatorDtoList = adminService.getAllAdminCalculatorList();
+
+                if (searchType.equals("아이디")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getNickname().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("정산 요청액")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("실제 정산액")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalRealPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("수수료")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalCharge().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getNickname().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalRealPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalCharge().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastAdminCalculatorDtoList.size());
+                for (int i = (page - 1) * 10; i < Math.min((page - 1) * 10 + 10, lastAdminCalculatorDtoList.size()); i++) {
+                    finalAdminCalculatorDtoList.add(lastAdminCalculatorDtoList.get(i));
+                }
+                adminCalculatorDtoList = finalAdminCalculatorDtoList;
+            }
+
+            classificationDto.setAdminCalculatorList(adminCalculatorDtoList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+        //분류값이 있을 때
+        else {
+
+            List<AdminCalculatorDto> adminCalculatorDtoList = adminService.getAllAdminCalculatorListByTypePaging(paging);
+            pagination.setArticleTotalCount(adminService.countAdminCalculatorByType(paging));
+
+            if (!keyword.isEmpty()) {
+
+                log.info("키워드 : " + keyword);
+
+                List<AdminCalculatorDto> lastAdminCalculatorDtoList = new ArrayList<>();
+                List<AdminCalculatorDto> finalAdminCalculatorDtoList = new ArrayList<>();
+
+                adminCalculatorDtoList = adminService.getAllAdminCalculatorListByType(classification);
+
+                if (searchType.equals("아이디")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getNickname().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("정산 요청액")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("실제 정산액")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalRealPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else if (searchType.equals("수수료")) {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getTotalCharge().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                } else {
+                    for (AdminCalculatorDto adminCalculatorDto : adminCalculatorDtoList) {
+                        if (adminCalculatorDto.getNickname().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalRealPrice().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        } else if (adminCalculatorDto.getTotalCharge().toString().contains(keyword)) {
+                            lastAdminCalculatorDtoList.add(adminCalculatorDto);
+                        }
+                    }
+                }
+
+                pagination.setArticleTotalCount(lastAdminCalculatorDtoList.size());
+                for (int i = (page - 1) * 10; i < Math.min((page - 1) * 10 + 10, lastAdminCalculatorDtoList.size()); i++) {
+                    finalAdminCalculatorDtoList.add(lastAdminCalculatorDtoList.get(i));
+                }
+                adminCalculatorDtoList = finalAdminCalculatorDtoList;
+
+            }
+
+            paging.setClassification(classification);
+            classificationDto.setAdminCalculatorList(adminCalculatorDtoList);
+            classificationDto.setPagination(pagination);
+
+            return classificationDto;
+        }
+    }
+
+
     @Transactional
     @PostMapping("/change-ad")
     public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId, @RequestParam("status") Integer status) {
@@ -1344,6 +1504,15 @@ public class AdminRestController {
 
         adminService.updateNotice(noticeDto);
 
+        return ResponseEntity.status(HttpStatus.OK).body(200);
+
+    }
+
+    @Transactional
+    @PutMapping("/calculator-update/{editorId}")
+    public ResponseEntity<Integer> updateCalculator(@PathVariable(name = "editorId") Integer editorId) {
+        log.info("정산처리 레스트 컨트롤러 실행");
+        adminService.updateCalStatusByEditorId(editorId);
         return ResponseEntity.status(HttpStatus.OK).body(200);
 
     }

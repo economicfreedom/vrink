@@ -363,6 +363,45 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<AdminCalculatorDto> getAllAdminCalculatorList() {
+        return adminRepository.getAllAdminCalculatorList();
+    }
+
+    @Override
+    public List<AdminCalculatorDto> getAllAdminCalculatorListByType(String classification) {
+        return adminRepository.getAllAdminCalculatorListByType(classification);
+    }
+
+    @Override
+    public List<AdminCalculatorDto> getAllAdminCalculatorListByPaging(PagingDto paging) {
+        return adminRepository.getAllAdminCalculatorListByPaging(paging);
+    }
+
+    @Override
+    public List<AdminCalculatorDto> getAllAdminCalculatorListByTypePaging(PagingDto paging) {
+        return adminRepository.getAllAdminCalculatorListByTypePaging(paging);
+    }
+
+    @Override
+    public int countAllAdminCalculator() {
+        return adminRepository.countAllAdminCalculator();
+    }
+
+    @Override
+    public int countAdminCalculatorByType(PagingDto paging) {
+        return adminRepository.countAdminCalculatorByType(paging);
+    }
+
+    @Override
+    public List<AdminCalculatorDto> getAdminCalculatorDetailOkListByEditorId(Integer id) {
+        return adminRepository.getAdminCalculatorDetailOkListByEditorId(id);
+    }
+    @Override
+    public List<AdminCalculatorDto> getAdminCalculatorDetailNoListByEditorId(Integer id) {
+        return adminRepository.getAdminCalculatorDetailNoListByEditorId(id);
+    }
+
+    @Override
     public List<NoticeDto> getAllNoticeList(PagingDto paging) {
         return adminRepository.getAllNoticeList(paging);
     }
@@ -395,6 +434,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateNotice(NoticeDto noticeDto) {
         adminRepository.updateNotice(noticeDto);
+    }
+
+    @Override
+    public void updateCalStatusByEditorId(Integer editorId) {
+        adminRepository.updateCalStatusByEditorId(editorId);
     }
 
 }

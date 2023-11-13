@@ -162,64 +162,12 @@
                 </c:forEach>
             </div>
 
-            <%--            <div class="form-outline mb-0" style="display: flex; justify-content: center;">--%>
-            <%--                <div class="user-inline">--%>
-            <%--                    <label class="form-label my-0" for="editor-createdAt">판매자 전환일</label>--%>
-            <%--                    <div style="display: flex;">--%>
-            <%--                        <input type="text" id="editor-createdAt" value="${userDetail.editorCreatedAt != null ? userDetail.editorCreatedAt : '구매자'}"--%>
-            <%--                               class="form-control form-control input-l me-1" readonly="readonly"/>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--                <div class="user-inline">--%>
-            <%--                    <label class="form-label my-0" for="created-at">가입일</label>--%>
-            <%--                    <div style="display: flex;">--%>
-            <%--                        <input type="text" id="created-at" value="${userDetail.createdAt}"--%>
-            <%--                               class="form-control form-control input-l ms-1" readonly="readonly"/>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
 
             <input type="hidden" id="payment-id" value="${adminPayment.paymentId}">
-            <%--            <div class="form-outline mb-0 mt-2">--%>
-            <%--                <label style="font-weight: bold" class="form-label my-0" for="roleId">회원등급 :--%>
-            <%--                    <c:choose><c:when test="${userDetail.level == 0}"> 일반 유저 </c:when><c:otherwise> 관리자 </c:otherwise>--%>
-            <%--                    </c:choose></label>--%>
-            <%--                <select name="level" id="roleId" class="datatable-selector" style="padding-left: 1.125rem; padding-right: 2.125rem;">--%>
-            <%--                    <c:choose>--%>
-            <%--                        <c:when test="${userDetail.level == 0}">--%>
-            <%--                            <option value="2" selected>관리자</option>--%>
-            <%--                        </c:when>--%>
-            <%--                        <c:otherwise>--%>
-            <%--                            <option value="1" selected>일반유저</option>--%>
-            <%--                        </c:otherwise>--%>
-            <%--                    </c:choose>--%>
-            <%--                </select>--%>
-            <%--                <button class="btn btn-secondary btn-block btn-admin" type="button" id="changeRole">변경하기</button>--%>
-            <%--            </div>--%>
 
-            <%--            <div class="form-outline mb-0 mt-2">--%>
-            <%--                <label style="font-weight: bold" class="form-label my-0" for="ableId">회원등급 :--%>
-            <%--                    <c:choose><c:when test="${userDetail.enabledCheck == 0}"> 비탈퇴 회원 </c:when><c:otherwise> 탈퇴 회원 </c:otherwise>--%>
-            <%--                    </c:choose></label>--%>
-            <%--                <select name="able" id="ableId" class="datatable-selector" style="padding-left: 1.125rem; padding-right: 2.125rem;">--%>
-            <%--                    <c:choose>--%>
-            <%--                        <c:when test="${userDetail.enabledCheck == 0}">--%>
-            <%--                            <option value="1" selected>탈퇴 처리</option>--%>
-            <%--                        </c:when>--%>
-            <%--                        <c:otherwise>--%>
-            <%--                            <option value="0" selected>비탈퇴 처리</option>--%>
-            <%--                        </c:otherwise>--%>
-            <%--                    </c:choose>--%>
-            <%--                </select>--%>
-            <%--                <button class="btn btn-secondary btn-block btn-admin" type="button" id="changeAble">변경하기</button>--%>
-            <%--            </div>--%>
 
 
             <div class="pt-1">
-
-                <%--                <button class="btn btn-dark btn-lg btn-block"--%>
-                <%--                        style="font-size: 0.8rem;" type="submit">정보수정--%>
-                <%--                </button>--%>
 
                 <button class="btn btn-secondary btn-block btn-admin"
                         type="button"
@@ -240,64 +188,6 @@
 
 </div>
 <script>
-
-    $('#changeRole').on('click', () => {
-
-        let idval = $('#userId').val();
-        let roleval = $('#roleId').val();
-
-        console.log(idval);
-        console.log(roleval);
-
-        $.ajax({
-            type   : "POST",
-            url    : "/admin/user/modify-level",
-            data   : {
-                "userId": idval,
-                "level" : roleval
-            },
-            success: function (data) {
-                if (data === 200) {
-                    location.reload();
-                }
-            }
-            , error: function () {
-                Swal.fire({
-                    icon : "error",
-                    title: "에러입니다",
-                });
-            }
-        });
-    });
-
-    $('#changeAble').on('click', () => {
-
-        let idval = $('#userId').val();
-        let ableval = $('#ableId').val();
-
-        console.log(idval);
-        console.log(ableval);
-
-        $.ajax({
-            type   : "POST",
-            url    : "/admin/user/modify-able",
-            data   : {
-                "userId"      : idval,
-                "enabledCheck": ableval
-            },
-            success: function (data) {
-                if (data === 200) {
-                    location.reload();
-                }
-            }
-            , error: function () {
-                Swal.fire({
-                    icon : "error",
-                    title: "에러입니다",
-                });
-            }
-        });
-    });
 
     function show_spinner() {
         document.getElementsByClassName('layer-popup')[0].style.display = 'block';

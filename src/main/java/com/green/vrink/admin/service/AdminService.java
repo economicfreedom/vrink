@@ -119,6 +119,15 @@ public interface AdminService {
     List<AdminPaymentStateDto> getAdminPaymentStatesById(Integer id);
     AdminPaymentDto getAdminPaymentDtoById(Integer id);
 
+    List<AdminCalculatorDto> getAllAdminCalculatorList();
+    List<AdminCalculatorDto> getAllAdminCalculatorListByType(String classification);
+    List<AdminCalculatorDto> getAllAdminCalculatorListByPaging(PagingDto paging);
+    List<AdminCalculatorDto> getAllAdminCalculatorListByTypePaging(PagingDto paging);
+    int countAllAdminCalculator();
+    int countAdminCalculatorByType(PagingDto paging);
+    List<AdminCalculatorDto> getAdminCalculatorDetailOkListByEditorId(Integer id);
+    List<AdminCalculatorDto> getAdminCalculatorDetailNoListByEditorId(Integer id);
+
     List<NoticeDto> getAllNoticeList(PagingDto paging);
     List<NoticeDto> getAllNoticeListByPaging(PagingDto paging);
     NoticeDto getNoticeById(Integer id);
@@ -127,5 +136,7 @@ public interface AdminService {
 
     void insertNotice(NoticeDto noticeDto);
     void updateNotice(NoticeDto noticeDto);
+
+    void updateCalStatusByEditorId(Integer editorId);
 
 }

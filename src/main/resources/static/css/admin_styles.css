@@ -11278,3 +11278,16 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+.cd-list {
+  min-width: 135px;
+  max-width: 135px;
+}
+.cd-list-1 {
+  min-width: 165px;
+  max-width: 165px;
+}
+.cd-first {
+  min-width: 70px;
+  max-width: 70px;
+}

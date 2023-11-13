@@ -81,7 +81,6 @@ public interface AdminRepository {
     List<AdminPaymentDto> getAllAdminPaymentListByType(String classification);
     List<AdminPaymentDto> getAllAdminPaymentListByPaging(PagingDto paging);
     List<AdminPaymentDto> getAllAdminPaymentListByTypePaging(PagingDto paging);
-
     int countAllAdminPayment();
     int countAdminPaymentByType(PagingDto paging);
 
@@ -89,6 +88,20 @@ public interface AdminRepository {
     List<AdminPaymentStateDto> getAdminPaymentStatesById(Integer id);
     AdminPaymentDto getAdminPaymentDtoById(Integer id);
 
+
+    List<AdminCalculatorDto> getAllAdminCalculatorList();
+    List<AdminCalculatorDto> getAllAdminCalculatorListByType(String classification);
+    List<AdminCalculatorDto> getAllAdminCalculatorListByPaging(PagingDto paging);
+    List<AdminCalculatorDto> getAllAdminCalculatorListByTypePaging(PagingDto paging);
+    int countAllAdminCalculator();
+    int countAdminCalculatorByType(PagingDto paging);
+
+    List<AdminCalculatorDto> getAdminCalculatorDetailOkListByEditorId(Integer id);
+    List<AdminCalculatorDto> getAdminCalculatorDetailNoListByEditorId(Integer id);
+
+    int updateCalStatusByEditorId(Integer editorId);
+
+    
     List<NoticeDto> getAllNoticeList(PagingDto paging);
     List<NoticeDto> getAllNoticeListByPaging(PagingDto paging);
     NoticeDto getNoticeById(Integer id);

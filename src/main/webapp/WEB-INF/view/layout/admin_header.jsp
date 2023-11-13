@@ -123,7 +123,7 @@
                         </nav>
                     </div> <!-- end of 게시판  -->
 
-                    <a class="nav-link collapsed" href="/admin/payment-admin?reset=1">
+                    <a class="nav-link collapsed" href="/admin/calculator-admin?reset=1">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
                         정산 목록
                     </a>

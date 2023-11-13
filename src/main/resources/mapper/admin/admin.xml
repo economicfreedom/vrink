@@ -639,6 +639,102 @@
     </select>
 
 
+
+    <select id="getAllAdminCalculatorList" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        FROM calculator AS c
+            LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+            LEFT JOIN user AS e ON ed.user_id = e.user_id
+        GROUP BY c.editor_id, c.cal_status
+        ORDER BY c.cal_id DESC
+    </select>
+
+    <select id="getAllAdminCalculatorListByType" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        FROM calculator AS c
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
+        WHERE c.cal_status = #{classification}
+        GROUP BY c.editor_id, c.cal_status
+        ORDER BY c.cal_id DESC
+    </select>
+
+    <select id="getAllAdminCalculatorListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        FROM calculator AS c
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
+        GROUP BY c.editor_id, c.cal_status
+        ORDER BY c.cal_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="getAllAdminCalculatorListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
+            resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        FROM calculator AS c
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
+        WHERE c.cal_status = #{classification}
+        GROUP BY c.editor_id, c.cal_status
+        ORDER BY c.cal_id DESC
+        LIMIT #{offset}, #{recordSize}
+    </select>
+
+    <select id="countAllAdminCalculator" resultType="integer">
+        SELECT count(*)
+        FROM (
+                 SELECT editor_id, cal_status
+                 FROM calculator
+                 GROUP BY editor_id, cal_status
+             ) SUBQUERY
+    </select>
+
+    <select id="countAdminCalculatorByType" resultType="integer">
+        SELECT count(*)
+        FROM (
+                 SELECT editor_id, cal_status
+                 FROM calculator
+                 WHERE cal_status = #{classification}
+                 GROUP BY editor_id, cal_status
+             ) SUBQUERY
+    </select>
+
+    <select id="getAdminCalculatorDetailOkListByEditorId" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, c.cal_price, c.real_cal_price, c.cal_price-c.real_cal_price AS charge,
+            e.nickname AS nickname, c.cal_status, c.created_at, c.complete_date,
+            (SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0) AS total_price,
+            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0)*0.95) AS total_real_price,
+            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0)*0.05) AS total_charge
+        FROM calculator AS c
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
+        WHERE c.editor_id = #{id} AND c.cal_status = 0
+        ORDER BY c.cal_id DESC
+    </select>
+
+    <select id="getAdminCalculatorDetailNoListByEditorId" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
+        SELECT
+            c.cal_id, c.editor_id, c.cal_price, c.real_cal_price, c.cal_price-c.real_cal_price AS charge,
+            e.nickname AS nickname, c.cal_status, c.created_at, c.complete_date,
+            (SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1) AS total_price,
+            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1)*0.95) AS total_real_price,
+            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1)*0.05) AS total_charge
+        FROM calculator AS c
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
+        WHERE c.editor_id = #{id} AND c.cal_status = 1
+        ORDER BY c.cal_id DESC
+    </select>
+
+
     <select id="countAllNotice" resultType="integer">
         SELECT count(*)
         FROM notice
@@ -682,6 +778,12 @@
             content = #{content},
             type = #{type}
         WHERE notice_id = #{noticeId}
+    </update>
+
+    <update id="updateCalStatusByEditorId">
+        UPDATE calculator
+        SET cal_status = 1, complete_date = now(), real_cal_price = cal_price * 0.95
+        WHERE editor_id = #{editorId}
     </update>
 
 </mapper>
