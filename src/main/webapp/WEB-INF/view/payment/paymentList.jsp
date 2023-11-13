@@ -1,8 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 function refund(impUid, totalprice) {
@@ -58,21 +55,17 @@ function refund(impUid, totalprice) {
                     <h2 class="cart-head-title">${payment.createdAt}</h2>
                     <ul>
                         <li><h3>상품명</h3> <span>${payment.name}</span></li>
-                        <li><h3>가격</h3> <span>
-                            <fmt:formatNumber value="${payment.totalPrice}" pattern="#,###" />
-
-
-                            원</span></li>
+                        <li><h3>가격</h3> <span>${payment.totalPrice}원</span></li>
                         <li><h3>판매자 연락처</h3> <span>${payment.phone}</span></li>
                         <li><h3>판매자 이메일</h3> <span>${payment.email}</span></li>
                         <c:if test="${payment.request != null}">
                         <li><h3>요청사항</h3> <span>${payment.request}</span></li>
                         </c:if>
-                        <li><span id="showButton" style="cursor: pointer">구매내역 상세보기</span></li>
+                        <li><span id="showButton">구매내역 상세보기</span></li>
                         <c:forEach items="${paymentDetail}" var="paymentDetail">
                         <li class="hidden-row"><h3>상품이름</h3><span>${paymentDetail.options}</span></li>
                         <li class="hidden-row"><h3>개수</h3><span>${paymentDetail.quantity}개</span></li>
-                        <li class="hidden-row"><h3>가격</h3><span><fmt:formatNumber value="${paymentDetail.price}" pattern="#,###" />원</span></li>
+                        <li class="hidden-row"><h3>가격</h3><span>${paymentDetail.price}원</span></li>
                         </c:forEach>
                         <li><span><input type="button" class="flat-btn refund" value="돌아가기" onclick="location.href='/payment/buy-list'"></span></li>
                     </ul>
