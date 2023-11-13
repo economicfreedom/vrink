@@ -95,6 +95,13 @@
     .tagify__input {
         display: none;
     }
+
+    .intro-area {
+        border: 0;
+        width: 100%;
+        resize: none;
+        outline: none;
+    }
 </style>
 <section class="block">
     <div class="container">
@@ -146,7 +153,7 @@
                              src="${editorDetail.profileImage}">
                     </div>
                     <h4>${editorDetail.nickname}</h4>
-                    <h5>${editorDetail.introduce}</h5>
+                    <textarea class="t-center intro-area" spellcheck="false">${editorDetail.introduce}</textarea>
                     <input type="text" name="basic" class="customLook-detail" value="${tag}">
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
