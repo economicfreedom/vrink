@@ -48,15 +48,18 @@
     </select>
 
     <select id="getTotal" resultType="java.lang.Integer">
-        SELECT count(editor_id) FROM follow
+        SELECT count(f.user_id)
+        FROM follow f
+        LEFT JOIN user u
+        ON u.user_id = f.user_id
         <if test="type == ''">
-            WHERE user_id LIKE #{userId}
+            WHERE f.user_id LIKE #{userId}
         </if>
         <if test="type == 'all'">
-            WHERE user_id LIKE #{userId}
+            WHERE f.user_id LIKE #{userId}
         </if>
         <if test="type == 'nickname'">
-            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+            WHERE u.nickname LIKE CONCAT('%',#{keyword},'%')
         </if>
     </select>
     <select id="findAllByCriteria" resultType="com.green.vrink.follow.dto.GetFollowEditorDto">
@@ -77,7 +80,7 @@
             WHERE u_user.user_id = #{userId}
         </if>
         <if test="type == 'nickname'">
-            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+            WHERE u_editor.nickname LIKE CONCAT('%',#{keyword},'%')
         </if>
 
 

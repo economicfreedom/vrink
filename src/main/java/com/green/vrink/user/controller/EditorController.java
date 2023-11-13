@@ -250,14 +250,26 @@ public class EditorController {
                             ,@RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
                             ,@RequestParam(name = "type" ,defaultValue = "") String type
                             ,Model model) {
+        User user = (User)session.getAttribute(Define.USER);
+        log.info("{}", user);
+        if (user == null) {
+            return "main";
+
+        } else {
+            Integer isEditor = userRepository.findEditorIdByUserId(user.getUserId());
+            if (!editorId.equals(isEditor)) {
+                return "main";
+            }
+        }
+
+
         Criteria criteria = new Criteria();
         criteria.setType(type);
         criteria.setCountPerPage(10);
         criteria.setPageNum(pageNum);
         criteria.setEditorId(editorId);
 
-        Integer total = editorService.getTotal(criteria);
-        log.info("{}", total);
+        Integer total   = editorService.getTotal(criteria);
         List<Calculator> getMyCalList = editorService.getMyCalList(criteria);
 
         PageDTO pageDTO = new PageDTO();

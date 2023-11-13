@@ -1741,7 +1741,7 @@ blockquote p {
     border-radius: 3px;
 
 }
-.suggest-state-btn {
+.status-btn {
     border: 1px solid transparent;
     color: #fff;
     float: left;

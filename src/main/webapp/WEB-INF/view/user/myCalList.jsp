@@ -29,7 +29,7 @@
             let type = $(this).val();
             console.log(document["page-form"].type.value = $("select[name='state']").val());
             $('paginationFlag').val(1);
-            location.href = "/my-cal-list/" + ${EDITOR_ID} + "?type=" + type;
+            location.href = "/editor/my-cal-list/" + ${EDITOR_ID} + "?type=" + type;
         });
     })
 </script>
@@ -38,27 +38,24 @@
         <div class="col-sm-9 col-center">
             <div class="d-flex mb-3" style="justify-content: space-between;">
                 <div>
-                    <c:if test="${pageDTO.cri.type != ''}">
-                        <h2 style="color: grey">${pageDTO.cri.type}</h2>
-                    </c:if>
-
-                    <c:if test="${pageDTO.cri.type == ''}">
-                        <div class="heading1">
-                            <h2 style="color: grey">정산 내역</h2>
-                        </div>
-                    </c:if>
+                    <div class="heading1">
+                        <h2 style="color: grey">정산 내역</h2>
+                    </div>
                 </div>
             </div>
             <input type="hidden" id="paginationFlag" value="0" />
             <table class="w-full t-center">
                 <colgroup>
+                    <col width="2%">
+                    <col width="19%">
+                    <col width="25%">
+                    <col width="19%">
+                    <col width="25%">
                     <col width="10%">
-                    <col width="40%">
-                    <col width="25%">
-                    <col width="25%">
                 </colgroup>
                 <thead>
                 <tr class="board-list-th">
+                    <th class="t-center"></th>
                     <th class="t-center">정산 요청 금액</th>
                     <th class="t-center">요청 일자</th>
                     <th class="t-center">정산 금액</th>
@@ -75,15 +72,21 @@
                 <tbody>
                 <c:forEach items="${calList}" var="cal">
                     <tr class="board-list-tr">
-                        <td>${cal.calPrice}</td>
+                        <td></td>
+                        <td>${cal.calPrice}원</td>
                         <td>${cal.createdAt}</td>
-                        <td>${cal.realCalPrice}</td>
-                        <td>${cal.completeDate}</td>
                         <c:if test="${0 eq cal.calStatus}">
-                            <td><input type="button" value="정산 요청" class="cal-state-btn" style="background-color: #ff2929; padding: 5px 16px"/></td>
+                            <td>-</td>
                         </c:if>
                         <c:if test="${1 eq cal.calStatus}">
-                            <td><input type="button" value="정산 완료" class="cal-state-btn" style="background-color: grey; padding: 5px 10px;"/></td>
+                            <td>${cal.realCalPrice}원</td>
+                        </c:if>
+                        <td>${cal.completeDate}</td>
+                        <c:if test="${0 eq cal.calStatus}">
+                            <td><input type="button" value="정산 요청" class="status-btn" style="background-color: grey; padding: 5px 16px"/></td>
+                        </c:if>
+                        <c:if test="${1 eq cal.calStatus}">
+                            <td><input type="button" value="정산 완료" class="status-btn" style="background-color: #ff2929; padding: 5px 16px;"/></td>
                         </c:if>
                     </tr>
                 </c:forEach>
@@ -92,17 +95,17 @@
         </div>
     </div>
 
-    <form action="/my-cal-list/"  name="page-form">
+    <form action="/editor/my-cal-list/${EDITOR_ID}"  name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 
             <c:if test="${pageDTO.prev}">
                 <li class="disabled"><a href="#"
-                                        data-page-num="${pageDTO.beginPage-1}"><span>PREV</span></a>
+                    data-page-num="${pageDTO.beginPage-1}"><span>PREV</span></a>
                 </li>
             </c:if>
             <c:if test="${!pageDTO.prev}">
                 <li class="disabled"><a href="#"
-                                        data-page-num="${pageDTO.beginPage-1}"><span></span></a>
+                    data-page-num="${pageDTO.beginPage-1}"><span></span></a>
                 </li>
             </c:if>
 

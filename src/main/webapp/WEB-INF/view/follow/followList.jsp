@@ -21,7 +21,7 @@
             let type = $("#type").val();
             let keyword = $("#keyword").val();
             $('#paginationFlag').val('0');
-            location.href = "/follow/follow-list?keyword=" + keyword + "&type=" + type;
+            location.href = "/follow/follow-list/"+ ${USER.userId} +"?keyword=" + keyword + "&type=" + type;
         });
         $("#keyword").keypress(function (event) {
             console.log($('#paginationFlag').val());
@@ -29,7 +29,7 @@
                 let type = $("#type").val();
                 let keyword = $("#keyword").val();
                 $('#paginationFlag').val('0');
-                location.href = "/sfollow/follow-list?type=" + type + "&keyword=" + keyword;
+                location.href = "/follow/follow-list/" + ${USER.userId} +"?type=" + type + "&keyword=" + keyword;
             }
         });
         $('#pagination').on('click', 'a', function (e) {
@@ -81,21 +81,25 @@
                     <col width="30%">
                 </colgroup>
                 <thead>
-                <tr class="youtb-list-th">
+                <tr class="board-list-th">
                     <th class="t-center"></th>
                     <th class="t-center"></th>
-                    <th>활동명</th>
+                    <th class="t-center">활동명</th>
                     <th class="t-center">팔로우</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${followEditor}" var="followEditor">
-                    <tr class="youtb-list-tr">
+                    <tr class="board-list-tr">
                         <td></td>
                         <td>
-                            <div><a href=""><img src="${followEditor.profileImage}" width="80%" height=""></a></div>
+                            <div class="circle-profile-area" style="width: 50px; height: 60px">
+                                <a href="/editor/editor-detail/${followEditor.editorId}">
+                                    <img class="circle-profile" src="${followEditor.profileImage}" width="20%" height="" style="padding: 5px 0">
+                                </a>
+                            </div>
                         </td>
-                        <td class="t-left"><a href="#" >${followEditor.nickname}</a></td>
+                        <td class="t-center"><a href="/editor/editor-detail/${followEditor.editorId}" >${followEditor.nickname}</a></td>
                         <td>${followEditor.count} 명</td>
                     </tr>
                 </c:forEach>
@@ -104,7 +108,7 @@
         </div>
     </div>
 
-    <form action="/follow/follow-list" name="page-form">
+    <form action="/follow/follow-list/${USER.userId}" name="page-form">
         <ul class="pagination" id="pagination" style="margin: 20px 0;">
 
             <c:if test="${pageDTO.prev}">

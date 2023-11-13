@@ -19,11 +19,6 @@
 								<input type="button" value="정산 신청" class="check-btn" id="calculate-point-btn"/>
 							</div>
 						</div>
-						<div class="field">
-							<div style="margin-top: 30px; display: flex; justify-content: flex-end">
-								<a href="/editor/my-cal-list/${EDITOR_ID}">정산내역</a>
-							</div>
-						</div>
 					</div>
 	            </div>
 	    	</div>
