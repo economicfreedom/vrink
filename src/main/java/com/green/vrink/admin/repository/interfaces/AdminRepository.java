@@ -49,6 +49,7 @@ public interface AdminRepository {
     List<User> getAllUserPaging(PagingDto paging);
     List<User> getAllUserByTypePaging(PagingDto paging);
     User getUserById(Integer id);
+    User getUserByNickname(String nickname);
 
     Integer userTotalCount(PagingDto paging);
     Integer userTotalCountClassification(PagingDto paging);

@@ -455,10 +455,8 @@
                                     + '">'
                                     + question.type
                                     + '</a></p></td>'
-                                    + '<td><a href="/admin/question/detail?page='
-                                    + pagination.paging.page
-                                    + '&id='
-                                    + question.questionId
+                                    + '<td><a href="/admin/user/detail-nickname?nickname='
+                                    + question.nickname
                                     + '">'
                                     + question.nickname
                                     + '</a></td>'

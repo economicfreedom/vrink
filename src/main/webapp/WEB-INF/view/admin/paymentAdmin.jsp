@@ -539,17 +539,13 @@
                             + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'
                             + adminPayment.state
                             + button
-                            + '<td><a href="/admin/payment-admin/detail?page='
-                            + pagination.paging.page
-                            + '&id='
-                            + adminPayment.paymentId
+                            + '<td><a href="/admin/user/detail-nickname?nickname='
+                            + adminPayment.customerNickname
                             + '"><text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> '
                             + adminPayment.customerNickname
                             + '</text></a></td>'
-                            + '<td><a href="/admin/payment-admin/detail?page='
-                            + pagination.paging.page
-                            + '&id='
-                            + adminPayment.paymentId
+                            + '<td><a href="/admin/user/detail-nickname?nickname='
+                            + adminPayment.editorNickname
                             + '"><text style="color: red"><i class="fa-solid fa-coins"></i> '
                             + adminPayment.editorNickname
                             + '</text></a></td>'

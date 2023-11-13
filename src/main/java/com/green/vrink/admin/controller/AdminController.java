@@ -335,6 +335,12 @@ public class AdminController {
         return "admin/userDetailAdmin";
     }
 
+    @GetMapping("/user/detail-nickname")
+    public String userDetail(@RequestParam("nickname") String nickname, Model model) {
+        model.addAttribute("userDetail", adminService.getUserByNickname(nickname));
+        return "admin/userDetailAdmin";
+    }
+
     @GetMapping("/question")
     public String questionAdmin(@ModelAttribute("paging") PagingDto paging,
                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,

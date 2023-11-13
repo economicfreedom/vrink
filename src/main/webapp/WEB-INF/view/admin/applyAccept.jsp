@@ -53,12 +53,6 @@
         vertical-align: middle;
     }
 
-    td a {
-        color: black;
-        text-decoration: none !important;
-        margin-left: 15px;
-    }
-
     h4 {
         margin-top: 5px;
         font-size: 20px;
@@ -484,8 +478,11 @@
                                 + adminApply.number
                                 + '</td>'
                                 + '<td>'
+                                + '<a href="/admin/user/detail-nickname?nickname='
                                 + adminApply.nickname
-                                + '</td>'
+                                + '">'
+                                + adminApply.nickname
+                                + '</a></td>'
                                 + '<td>'
                                 + regData
                                 + '</td>'

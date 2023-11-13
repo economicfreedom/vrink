@@ -175,7 +175,7 @@
                 <%--                        style="font-size: 0.8rem;" type="submit">정보수정--%>
                 <%--                </button>--%>
 
-                <button class="btn btn-secondary btn-block btn-admin" type="button" onClick="location.href='/admin/user?page=${page}'">
+                <button class="btn btn-secondary btn-block btn-admin" type="button" onClick="history.back();">
                     목록보기
                 </button>
 

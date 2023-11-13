@@ -95,7 +95,7 @@
                     html += '<ul class="list-group custom-list-group" style="margin-top:10px;" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item" style="border: 1px solid #00000075; padding: 5px;">';
                     html += '<div class="comment-header">';
-                    html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
+                    html += '<strong class="comment-nickname"><a href="/admin/user/detail-nickname?nickname=' + reply.nickname + '">' + reply.nickname + '</a></strong>';
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
@@ -131,7 +131,7 @@
     <div class="row" style="margin: 10px;">
         <div class="title">
             <div>
-                <span>작성자 : ${dto.nickname}</span> <span>작성일 : ${dto.createdAt}</span></div>
+                <span>작성자 : <a href="/admin/user/detail-nickname?nickname=${dto.nickname}">${dto.nickname}</a></span> <span>작성일 : ${dto.createdAt}</span></div>
             <div class="my-3">
                 <h2>제목 : ${dto.title}
                     <button type="button" style="float: right;margin-left: 20px " class="btn btn-secondary btn-block"
@@ -166,7 +166,7 @@
                                 <li class="list-group-item custom-list-item"
                                     style="border: 1px solid #00000075; padding: 5px;">
                                     <div class="comment-header">
-                                        <strong class="comment-nickname">${reply.nickname}</strong>
+                                        <strong class="comment-nickname"><a href="/admin/user/detail-nickname?nickname=${reply.nickname}">${reply.nickname}</a></strong>
                                         <span class="comment-date">${reply.createdAt}</span>
                                     </div>
                                     <textarea class="form-control custom-textarea"

@@ -83,6 +83,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public User getUserByNickname(String nickname) {
+        return adminRepository.getUserByNickname(nickname);
+    }
+
+    @Override
     public Integer userTotalCount(PagingDto paging) {
         return adminRepository.userTotalCount(paging);
     }

@@ -27,8 +27,16 @@
                         <text style="color: blue"><i class="fa-solid fa-cart-shopping"></i> 구매자</text>
                     </label>
                     <div style="display: flex;">
-                        <input type="text" id="customer-nickname" value="${adminPayment.customerNickname}"
-                               class="form-control form-control input-l" readonly="readonly"/>
+                        <input style="    color: var(--bs-link-color);
+                               text-decoration: underline;
+                               cursor: pointer;
+                               "
+                               type="text"
+                               id="customer-nickname"
+                               onclick="location.href = '/admin/user/detail-nickname?nickname=${adminPayment.customerNickname}'"
+                               value="${adminPayment.customerNickname}"
+                               class="form-control form-control input-l"
+                               readonly="readonly"/>
                     </div>
                 </div>
                 <div class="user-inline ml-2">
@@ -36,8 +44,16 @@
                         <text style="color: red"><i class="fa-solid fa-coins"></i> 판매자</text>
                     </label>
                     <div style="display: flex;">
-                        <input type="text" id="editor-nickname" value="${adminPayment.editorNickname}"
-                               class="form-control form-control input-l" readonly="readonly"/>
+                        <input style="    color: var(--bs-link-color);
+                               text-decoration: underline;
+                               cursor: pointer;
+                               "
+                               type="text"
+                               id="editor-nickname"
+                               onclick="location.href = '/admin/user/detail-nickname?nickname=${adminPayment.editorNickname}'"
+                               value="${adminPayment.editorNickname}"
+                               class="form-control form-control input-l"
+                               readonly="readonly"/>
                     </div>
                 </div>
             </div>
@@ -247,7 +263,7 @@
             }
             , error: function () {
                 Swal.fire({
-                    icon: "error",
+                    icon : "error",
                     title: "에러입니다",
                 });
             }
@@ -276,7 +292,7 @@
             }
             , error: function () {
                 Swal.fire({
-                    icon: "error",
+                    icon : "error",
                     title: "에러입니다",
                 });
             }

@@ -67,6 +67,7 @@ public interface AdminService {
     AdminAdDto getAdById(Integer id);
 
     User getUserById(Integer id);
+    User getUserByNickname(String nickname);
 
     Integer userTotalCount(PagingDto paging);
 

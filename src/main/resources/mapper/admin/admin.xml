@@ -291,6 +291,12 @@
         WHERE user_id = #{id}
     </select>
 
+    <select id="getUserByNickname" resultType="com.green.vrink.user.repository.model.User">
+        SELECT *
+        from user
+        WHERE nickname = #{nickname}
+    </select>
+
     <select id="getAllAdList" resultType="com.green.vrink.admin.dto.AdminAdDto">
         SELECT *
         FROM ad

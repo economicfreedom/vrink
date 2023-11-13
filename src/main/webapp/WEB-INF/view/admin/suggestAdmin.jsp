@@ -423,11 +423,7 @@
                                 + suggest.state
                                 + '</a></td>'
                                 + '<td>'
-                                + '<a href="/admin/suggest-detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + suggest.suggestId
-                                + '&nickname='
+                                + '<a href="/admin/user/detail-nickname?nickname='
                                 + suggest.nickname
                                 + '">'
                                 + suggest.nickname

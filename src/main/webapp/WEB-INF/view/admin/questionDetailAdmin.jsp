@@ -13,7 +13,7 @@
     <div class="row" style="margin: 10px;">
         <div class="title">
             <div>
-                <span>작성자 : ${questionDetail.nickname}</span> <span>작성일 : ${questionDetail.createdAt}</span></div>
+                <span>작성자 : <a href="/admin/user/detail-nickname?nickname=${questionDetail.nickname}">${questionDetail.nickname}</a></span> <span>작성일 : ${questionDetail.createdAt}</span></div>
             <div class="my-3">
                 <h2>
                     <c:choose>

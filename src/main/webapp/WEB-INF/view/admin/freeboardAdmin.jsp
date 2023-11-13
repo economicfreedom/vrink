@@ -370,10 +370,8 @@
                                 + freeboard.communityId
                                 + '</a></td>'
                                 + '<td>'
-                                + '<a href="/admin/freeboard-detail?page='
-                                + pagination.paging.page
-                                + '&id='
-                                + freeboard.communityId
+                                + '<a href="/admin/user/detail-nickname?nickname='
+                                + freeboard.nickname
                                 + '">'
                                 + freeboard.nickname
                                 + '</a></td>'
