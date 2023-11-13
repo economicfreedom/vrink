@@ -13,7 +13,7 @@
 
 |   Name   | 최규하 | 김태영 | 박성건 | 황정민 
 | :------: | --- | --- | --- | --- |
-| Position | 팀장 & VRM 기능 & 형태소분석 | 회원기능 & 의뢰기능 | 작가기능 & 결제기능 | 관리자 페이지 & 정산기능 |
+| Position | 프로젝트 설계 & 모든 부분 기여 & VRM 기능 & 형태소분석 | 회원기능 & 좋아요 기능 & 의뢰기능 | 작가기능 & 결제기능 & DB설계 | 관리자 전체 페이지 & 정산기능 & 알림기능|
 
 - 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 15일
 - 시연 영상 (유튜브) : https://youtu.be/우리주소
@@ -32,7 +32,8 @@
 * <img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Chart.js&logoColor=white"/> : 4.4.0
 * <img src="https://img.shields.io/badge/Summernote-42c0ee?style=flat&logo=&logoColor=white"/> : 0.8.18
 * <img src="https://img.shields.io/badge/Sweetalert2-8e64a6?style=flat&logo=&logoColor=white"/> : 2.11
-* <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : vrm module
+* <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : Pixiv vrm module
+* <img src="https://img.shields.io/badge/SlickPic-FF880F?style=flat&logo=SlickPic&logoColor=white"/> : 1.8.0
 
   <br>
 
@@ -50,6 +51,7 @@
 * <img src="https://img.shields.io/badge/KOMORAN-2980b9?style=flat&logo=&logoColor=white"/> : 3.3.9
 * <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.16.2
 * <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.20
+* <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> : 8.4
 
   <br>
 
@@ -60,12 +62,15 @@
 * <img src="https://img.shields.io/badge/GoogleSMTP-4285F4?style=flat&logo=&logoColor=white"/> : TLS 1.2
 * <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> : 2.42.1
 * <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/> : 3.10.3
+* <img src="https://img.shields.io/badge/GitHub_Desktop-802790?style=flat&logo=GitHub&logoColor=white"/> : 3.3.5
 * <img src="https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/> : Ultimate 2023.2.4
 * <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> : Stable 245033
-* <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
-* <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.0.4
+* <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.04
 * <img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0 CE
 * <img src="https://img.shields.io/badge/Openai-412991?style=flat&logo=Openai&logoColor=white"/> : 3.5 Turbo
+* <img src="https://img.shields.io/badge/Talend_Api_Tester-FF6D70?style=flat&logo=Talend&logoColor=white"/> : 25.11.3
+* <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
+* <img src="https://img.shields.io/badge/Oracle_Cloud_Instance-F80000?style=flat&logo=Oracle&logoColor=white"/> : instance
 
   <br>
 
