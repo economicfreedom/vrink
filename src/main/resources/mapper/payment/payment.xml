@@ -14,15 +14,22 @@
 
     <select id="findByPaymentId" resultType="com.green.vrink.payment.dto.PaymentDTO">
         SELECT payment_id,
-               user_id,
-               name,
+               p.user_id,
+               p.name,
                imp_uid,
                merchant_uid,
                total_price,
-               date_format(created_at, '%y-%m-%d %h:%i') as created_at,
-               request
-        FROM payment
-        WHERE payment_id = #{paymentId};
+               date_format(p.created_at, '%y-%m-%d %h:%i') as created_at,
+               request,
+               u.email,
+               CONCAT(
+                       SUBSTRING(u.phone, 1, 3), '-'
+                   , SUBSTRING(u.phone, 4, 4), '-'
+                   , SUBSTRING(u.phone, 8))                AS phone
+        FROM payment p
+                 LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+                 LEFT JOIN user u ON ed.user_id = u.user_id
+        WHERE payment_id = #{paymentId}
     </select>
 
     <insert id="insertByPaymentState">

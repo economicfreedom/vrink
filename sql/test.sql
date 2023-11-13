@@ -746,4 +746,32 @@ WHERE user_id = 1111 AND editor_id = 4;
 SELECT * FROM payment_state;
 
 
+
 select * from review_count;
+
+        SELECT payment_id,
+               user_id,
+               name,
+               imp_uid,
+               merchant_uid,
+               total_price,
+               date_format(created_at, '%y-%m-%d %h:%i') as created_at,
+               request,
+               u.email,
+               u.phone
+        FROM payment p
+        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+        LEFT JOIN user u ON ed.user_id = u.user_id
+        WHERE payment_id = 99
+
+SELECT * FROM payment
+WHERE payment_id= 99;
+
+SELECT * FROM editor_detail
+WHERE editor_id = 7;
+
+SELECT * FROM user
+where user_id=2;
+
+    SELECT * FROM notice
+        WHERE type = 'community';

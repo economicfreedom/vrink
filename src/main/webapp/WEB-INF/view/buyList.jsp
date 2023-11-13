@@ -129,14 +129,6 @@
                         <span>Easy to Customize</span>
                     </div>
 
-                    <%--                    나중에 수정--%>
-                    <%--                    <div>--%>
-                    <%--                        <label for="done">작업 종료</label>--%>
-                    <%--                        <input type="radio" name="test" value="1" id="done">--%>
-                    <%--                        <br>--%>
-                    <%--                        <label for="ing">작업중</label>--%>
-                    <%--                        <input type="radio" name="test" value="2" id="ing">--%>
-                    <%--                    </div>--%>
                     <div class="coupon" style="float: right;margin-right: 19.3% ;margin-bottom: 20px;">
 
                         <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword"
@@ -149,10 +141,19 @@
                         <c:forEach items="${list}" var="dto">
                             <li>
                                 <div class="cart-thumb">
-                                    <span><img src="${dto.image}" alt="작가 이미지"/></span>
-                                        <%--                                    <a class="delete-cart" title="의뢰내역에서 삭제합니다."><i class="fa fa-trash-o"></i></a>--%>
+
+
+                                        <span>
+
+                                            <img src="${dto.image}" alt="작가 이미지"/>
+
+                                        </span>
+
+
                                     <h3>
-                                            ${dto.nickname}</h3>
+                                        <a href="/payment/payment-list?payment-id=${dto.paymentId}&user-id=${dto.userId}"
+                                           title="상세보기" style="color: #00A0D1;font-weight: bold">
+                                                ${dto.nickname}</a></h3>
 
                                     <div class="price-cart-item">
                                         <span style="color: grey; font-size: larger;font-weight: bold"> ${dto.name}</span>
@@ -309,7 +310,7 @@
                         html += '<span style="margin-top: 70px; font-weight: bold">￦' + dto.point + '</span>'
                         html += '<span style="color: black; font-size: small">' + dto.createdAt + '</span>'
                         html += '<span><a '
-                        html += 'href="/payment/payment-list?payment-id='+dto.paymentId+'&user-id='+dto.userId+'"'
+                        html += 'href="/payment/payment-list?payment-id=' + dto.paymentId + '&user-id=' + dto.userId + '"'
                         html += ' title="상세보기" style="color: #00A0D1;font-weight: bold">'
                         html += '상세 보기</a></span>'
                         html += '</div>'

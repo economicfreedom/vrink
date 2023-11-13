@@ -20,4 +20,7 @@ public class PaymentDTO {
     private Integer quantity[];
     private String request;
     private String createdAt;
+    private String email;
+    private String phone;
+
 }
