@@ -74,4 +74,6 @@ public interface UserRepository {
 	Integer getTotalCount(Criteria criteria);
 
 	List<Calculator> getMyCalList(Criteria criteria);
+
+	void deleteByEditorId(Integer editorId);
 }

@@ -385,14 +385,14 @@
     </update>
 
     <insert id="insertEditorDetailByUserId">
-        INSERT INTO editor_detail(user_id, thumbnail)
+        INSERT INTO editor(user_id, thumbnail)
         VALUES (#{userId}, '/images/resource/default_image.gif')
     </insert>
 
 
     <select id="countEditorDetailByUserId" resultType="integer">
         SELECT count(*)
-        FROM editor_detail
+        FROM editor
         WHERE user_id = #{userId}
     </select>
 
@@ -522,7 +522,7 @@
             ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
         WHERE
@@ -544,7 +544,7 @@
             ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
         WHERE
@@ -566,7 +566,7 @@
             ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
         WHERE
@@ -589,7 +589,7 @@
             ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-                 LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
         WHERE
@@ -633,7 +633,7 @@
             editor.nickname AS editorNickname
         FROM payment
             LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-            LEFT JOIN editor_detail AS e ON payment.editor_id = e.editor_id
+            LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
             LEFT JOIN user AS editor ON e.user_id = editor.user_id
         WHERE payment_id = #{id}
     </select>

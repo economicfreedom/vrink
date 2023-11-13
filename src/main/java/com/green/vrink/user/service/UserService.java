@@ -67,4 +67,8 @@ public class UserService {
 	public Integer findUserIdBySuggestId(Integer suggestId) {
 		return userRepository.findUserIdBySuggestId(suggestId);
 	}
+
+	public void deleteByEditorId(Integer editorId) {
+		userRepository.deleteByEditorId(editorId);
+	}
 }

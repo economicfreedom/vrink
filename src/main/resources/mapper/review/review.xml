@@ -77,7 +77,7 @@
         ed.introduce,
         u.nickname
         FROM review r
-        LEFT JOIN editor_detail ed ON r.editor_id = ed.editor_id
+        LEFT JOIN editor ed ON r.editor_id = ed.editor_id
         LEFT JOIN user u ON u.user_id = ed.user_id
         GROUP BY ed.editor_id
         ORDER BY count DESC

@@ -58,6 +58,7 @@
 
     .customLook-detail .tagify__tag > div {
         border-radius: 25px;
+        cursor: pointer;
     }
 
     .customLook-detail .tagify__tag__removeBtn {
@@ -492,6 +493,12 @@
                 }
             }
         });
+
+        $('.tagify__tag-text').parent().on('click',function(){
+            let keyword = $(this).text();
+            let type = 'tag'
+            location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
+        })
 
         isFollow();
 

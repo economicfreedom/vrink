@@ -186,14 +186,6 @@
                             </ul>
 
                         </li>
-
-                        <li class="menu-item-has-children">
-                            <a class="menu-title" href="#" title="">공지사항</a>
-                            <ul>
-                                <li><a href="/notice/notice-list" title="">보러가기</a></li>
-                            </ul>
-                        </li>
-
                         <c:if test="${not empty EDITOR_ID}">
                             <li class="menu-item-has-children">
                                 <a class="menu-title" href="contact.html" title="">Editor Only</a>
@@ -210,12 +202,21 @@
                             </li>
                         </c:if>
 
+                        <li class="menu-item-has-children">
+                            <a class="menu-title" href="#" title="">공지사항</a>
+                            <ul>
+                                <li><a href="/notice/notice-list" title="">보러가기</a></li>
+                            </ul>
+                        </li>
+
                         <li id="my-info-list" class="menu-item-has-children">
                             <a class="menu-title" href="contact.html" title="">MY PAGE</a>
                             <ul>
                                 <li><a href="/user/my-page" title="">내 정보</a></li>
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
+                                <li><a href="/payment/buy-list" title="">구매 목록</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
+
                                 <li><a href="/follow/follow-list/${USER.userId}" title="">관심 작가</a></li>
 
                             </ul>

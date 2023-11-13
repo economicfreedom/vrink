@@ -123,7 +123,7 @@
         <div class="coupens-area">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                     <div class="heading3">
                         <h3>VRINK를 이용해주셔서 감사합니다.</h3>
                         <span>Easy to Customize</span>
@@ -137,15 +137,15 @@
                     <%--                        <label for="ing">작업중</label>--%>
                     <%--                        <input type="radio" name="test" value="2" id="ing">--%>
                     <%--                    </div>--%>
-                    <div class="coupon" style="float: right;margin-right: 19.3% ;margin-bottom: 20px;">
-
+                </div>
+                <div class="col-sm-10 col-center">
+                    <div class="coupon" style="float: right;margin-bottom: 20px; margin-right: 0">
                         <input type="text" class="" placeholder="검색어 입력" style="height: 49px;" id="keyword"
                                value="${keyword == null ? '':keyword}">
                         <button type="submit" class="flat-btn" id="search"><i class="fa fa-search"></i>검색하기</button>
                     </div>
-                </div>
                 <div class="cart-lists">
-                    <ul id="list" style="width: 80%;height: 50%;">
+                    <ul id="list" style="height: 50%;">
                         <c:forEach items="${list}" var="dto">
                             <li>
                                 <div class="cart-thumb">
@@ -235,7 +235,7 @@
                         </c:forEach>
                     </ul>
                 </div>
-
+                </div>
             </div>
         </div>
     </div>

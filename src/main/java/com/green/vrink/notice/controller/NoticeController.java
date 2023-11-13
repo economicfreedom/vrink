@@ -48,7 +48,7 @@ public class NoticeController {
         return "notice/noticeList";
     }
 
-    @GetMapping("/get/{noticeId}")
+    @GetMapping("/{noticeId}")
     public String getSuggest(@PathVariable int noticeId, Model model) {
         NoticeDto notice = noticeService.getNotice(noticeId);
         if (notice == null) {
