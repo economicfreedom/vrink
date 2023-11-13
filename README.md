@@ -153,7 +153,7 @@
 ## 5️⃣ SiteMap
 <br>
 
-![image](https://github.com/economicfreedom/vrink/assets/35636560/2f95ba3a-7042-4d0f-9e21-f3c2a1789f39)
+![image](https://github.com/economicfreedom/vrink/assets/35636560/18b08086-1471-4f11-9582-585e8b54ee1e)
 ![image](https://github.com/economicfreedom/vrink/assets/35636560/5748c13f-c222-4020-99d7-e76b85d9d6df)
 
 
