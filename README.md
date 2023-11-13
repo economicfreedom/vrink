@@ -34,6 +34,7 @@
 * <img src="https://img.shields.io/badge/Sweetalert2-8e64a6?style=flat&logo=&logoColor=white"/> : 2.11
 * <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : Pixiv vrm module
 * <img src="https://img.shields.io/badge/SlickPic-FF880F?style=flat&logo=SlickPic&logoColor=white"/> : 1.8.0
+* <img src="https://img.shields.io/badge/Tagify-fa8072?style=flat&logo=&logoColor=white"/> : 4.17.9
 
   <br>
 
@@ -49,8 +50,8 @@
 * <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0.21
 * <img src="https://img.shields.io/badge/SpringSecurityCrypto-6db33f?style=flat&logo=Spring&logoColor=white"/> : 5.7.1
 * <img src="https://img.shields.io/badge/KOMORAN-2980b9?style=flat&logo=&logoColor=white"/> : 3.3.9
-* <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.16.2
-* <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.20
+* <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.15.3
+* <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.19
 * <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> : 8.3
 
   <br>
@@ -77,24 +78,26 @@
 
 ## ⚙ 의존성
 ```java
-implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-implementation 'javax.servlet:jstl'
-implementation 'org.springframework.boot:spring-boot-starter-aop'
-implementation 'org.springframework.boot:spring-boot-starter-validation'
-implementation 'org.springframework.boot:spring-boot-starter-web'
-implementation 'org.springframework.security:spring-security-crypto'
-compileOnly 'org.projectlombok:lombok'
-developmentOnly 'org.springframework.boot:spring-boot-devtools'
-implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
-runtimeOnly 'com.mysql:mysql-connector-j'
-annotationProcessor 'org.projectlombok:lombok'
-testImplementation 'org.springframework.boot:spring-boot-starter-test'
-implementation 'org.springframework.boot:spring-boot-starter-mail'
-implementation 'org.springframework:spring-context-support'
-implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
-implementation 'commons-io:commons-io:2.6'
-implementation 'com.google.code.gson:gson:2.8.6'
-implementation 'commons-fileupload:commons-fileupload:1.3.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+    implementation 'org.jsoup:jsoup:1.15.3'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'javax.mail:javax.mail-api:1.6.2'
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+    implementation 'net.coobird:thumbnailator:0.4.19'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'javax.servlet:jstl'
+    implementation 'org.springframework.security:spring-security-crypto:5.7.1'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 ```
 
 <br>
