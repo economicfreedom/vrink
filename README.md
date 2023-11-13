@@ -1,4 +1,6 @@
-![로고2](https://github.com/seoyounglee0105/green_airline_project/assets/106488607/45885ada-932d-4640-93a8-4a84d451bb9c)
+![로고2](
+// https://github.com/seoyounglee0105/green_airline_project/assets/106488607/45885ada-932d-4640-93a8-4a84d451bb9c 우리주소 넣기
+)
 
 
 
@@ -9,32 +11,40 @@
 - *모든 팀원이 풀스택으로 개발에 참여했으며, 주 포지션은 아래와 같습니다.*
 <br>
 
-|   Name   | 이서영 | 강민정 | 이치승 | 정다운 
+|   Name   | 최규하 | 김태영 | 박성건 | 황정민 
 | :------: | --- | --- | --- | --- |
-| Position | 팀장 & 예약 기능 | 여행준비 기능 | 여행일지 기능 | 마일리지 기능 | Backend & UI |
+| Position | 팀장 & VRM 기능 & 형태소분석 | 회원기능 & 의뢰기능 | 작가기능 & 결제기능 | 관리자 페이지 & 정산기능 |
 
-- 프로젝트 기간 : 2023년 5월 15일 ~ 2023년 6월 7일
-- 시연 영상 (유튜브) : https://youtu.be/TZmGoEAzEio
+- 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 15일
+- 시연 영상 (유튜브) : https://youtu.be/우리주소
 
 <br> 
+
++ Languages:  <img src="https://img.shields.io/badge/Java-db380e?style=flat&logo=Java&logoColor=white"/>
++ Back-end: <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/>
++ API: <img src="https://img.shields.io/badge/kakao-FFCD00?style=flat&logo=kakao&logoColor=white"/>(로그인, 결제) <img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=Naver&logoColor=white"/>(지도, 메일) <img src="https://img.shields.io/badge/Coolsms-6199d2?style=flat&logo=Wikiquote&logoColor=white"/>(sms)
++ DB: <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
++ DVCS: <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
++ IDE: <img src="https://img.shields.io/badge/SpringToolSuite4-1b7f38?style=flat&logo=Spring&logoColor=white"/>
++ Collaborative Software: <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> <img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Jira&logoColor=white"/>
 
 ## 🎮 기술 스택
 
 ### ✨ Front-End
 
-<details>
-    <summary>⚡️ FE 자세히 살펴보기</summary>
-    <br>
-    <ul>
-        <li>bootstrap : 4.6.2 </li>
-        <li>HTML5 </li>
-        <li>CSS3 </li>
-        <li>JavaScript : 1.16.1 </li>
-        <li>JQuery : 3.6.4 </li>
-        <li>Chart.js </li>
-        <li>summernote : 0.8.18 </li>
-    </ul>
-</details>
+* <img src="https://img.shields.io/badge/Bootstrapap-7952B3?style=flat&logo=bootstrap&logoColor=white"/> : 3.6.2
+* <img src="https://img.shields.io/badge/html5-1572B6?style=flat&logo=html5&logoColor=white"/> : 5.0
+* <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/> : 3.0
+* <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/> : 1.16.1
+* <img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3
+* <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/> : 3.5.1
+* <img src="https://img.shields.io/badge/FontAwesome-528DD7?style=flat&logo=Font Awesome&logoColor=white"/> : 6.4.2
+* <img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Chart.js&logoColor=white"/> : 4.4.0
+* <img src="https://img.shields.io/badge/Summernote-42c0ee?style=flat&logo=&logoColor=white"/> : 0.8.18
+* <img src="https://img.shields.io/badge/Sweetalert2-8e64a6?style=flat&logo=&logoColor=white"/> : 2.11
+* <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : vrm module
+  
+
 
   <br>
 
