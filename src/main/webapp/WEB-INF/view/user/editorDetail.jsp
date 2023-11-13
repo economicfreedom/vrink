@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 <script src="https://unpkg.com/@yaireo/tagify"></script>
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 
 
 <style>
@@ -48,12 +48,14 @@
         --tag-remove-btn-bg--hover: black;
         display: inline-block;
         min-width: 0;
-        border:none;
+        border: none;
 
     }
+
     .customLook-detail .tagify__tag {
         margin-top: 0;
     }
+
     .customLook-detail .tagify__tag > div {
         border-radius: 25px;
     }
@@ -80,11 +82,12 @@
         margin: 0 0 0 5px;
         vertical-align: top;
     }
+
     .customLook-detail + button:hover {
         box-shadow: 0 0 0 5px inset currentColor;
     }
 
-    .tagify__tag>div>* {
+    .tagify__tag > div > * {
         white-space: nowrap;
     }
 
@@ -105,16 +108,16 @@
         </div>
         <div class="row mb-5">
             <div class="col-sm-9">
-                    <c:if test="${editorDetail.vrm != null}">
+                <c:if test="${editorDetail.vrm != null}">
                     <div class="mb-3">
                         <canvas id="canvas"></canvas>
                     </div>
                     <div class="mb-3 t-center" id="vrm-width">
-                    <a
-                            href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
-                    크게 보러 가기</a>
+                        <a
+                                href="/editor/vrm?editor-id=${editorDetail.editorId}" target="_blank">작가의 VRM
+                            크게 보러 가기</a>
                     </div>
-                    </c:if>
+                </c:if>
                 <c:if test="${editorDetail.content == null}">
                     <div class="block t-center">아직 자기소개를 작성하지 않았습니다</div>
                 </c:if>
@@ -129,10 +132,9 @@
                             </div>
                             <div style="font-size: 25px; cursor: pointer" id="like">
                                 <i id="heart" class="fa fa-heart" style="color: grey;"></i>
-                                <input type="hidden" id="likeFlag" value="" />
+                                <input type="hidden" id="likeFlag" value=""/>
                             </div>
                         </c:if>
-
 
 
                     </div>
@@ -147,12 +149,16 @@
                     <input type="text" name="basic" class="customLook-detail" value="${tag}">
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
-                            <div id="edit" style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;" onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
-                                소개 수정하기</div>
+                            <div id="edit"
+                                 style="background-color: #fff; height: 50px; color: black; line-height: 50px; border-top: 1px solid black; font-weight: bold; cursor: pointer;"
+                                 onclick="location.href='/editor/editor-edit?editor-id=${editorDetail.editorId}'">
+                                소개 수정하기
+                            </div>
                         </c:if>
 
                         <div style="background-color: #343434; height: 50px; color: white; line-height: 50px; font-weight: bold;">
-                                가격 옵션</div>
+                            가격 옵션
+                        </div>
                         <c:if test="${empty editorPrice}">
                             <div><h5>가격등록이 되지않았습니다.</h5></div>
                         </c:if>
@@ -164,9 +170,11 @@
                                 </div>
                             </c:forEach>
                             <c:if test="${editorDetail.editorId != EDITOR_ID}">
-                            <div id="suggest"
-                                 style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer" onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
-                                작가에게 의뢰하기</div>
+                                <div id="suggest"
+                                     style="background-color: #ff2929; height: 50px; color: white; line-height: 50px; font-weight: bold; cursor: pointer"
+                                     onclick="location.href='/payment/payment-page?editor-id=${editorDetail.editorId}'">
+                                    작가에게 의뢰하기
+                                </div>
                             </c:if>
                         </c:if>
                     </div>
@@ -185,7 +193,8 @@
                     </c:when>
                     <c:otherwise>
                         <div class="col-sm-1">
-                            <img width="100" height="100" src="/image/bot.png" style="margin-left: -20px; margin-top: -35px;">
+                            <img width="100" height="100" src="/image/bot.png"
+                                 style="margin-left: -20px; margin-top: -35px;">
                         </div>
                         <div class="col-sm-11" style="border: 1px solid black"><h5>아직 리뷰가 없어요..</h5></div>
                     </c:otherwise>
@@ -259,9 +268,9 @@
                                     <div
                                             style="display: flex; flex-direction: column; gap: 1rem; padding: 0 30%; margin-bottom: 4px; margin-top: 4px">
                                         <c:if test="${review.userId == USER.userId}">
-                                        <button type="button" class="btn btn-danger"
-                                                onclick="deleteReview(${review.reviewId})" id="review-del">삭제
-                                        </button>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="deleteReview(${review.reviewId})" id="review-del">삭제
+                                            </button>
                                         </c:if>
                                     </div>
                                 </td>
@@ -299,7 +308,7 @@
         antialias: true,
         canvas: document.querySelector("#canvas")
     });
-    renderer.setSize($('#vrm-width').width(), $('#vrm-width').height()*30);
+    renderer.setSize($('#vrm-width').width(), $('#vrm-width').height() * 30);
 
     // document.body.appendChild(renderer.domElement);
 
@@ -325,7 +334,7 @@
     // lookat target
 
     const lookAtTarget = new THREE.Object3D();
-    camera.add( lookAtTarget );
+    camera.add(lookAtTarget);
 
 
     // gltf and vrm
@@ -448,12 +457,12 @@
 
     animate();
 
-    window.addEventListener( 'mousemove', ( event ) => {
+    window.addEventListener('mousemove', (event) => {
 
-        lookAtTarget.position.x = 10.0 * ( ( event.clientX - 0.5 * window.innerWidth ) / window.innerHeight );
-        lookAtTarget.position.y = - 10.0 * ( ( event.clientY - 0.5 * window.innerHeight ) / window.innerHeight );
+        lookAtTarget.position.x = 10.0 * ((event.clientX - 0.5 * window.innerWidth) / window.innerHeight);
+        lookAtTarget.position.y = -10.0 * ((event.clientY - 0.5 * window.innerHeight) / window.innerHeight);
 
-    } );
+    });
 
 
     const target = document.querySelector('#vrm-width');
@@ -463,7 +472,7 @@
             antialias: true,
             canvas: document.querySelector("#canvas")
         });
-        renderer.setSize($('#vrm-width').width(), $('#vrm-width').height()*30);
+        renderer.setSize($('#vrm-width').width(), $('#vrm-width').height() * 30);
     })
 
     resizeObserver.observe(target);
@@ -473,8 +482,8 @@
         var input = document.querySelector('input[name=basic]');
 
 
-        var tagify = new Tagify(input,{
-            userInput : false,
+        var tagify = new Tagify(input, {
+            userInput: false,
             hooks: {
                 beforeRemoveTag: function () {
                     return new Promise((resolve, reject) => {
@@ -499,14 +508,14 @@
                     editorId: `${editorDetail.editorId}`
                 })
             })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("이미 " + `${editorDetail.nickname}` + "님을 신고하셨습니다." );
-                    } else {
-                        alert("정상적으로 신고 되었습니다.")
+                .then(response => response.json())
+                .then(data => {
+                    if (data){
+                        alert(data.message)
+                    }else {
+                        alert("신고 되었습니다.")
                     }
                 })
-                .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
         })
 
@@ -522,13 +531,11 @@
 
             let star = $("#star-val").val();
 
-            if (content.length <=0 ){
+
+            if (content.length <= 0) {
                 alert("리뷰를 입력해주세요.");
                 return;
             }
-
-            console.log(star);
-
 
             fetch('/review/save', {
 
@@ -541,29 +548,26 @@
                     userId: `${USER.userId}`,
                     content: content,
                     count: star,
-                    nickname : `${USER.nickname}`
+                    nickname: `${USER.nickname}`
 
 
                 })
             })
-                .then(response => {
-                    if (!response.ok) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
 
-                        alert("로그인 이후 사용가능합니다.")
-                        $(".log-in-btn").click()
+                        alert(data.message)
                     } else {
-
                         location.reload();
-
                     }
                 })
-                .then((data) => console.log(data))
-                .catch(error => console.error('Error:', error));
+
 
         })
 
         $('#like').on('click', function () {
-           follow();
+            follow();
         });
 
     })
@@ -595,33 +599,33 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify ({
+            body: JSON.stringify({
                 userId: `${USER.userId}`,
                 editorId: `${editorDetail.editorId}`
             })
         })
-        .then(response => response.json()
-        )
-        .then(data => {
-            if(data.code === 200) {
-                $('#likeFlag').val(1);
-                $('#heart').css('color', '#ff2929');
-            } else {
-                $('#likeFlag').val(0);
-                $('#heart').css('color', 'grey');
-            }
-            // location.reload();
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(response => response.json()
+            )
+            .then(data => {
+                if (data.code === 200) {
+                    $('#likeFlag').val(1);
+                    $('#heart').css('color', '#ff2929');
+                } else {
+                    $('#likeFlag').val(0);
+                    $('#heart').css('color', 'grey');
+                }
+                // location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     function isFollow() {
         fetch('/follow/is-follow', {
             method: 'POST',
             headers: {
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 userId: `${USER.userId}`,

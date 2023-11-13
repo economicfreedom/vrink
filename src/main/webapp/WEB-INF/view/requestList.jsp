@@ -62,10 +62,10 @@
     <div class="container">
         <div class="inner-content">
             <span><i class="fa fa-bolt"></i></span>
-            <h2>GALLERY 3 COLUMN</h2>
+            <h2>의뢰 목록</h2>
             <ul>
-                <li><a href="#" title="">HOME</a></li>
-                <li><a href="#" title="">GALLERY 3 COLUMN</a></li>
+                <li><a href="/" title="">HOME</a></li>
+                <li>의뢰 목록</li>
             </ul>
         </div>
     </div>

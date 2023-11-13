@@ -19,4 +19,7 @@ public interface ReviewService {
 
 
     boolean hasReviewCount(Integer userId, int editorId);
+
+    
+
 }

@@ -2,8 +2,13 @@ package com.green.vrink.report.controller;
 
 import com.green.vrink.report.dto.ReportDTO;
 import com.green.vrink.report.service.ReportService;
+import com.green.vrink.user.repository.model.User;
 import com.green.vrink.util.Check;
+import com.green.vrink.util.Define;
 import com.green.vrink.util.LoginCheck;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,24 +34,35 @@ public class ReportRestController {
     private final HttpSession httpSession;
 
     @PostMapping("/report-board")
-    @LoginCheck
     public ResponseEntity<?> reportBoard(@Valid @RequestBody ReportDTO reportDTO, BindingResult bindingResult) {
         log.info("report dto {}", reportDTO);
 
-//        httpSession.getAttribute()
-//        if ()
+        CustomMessage customMessage = null;
+        User user = (User) httpSession.getAttribute(Define.USER);
+
+        if (user == null) {
+            customMessage = new CustomMessage(
+                    "로그인후 이용 가능합니다."
+                    , (short) 400);
+            return ResponseEntity.badRequest().body(customMessage);
+        }
 
         if (bindingResult.hasErrors()) {
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
-
-            return ResponseEntity.badRequest().body(defaultMessage);
+            customMessage = new CustomMessage(
+                    defaultMessage
+                    , (short) 400);
+            return ResponseEntity.badRequest().body(customMessage);
         }
 
 
         Integer checkRes = reportService.checkReport(reportDTO);
 
         if (!isNull(checkRes)) {
-            return ResponseEntity.badRequest().build();
+            customMessage = new CustomMessage(
+                    "이미 신고하신 글 입니다."
+                    , (short) 400);
+            return ResponseEntity.badRequest().body(customMessage);
         }
 
 
@@ -54,11 +70,24 @@ public class ReportRestController {
         if (res == 1) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.badRequest().build();
+
+            customMessage = new CustomMessage(
+                    "신고에 실패하였습니다. 문의 게시판을 이용해주세요"
+                    , (short) 400);
+
+            return ResponseEntity.badRequest().body(customMessage);
         }
 
 
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class CustomMessage {
+        private String message;
+        private Short code;
 
+
+    }
 }

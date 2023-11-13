@@ -257,7 +257,7 @@ public class EditorController {
         criteria.setEditorId(editorId);
 
         Integer total = editorService.getTotal(criteria);
-        log.info("{}", total);
+
         List<Calculator> getMyCalList = editorService.getMyCalList(criteria);
 
         PageDTO pageDTO = new PageDTO();

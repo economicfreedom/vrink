@@ -746,4 +746,4 @@ WHERE user_id = 1111 AND editor_id = 4;
 SELECT * FROM payment_state;
 
 
-
+select * from review_count;

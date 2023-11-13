@@ -6,6 +6,7 @@ import com.green.vrink.review.repository.interfaces.ReviewRepository;
 import com.green.vrink.review.repository.model.Review;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Slf4j
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository replyRepository;
+
     @Override
     public Integer save(ReviewDTO reviewDTO) {
         Review entity = Review.builder()
@@ -26,7 +28,6 @@ public class ReviewServiceImpl implements ReviewService {
 
         replyRepository.minusCount(reviewDTO.getUserId(), reviewDTO.getEditorId());
 
-        Integer i = replyRepository.reviewSave(entity);
 
 
 
@@ -34,6 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+
     public Integer duplicationCheck(ReviewDTO reviewDTO) {
         Review entity = Review.builder()
                 .userId(reviewDTO.getUserId())
@@ -72,13 +74,16 @@ public class ReviewServiceImpl implements ReviewService {
 
         Integer tableExists = replyRepository.isTableExists(userId, editorId);
 
-        Integer count = replyRepository.findCountByUserIdAndEditorId(userId, editorId);
 
-        if (tableExists != null){
-            if (count >= 1){
+        if (tableExists != null) {
+            Integer count = replyRepository.findCountByUserIdAndEditorId(userId, editorId);
+            log.info("count {}",count);
+            if (count >= 1) {
                 return true;
             }
+
         }
+        log.info("tableExists : {}",tableExists);
 
         return false;
     }

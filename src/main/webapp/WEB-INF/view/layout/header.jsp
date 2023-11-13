@@ -32,7 +32,7 @@
                                     <strong>승철이</strong>
                                 </a>
                             </div><!-- LOGO -->
-                            <p>WELCOME TO 승철 WOULD</p>
+                            <p>Virtual Link</p>
                             <div style="padding-top: 40px; padding-bottom: 40px">
                                 <h4>로그인</h4>
                                 <div class="field">
@@ -51,12 +51,13 @@
                             <i style="">또는</i>
                             <span style="">LOGIN WITH</span>
                             <div class="kakao-login-div">
-	                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
-	                            	<img alt="카카오 로그인" src="/images/kakao_login_medium_wide.png">
-	                            </a>
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
+                                    <img alt="카카오 로그인" src="/images/kakao_login_medium_wide.png">
+                                </a>
                             </div>
                             <div class="field">
-                                <div class="find-info-div" style="margin-top: 20px; display: flex; justify-content: center; align-content: center">
+                                <div class="find-info-div"
+                                     style="margin-top: 20px; display: flex; justify-content: center; align-content: center">
                                     <a class="find-link" href="/user/find/email" style="margin-top: 5px">아이디 찾기</a>
                                     <p style="margin: 0 10px">|</p>
                                     <a class="find-link" href="/user/find/password" style="margin-top: 5px">비밀번호 찾기</a>
@@ -67,7 +68,7 @@
                     <div class="col-md-6">
                         <div class="registration-sec">
                             <h3>VRINK</h3>
-                            <p>WELCOME TO 승철 WOULD.</p>
+                            <p>Virtual Link.</p>
                             <div class="common-sign-up">
                                 <div class="field">
                                     <div class="check-div">
@@ -98,12 +99,14 @@
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <input type="text" placeholder="휴대폰번호" class="phone-input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11"/>
+                                    <input type="text" placeholder="휴대폰번호" class="phone-input"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                           maxlength="11"/>
                                     <input type="hidden" class="phone-check-flag" value="1"/>
                                 </div>
                                 <div class="field">
                                     <div class="flat-btn-div">
-		                                <input type="button" value="회원가입" class="flat-btn" id="sign-up-btn" />
+                                        <input type="button" value="회원가입" class="flat-btn" id="sign-up-btn"/>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +125,7 @@
                     <a href="/" title="">
                         <i class="fa fa-get-pocket"></i>
                         <span>VRINK</span>
-                        <strong>승철이</strong>
+                        <strong>Virtual Link</strong>
                     </a>
                 </div><!-- LOGO -->
                 <c:if test="${not empty USER}">
@@ -134,7 +137,10 @@
                                 <h4>알림이 없습니다.</h4>
                             </c:if>
                             <c:forEach items="${messageList}" var="message" varStatus="varstat">
-                                <a href="#" class="list-group-item" onclick="checkAlarm(${message.messageId}, '${message.url}')"><span style="float:left; font-weight: bold; margin-right: 5px">${varstat.count}.</span> ${message.content} <span style="float: right">${message.createdAt}</span></a>
+                                <a href="#" class="list-group-item"
+                                   onclick="checkAlarm(${message.messageId}, '${message.url}')"><span
+                                        style="float:left; font-weight: bold; margin-right: 5px">${varstat.count}.</span> ${message.content}
+                                    <span style="float: right">${message.createdAt}</span></a>
                             </c:forEach>
                         </div>
                         <!-- 알림 개수를 표시할 배지 -->
@@ -153,7 +159,8 @@
                     </div>
                     <c:if test="${USER.level == 1}">
                         <div class="go-admin-div" style="margin-right: -60px;">
-                            <a href="${pageContext.request.contextPath}/admin/main" style="text-decoration: none; color: white;"><span class="go-admin-btn">관리자 홈</span></a>
+                            <a href="${pageContext.request.contextPath}/admin/main"
+                               style="text-decoration: none; color: white;"><span class="go-admin-btn">관리자 홈</span></a>
                         </div>
                     </c:if>
                 </div>
@@ -163,41 +170,47 @@
                         <li class="menu-item-has-children">
                             <a class="menu-title" href="/editor/list" title="">작가</a>
                             <ul>
-                                <c:if test="${not empty EDITOR_ID}">
-                                <li><a href="/editor/editor-detail/${EDITOR_ID}" title="">내 소개</a></li>
-                                </c:if>
                                 <li><a href="/editor/list" title="">둘러보기</a></li>
                                 <c:if test="${not empty USER && empty EDITOR_ID}">
-                                <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
-                                </c:if>
-                                <c:if test="${not empty EDITOR_ID}">
-                                <li><a href="/editor/editor-price?editor-id=${EDITOR_ID}" title="">가격 설정하기</a></li>
+                                    <li><a href="/editor/apply-form" title="">작가 신청하기</a></li>
                                 </c:if>
                             </ul>
                         </li>
 
                         <li class="menu-item-has-children">
-                            <a class="menu-title" href="" title="">의뢰 하기</a>
+                            <a class="menu-title" href="" title="">커뮤니티</a>
                             <ul>
-                                <li><a href="/suggest/list" title="">의뢰게시판</a></li>
+                                <li><a href="/board/board-list" title="">자유 게시판</a></li>
+                                <li><a href="/suggest/list" title="">의뢰 게시판</a></li>
                             </ul>
+
                         </li>
-                        <li class="menu-item-has-children">
-                            <a class="menu-title" href="#" title="">자유게시판</a>
-                            <ul>
-                                <li><a href="/board/board-list" title="">보러가기</a></li>
-                            </ul>
-                        </li>
+                        <c:if test="${not empty EDITOR_ID}">
+                            <li class="menu-item-has-children">
+                                <a class="menu-title" href="contact.html" title="">Editor Only</a>
+                                <ul>
+
+                                    <li><a href="/editor/editor-detail/${EDITOR_ID}" title="">내 소개</a></li>
+                                    <li><a href="/editor/editor-price?editor-id=${EDITOR_ID}" title="의뢰 목록">가격 설정하기</a>
+                                    <li><a href="/editor/request-list" title="의뢰 목록">의뢰 목록</a></li>
+                                    <li id="only-editor"><a href="/editor/calculate/point" title="정산 및 내 포인트 확인">내
+                                        포인트</a></li>
+                                    <li><a href="/editor/my-cal-list/${EDITOR_ID}" title="정산 목록">정산 목록</a>
+
+                                </ul>
+                            </li>
+                        </c:if>
                         <li id="my-info-list" class="menu-item-has-children">
-                        	<a class="menu-title" href="contact.html" title="">MY PAGE</a>
+                            <a class="menu-title" href="contact.html" title="">MY PAGE</a>
                             <ul>
                                 <li><a href="/user/my-page" title="">내 정보</a></li>
                                 <li><a href="/user/change-password" title="">비밀번호 변경</a></li>
                                 <li><a href="/qna/list" title="">내 문의 내용</a></li>
-                                <li id="only-editor"><a href="/editor/calculate/point" title="">내 포인트</a></li>
                                 <li><a href="/follow/follow-list/${USER.userId}" title="">관심 작가</a></li>
+
                             </ul>
                         </li>
+
                     </ul>
                 </nav>
 
@@ -206,9 +219,10 @@
     </header>
 </div>
 <script type="text/javascript">
-    $(window).resize(function() {
+    $(window).resize(function () {
         open_chatroom();
     });
+
     function open_chatroom() {
         var windowWidth = $(window).width();
 
@@ -218,20 +232,21 @@
             $(".menu-title").css("color", "#ffffff");
         }
     }
+
     let authEmailNumber = null; // 함수 밖의 변수
 
-    if(`${USER.editor}` == 'standard') {
+    if (`${USER.editor}` == 'standard') {
         $('#only-editor').css("display", "none");
     }
 
     `${USER.email}` == '' ? $('#my-info-list').css("display", "none") : $('#my-info-list').css("display", "block");
 
-    if(`${USER.email}` !== '') {
-    	$('.log-in-btn').css("display", "none");
-    } 
-    if(`${USER.email}` !== '') {
-    	$('.log-out-btn').css("display", "block");
-    } 
+    if (`${USER.email}` !== '') {
+        $('.log-in-btn').css("display", "none");
+    }
+    if (`${USER.email}` !== '') {
+        $('.log-out-btn').css("display", "block");
+    }
 
     $('#email-check-btn').on('click', function () {
         let email = $('.email-input').val().trim();
@@ -241,8 +256,8 @@
     });
 
     $('#nickname-check-btn').on('click', function () {
-       let nickname = $('.nickname-input').val().trim();
-       nicknameCheck(nickname);
+        let nickname = $('.nickname-input').val().trim();
+        nicknameCheck(nickname);
     });
 
     async function emailCheck(email) {
@@ -323,7 +338,7 @@
 
     $('.password-input').change(function () {
         let password = $('.password-input').val().trim();
-            $('.password-check-flag').val('0');
+        $('.password-check-flag').val('0');
         if (passwordValidation(password)) {
             $('.password-check-flag').val('1');
         }
@@ -344,9 +359,9 @@
         let phone = $('.phone-input').val().trim();
         $('.phone-check-flag').val('1');
 
-       if(phoneValidation(phone)) {
-           $('.phone-check-flag').val('0');
-       }
+        if (phoneValidation(phone)) {
+            $('.phone-check-flag').val('0');
+        }
     });
 
     $('#sign-up-btn').on('click', function () {
@@ -395,14 +410,14 @@
             )
             .catch(error => console.error('Error:', error));
     });
-    
-    $('#sign-in-btn').on('click', function() {
-    	if($('.sign-in-email').val().trim() == '' || $('.sign-in-password').val().trim() == '') {
-    		alert('아이디 또는 비밀번호를 입력해주세요');
-    		return;
-    	}
-    	
-    	fetch('http://localhost/user/sign-in', {
+
+    $('#sign-in-btn').on('click', function () {
+        if ($('.sign-in-email').val().trim() == '' || $('.sign-in-password').val().trim() == '') {
+            alert('아이디 또는 비밀번호를 입력해주세요');
+            return;
+        }
+
+        fetch('http://localhost/user/sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -415,7 +430,7 @@
             .then(response => {
                 if (response.ok) {
                     location.reload();
-                }else if (response.status.valueOf() === 401) {
+                } else if (response.status.valueOf() === 401) {
                     alert("아이디 또는 비밀번호가 틀립니다.");
                 } else {
                     alert("존재하지않는 아이디입니다.");
@@ -447,7 +462,7 @@
 
     $(document).ready(function () {
         var dropdown = document.getElementById("dropdown-alarm");
-        dropdown.addEventListener("click", function() {
+        dropdown.addEventListener("click", function () {
             dropdown.classList.toggle("active");
             if (dropdown.classList.contains("active")) {
                 // 알림 팝업이 열릴 때, 알림 개수를 초기화
@@ -456,7 +471,7 @@
         });
 
         var body = document.getElementById("main-body");
-        body.addEventListener("click", function() {
+        body.addEventListener("click", function () {
             if (dropdown.classList.contains("active")) {
                 dropdown.classList.toggle("active");
             }
@@ -471,7 +486,7 @@
         try {
             alert('로그아웃 되었습니다.');
             await fetch("http://localhost/user/log-out");
-            location.href= "http://localhost";
+            location.href = "http://localhost";
         } catch (error) {
             console.log(error);
         }

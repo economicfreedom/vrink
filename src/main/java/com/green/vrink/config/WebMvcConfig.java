@@ -1,6 +1,8 @@
 package com.green.vrink.config;
 
-import com.green.vrink.interceptor.AuthInterceptor;
+import com.green.vrink.interceptor.AuthAdminInterceptor;
+import com.green.vrink.interceptor.AuthEditorInterceptor;
+import com.green.vrink.interceptor.AuthUserInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,20 +14,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Component
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final AuthInterceptor authInterceptor;
-
+    private final AuthUserInterceptor authUserInterceptor;
+    private final AuthAdminInterceptor authAdminInterceptor;
+    private final AuthEditorInterceptor authEditorInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         String[] authRequiredPaths = {
-                "/editor/editor-edit",
-                "/editor/editor-price",
                 "/payment/**",
                 "/user/my-page",
                 "/user/change-password",
                 "/user/update/**",
                 "/user/delete/**",
-                "/editor/calculator/point",
-                "/editor/calculate/point",
                 "/suggest/post",
                 "/suggest/patch/**",
                 "/suggest/delete/**",
@@ -41,8 +40,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 "/report/**"
         };
 
-        registry.addInterceptor(authInterceptor)
+        String[] authEditorPaths = {
+
+                "/editor/request-list",
+                "/editor/request-view",
+                "/editor/editor-edit",
+                "/editor/editor-price",
+                "/editor/calculator/point",
+                "/editor/calculate/point"
+
+
+        };
+        registry.addInterceptor(authUserInterceptor)
                 .addPathPatterns(authRequiredPaths);
+        registry.addInterceptor(authAdminInterceptor)
+                .addPathPatterns("/admin/**");
+        registry.addInterceptor(authEditorInterceptor)
+                .addPathPatterns(authEditorPaths);
     }
 
     @Bean

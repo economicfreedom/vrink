@@ -5,9 +5,12 @@ import com.green.vrink.payment.repository.interfaces.PaymentRepository;
 import com.green.vrink.payment.repository.interfaces.PaymentStateRepository;
 import com.green.vrink.review.repository.interfaces.ReviewRepository;
 import com.green.vrink.user.repository.interfaces.UserRepository;
+import com.green.vrink.util.Check;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import static com.green.vrink.util.Check.isNull;
 
 @Service
 @RequiredArgsConstructor
@@ -39,8 +42,8 @@ public class PaymentStateServiceImpl implements PaymentStateService {
         Integer tableExists = reviewRepository
                 .isTableExists(paymentStateDTO.getUserId()
                         , paymentStateDTO.getEditorId());
-
-        if (tableExists==null) {
+        log.info("tableExists {}", tableExists);
+        if (isNull(tableExists)) {
             reviewRepository.insertReviewCount(
                     paymentStateDTO.getUserId()
                     , paymentStateDTO.getEditorId()
