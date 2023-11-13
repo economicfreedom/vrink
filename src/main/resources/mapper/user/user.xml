@@ -26,7 +26,7 @@
     </select>
 
     <insert id="editorWrite">
-        INSERT INTO editor_detail(user_id, profile_image, introduce, thumbnail, content, vrm)
+        INSERT INTO editor(user_id, profile_image, introduce, thumbnail, content, vrm)
         VALUES (#{userId}, #{profileImage}, #{introduce}, #{thumbnail}, #{content}, #{vrm})
     </insert>
 
@@ -34,7 +34,7 @@
 
         SELECT ed.editor_id, ed.user_id, replace(ed.profile_image,"\\",'/') as profile_image,
                ed.introduce, replace(ed.thumbnail,"\\",'/') as thumbnail, ed.content, replace(ed.vrm,"\\",'/') as vrm, u.nickname
-        FROM editor_detail ed
+        FROM editor ed
         LEFT JOIN user u
         ON u.user_id = ed.user_id
         WHERE ed.editor_id = #{editorId};
@@ -43,7 +43,7 @@
 
     <select id="findVrmById" resultType="java.lang.String">
         SELECT vrm
-        FROM editor_detail
+        FROM editor
         WHERE editor_id = #{editorId}
     </select>
 
@@ -67,7 +67,7 @@
                    WHEN round(avg(r.count)) = 10 THEN '★★★★★'
                    ELSE ''
           END AS star
-          FROM editor_detail e
+          FROM editor e
               LEFT JOIN user u
           ON e.user_id = u.user_id
               LEFT JOIN review r ON e.editor_id = r.editor_id
@@ -86,12 +86,12 @@
     </select>
     <select id="getTotal" resultType="java.lang.Integer">
         SELECT count(editor_id)
-        FROM editor_detail
+        FROM editor
     </select>
 
 
     <update id="updateByEditorId">
-        UPDATE editor_detail
+        UPDATE editor
         SET profile_image=#{profileImage},
             introduce=#{introduce},
             thumbnail=#{thumbnail},
@@ -125,13 +125,13 @@
     </select>
 
     <select id="findEditorIdByUserId" resultType="java.lang.Integer">
-        SELECT editor_detail.editor_id
-        FROM editor_detail
+        SELECT editor.editor_id
+        FROM editor
         WHERE user_id = #{userId};
     </select>
     <select id="findUserIdByEditorId" resultType="java.lang.Integer">
         SELECT user_id
-        FROM editor_detail
+        FROM editor
         WHERE editor_id = #{editorId}
     </select>
 
@@ -149,7 +149,7 @@
         UPDATE user
         SET point = ifnull(point, 0) + #{point}
         WHERE user_id = (SELECT user_id
-                         FROM editor_detail
+                         FROM editor
                          WHERE editor_id = #{editorId})
 
     </update>
@@ -381,5 +381,9 @@
             WHERE cal_status LIKE 1
         </if>
     </select>
+
+    <delete id="deleteByEditorId">
+        DELETE FROM editor WHERE editor_id = #{editorId}
+    </delete>
 </mapper>
 

@@ -3,6 +3,7 @@ package com.green.vrink.user.controller;
 import javax.servlet.http.HttpSession;
 
 import com.green.vrink.user.dto.*;
+import com.green.vrink.user.repository.model.Editor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -155,6 +156,11 @@ public class UserRestController {
             return 0;
         }
         int result = userService.deleteByUserId(userId);
+        Editor editor = (Editor) session.getAttribute(Define.EDITOR_ID);
+        if (editor != null) {
+            userService.deleteByEditorId(editor.getEditorId());
+            session.removeAttribute(Define.EDITOR_ID);
+        }
         log.info("deleteFlag: {}", result);
         if (result == 1) {
             userService.updateNickname(userId, "알수없음");

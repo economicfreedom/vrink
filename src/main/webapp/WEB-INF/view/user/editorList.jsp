@@ -142,6 +142,22 @@
     .tagify__tag>div>* {
         white-space: nowrap;
     }
+
+    .search-area {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+
+
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
 </style>
 <div class="inner-head overlap">
     <div data-velocity="-.2"
@@ -167,11 +183,11 @@
                 <div class="row mb-5 text-right">
                     <div class="col-sm-12">
                         <input type="text" name="basic" class="customLook-list" value="${tag}">
-                        <select id="type" name="type">
+                        <select id="type" name="type" class="search-area">
                             <option value="nickname" ${pageDTO.cri.type == 'nickname' ? 'selected' : ''}>닉네임</option>
                             <option value="tag" ${pageDTO.cri.type == 'tag' ? 'selected' : ''}>태그</option>
                         </select>
-                        <input type="text" id="keyword" placeholder="검색어를 입력하세요." value="${pageDTO.cri.keyword}">
+                        <input type="text" id="keyword" class="search-area" placeholder="검색어를 입력하세요." value="${pageDTO.cri.keyword}">
                         <img src="/image/54481.png" width="15px" height="15px" style="cursor: pointer"
                              id="search">
                     </div>
@@ -236,7 +252,8 @@
     $("#keyword").keypress(function (event) {
         if (event.which == 13) {  // 13은 엔터 키의 키 코드입니다.
             let keyword = $("#keyword").val();
-            location.href = "/editor/list?keyword=" + keyword;
+            let type = $('#type').val();
+            location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
         }
     });
 </script>

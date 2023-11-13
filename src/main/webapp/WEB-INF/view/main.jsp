@@ -184,7 +184,7 @@
                         <tr class="board-list-tr">
                             <td>${notice.noticeId}</td>
                             <td class="t-left">
-                                <a href="/notice/get/${notice.noticeId}"
+                                <a href="/notice/${notice.noticeId}"
                                    style="text-decoration: none; color: black"><span>
                                         </span> <span> ${notice.title}</span></a></td>
                             <td>${notice.createdAt}</td>

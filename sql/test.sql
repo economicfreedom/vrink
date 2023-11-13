@@ -7,7 +7,7 @@ select *
 from review;
 
 alter table review
-    add foreign key (editor_id) references editor_detail (editor_id);
+    add foreign key (editor_id) references editor (editor_id);
 
 alter table review
     add column editor_id int not null;
@@ -47,10 +47,10 @@ ALTER TABLE `message`
             );
 
 ALTER TABLE `review`
-    ADD CONSTRAINT `FK_editor_detail_TO_review_1` FOREIGN KEY (
+    ADD CONSTRAINT `FK_editor_TO_review_1` FOREIGN KEY (
                                                                `editor_id`
         )
-        REFERENCES `editor_detail` (
+        REFERENCES `editor` (
                                     `editor_id`
             );
 
@@ -118,8 +118,8 @@ ALTER TABLE `suggest`
                            `user_id`
             );
 
-ALTER TABLE `editor_detail`
-    ADD CONSTRAINT `FK_user_TO_editor_detail_1` FOREIGN KEY (
+ALTER TABLE `editor`
+    ADD CONSTRAINT `FK_user_TO_editor_1` FOREIGN KEY (
                                                              `user_id`
         )
         REFERENCES `user` (
@@ -175,8 +175,8 @@ WHERE editor_id = 0;
 select *
 from review;
 select *
-from editor_detail;
-insert into editor_detail(user_id, image, content, vrm)
+from editor;
+insert into editor(user_id, image, content, vrm)
     value (1, 'tt', 'tt', 'tt');
 
 select *
@@ -220,14 +220,14 @@ FROM community_reply;
 select *
 from user;
 SELECT *
-FROM editor_detail;
+FROM editor;
 
 SELECT r.editor_id
      , profile_image
      , introduce
      , nickname
      , COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count
-FROM editor_detail e
+FROM editor e
          LEFT JOIN user u ON e.user_id = u.user_id
          LEFT JOIN review r ON e.editor_id = r.editor_id
 GROUP BY r.editor_id, profile_image, introduce, nickname
@@ -238,7 +238,7 @@ SELECT r.editor_id
      , introduce
      , nickname
      , COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count
-FROM editor_detail e
+FROM editor e
          LEFT JOIN user u
                    ON e.user_id = u.user_id
          LEFT JOIN review r ON e.editor_id = r.editor_id
@@ -249,14 +249,14 @@ SELECT e.editor_id,
        introduce,
        nickname,
        COALESCE(ROUND(avg(r.count / 2), 1), 0.0) as count
-FROM editor_detail e
+FROM editor e
          LEFT JOIN user u ON e.user_id = u.user_id
          LEFT JOIN review r ON e.editor_id = r.editor_id
 GROUP BY e.editor_id, profile_image, introduce, nickname;
 select *
-from editor_detail;
+from editor;
 
-insert into editor_detail(user_id, profile_image, introduce, image, content, vrm)
+insert into editor(user_id, profile_image, introduce, image, content, vrm)
     value (1, null, 'ㅎㅇ', 'ㅎㅇ', 'ㅎㅇ', null);
 
 
@@ -370,7 +370,7 @@ INSERT INTO payment_state(payment_id, customer_recognize, point)
 SELECT ps.point, customer_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id, p.user_id
 FROM payment_state ps
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
-         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN editor ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 1
   AND customer_recognize = 0;
@@ -380,7 +380,7 @@ select *
 FROM user;
 
 select nickname
-from editor_detail ed
+from editor ed
          left join user u on u.user_id = ed.user_id;
 
 
@@ -419,7 +419,7 @@ SELECT ps.point
 FROM payment_state ps
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
          LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN editor ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 0
   AND customer_recognize = 0
@@ -483,7 +483,7 @@ FROM payment_state ps
               ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
          LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN editor ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
 WHERE p.user_id = 0
 GROUP BY ps.point, customer_recognize, editor_recognize, payment_state_id, ps.created_at, u.nickname, p.editor_id,
@@ -508,15 +508,15 @@ select *
 from user
 where user_id = 52;
 SELECT user_id
-FROM editor_detail
+FROM editor
 WHERE editor_id = 52;
 
 SELECT *
-FROM editor_detail;
+FROM editor;
 UPDATE user
 SET point = ifnull(point, 0) + 1111
 WHERE user_id = (SELECT user_id
-                 FROM editor_detail
+                 FROM editor
                  WHERE editor_id = 52);
 
 update user
@@ -605,7 +605,7 @@ from payment_detail;
 
 
 SELECT *
-FROM editor_detail;
+FROM editor;
 SELECT *
 FROM user
 where user_id = 2;
@@ -618,7 +618,7 @@ FROM payment_state ps
               ON ps.payment_id = ps_max.payment_id AND ps.created_at = ps_max.max_created_at
          LEFT JOIN payment p ON ps.payment_id = p.payment_id
          LEFT JOIN payment_detail pd ON p.payment_id = pd.payment_id
-         LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+         LEFT JOIN editor ed ON ed.editor_id = p.editor_id
          LEFT JOIN user u ON ed.user_id = u.user_id
 
 WHERE p.user_id = #{userId} AND customer_recognize =0
@@ -719,7 +719,7 @@ CREATE TABLE `review_count`
 (
     `count_id`  int NOT NULL primary key auto_increment,
     `user_id`   int NOT NULL references user (user_id),
-    `editor_id` int NOT NULL references editor_detail (editor_id),
+    `editor_id` int NOT NULL references editor (editor_id),
     `count`     int NOT NULL DEFAULT 0 COMMENT '리뷰 작성 가능 회수'
 );
 
