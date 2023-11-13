@@ -60,6 +60,7 @@
 * <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> : Stable 245033
 * <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
 * <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.0.4
+* <img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0 CE
 
   <br>
 
