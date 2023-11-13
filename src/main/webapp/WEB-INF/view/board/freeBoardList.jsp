@@ -97,6 +97,19 @@
                 </tr>
                 </thead>
                 <tbody>
+
+                <c:forEach items="${noticeList}" var="notice">
+                    <tr class="board-list-tr" style="font-weight: bold">
+                        <td>공지사항</td>
+                        <td class="t-left">
+                            <a href="/notice/${notice.noticeId}"
+                               style="text-decoration: none; color: black"><span>
+                                    ${notice.title}</span> </a></td>
+
+                        <td>관리자</td>
+                        <td>${notice.createdAt}</td>
+                    </tr>
+                </c:forEach>
                 <c:forEach items="${list}" var="board">
                     <tr class="board-list-tr">
                         <td>${board.communityId}</td>

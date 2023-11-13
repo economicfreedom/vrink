@@ -145,7 +145,7 @@
 
             <c:if test="${pageDTO.prev}">
                 <li class="disabled"><a href="#"
-                                        data-page-num="${pageDTO.beginPage-1}"><span>PREV</span></a>
+                                        data-page-num="${pageDTO.beginPage-1}" style="cursor: pointer"><span>PREV</span></a>
                 </li>
             </c:if>
             <c:if test="${!pageDTO.prev}">

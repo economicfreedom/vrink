@@ -3,4 +3,8 @@
 <mapper namespace="com.green.vrink.notice.repository.interfaces.NoticeRepository">
 
 
+    <select id="findNoticeListByType" resultType="com.green.vrink.notice.dto.NoticeDto">
+        SELECT * FROM notice
+        WHERE type = #{type}
+    </select>
 </mapper>
