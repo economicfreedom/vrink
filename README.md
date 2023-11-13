@@ -20,10 +20,10 @@
 
 <br> 
 
-+ Languages:  <img src="https://img.shields.io/badge/Java-db380e?style=flat&logo=Java&logoColor=white"/>
-+ Back-end: <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/>
++ Languages:  
++ Back-end:  
 + API: <img src="https://img.shields.io/badge/kakao-FFCD00?style=flat&logo=kakao&logoColor=white"/>(로그인, 결제) <img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=Naver&logoColor=white"/>(지도, 메일) <img src="https://img.shields.io/badge/Coolsms-6199d2?style=flat&logo=Wikiquote&logoColor=white"/>(sms)
-+ DB: <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
++ DB: 
 + DVCS: <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
 + IDE: <img src="https://img.shields.io/badge/SpringToolSuite4-1b7f38?style=flat&logo=Spring&logoColor=white"/>
 + Collaborative Software: <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> <img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Jira&logoColor=white"/>
@@ -32,38 +32,31 @@
 
 ### ✨ Front-End
 
-* <img src="https://img.shields.io/badge/Bootstrapap-7952B3?style=flat&logo=bootstrap&logoColor=white"/> : 3.6.2
+
 * <img src="https://img.shields.io/badge/html5-1572B6?style=flat&logo=html5&logoColor=white"/> : 5.0
 * <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/> : 3.0
 * <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/> : 1.16.1
-* <img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3
 * <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/> : 3.5.1
 * <img src="https://img.shields.io/badge/FontAwesome-528DD7?style=flat&logo=Font Awesome&logoColor=white"/> : 6.4.2
 * <img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Chart.js&logoColor=white"/> : 4.4.0
 * <img src="https://img.shields.io/badge/Summernote-42c0ee?style=flat&logo=&logoColor=white"/> : 0.8.18
 * <img src="https://img.shields.io/badge/Sweetalert2-8e64a6?style=flat&logo=&logoColor=white"/> : 2.11
 * <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : vrm module
-  
-
 
   <br>
 
 ### 💻 Back-End
 
-<details>
-      <summary>⚡️ BE 자세히 살펴보기</summary>
-      <br>
-      <ul>
-          <li>springboot : 4.18.0 </li>
-          <li>H2 Database → MySQL : 8.0.32 </li>
-          <li>jdk : 11.0.17 </li>
-          <li>lombok </li>
-          <li>MyBatis </li>
-          <li>JSP </li>
-          <li>BCrypt HASH </li>
+* <img src="https://img.shields.io/badge/OpenJDK-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 11.0.21 Amazon Correto
+* <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/> : 2.7.17
+* <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/> : 9.0
+* <img src="https://img.shields.io/badge/lombok-d00223?style=flat&logo=&logoColor=black"/> : 1.18.30
+* <img src="https://img.shields.io/badge/Mybatis-0a0a0a?style=flat&logo=&logoColor=white"/> : 3.0
+* <img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3
+* <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0.21
+
+          <li>BCrypt HASH </li> cryptohash
           <li>Apache Tomcat : 9.0 </li>
-      </ul>
-  </details>
   
   <br>
   
