@@ -20,18 +20,9 @@
 
 <br> 
 
-+ Languages:  
-+ Back-end:  
-+ API: <img src="https://img.shields.io/badge/kakao-FFCD00?style=flat&logo=kakao&logoColor=white"/>(로그인, 결제) <img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=Naver&logoColor=white"/>(지도, 메일) <img src="https://img.shields.io/badge/Coolsms-6199d2?style=flat&logo=Wikiquote&logoColor=white"/>(sms)
-+ DB: 
-+ DVCS: <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
-+ IDE: <img src="https://img.shields.io/badge/SpringToolSuite4-1b7f38?style=flat&logo=Spring&logoColor=white"/>
-+ Collaborative Software: <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> <img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Jira&logoColor=white"/>
-
 ## 🎮 기술 스택
 
 ### ✨ Front-End
-
 
 * <img src="https://img.shields.io/badge/html5-1572B6?style=flat&logo=html5&logoColor=white"/> : 5.0
 * <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/> : 3.0
@@ -54,35 +45,21 @@
 * <img src="https://img.shields.io/badge/Mybatis-0a0a0a?style=flat&logo=&logoColor=white"/> : 3.0
 * <img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3
 * <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0.21
-
-          <li>BCrypt HASH </li> cryptohash
-          <li>Apache Tomcat : 9.0 </li>
-  
-  <br>
-  
-### 🛠 외부 API
-
-<details>
-      <summary>⚡️ API 자세히 살펴보기</summary>
-      <br>
-      <ul>
-          <li>카카오 소셜 로그인 API (OAuth 2.0 프로토콜)</li>
-          <li>카카오페이 API</li>
-          <li>이메일 전송 API (네이버 SMTP 프로토콜)</li>
-          <li>구글 맵 API</li>
-          <li>CoolSMS API</li>
-          <li>DAUM 우편번호 찾기 API</li>
-          <li>국가 코드 OPEN API</li>
-      </ul>
-</details>
+* <img src="https://img.shields.io/badge/SpringSecurityCrypto-6db33f?style=flat&logo=Spring&logoColor=white"/> : 5.7.1
 
   <br>
 
-### 🙌🏻 Collaboration
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=Jira&logoColor=white"/> <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Slack&logoColor=white"/> <img src="https://img.shields.io/badge/Github-181717?style=flat&logo=Github&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Eclipse-2C2255?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Notion&logoColor=white"/> <br><img src="https://img.shields.io/badge/JQuery-0769AD?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Tomcat-F8DC75?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=Notion&logoColor=white"/>
+### 🛠 외부 API 및 Collaborative Software
 
+* <img src="https://img.shields.io/badge/Kakao-FFCD00?style=flat&logo=kakao&logoColor=white"/> : OAuth 2.0
+* <img src="https://img.shields.io/badge/PortOne-f4682c?style=flat&logo=&logoColor=white"/> : 1.0
+* <img src="https://img.shields.io/badge/GoogleSMTP-4285F4?style=flat&logo=&logoColor=white"/> : TLS 1.2
+* <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> : 2.42.1
+* <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/> : 3.10.3
+* <img src="https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/> : Ultimate 2023.2.4
+* <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> : Stable 245033
 
-<br>
+  <br>
 
 ## ⚙ 의존성
 ```java
