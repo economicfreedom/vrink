@@ -2,6 +2,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 
@@ -167,7 +169,8 @@
                             <c:forEach items="${editorPrice}" var="editorPrice">
                                 <div class="d-flex j-around">
                                     <div><h5>${editorPrice.options}</h5></div>
-                                    <div><h5>${editorPrice.price}</h5></div>
+                                    <div><h5><fmt:formatNumber value="${editorPrice.price}" pattern="#,###" />
+                                    원</h5></div>
                                 </div>
                             </c:forEach>
                             <c:if test="${editorDetail.editorId != EDITOR_ID}">
@@ -494,7 +497,7 @@
             }
         });
 
-        $('.tagify__tag-text').parent().on('click',function(){
+        $('.tagify__tag-text').parent().on('click', function () {
             let keyword = $(this).text();
             let type = 'tag'
             location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
@@ -517,9 +520,9 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data){
+                    if (data) {
                         alert(data.message)
-                    }else {
+                    } else {
                         alert("신고 되었습니다.")
                     }
                 })

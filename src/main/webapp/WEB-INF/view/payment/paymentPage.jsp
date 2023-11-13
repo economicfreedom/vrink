@@ -162,7 +162,7 @@
 										<div class="price-cart-item">
 											<span class="price-area">${priceDTO.price}</span>
 										</div>
-										<p>The best item that you can get</p>
+										<p></p>
 									</div>
 									<div class="c-input-number">
 										<span><input type="number" class="manual-adjust" min="0" value="0" title="Enter &quot;+x&quot; or &quot;+x%&quot; or &quot;*x&quot;
@@ -180,7 +180,7 @@
 									<div class="price-cart-item">
 										<span class="price-area">${priceDTO.price}</span>
 									</div>
-									<p>The best item that you can get</p>
+									<p></p>
 								</div>
 								<div class="c-input-number cart-request">
 									<i class="fa fa-at"></i>
