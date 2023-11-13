@@ -58,6 +58,8 @@
 * <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/> : 3.10.3
 * <img src="https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/> : Ultimate 2023.2.4
 * <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> : Stable 245033
+* <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
+* <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.0.4
 
   <br>
 
