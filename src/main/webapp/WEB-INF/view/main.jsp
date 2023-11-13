@@ -116,7 +116,7 @@
             <div class="col-sm-10">
                 <div class="banner col-sm-12">
                     <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner1.webp" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner4.webp" alt="">
                     </div>
                     <div>
                         <img class="img-responsive" src="/images/resource/banner/banner2.webp" alt="">
@@ -125,7 +125,7 @@
                         <img class="img-responsive" src="/images/resource/banner/banner3.webp" alt="">
                     </div>
                     <div>
-                        <img class="img-responsive" src="/images/resource/banner/banner4.webp" alt="">
+                        <img class="img-responsive" src="/images/resource/banner/banner1.webp" alt="">
                     </div>
                 </div>
             </div>
