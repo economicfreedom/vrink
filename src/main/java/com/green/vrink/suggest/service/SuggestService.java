@@ -21,4 +21,5 @@ public interface SuggestService {
     List<GetSuggestDto> getSuggestList(Criteria criteria);
     Integer acceptSuggest(Integer suggestId);
 
+    int getUserIdBySuggestId(Integer suggestId);
 }

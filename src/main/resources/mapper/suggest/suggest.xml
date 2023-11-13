@@ -144,9 +144,14 @@
         LIMIT #{offset},#{countPerPage}
     </select>
     <select id="findStateById" resultType="java.lang.Integer">
-        SELECT state FROM
-        WHERE
+        SELECT state FROM suggest
+        WHERE suggest_id = #{suggestId}
 
+    </select>
+    <select id="findUserIdBySuggestId" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM suggest
+        WHERE suggest_id = #{suggestId}
     </select>
 
 

@@ -56,8 +56,8 @@ public class UserService {
 		return userRepository.findPasswordByEmailAndName(findPasswordDto);
 	}
 
-	public User findByUserId(int email) {
-		return userRepository.findByUserId(email);
+	public User findByUserId(int userId) {
+		return userRepository.findByUserId(userId);
 	}
 
 	public Integer findUserIdByEmail(String email) {
@@ -70,5 +70,11 @@ public class UserService {
 
 	public void deleteByEditorId(Integer editorId) {
 		userRepository.deleteByEditorId(editorId);
+	}
+
+    public User getUserByUserId(Integer receiverId) {
+		User user = userRepository.findByUserId(receiverId);
+
+		return user;
 	}
 }

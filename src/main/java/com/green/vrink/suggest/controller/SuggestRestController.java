@@ -32,16 +32,17 @@ public class SuggestRestController {
 
     @PostMapping("/post")
     public Integer postSuggest(@RequestBody PostSuggestDto postSuggestDto) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return -1;
         }
 
         return suggestService.postSuggest(postSuggestDto);
     }
+
     @PutMapping("/patch")
     public Integer patchSuggest(@RequestBody PatchSuggestDto patchSuggestDto) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return -1;
         }
@@ -51,7 +52,7 @@ public class SuggestRestController {
 
     @DeleteMapping("/delete/{suggestId}")
     public Integer deleteSuggest(@PathVariable Integer suggestId) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         GetSuggestDto suggest = suggestService.getSuggest(suggestId);
 
         if (user == null || suggest == null || user.getUserId() != suggest.getUserId()) {
@@ -63,7 +64,7 @@ public class SuggestRestController {
 
     @PostMapping("/reply/post")
     public Integer postSuggestReply(@RequestBody PostSuggestReplyDto postSuggestReplyDto) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return -1;
         }
@@ -77,14 +78,14 @@ public class SuggestRestController {
         log.info("flag: {}", flag);
         log.info("flag2: {}", flag2);
         if (editorId == null && !writerId.equals(user.getUserId())) {
-            return  0;
+            return 0;
         }
         return suggestService.postSuggestReply(postSuggestReplyDto);
     }
 
     @PutMapping("/reply/patch")
     public Integer getReplyCount(@RequestBody PatchSuggestReplyDto patchSuggestReplyDto) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return -1;
         }
@@ -94,7 +95,7 @@ public class SuggestRestController {
 
     @DeleteMapping("/reply/delete/{replyId}")
     public Integer deleteReply(@PathVariable Integer replyId) {
-        User user = (User)session.getAttribute(Define.USER);
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
             return -1;
         }
@@ -126,14 +127,30 @@ public class SuggestRestController {
     }
 
     @PutMapping("/accept-suggest/{suggestId}")
-    public Integer acceptSuggest(@PathVariable Integer suggestId, @RequestBody AcceptSuggestDto acceptSuggestDto) {
-        User user = (User)session.getAttribute(Define.USER);
+    public ResponseEntity<?> acceptSuggest(@PathVariable Integer suggestId, @RequestBody AcceptSuggestDto acceptSuggestDto) {
+        User user = (User) session.getAttribute(Define.USER);
         if (user == null) {
-            return 0;
+            return ResponseEntity.badRequest().build();
         }
+        int userId = suggestService.getUserIdBySuggestId(suggestId);
+
+        log.info("userId {}",userId);
+        User _user = userService.findByUserId(userId);
+
+        String phone = _user.getPhone();
+        String email = _user.getEmail();
+
+        String content = user.getNickname()
+                + "님이 의뢰를 수락하였습니다. <br> 연락처 : "
+                + phone + "<br> email : "
+                + email;
 
         int suggestState = suggestService.acceptSuggest(suggestId);
-        messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), acceptSuggestDto.getContent());
-        return suggestState;
+
+        if (suggestState == 1) {
+            return ResponseEntity.badRequest().build();
+        }
+        messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), content);
+        return ResponseEntity.badRequest().build();
     }
 }

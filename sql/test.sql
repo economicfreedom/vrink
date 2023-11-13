@@ -775,3 +775,9 @@ where user_id=2;
 
     SELECT * FROM notice
         WHERE type = 'community';
+
+select * from suggest
+where suggest_id = 1034;
+
+select * from user
+where user_id=0;

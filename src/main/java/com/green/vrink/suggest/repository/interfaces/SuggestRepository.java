@@ -23,4 +23,6 @@ public interface SuggestRepository {
     Integer acceptSuggest(Integer suggestId);
     List<GetSuggestDto> findAllByCriteria(Criteria criteria);
     Integer findStateById(Integer suggestId);
+
+    int findUserIdBySuggestId(Integer suggestId);
 }

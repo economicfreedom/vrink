@@ -2,13 +2,14 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
 <style>
-    .custom-btn{
+    .custom-btn {
         background-color: #ff2929;
-        color:white;
+        color: white;
         border: none;
 
     }
-    .custom-btn:hover{
+
+    .custom-btn:hover {
         background-color: white;
         color: #ff2929;
     }
@@ -34,18 +35,18 @@
             let reply = $("#reply-content");
             let content = reply.val();
             let result = await fetch('/suggest/reply/post', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            suggestId: `${suggest.suggestId}`,
-                                            userId:`${USER.userId}`,
-                                            content: content,
-                                        })
-                                    });
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    suggestId: `${suggest.suggestId}`,
+                    userId: `${USER.userId}`,
+                    content: content,
+                })
+            });
             let resultCode = await result.json();
-            if(resultCode === 1) {
+            if (resultCode === 1) {
                 location.reload();
             } else if (resultCode === 0) {
                 alert("의뢰 게시물에 대한 댓글 작성은 본인 또는 작가만 작성할 수 있습니다.");
@@ -54,7 +55,6 @@
                 $(".log-in-btn").click()
             }
         }
-
 
 
     })
@@ -66,8 +66,8 @@
     async function deleteBoard(id) {
 
         let result = await fetch('/suggest/delete/' + id, {
-                                method: 'DELETE',
-                                });
+            method: 'DELETE',
+        });
         let resultCode = await result.json();
         if (resultCode !== 1) {
             alert('잠시 후 시도해주십시오.');
@@ -81,8 +81,8 @@
     async function deleteReply(id) {
 
         let result = await fetch('/suggest/reply/delete/' + id, {
-                            method: 'DELETE',
-                            });
+            method: 'DELETE',
+        });
         let resultCode = await result.json();
         if (resultCode == 1) {
             alert('삭제가 완료되었습니다.');
@@ -125,15 +125,15 @@
             return;
         }
         let result = await fetch('/suggest/reply/patch', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            replyId: id,
-                            content: content,
-                        })
-                    });
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                replyId: id,
+                content: content,
+            })
+        });
         let resultCode = await result.json();
         if (resultCode === 1) {
             alert("댓글 수정을 완료했습니다.");
@@ -171,14 +171,14 @@
                 // 예시: FreeBoardReplyDTO 리스트 출력
                 data.pageDTOs.forEach(reply => {
 
-                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId +'">';
+                    html += '<ul class="list-group custom-list-group" style="margin-top:5%" id="reply-' + reply.replyId + '">';
                     html += '<li class="list-group-item custom-list-item">';
                     html += '<div class="comment-header">';
                     html += '<strong class="comment-nickname">' + reply.nickname + '</strong>';
                     html += '<span class="comment-date">' + reply.createdAt + '</span>';
                     html += '</div>';
 
-                    html += '<textarea class="form-control custom-textarea" id="reply-content-'+reply.replyId+'"';
+                    html += '<textarea class="form-control custom-textarea" id="reply-content-' + reply.replyId + '"';
                     html += ' rows="2"';
                     html += ' readonly ';
                     html += '>' + reply.content + '</textarea>';
@@ -228,22 +228,16 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                receiverId:receiverId,
-                content:`${suggest.nickname}`+ "님이 " + nickname + "님의 제안을 수락했습니다!",
+                receiverId: receiverId,
+                content: `${suggest.nickname}` + "님이 " + nickname + "님의 제안을 수락했습니다!",
             })
         });
-        let resultCode = await result.json();
-        if (resultCode === 1) {
-            alert('의뢰 수락 메세지가 성공적으로 전달되었습니다.');
-            location.reload();
-            return;
-        }
-        alert('잠시 후 다시 시도해주세요');
-
+        let resultCode = result.json();
+        alert('의뢰 수락 메세지가 성공적으로 전달되었습니다.');
+        location.reload();
 
 
     }
-
 
 
 </script>
@@ -305,20 +299,26 @@
                     <!-- 댓글 리스트 부분 -->
                     <div id="reply-container">
                         <c:forEach var="suggestReply" items="${suggestReply}">
-                            <ul class="list-group custom-list-group" style="margin-top:5%" id="reply-`${suggestReply.replyId}`">
-                                <li class="list-group-item custom-list-item" >
+                            <ul class="list-group custom-list-group" style="margin-top:5%"
+                                id="reply-`${suggestReply.replyId}`">
+                                <li class="list-group-item custom-list-item">
                                     <div class="comment-header">
-                                        <a href="/editor/editor-detail/${suggestReply.userId}"><strong class="comment-nickname">${suggestReply.nickname}</strong></a>
+                                        <a href="/editor/editor-detail/${suggestReply.userId}"><strong
+                                                class="comment-nickname">${suggestReply.nickname}</strong></a>
                                         <span class="comment-date">${suggestReply.createdAt}</span>
                                     </div>
                                     <textarea class="form-control custom-textarea" rows="2"
                                               id="reply-content-${suggestReply.replyId}"
                                               readonly
-                                              >${suggestReply.content}</textarea>
+                                    >${suggestReply.content}</textarea>
                                     <c:if test="${suggestReply.userId != suggest.userId && not empty USER && suggest.userId == USER.userId}">
-                                        <div style="display: flex; justify-content: flex-end;">
-                                            <input  type="button" value="제안 수락" class="flat-btn" id="accept-suggest-btn" style="padding: 1px 10px; " onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
-                                        </div>
+                                        <c:if test="${suggest.state == 0}">
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <input type="button" value="제안 수락" class="flat-btn"
+                                                       id="accept-suggest-btn" style="padding: 1px 10px; "
+                                                       onclick="acceptSuggest(`${suggestReply.userId}`, `${suggestReply.nickname}`)"/>
+                                            </div>
+                                        </c:if>
                                     </c:if>
                                     <div class="comment-buttons">
                                         <c:if test="${suggestReply.userId == USER.userId}">

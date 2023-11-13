@@ -75,10 +75,21 @@ public class SuggestServiceImpl implements SuggestService{
 
     @Override
     public Integer acceptSuggest(Integer suggestId) {
-        
-        return suggestRepository.acceptSuggest(suggestId);
+
+        Integer state = suggestRepository.findStateById(suggestId);
+
+        if (state.intValue() ==0){
+
+            suggestRepository.acceptSuggest(suggestId);
+            return 0;
+        }
+
+        return 1;
     }
 
+    @Override
+    public int getUserIdBySuggestId(Integer suggestId) {
 
-
+        return suggestRepository.findUserIdBySuggestId(suggestId);
+    }
 }
