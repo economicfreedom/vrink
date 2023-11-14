@@ -8,7 +8,6 @@ import com.green.vrink.message.service.MessageService;
 import com.green.vrink.notice.dto.NoticeDto;
 import com.green.vrink.notice.service.NoticeService;
 import com.green.vrink.user.repository.model.User;
-import com.green.vrink.util.Check;
 import com.green.vrink.util.Criteria;
 import com.green.vrink.util.LoginCheck;
 import com.green.vrink.util.PageDTO;
@@ -39,13 +38,8 @@ public class FreeBoardController {
     private final MessageService messageService;
 
 
-
-
-
-
     @GetMapping("/write-form")
     public String read(Model model) {
-
 
 
         return "board/freeBoardWrite";
@@ -73,22 +67,22 @@ public class FreeBoardController {
         cri.setPageNum(1);
         cri.setCountPerPage(7);
 
-        log.info("FreeBoardDTO {}",dto);
+        log.info("FreeBoardDTO {}", dto);
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         pageDTO.setArticleTotalCount(total);
 
-        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(communityId,cri);
+        List<FreeBoardReplyDTO> freeBoardReplyDTOS = freeBoardReplyService.readList(communityId, cri);
         log.info(pageDTO.toString());
-        log.info("total : {}",total);
+        log.info("total : {}", total);
 
         boolean next = pageDTO.getEndPage() > 1;
 
 
-        model.addAttribute("list",freeBoardReplyDTOS);
+        model.addAttribute("list", freeBoardReplyDTOS);
         model.addAttribute("dto", dto);
-        model.addAttribute("next",next);
-        model.addAttribute("total",total);
+        model.addAttribute("next", next);
+        model.addAttribute("total", total);
 
         return "board/freeBoardReadForm";
     }
@@ -101,11 +95,20 @@ public class FreeBoardController {
             , Model model
             , HttpSession httpSession) {
         FreeBoardDTO dto = freeBoardService.read(communityId);
-        model.addAttribute("dto",dto);
+
+        model.addAttribute("dto", dto);
         User user = (User) httpSession.getAttribute("USER");
         Integer userId = freeBoardService.getUserId(communityId);
 
-        if (user == null || userId != dto.getUserId() ){
+
+        log.info("user : {}",user);
+        log.info("dto : {}",dto);
+
+        if (user == null ) {
+            log.error("유저의 값이 없음");
+            return "redirect:/";
+        } else if (userId.intValue() != dto.getUserId().intValue()) {
+            log.error("userId가 일치 하지 않음");
             return "redirect:/";
         }
 
@@ -113,13 +116,13 @@ public class FreeBoardController {
         return "board/freeBoardUpdateForm";
     }
 
-    @GetMapping("/board-list") 
+    @GetMapping("/board-list")
     public String list(
-            @RequestParam(name = "page-num" ,defaultValue = "1") Integer pageNum
-            ,@RequestParam(name = "keyword",defaultValue = "") String keyword
-            ,@RequestParam(name = "type" ,defaultValue = "") String type
-            ,Model model
-    ){
+            @RequestParam(name = "page-num", defaultValue = "1") Integer pageNum
+            , @RequestParam(name = "keyword", defaultValue = "") String keyword
+            , @RequestParam(name = "type", defaultValue = "") String type
+            , Model model
+    ) {
 
 
         Criteria cri = new Criteria();
@@ -132,19 +135,18 @@ public class FreeBoardController {
         List<FreeBoardDTO> list = freeBoardService.pageList(cri);
 
 
-
-        if (pageNum.intValue()==1){
+        if (pageNum.intValue() == 1) {
             List<NoticeDto> noticeList = noticeService.noticeList("community");
-            model.addAttribute("noticeList",noticeList);
+            model.addAttribute("noticeList", noticeList);
 
         }
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCri(cri);
         pageDTO.setArticleTotalCount(total);
-        model.addAttribute("pageDTO",pageDTO);
-        model.addAttribute("list",list);
-        model.addAttribute("total",total);
+        model.addAttribute("pageDTO", pageDTO);
+        model.addAttribute("list", list);
+        model.addAttribute("total", total);
         return "board/freeBoardList";
     }
 

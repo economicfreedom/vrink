@@ -780,7 +780,9 @@ select * from suggest
 where suggest_id = 1034;
 
 select * from user
-where user_id=0;
+where email = 'vrinkteam@gmail.com';
+SELECT * FROM community
+where user_id = 6967;
 
 SELECT * FROM report;
 
