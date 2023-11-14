@@ -326,9 +326,8 @@
 
 <script>
 
-    function changeApply(applyId, accepted, number, userId) {
+    function changeApply(applyId, accepted, number, userId, accountName) {
         show_spinner();
-
         $.ajax({
             type   : "POST",
             url    : "/admin/change-apply",
@@ -336,7 +335,8 @@
                 "applyId" : applyId,
                 "accepted": accepted,
                 "number"  : number,
-                "userId" : userId
+                "userId" : userId,
+                "name" : accountName
             },
             success: function (data) {
                 if (data === 200) {
@@ -459,7 +459,7 @@
                             if (adminApply.accepted === 0) {
                                 adminApply.accepted = '<text style="color: cadetblue">승인 대기</text>';
                                 acct = 0;
-                                button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ',' + adminApply.userId + ',' + adminApply.accountName + ')">승인</button></td>'
+                                button = '</p> <button class="btn btn-secondary btn-block btn-admin" type="button" onclick="changeApply(' + adminApply.applyId + ',' + acct + ',' + adminApply.number + ',' + adminApply.userId + ',\'' + adminApply.name + '\')">승인</button></td>'
                             } else {
                                 adminApply.accepted = '<text style="color: #173f41">승인됨 <i class="fa-solid fa-circle-check"></i></text>';
                                 acct = 1;

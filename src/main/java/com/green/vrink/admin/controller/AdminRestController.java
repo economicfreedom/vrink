@@ -958,8 +958,8 @@ public class AdminRestController {
     public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId,
                                                @RequestParam("accepted") Integer accepted,
                                                @RequestParam("number") String number,
-                                               @RequestParam("accountName") String accountName,
-                                               @RequestParam("userId") Integer userId) throws IOException {
+                                               @RequestParam("userId") Integer userId,
+                                               @RequestParam("name") String name) throws IOException {
 
         log.info("승인 상태 변경 레스트 컨트롤러 실행");
 
@@ -984,7 +984,7 @@ public class AdminRestController {
             accepted = 1;
             adminService.changeApply(applyId, accepted);
             adminService.changeCheater(applyId, "이력 없음");
-            adminService.updateUserEditorById(userId, number, accountName);
+            adminService.updateUserEditorById(userId, number, name);
             int ce = adminService.countEditorDetailByUserId(userId);
             if (ce == 0) {
                 adminService.insertEditorDetailByUserId(userId);

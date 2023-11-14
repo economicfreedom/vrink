@@ -457,7 +457,7 @@
         SET editor            = 'editor',
             editor_created_at = now(),
             account = #{number},
-            account_name = #{accountName}
+            account_name = #{name}
         WHERE user_id = #{userId}
     </update>
 
