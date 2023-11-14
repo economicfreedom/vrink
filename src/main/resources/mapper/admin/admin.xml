@@ -17,14 +17,14 @@
     <select id="getAllAdminApplyList" resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
-        INNER JOIN user ON apply.user_id = user.user_id
+                 INNER JOIN user ON apply.user_id = user.user_id
     </select>
 
     <select id="getAllAdminApplyListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
-        INNER JOIN user ON apply.user_id = user.user_id
+                 INNER JOIN user ON apply.user_id = user.user_id
         ORDER BY apply.apply_id DESC
             LIMIT #{offset}, #{recordSize}
     </select>
@@ -33,7 +33,7 @@
             resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
-        INNER JOIN user ON apply.user_id = user.user_id
+                 INNER JOIN user ON apply.user_id = user.user_id
         WHERE apply.accepted = #{classification}
         ORDER BY apply.apply_id DESC
             LIMIT #{offset}, #{recordSize}
@@ -43,7 +43,7 @@
             resultType="com.green.vrink.admin.dto.AdminApplyDto">
         SELECT apply.*, user.nickname
         FROM apply
-        INNER JOIN user ON apply.user_id = user.user_id
+                 INNER JOIN user ON apply.user_id = user.user_id
         WHERE apply.accepted = #{classification}
         ORDER BY apply.apply_id DESC
     </select>
@@ -103,7 +103,14 @@
     </select>
 
     <select id="getSuggestById" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id,
+               s.user_id,
+               title,
+               s.content,
+               s.created_at,
+               s.state,
+               nickname,
+               count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
@@ -114,23 +121,41 @@
     </select>
 
     <select id="getAllSuggestList" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id,
+               s.user_id,
+               title,
+               s.content,
+               s.created_at,
+               s.state,
+               nickname,
+               count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
-        WHERE (s.state = #{classification} OR #{classification} NOT IN (0, 1))
+        WHERE (s.state = #{classification}
+           OR #{classification} NOT IN (0
+            , 1))
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
     </select>
 
     <select id="getAllSuggestListByPaging" resultType="com.green.vrink.suggest.dto.AdminSuggestDto">
-        SELECT s.suggest_id, s.user_id, title, s.content, s.created_at, s.state, nickname, count(sr.suggest_id)AS count
+        SELECT s.suggest_id,
+               s.user_id,
+               title,
+               s.content,
+               s.created_at,
+               s.state,
+               nickname,
+               count(sr.suggest_id)AS count
         FROM suggest s
             LEFT JOIN user u
         ON s.user_id = u.user_id
             LEFT JOIN suggest_reply sr ON s.suggest_id = sr.suggest_id
-        WHERE (s.state = #{classification} OR #{classification} NOT IN (0, 1))
+        WHERE (s.state = #{classification}
+           OR #{classification} NOT IN (0
+            , 1))
         GROUP BY s.suggest_id, s.user_id, title, s.content, s.created_at, nickname
         ORDER BY suggest_id DESC
             LIMIT #{offset}, #{recordSize}
@@ -298,14 +323,34 @@
     </select>
 
     <select id="getAllAdList" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT *
+        SELECT ad_id,
+               ad_com_name,
+               IF(main_image = 'null', 'undefined', main_image) AS main_image,
+               IF(hhhh_image = 'null', 'undefined', hhhh_image) AS hhhh_image,
+               IF(vvvv_image = 'null', 'undefined', vvvv_image) AS vvvv_image,
+               price,
+               created_at,
+               ad_period,
+               status,
+               category,
+               is_notice
         FROM ad
         WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
           AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
     </select>
 
     <select id="getAllAdListByType" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT *
+        SELECT ad_id,
+               ad_com_name,
+               IF(main_image = 'null', 'undefined', main_image) AS main_image,
+               IF(hhhh_image = 'null', 'undefined', hhhh_image) AS hhhh_image,
+               IF(vvvv_image = 'null', 'undefined', vvvv_image) AS vvvv_image,
+               price,
+               created_at,
+               ad_period,
+               status,
+               category,
+               is_notice
         FROM ad
         WHERE status = #{classification}
           AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
@@ -314,7 +359,17 @@
     </select>
 
     <select id="getAllAdListByPaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT *
+        SELECT ad_id,
+               ad_com_name,
+               IF(main_image = 'null', 'undefined', main_image) AS main_image,
+               IF(hhhh_image = 'null', 'undefined', hhhh_image) AS hhhh_image,
+               IF(vvvv_image = 'null', 'undefined', vvvv_image) AS vvvv_image,
+               price,
+               created_at,
+               ad_period,
+               status,
+               category,
+               is_notice
         FROM ad
         WHERE (category = #{classification2} OR #{classification2} NOT IN (0, 1))
           AND (is_notice = #{classification3} OR #{classification3} NOT IN (0, 1))
@@ -323,7 +378,17 @@
     </select>
 
     <select id="getAllAdListByTypePaging" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT *
+        SELECT ad_id,
+               ad_com_name,
+               IF(main_image = 'null', 'undefined', main_image) AS main_image,
+               IF(hhhh_image = 'null', 'undefined', hhhh_image) AS hhhh_image,
+               IF(vvvv_image = 'null', 'undefined', vvvv_image) AS vvvv_image,
+               price,
+               created_at,
+               ad_period,
+               status,
+               category,
+               is_notice
         FROM ad
         WHERE status = #{classification}
           AND (category = #{classification2} OR #{classification2} NOT IN (0, 1))
@@ -360,7 +425,17 @@
     </update>
 
     <select id="getAdById" resultType="com.green.vrink.admin.dto.AdminAdDto">
-        SELECT *
+        SELECT ad_id,
+               ad_com_name,
+               IF(main_image = 'null', 'undefined', main_image) AS main_image,
+               IF(hhhh_image = 'null', 'undefined', hhhh_image) AS hhhh_image,
+               IF(vvvv_image = 'null', 'undefined', vvvv_image) AS vvvv_image,
+               price,
+               created_at,
+               ad_period,
+               status,
+               category,
+               is_notice
         from ad
         WHERE ad_id = #{id}
     </select>
@@ -514,90 +589,76 @@
     </insert>
 
     <select id="getAllAdminPaymentList" resultType="com.green.vrink.admin.dto.AdminPaymentDto">
-        SELECT
-            payment.*,
-            customer.nickname AS customerNickname,
-            editor.nickname AS editorNickname,
-            ps.state,
-            ps.payment_state_id
+        SELECT payment.*,
+               customer.nickname AS customerNickname,
+               editor.nickname   AS editorNickname,
+               ps.state,
+               ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
                  LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
-        WHERE
-                (ps.payment_state_id, ps.payment_id) IN (
-                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
-                FROM payment_state
-                GROUP BY payment_id
-            )
+        WHERE (ps.payment_state_id, ps.payment_id) IN (SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                                                       FROM payment_state
+                                                       GROUP BY payment_id)
         ORDER BY ps.payment_state_id DESC
     </select>
 
     <select id="getAllAdminPaymentListByType" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminPaymentDto">
-        SELECT
-            payment.*,
-            customer.nickname AS customerNickname,
-            editor.nickname AS editorNickname,
-            ps.state,
-            ps.payment_state_id
+        SELECT payment.*,
+               customer.nickname AS customerNickname,
+               editor.nickname   AS editorNickname,
+               ps.state,
+               ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
                  LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
-        WHERE
-                (ps.payment_state_id, ps.payment_id) IN (
-                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
-                FROM payment_state
-                GROUP BY payment_id
-            ) AND state = #{classification}
+        WHERE (ps.payment_state_id, ps.payment_id) IN (SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                                                       FROM payment_state
+                                                       GROUP BY payment_id)
+          AND state = #{classification}
         ORDER BY ps.payment_state_id DESC
     </select>
 
     <select id="getAllAdminPaymentListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminPaymentDto">
-        SELECT
-            payment.*,
-            customer.nickname AS customerNickname,
-            editor.nickname AS editorNickname,
-            ps.state,
-            ps.payment_state_id
+        SELECT payment.*,
+               customer.nickname AS customerNickname,
+               editor.nickname   AS editorNickname,
+               ps.state,
+               ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
                  LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
-        WHERE
-                (ps.payment_state_id, ps.payment_id) IN (
-                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
-                FROM payment_state
-                GROUP BY payment_id
-            )
+        WHERE (ps.payment_state_id, ps.payment_id) IN (SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                                                       FROM payment_state
+                                                       GROUP BY payment_id)
         ORDER BY ps.payment_state_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllAdminPaymentListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminPaymentDto">
-        SELECT
-            payment.*,
-            customer.nickname AS customerNickname,
-            editor.nickname AS editorNickname,
-            ps.state,
-            ps.payment_state_id
+        SELECT payment.*,
+               customer.nickname AS customerNickname,
+               editor.nickname   AS editorNickname,
+               ps.state,
+               ps.payment_state_id
         FROM payment
                  LEFT JOIN user AS customer ON payment.user_id = customer.user_id
                  LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
                  LEFT JOIN user AS editor ON e.user_id = editor.user_id
                  LEFT JOIN payment_state AS ps ON payment.payment_id = ps.payment_id
-        WHERE
-                (ps.payment_state_id, ps.payment_id) IN (
-                SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
-                FROM payment_state
-                GROUP BY payment_id
-            ) AND state = #{classification}
+        WHERE (ps.payment_state_id, ps.payment_id) IN (SELECT MAX(payment_state_id) AS max_payment_state_id, payment_id
+                                                       FROM payment_state
+                                                       GROUP BY payment_id)
+          AND state = #{classification}
         ORDER BY ps.payment_state_id DESC
             LIMIT #{offset}, #{recordSize}
     </select>
@@ -610,7 +671,7 @@
     <select id="countAdminPaymentByType" resultType="integer">
         SELECT count(*)
         FROM payment
-        LEFT JOIN payment_state as ps ON payment.payment_id = ps.payment_id
+                 LEFT JOIN payment_state as ps ON payment.payment_id = ps.payment_id
         WHERE state = #{classification}
     </select>
 
@@ -627,33 +688,45 @@
     </select>
 
     <select id="getAdminPaymentDtoById" resultType="com.green.vrink.admin.dto.AdminPaymentDto">
-        SELECT
-            payment.*,
-            customer.nickname AS customerNickname,
-            editor.nickname AS editorNickname
+        SELECT payment.*,
+               customer.nickname AS customerNickname,
+               editor.nickname   AS editorNickname
         FROM payment
-            LEFT JOIN user AS customer ON payment.user_id = customer.user_id
-            LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
-            LEFT JOIN user AS editor ON e.user_id = editor.user_id
+                 LEFT JOIN user AS customer ON payment.user_id = customer.user_id
+                 LEFT JOIN editor AS e ON payment.editor_id = e.editor_id
+                 LEFT JOIN user AS editor ON e.user_id = editor.user_id
         WHERE payment_id = #{id}
     </select>
 
 
-
     <select id="getAllAdminCalculatorList" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        SELECT c.cal_id,
+               c.editor_id,
+               e.nickname                     AS nickname,
+               SUM(c.cal_price)               AS total_price,
+               SUM(c.real_cal_price)          AS total_real_price,
+               FLOOR(SUM(c.cal_price) * 0.05) AS total_charge,
+               c.cal_status,
+               c.created_at,
+               c.complete_date
         FROM calculator AS c
-            LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
-            LEFT JOIN user AS e ON ed.user_id = e.user_id
+                 LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
+                 LEFT JOIN user AS e ON ed.user_id = e.user_id
         GROUP BY c.editor_id, c.cal_status
         ORDER BY c.cal_id DESC
     </select>
 
     <select id="getAllAdminCalculatorListByType" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        SELECT c.cal_id,
+               c.editor_id,
+               e.nickname                     AS nickname,
+               SUM(c.cal_price)               AS total_price,
+               SUM(c.real_cal_price)          AS total_real_price,
+               FLOOR(SUM(c.cal_price) * 0.05) AS total_charge,
+               c.cal_status,
+               c.created_at,
+               c.complete_date
         FROM calculator AS c
                  LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
                  LEFT JOIN user AS e ON ed.user_id = e.user_id
@@ -664,73 +737,107 @@
 
     <select id="getAllAdminCalculatorListByPaging" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        SELECT c.cal_id,
+               c.editor_id,
+               e.nickname                     AS nickname,
+               SUM(c.cal_price)               AS total_price,
+               SUM(c.real_cal_price)          AS total_real_price,
+               FLOOR(SUM(c.cal_price) * 0.05) AS total_charge,
+               c.cal_status,
+               c.created_at,
+               c.complete_date
         FROM calculator AS c
                  LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
                  LEFT JOIN user AS e ON ed.user_id = e.user_id
         GROUP BY c.editor_id, c.cal_status
         ORDER BY c.cal_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="getAllAdminCalculatorListByTypePaging" parameterType="com.green.vrink.admin.dto.PagingDto"
             resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, e.nickname AS nickname, SUM(c.cal_price) AS total_price, SUM(c.real_cal_price) AS total_real_price, FLOOR(SUM(c.cal_price) * 0.05) AS total_charge, c.cal_status, c.created_at, c.complete_date
+        SELECT c.cal_id,
+               c.editor_id,
+               e.nickname                     AS nickname,
+               SUM(c.cal_price)               AS total_price,
+               SUM(c.real_cal_price)          AS total_real_price,
+               FLOOR(SUM(c.cal_price) * 0.05) AS total_charge,
+               c.cal_status,
+               c.created_at,
+               c.complete_date
         FROM calculator AS c
                  LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
                  LEFT JOIN user AS e ON ed.user_id = e.user_id
         WHERE c.cal_status = #{classification}
         GROUP BY c.editor_id, c.cal_status
         ORDER BY c.cal_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <select id="countAllAdminCalculator" resultType="integer">
         SELECT count(*)
-        FROM (
-                 SELECT editor_id, cal_status
-                 FROM calculator
-                 GROUP BY editor_id, cal_status
-             ) SUBQUERY
+        FROM (SELECT editor_id, cal_status
+              FROM calculator
+              GROUP BY editor_id, cal_status) SUBQUERY
     </select>
 
     <select id="countAdminCalculatorByType" resultType="integer">
         SELECT count(*)
-        FROM (
-                 SELECT editor_id, cal_status
-                 FROM calculator
-                 WHERE cal_status = #{classification}
-                 GROUP BY editor_id, cal_status
-             ) SUBQUERY
+        FROM (SELECT editor_id, cal_status
+              FROM calculator
+              WHERE cal_status = #{classification}
+              GROUP BY editor_id, cal_status) SUBQUERY
     </select>
 
     <select id="getAdminCalculatorDetailOkListByEditorId" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, c.cal_price, c.real_cal_price, c.cal_price-c.real_cal_price AS charge,
-            e.nickname AS nickname, c.cal_status, c.created_at, c.complete_date,
-            (SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0) AS total_price,
-            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0)*0.95) AS total_real_price,
-            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0)*0.05) AS total_charge
+        SELECT c.cal_id,
+               c.editor_id,
+               c.cal_price,
+               c.real_cal_price,
+               c.cal_price - c.real_cal_price                                                                   AS charge,
+               e.nickname                                                                                       AS nickname,
+               c.cal_status,
+               c.created_at,
+               c.complete_date,
+               (SELECT SUM(cal_price)
+                FROM calculator
+                WHERE editor_id = #{id}
+                  AND cal_status = 0)                                                                           AS total_price,
+               FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0) *
+                     0.95)                                                                                      AS total_real_price,
+               FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 0) *
+                     0.05)                                                                                      AS total_charge
         FROM calculator AS c
                  LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
                  LEFT JOIN user AS e ON ed.user_id = e.user_id
-        WHERE c.editor_id = #{id} AND c.cal_status = 0
+        WHERE c.editor_id = #{id}
+          AND c.cal_status = 0
         ORDER BY c.cal_id DESC
     </select>
 
     <select id="getAdminCalculatorDetailNoListByEditorId" resultType="com.green.vrink.admin.dto.AdminCalculatorDto">
-        SELECT
-            c.cal_id, c.editor_id, c.cal_price, c.real_cal_price, c.cal_price-c.real_cal_price AS charge,
-            e.nickname AS nickname, c.cal_status, c.created_at, c.complete_date,
-            (SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1) AS total_price,
-            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1)*0.95) AS total_real_price,
-            FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1)*0.05) AS total_charge
+        SELECT c.cal_id,
+               c.editor_id,
+               c.cal_price,
+               c.real_cal_price,
+               c.cal_price - c.real_cal_price                                                                   AS charge,
+               e.nickname                                                                                       AS nickname,
+               c.cal_status,
+               c.created_at,
+               c.complete_date,
+               (SELECT SUM(cal_price)
+                FROM calculator
+                WHERE editor_id = #{id}
+                  AND cal_status = 1)                                                                           AS total_price,
+               FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1) *
+                     0.95)                                                                                      AS total_real_price,
+               FLOOR((SELECT SUM(cal_price) FROM calculator WHERE editor_id = #{id} AND cal_status = 1) *
+                     0.05)                                                                                      AS total_charge
         FROM calculator AS c
                  LEFT JOIN editor AS ed ON c.editor_id = ed.editor_id
                  LEFT JOIN user AS e ON ed.user_id = e.user_id
-        WHERE c.editor_id = #{id} AND c.cal_status = 1
+        WHERE c.editor_id = #{id}
+          AND c.cal_status = 1
         ORDER BY c.cal_id DESC
     </select>
 
@@ -759,11 +866,12 @@
         FROM notice
         WHERE type = COALESCE(#{classification}, type)
         ORDER BY notice_id DESC
-        LIMIT #{offset}, #{recordSize}
+            LIMIT #{offset}, #{recordSize}
     </select>
 
     <delete id="deleteNoticeById">
-        DELETE FROM notice
+        DELETE
+        FROM notice
         WHERE notice_id = #{id}
     </delete>
 
@@ -774,15 +882,17 @@
 
     <update id="updateNotice">
         UPDATE notice
-        SET title = #{title},
+        SET title   = #{title},
             content = #{content},
-            type = #{type}
+            type    = #{type}
         WHERE notice_id = #{noticeId}
     </update>
 
     <update id="updateCalStatusByEditorId">
         UPDATE calculator
-        SET cal_status = 1, complete_date = now(), real_cal_price = cal_price * 0.95
+        SET cal_status     = 1,
+            complete_date  = now(),
+            real_cal_price = cal_price * 0.95
         WHERE editor_id = #{editorId}
     </update>
 
