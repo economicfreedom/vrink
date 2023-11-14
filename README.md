@@ -6,12 +6,12 @@
 <br>
 
 ## 🚀 프로젝트 개요
-- *모든 팀원이 풀스택으로 개발에 참여했으며, 주 포지션은 아래와 같습니다.*
+- *모든 팀원이 능동적으로 개발에 참여했으며, 주 포지션은 아래와 같습니다.*
 <br>
 
 |   Name   | 최규하 | 김태영 | 박성건 | 황정민 
 | :------: | --- | --- | --- | --- |
-| Position | 프로젝트 설계 & 모든 부분 기여 & VRM 기능 & 형태소분석 | 회원기능 & 좋아요 기능 & 의뢰기능 | 작가기능 & 결제기능 & DB설계 | 관리자 전체 페이지 & 정산기능 & 알림기능|
+| Position | 프로젝트 설계 & 모든 부분 기여<br> & VRM 기능 & 형태소분석 | 회원기능 & 좋아요 기능<br> & 의뢰기능 | 작가기능 & 결제기능<br> & DB설계 | 관리자 전체 페이지 & 정산기능<br> & 알림기능|
 
 - 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 15일
 - 시연 영상 (유튜브) : https://youtu.be/우리주소
@@ -19,7 +19,6 @@
 <br> 
 
 ## 🎮 기술 스택
-
 ### ✨ Front-End
 
 * <img src="https://img.shields.io/badge/html5-1572B6?style=flat&logo=html5&logoColor=white"/> : 5.0
@@ -33,7 +32,6 @@
 * <img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : Pixiv vrm module
 * <img src="https://img.shields.io/badge/SlickPic-FF880F?style=flat&logo=SlickPic&logoColor=white"/> : 1.8.0
 * <img src="https://img.shields.io/badge/Tagify-fa8072?style=flat&logo=&logoColor=white"/> : 4.17.9
-
   <br>
 
 ### 💻 Back-End
@@ -51,7 +49,6 @@
 * <img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.15.3
 * <img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.19
 * <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> : 8.3
-
   <br>
 
 ### 🛠 외부 API 및 Collaborative Software
@@ -71,7 +68,6 @@
 * <img src="https://img.shields.io/badge/Talend_Api_Tester-FF6D70?style=flat&logo=Talend&logoColor=white"/> : 25.11.3
 * <img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance
 * <img src="https://img.shields.io/badge/Oracle_Cloud_Instance-F80000?style=flat&logo=Oracle&logoColor=white"/> : instance
-
   <br>
 
 ## ⚙ 의존성
@@ -149,9 +145,14 @@
 
 
 ## 5️⃣ SiteMap
+
 <br>
 
 ![image](https://github.com/economicfreedom/vrink/assets/35636560/18b08086-1471-4f11-9582-585e8b54ee1e)
+
+<br>
+<br>
+
 ![image](https://github.com/economicfreedom/vrink/assets/35636560/5748c13f-c222-4020-99d7-e76b85d9d6df)
 
 
