@@ -37,11 +37,15 @@ public class AdminRestController {
 
     @GetMapping("/apply-accept/classification")
     @ResponseBody
-    public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
-            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+    public ClassificationDto adminApplyClassification(@ModelAttribute("paging") PagingDto paging,
+                                                      @RequestParam(value = "page",
+                                                              required = false, defaultValue = "1") int page,
+                                                      @RequestParam(value = "classification",
+                                                              required = false, defaultValue = "전체") String classification,
+                                                      @RequestParam(value = "searchType",
+                                                              required = false, defaultValue = "전체") String searchType,
+                                                      @RequestParam(value = "keyword",
+                                                              required = false, defaultValue = "") String keyword) {
 
         log.info("판매자 신청 목록 레스트 컨트롤러 실행");
 
@@ -195,10 +199,13 @@ public class AdminRestController {
 
     @GetMapping("/freeboard/classification")
     @ResponseBody
-    public ClassificationDto freeboardClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+    public ClassificationDto freeboardClassification(@ModelAttribute("paging") PagingDto paging,
+                                                     @RequestParam(value = "page",
+                                                             required = false, defaultValue = "1") int page,
+                                                     @RequestParam(value = "searchType",
+                                                             required = false, defaultValue = "전체") String searchType,
+                                                     @RequestParam(value = "keyword",
+                                                             required = false, defaultValue = "") String keyword) {
 
         log.info("자유게시판 관리 목록 레스트 컨트롤러 실행");
 
@@ -304,10 +311,14 @@ public class AdminRestController {
 
     @GetMapping("/suggest/classification")
     @ResponseBody
-    public ClassificationDto suggestClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword, @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
+    public ClassificationDto suggestClassification(@ModelAttribute("paging") PagingDto paging,
+                                                   @RequestParam(value = "page",
+                                                           required = false, defaultValue = "1") int page,
+                                                   @RequestParam(value = "searchType",
+                                                           required = false, defaultValue = "전체") String searchType,
+                                                   @RequestParam(value = "keyword",
+                                                           required = false, defaultValue = "") String keyword,
+                                                   @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
 
         log.info("의뢰게시판 관리 목록 레스트 컨트롤러 실행");
 
@@ -944,7 +955,11 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-apply")
-    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId, @RequestParam("accepted") Integer accepted, @RequestParam("number") String number, @RequestParam("userId") Integer userId) throws IOException {
+    public ResponseEntity<Integer> changeApply(@RequestParam("applyId") Integer applyId,
+                                               @RequestParam("accepted") Integer accepted,
+                                               @RequestParam("number") String number,
+                                               @RequestParam("accountName") String accountName,
+                                               @RequestParam("userId") Integer userId) throws IOException {
 
         log.info("승인 상태 변경 레스트 컨트롤러 실행");
 
@@ -960,36 +975,40 @@ public class AdminRestController {
 //            return ResponseEntity.status(HttpStatus.OK).body(200);
 //        } else {
 
-            //비승인에서 승인으로 바꿀 때
+        //비승인에서 승인으로 바꿀 때
 
-            log.info("비승인 상태이므로 승인 상태로 변경");
+        log.info("비승인 상태이므로 승인 상태로 변경");
 
-            if (!adminService.getCheatCheckList(number)) {
-                log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼 아님");
-                accepted = 1;
-                adminService.changeApply(applyId, accepted);
-                adminService.changeCheater(applyId, "이력 없음");
-                adminService.updateUserEditorById(userId);
-                int ce = adminService.countEditorDetailByUserId(userId);
-                if(ce == 0) {
-                    adminService.insertEditorDetailByUserId(userId);
-                }
-                return ResponseEntity.status(HttpStatus.OK).body(200);
-            } else {
-                log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼임");
-                adminService.changeCheater(applyId, "사기 이력");
-                return ResponseEntity.status(HttpStatus.OK).body(400);
+        if (!adminService.getCheatCheckList(number)) {
+            log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼 아님");
+            accepted = 1;
+            adminService.changeApply(applyId, accepted);
+            adminService.changeCheater(applyId, "이력 없음");
+            adminService.updateUserEditorById(userId, number, accountName);
+            int ce = adminService.countEditorDetailByUserId(userId);
+            if (ce == 0) {
+                adminService.insertEditorDetailByUserId(userId);
             }
+            return ResponseEntity.status(HttpStatus.OK).body(200);
+        } else {
+            log.info("중고나라 사기 조회 크롤링 실행 결과 : 사기꾼임");
+            adminService.changeCheater(applyId, "사기 이력");
+            return ResponseEntity.status(HttpStatus.OK).body(400);
+        }
 //        }
     }
 
     @GetMapping("/payment-admin/classification")
     @ResponseBody
-    public ClassificationDto paymentAdminClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
-            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+    public ClassificationDto paymentAdminClassification(@ModelAttribute("paging") PagingDto paging,
+                                                        @RequestParam(value = "page",
+                                                                required = false, defaultValue = "1") int page,
+                                                        @RequestParam(value = "classification",
+                                                                required = false, defaultValue = "전체") String classification,
+                                                        @RequestParam(value = "searchType",
+                                                                required = false, defaultValue = "전체") String searchType,
+                                                        @RequestParam(value = "keyword",
+                                                                required = false, defaultValue = "") String keyword) {
 
         log.info("결제 목록 레스트 컨트롤러 실행");
 
@@ -1192,11 +1211,15 @@ public class AdminRestController {
 
     @GetMapping("/calculator-admin/classification")
     @ResponseBody
-    public ClassificationDto calculatorAdminClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "classification",
-            required = false, defaultValue = "전체") String classification, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword) {
+    public ClassificationDto calculatorAdminClassification(@ModelAttribute("paging") PagingDto paging,
+                                                           @RequestParam(value = "page",
+                                                                   required = false, defaultValue = "1") int page,
+                                                           @RequestParam(value = "classification",
+                                                                   required = false, defaultValue = "전체") String classification,
+                                                           @RequestParam(value = "searchType",
+                                                                   required = false, defaultValue = "전체") String searchType,
+                                                           @RequestParam(value = "keyword",
+                                                                   required = false, defaultValue = "") String keyword) {
 
         log.info("결제 목록 레스트 컨트롤러 실행");
 
@@ -1351,7 +1374,8 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-ad")
-    public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId, @RequestParam("status") Integer status) {
+    public ResponseEntity<Integer> changeAd(@RequestParam("adId") Integer adId,
+                                            @RequestParam("status") Integer status) {
 
         log.info("배너 게재 상태 변경 레스트 컨트롤러 실행");
 
@@ -1372,7 +1396,8 @@ public class AdminRestController {
 
     @Transactional
     @PostMapping("/change-ad-period")
-    public ResponseEntity<Integer> changeAdPeriod(@RequestParam("adId") Integer adId, @RequestParam("adPeriod") Integer adPeriod) {
+    public ResponseEntity<Integer> changeAdPeriod(@RequestParam("adId") Integer adId,
+                                                  @RequestParam("adPeriod") Integer adPeriod) {
 
         log.info("배너 기간 변경 레스트 컨트롤러 실행");
 
@@ -1396,10 +1421,14 @@ public class AdminRestController {
 
     @GetMapping("/notice/classification")
     @ResponseBody
-    public ClassificationDto noticeClassification(@ModelAttribute("paging") PagingDto paging, @RequestParam(value = "page",
-            required = false, defaultValue = "1") int page, @RequestParam(value = "searchType",
-            required = false, defaultValue = "전체") String searchType, @RequestParam(value = "keyword",
-            required = false, defaultValue = "") String keyword, @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
+    public ClassificationDto noticeClassification(@ModelAttribute("paging") PagingDto paging,
+                                                  @RequestParam(value = "page",
+                                                          required = false, defaultValue = "1") int page,
+                                                  @RequestParam(value = "searchType",
+                                                          required = false, defaultValue = "전체") String searchType,
+                                                  @RequestParam(value = "keyword",
+                                                          required = false, defaultValue = "") String keyword,
+                                                  @RequestParam(value = "classification", required = false, defaultValue = "전체") String classification) {
 
         log.info("관리자 공지사항 목록 레스트 컨트롤러 실행");
 

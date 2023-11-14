@@ -347,6 +347,10 @@
                     Swal.fire({
                         icon: "error",
                         title: "사기 계좌로 조회되었습니다. 승인이 불가합니다.",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/admin/apply-accept";
+                        }
                     });
                 } else {
                     hide_spinner();
