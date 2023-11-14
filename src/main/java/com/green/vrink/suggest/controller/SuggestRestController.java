@@ -134,7 +134,7 @@ public class SuggestRestController {
         }
         int userId = suggestService.getUserIdBySuggestId(suggestId);
 
-        log.info("userId {}",userId);
+        log.info("userId {}", userId);
         User _user = userService.findByUserId(userId);
 
         String phone = _user.getPhone();
@@ -150,7 +150,10 @@ public class SuggestRestController {
         if (suggestState == 1) {
             return ResponseEntity.badRequest().build();
         }
-        messageService.sendMessageAndSaveNowPage(acceptSuggestDto.getReceiverId(), content);
+
+        messageService.sendMessageAndSaveSpecificPage(acceptSuggestDto.getReceiverId()
+                , content
+                , "suggest/get/" + suggestId);
         return ResponseEntity.badRequest().build();
     }
 }
