@@ -54,7 +54,12 @@
 
 ## 1️⃣ 프로젝트 구조
 
-![image](https://github.com/economicfreedom/vrink/assets/35636560/77eb7609-bcc3-45a2-9dfd-24bd535d8310)
+|   Class   | Resources | Webapp |
+| --- | --- | --- |
+| ![image](https://github.com/economicfreedom/vrink/assets/35636560/4a87ea4e-d4a0-422c-b65c-29c427738448) | ![image](https://github.com/economicfreedom/vrink/assets/35636560/947d30de-559e-45d3-bf50-36bedfae358f) | ![image](https://github.com/economicfreedom/vrink/assets/35636560/a1d994ab-8125-4001-85b8-4d6329e77c69) |
+
+
+
   
 <br>
 
