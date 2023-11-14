@@ -65,7 +65,6 @@
             let title = $("#title").val();
 
 
-            alert("동작함")
             fetch('/board/update', {
                 method: 'PUT',
                 headers: {

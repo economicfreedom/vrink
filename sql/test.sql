@@ -784,3 +784,6 @@ where user_id=0;
 
 delete from user
 where email  = 'gyuha454@kakao.com';
+
+select * from user
+where email = 'gyuha454@kakao.com';
