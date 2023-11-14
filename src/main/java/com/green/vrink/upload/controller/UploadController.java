@@ -34,8 +34,9 @@ import java.util.UUID;
 @Slf4j
 public class UploadController {
 
-//    @Value("${org.zerock.upload.path}")
-	private String uploadPath= Paths.get("src", "main", "resources", "static").toString();
+    @Value("${org.zerock.upload.path}")
+	private String uploadPath;
+//    = Paths.get("src", "main", "resources", "static").toString()
 //    private String uploadPath;
 
 
