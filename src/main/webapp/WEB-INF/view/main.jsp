@@ -116,25 +116,23 @@
             <div class="col-sm-10">
                 <div class="banner col-sm-12">
                     <c:forEach items="${adMainList}" var="ad">
-                        <c:if test="${ad.mainImage != null}">
                         <div>
                             <img class="img-responsive" src="${ad.mainImage}" alt="">
                         </div>
-                        </c:if>
                     </c:forEach>
                 </div>
             </div>
             <div class="col-sm-2 advertise">
-                <c:forEach items="${adSideList}" var="ad">
                     <div>
-                        <img class="img-responsive" src="${ad.vvvvImage}" alt="">
+                        <img class="img-responsive" src="${adSide.vvvvImage}" alt="">
                     </div>
-                </c:forEach>
             </div>
             <div class="col-sm-10 mt-5 h-advertise" >
-                <div>
-                    <img class="img-responsive" src="/images/resource/banner/sidebannerlong.webp" alt="">
-                </div>
+                <c:if test="${adSide.hhhhImage ne 'null'}">
+                    <div>
+                        <img class="img-responsive" src="${adSide.hhhhImage}" alt="">
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="row mt-5">
@@ -148,7 +146,7 @@
                         <c:forEach items="${reviewList}" var="review">
                         <div class="col-sm-3">
                             <div class="gallery-box curve">
-                                <img class="w-full" src="${review.thumbnail}" alt="" />
+                                <img class="img-responsive" src="${review.thumbnail}" alt="" />
                                 <div class="gallery-detail">
                                     <a href="/editor/editor-detail/${review.editorId}" title=""><i class="fa fa-search"></i></a>
                                     <h3>${review.nickname}작가</h3>

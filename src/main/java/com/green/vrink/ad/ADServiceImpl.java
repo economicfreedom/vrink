@@ -28,7 +28,7 @@ public class ADServiceImpl implements ADService {
     }
 
     @Override
-    public List<AdminAdDto> getSideAdList() {
+    public AdminAdDto getSideAdList() {
         return adRepository.findRandSideAd();
     }
 }

@@ -70,7 +70,7 @@
                     html += '<li><a title="" href="/editor/editor-detail/' + dto.editorId + '"><img'
 
                     let profileImage = dto.profileImage;
-                    if (dto.profileImage.length <= 0 ){
+                    if (dto.profileImage == null ){
                         profileImage = '/images/resource/no_face.png';
                     }
                     html += ' src="' + profileImage+ '"'
