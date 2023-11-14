@@ -781,3 +781,6 @@ where suggest_id = 1034;
 
 select * from user
 where user_id=0;
+
+delete from user
+where email  = 'gyuha454@kakao.com';
