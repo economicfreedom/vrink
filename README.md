@@ -19,7 +19,7 @@
 
 ## 🎮 기술 스택
 
-|   ### ✨ Front-End   | ### 💻 Back-End | ### 🛠 외부 API 및<br> Collaborative Software
+|   ✨ Front-End   | 💻 Back-End | 🛠 외부 API 및<br> Collaborative Software
 | --- | --- | --- |
 | <img src="https://img.shields.io/badge/html5-1572B6?style=flat&logo=html5&logoColor=white"/> : 5.0<br><img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/> : 3.0<br><img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/> : 1.16.1<br><img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/> : 3.5.1<br><img src="https://img.shields.io/badge/FontAwesome-528DD7?style=flat&logo=Font Awesome&logoColor=white"/> : 6.4.2<br><img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Chart.js&logoColor=white"/> : 4.4.0<br><img src="https://img.shields.io/badge/Summernote-42c0ee?style=flat&logo=&logoColor=white"/> : 0.8.18<br><img src="https://img.shields.io/badge/Sweetalert2-8e64a6?style=flat&logo=&logoColor=white"/> : 2.11<br><img src="https://img.shields.io/badge/Three.js-000000?style=flat&logo=Three.js&logoColor=white"/> : Pixiv vrm module<br><img src="https://img.shields.io/badge/SlickPic-FF880F?style=flat&logo=SlickPic&logoColor=white"/> : 1.8.0<br><img src="https://img.shields.io/badge/Tagify-fa8072?style=flat&logo=&logoColor=white"/> : 4.17.9 | <img src="https://img.shields.io/badge/OpenJDK-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.8 Amazon Correto<br><img src="https://img.shields.io/badge/OpenJDK-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 11.0.21 Amazon Correto<br><img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/> : 2.7.17<br><img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/> : 9.0<br><img src="https://img.shields.io/badge/lombok-d00223?style=flat&logo=&logoColor=black"/> : 1.18.30<br><img src="https://img.shields.io/badge/Mybatis-0a0a0a?style=flat&logo=&logoColor=white"/> : 3.0<br><img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=JSP&logoColor=white"/> : 2.3<br><img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0.21<br><img src="https://img.shields.io/badge/SpringSecurityCrypto-6db33f?style=flat&logo=Spring&logoColor=white"/> : 5.7.1<br><img src="https://img.shields.io/badge/KOMORAN-2980b9?style=flat&logo=&logoColor=white"/> : 3.3.9<br><img src="https://img.shields.io/badge/Jsoup-437291?style=flat&logo=OpenJDK&logoColor=white"/> : 1.15.3<br><img src="https://img.shields.io/badge/Thumbnailator-bbbabb?style=flat&logo=&logoColor=white"/> : 0.4.19<br><img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> : 8.3 | <img src="https://img.shields.io/badge/Kakao-FFCD00?style=flat&logo=kakao&logoColor=white"/> : OAuth 2.0<br><img src="https://img.shields.io/badge/PortOne-f4682c?style=flat&logo=&logoColor=white"/> : 1.0<br><img src="https://img.shields.io/badge/GoogleSMTP-4285F4?style=flat&logo=&logoColor=white"/> : TLS 1.2<br><img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/> : 2.42.1<br><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/> : 3.10.3<br><img src="https://img.shields.io/badge/GitHub_Desktop-802790?style=flat&logo=GitHub&logoColor=white"/> : 3.3.5<br><img src="https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/> : Ultimate 2023.2.4<br><img src="https://img.shields.io/badge/SpringToolSuite4-1b7f38?style=flat&logo=Spring&logoColor=white"/> : 4.20.1<br><img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=Discord&logoColor=white"/> : Stable 245033<br><img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white"/> : 20.04<br><img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat&logo=MySQL&logoColor=white"/> : 8.0 CE<br><img src="https://img.shields.io/badge/Openai-412991?style=flat&logo=Openai&logoColor=white"/> : 3.5 Turbo<br><img src="https://img.shields.io/badge/Talend_Api_Tester-FF6D70?style=flat&logo=Talend&logoColor=white"/> : 25.11.3<br><img src="https://img.shields.io/badge/Amazon_Lightsail-232F3E?style=flat&logo=Amazon AWS&logoColor=white"/> : db & instance<br><img src="https://img.shields.io/badge/Oracle_Cloud_Instance-F80000?style=flat&logo=Oracle&logoColor=white"/> : instance |
 
@@ -52,7 +52,7 @@
 <br>
 <br>
 
-## 1️⃣ 프로젝트 구조
+## 1️⃣ 프로젝트 구조 
 
 |   Class   | Resources | Webapp |
 | --- | --- | --- |
@@ -120,41 +120,47 @@
 
 ## 6️⃣ 주요 기능
 
-#### 항공권 예약 - 스케줄 선택
-- 왕복/편도 선택
-- 출발지/도착지 입력 시 자동 완성 기능 제공
-- 전체 공항 조회
-- 탑승일 선택
-- 탑승 인원 선택 (성인/유아/소아)
-- 좌석 등급 선택
-- 나이 계산기
-- 옵션 선택 후, 스케줄 출력 (잔여 n석, 매진, 미운영)
+#### 메인 페이지 - 배너 및 작가, 게시판 조회 및 크롤링
+- 메인 배너 슬라이드 조회
+- 사이드 배너 조회
+- 인기 작가 조회
+- 공지사항 조회
+- 스케줄러로 버튜버 순위 자동 크롤링 후 db 저장
+- 인기 버튜버 순위 일/주/월별 조회
+- 자유/의뢰 게시판 조회
 
-#### 항공권 예약 - 좌석 선택
-- 선택한 스케줄에 운항하는 항공기의 종류에 따라 좌석 배치가 다르게 나타남
-- 선택한 좌석 등급이 아닌 좌석 선택 불가능
-- 예약되지 않은 좌석만 선택 가능
-- 운항시간, 국내선/국제선, 탑승객 유형, 좌석 등급에 따라 가격 계산
+#### 작가 목록
+- 태그 클릭으로 작가 분류
+- 검색
+- 마우스오버시 리뷰점수, 별점표시
 
-#### 항공권 예약 - 결제
-- 탑승객 정보 입력
-- 카카오페이 또는 마일리지로 결제 가능
-- 결제 완료 시 문자 발송 (CoolSMS API)
-- 회원 등급에 따른 적립 비율로 적립 예정 마일리지 추가
-- 적립된 마일리지는 탑승일 다음 날부터 사용 가능
+#### 작가 소개
+- Three Js 뷰어로 작가 샘플 vrm 모델 미리보기
+- vrm 확대보기
+- 마우스 움직임에 따라 눈 포인팅
+- 태그로 분류
+- 작가 팔로우
+- 작가 신고
+- OpenAi 형태소 분석 기반 댓글 분석 감정
+- 별점 평가
+- 작품별 가격 설정
+- 작가에게 의뢰하기
+- 포트원API(결제)
 
-#### 항공권 환불
-- 탑승일 이전인 경우 환불 신청 가능
-- 환불 수수료 부과 (국제선/국내선, 탑승일까지 며칠 이전인지에 따라 결정됨)
+#### 자유게시판
+- 페이징
+- 검색
+- 댓글
 
-#### 마일리지샵 구매
-- 정렬 기능 (가격 높은 순, 가격 낮은 순)
-- 페이징 처리
-- 검색 기능 (브랜드, 상품명)
-- 상품별 재고량 부여
-- 구매 시 이메일로 기프티콘 이미지 발송
-- 기프티콘 유효기간 1년 부여
-- 마일리지샵 이용 내역 페이지에서 환불 가능
+#### 의뢰게시판
+- 페이징
+- 검색
+- 댓글
+- 제안 수락
+
+#### 공지사항
+- 페이징
+- 검색
 
 <br>
 
@@ -172,6 +178,21 @@
 <br>
 
 ## 7️⃣ 기능 - 회원
+
+작가 개인페이지 의뢰 요청 목록
+- 검색
+- 진행 여부 별 필터
+- 의뢰요청 상세보기
+  
+정산 신청/내역
+- 정산 내역 조회
+- 정산 신청
+- 정산 내역 필터
+
+내 문의
+- 문의 내역 리스트
+- 문의 작성
+
 
 #### 회원가입
 - 아이디 중복 확인
