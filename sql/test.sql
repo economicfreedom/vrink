@@ -780,10 +780,10 @@ select * from suggest
 where suggest_id = 1034;
 
 select * from user
-where user_id=0;
+where email = 'vrinkteam@gmail.com';
+SELECT * FROM community
+where user_id = 6967;
 
-delete from user
-where email  = 'gyuha454@kakao.com';
+SELECT * FROM report;
 
-select * from user
-where email = 'gyuha454@kakao.com';
+DELETE report;

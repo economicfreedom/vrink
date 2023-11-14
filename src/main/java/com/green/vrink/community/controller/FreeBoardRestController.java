@@ -79,7 +79,9 @@ public class FreeBoardRestController {
         Integer commUserId = freeBoardService.getUserId(freeBoardDTO.getCommunityId());
         Integer sessionUserId = user.getUserId();
 
-        if (userId != commUserId || sessionUserId != commUserId) {
+        if (userId.intValue() != commUserId.intValue()
+                || sessionUserId.intValue() != commUserId.intValue()){
+
             return new ResponseEntity<>("접근권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 

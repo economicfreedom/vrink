@@ -218,8 +218,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateUserEditorById(Integer userId) {
-        int result = adminRepository.updateUserEditorById(userId);
+    public void updateUserEditorById(Integer userId, String number, String name) {
+        int result = adminRepository.updateUserEditorById(userId, number, name);
     }
 
     @Transactional

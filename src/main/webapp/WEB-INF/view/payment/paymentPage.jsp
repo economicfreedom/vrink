@@ -30,7 +30,7 @@
 		  }
         IMP.request_pay(
           {
-            pg: "kcp.{TC0ONETIME}",
+            pg: "kcp.{INIpayTest}",
             pay_method: "card",
             merchant_uid: "merchant_"+new Date().getTime(),
             name: options[0] + name,
@@ -178,14 +178,10 @@
 							<li>
 								<div class="cart-thumb">
 									<h3><a class="options" href="#" title="">요청사항</a></h3>
-									<div class="price-cart-item">
-										<span class="price-area">${priceDTO.price}</span>
-									</div>
-									<p></p>
 								</div>
 								<div class="c-input-number cart-request">
 									<i class="fa fa-at"></i>
-									<textarea rows="3"></textarea>
+									<textarea rows="3" spellcheck="false"></textarea>
 								</div>
 								<div class="cart-item-quantity">
 

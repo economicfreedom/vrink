@@ -65,6 +65,7 @@
             let title = $("#title").val();
 
 
+
             fetch('/board/update', {
                 method: 'PUT',
                 headers: {
@@ -84,6 +85,7 @@
                     if (!response.ok) {
                         alert("")
                     } else {
+                        alert("수정되었습니다.")
                         location.href="/board/read/"+${dto.communityId}
                     }
                 })

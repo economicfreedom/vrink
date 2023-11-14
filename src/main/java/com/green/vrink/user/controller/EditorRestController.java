@@ -96,6 +96,7 @@ public class EditorRestController {
         AsyncPageDTO asyncPageDTO = new AsyncPageDTO();
         asyncPageDTO.setPageDTOs(editorDTO);
         asyncPageDTO.setHasNext(1,pageDTO.getEndPage());
+        log.info("둘러보기 리스트 : {} ", editorDTO);
         return ResponseEntity.ok(asyncPageDTO);
     }
 

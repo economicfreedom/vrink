@@ -1,7 +1,6 @@
 package com.green.vrink.upload.controller;
 
 
-import com.green.vrink.upload.dto.UploadRequestDTO;
 import com.green.vrink.upload.dto.UploadResponseDTO;
 import com.green.vrink.upload.dto.UploadResultDTO;
 import com.green.vrink.util.LoginCheck;
@@ -36,7 +35,8 @@ import java.util.UUID;
 public class UploadController {
 
     @Value("${org.zerock.upload.path}")
-	private final static String uploadPath = Paths.get("src", "main", "resources", "static").toString();
+	private String uploadPath;
+//            = Paths.get("src", "main", "resources", "static").toString();
 //    private String uploadPath;
 
 
@@ -125,6 +125,7 @@ public class UploadController {
 
 
         } // end of for
+        log.info("uploadDto : " + uploadResponseDTO);
         return new ResponseEntity<>(uploadResponseDTO, HttpStatus.OK);
     }
 

@@ -58,19 +58,17 @@ public class MainController {
         model.addAttribute("weeklyList",weeklyList);
         model.addAttribute("monthlyList",monthlyList);
 
-        Criteria criteria = new Criteria();
-        criteria.setCountPerPage(5);
-        List<GetSuggestDto> suggestList = suggestService.getSuggestList(criteria);
+        List<GetSuggestDto> suggestList = suggestService.getSuggestList(cri);
         model.addAttribute("suggestList", suggestList);
 
-        List<NoticeDto> noticeList = noticeService.getNoticeList(criteria);
+        List<NoticeDto> noticeList = noticeService.getNoticeList(cri);
         model.addAttribute("noticeList",noticeList);
 
         List<AdminAdDto> adMainList = adService.getMainAdList();
         model.addAttribute("adMainList",adMainList);
 
-        List<AdminAdDto> adSideList = adService.getSideAdList();
-        model.addAttribute("adSideList", adSideList);
+        AdminAdDto adSide = adService.getSideAdList();
+        model.addAttribute("adSide", adSide);
 
         return "main";
     }

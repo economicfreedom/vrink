@@ -52,7 +52,7 @@
                             <i style="">또는</i>
                             <span style="">LOGIN WITH</span>
                             <div class="kakao-login-div">
-                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code">
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=/kakao/sign-in&response_type=code">
                                     <img alt="카카오 로그인" src="/images/kakao_login_medium_wide.png">
                                 </a>
                             </div>
@@ -273,7 +273,7 @@
 
     async function emailCheck(email) {
         try {
-            let result = await fetch("http://localhost/user/check-email/" + email);
+            let result = await fetch("/user/check-email/" + email);
             let todo = await result.json();
 
             if (todo === 0) {
@@ -298,7 +298,7 @@
 
     async function sendEmail(email) {
         try {
-            const response = await fetch('http://localhost/mail/auth', {
+            const response = await fetch('/mail/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -335,7 +335,7 @@
     }
 
     async function nicknameCheck(nickname) {
-        let result = await fetch('http://localhost/user/check-nickname/' + nickname);
+        let result = await fetch('/user/check-nickname/' + nickname);
         let resultCode = await result.json();
         if (resultCode !== 0) {
             alert('이미 사용 중인 닉네임입니다.');
@@ -394,7 +394,7 @@
             return;
         }
 
-        fetch('http://localhost/user/sign-up', {
+        fetch('/user/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -428,7 +428,7 @@
             return;
         }
 
-        fetch('http://localhost/user/sign-in', {
+        fetch('/user/sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -456,7 +456,7 @@
     });
 
     function checkAlarm(messageId, URL) {
-        fetch('http://localhost/message/check-message', {
+        fetch('/message/check-message', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -496,8 +496,8 @@
     async function logout() {
         try {
             alert('로그아웃 되었습니다.');
-            await fetch("http://localhost/user/log-out");
-            location.href = "http://localhost";
+            await fetch("/user/log-out");
+            location.href = "/";
         } catch (error) {
             console.log(error);
         }

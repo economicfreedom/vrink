@@ -12,5 +12,5 @@ public interface ADService {
 
     List<AdminAdDto> getMainAdList();
 
-    List<AdminAdDto> getSideAdList();
+    AdminAdDto getSideAdList();
 }

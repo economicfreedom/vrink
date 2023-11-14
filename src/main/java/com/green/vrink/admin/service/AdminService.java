@@ -81,7 +81,7 @@ public interface AdminService {
 
     void updateUserEnabledCheckById(User user);
 
-    void updateUserEditorById(Integer userId);
+    void updateUserEditorById(Integer userId, String number, String name);
 
     void changeApply(Integer applyId, Integer accepted);
 

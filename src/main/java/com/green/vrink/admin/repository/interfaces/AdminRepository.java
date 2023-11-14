@@ -58,7 +58,7 @@ public interface AdminRepository {
 
     int updateUserLevelById(User user);
     int updateUserEnabledCheckById(User user);
-    int updateUserEditorById(Integer userId);
+    int updateUserEditorById(@Param("userId") Integer userId, @Param("number") String number, @Param("name") String name);
     int changeApply(@Param("applyId") Integer applyId, @Param("accepted") Integer accepted);
     int changeCheater(@Param("applyId") Integer applyId, @Param("content") String content);
     int changeAd(@Param("adId") Integer adId, @Param("status") Integer status);

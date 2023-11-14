@@ -61,7 +61,7 @@
 	});
 
 	async function checkPassword() {
-		let result = await fetch('http://localhost/user/find/password/', {
+		let result = await fetch('/user/find/password/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -81,7 +81,7 @@
 	}
 
 	async function changePassword(userId) {
-		let result = await fetch('http://localhost/user/update/password/' + userId, {
+		let result = await fetch('/user/update/password/' + userId, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'

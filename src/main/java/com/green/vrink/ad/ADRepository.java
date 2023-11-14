@@ -13,5 +13,5 @@ public interface ADRepository {
 
     List<AdminAdDto> findRandMainAd();
 
-    List<AdminAdDto> findRandSideAd();
+    AdminAdDto findRandSideAd();
 }

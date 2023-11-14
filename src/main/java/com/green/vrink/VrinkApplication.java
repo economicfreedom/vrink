@@ -2,9 +2,16 @@ package com.green.vrink;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class VrinkApplication {
+public class VrinkApplication extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(VrinkApplication.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(VrinkApplication.class, args);

@@ -519,10 +519,10 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    reportUserId: `${editorDetail.userId}`,
-                    userId: 1,
+                    reportUserId: ${editorDetail.userId},
+                    userId: ${USER.userId},
                     boardId: null,
-                    editorId: `${editorDetail.editorId}`
+                    editorId: ${editorDetail.editorId}
                 })
             })
                 .then(response => response.json())

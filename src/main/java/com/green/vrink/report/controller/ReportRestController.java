@@ -68,13 +68,16 @@ public class ReportRestController {
 
         Integer res = reportService.saveReportBoard(reportDTO);
         if (res == 1) {
-            return ResponseEntity.ok().build();
+            customMessage = new CustomMessage(
+                    "정상적으로 신고 되었습니다."
+                    , (short) 200);
+
+            return ResponseEntity.ok(customMessage);
         } else {
 
             customMessage = new CustomMessage(
                     "신고에 실패하였습니다. 문의 게시판을 이용해주세요"
                     , (short) 400);
-
             return ResponseEntity.badRequest().body(customMessage);
         }
 
