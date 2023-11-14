@@ -1,6 +1,8 @@
 
 ![KakaoTalk_20231113_180338020](https://github.com/economicfreedom/vrink/assets/35636560/0f2ec704-b830-40ae-b739-5d0cbb84fe4a)
 
+## Virtual Link to Beyond Reality, VRINK
+
 <br>
 
 ## 🚀 프로젝트 개요
