@@ -14,17 +14,16 @@ import java.util.List;
 @Service
 public class UploadServiceImpl implements UploadService {
 //    @Value("${org.zerock.upload.path}")
-//    @Value("${org.zerock.upload.path}")
-
-    private final static String path = Paths.get("src", "main", "resources", "static").toString();
+    @Value("${org.zerock.upload.path}")
+    private  String path ;
     ;
-    private static final String USER_DIR = System.getProperty("user.dir");
+//    private static final String USER_DIR = System.getProperty("user.dir");
 
     @Override
     public void imgRemove(List<String> images) {
         for (int i = 0; i < images.size(); i++) {
 
-            String path = USER_DIR+"\\" + this.path + images.get(i);
+            String path = this.path + images.get(i);
             log.info("삭제 파일 경로 : {}", path);
             File file = new File(path);
             if (file.exists()) {
