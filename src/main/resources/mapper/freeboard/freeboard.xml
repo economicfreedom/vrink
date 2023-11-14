@@ -49,13 +49,13 @@
 
         </if>
         <if test="type == 'content'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%')
+            WHERE c.content LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'nickname'">
             WHERE nickname LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'tc'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            WHERE c.content LIKE CONCAT('%',#{keyword},'%') AND
             title LIKE CONCAT('%',#{keyword},'%')
         </if>
         GROUP BY c.community_id, c.user_id, title, c.content, c.created_at, nickname
@@ -72,13 +72,13 @@
 
         </if>
         <if test="type == 'content'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%')
+            WHERE c.content LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'nickname'">
             WHERE nickname LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'tc'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            WHERE c.content LIKE CONCAT('%',#{keyword},'%') AND
             title LIKE CONCAT('%',#{keyword},'%')
         </if>
     </select>
