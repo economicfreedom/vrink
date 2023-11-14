@@ -69,13 +69,16 @@
                 alert("내용을 입력해주세요.")
                 return ;
             }
-            ;
+
 
             if (title.length <= 0|| title.trim()===""){
                 alert("제목을 입력해주세요.")
                 return;
             }
-
+            if (title.length > 30){
+                alert("제목은 30글자 까지만 입력 가능합니다.")
+                return;
+            }
 
 
             fetch('/board/write', {

@@ -781,3 +781,7 @@ where suggest_id = 1034;
 
 select * from user
 where user_id=0;
+
+SELECT * FROM report;
+
+DELETE report;

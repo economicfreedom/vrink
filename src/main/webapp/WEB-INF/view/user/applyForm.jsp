@@ -20,7 +20,7 @@
             let $this = $(this);
             let scrollPosition = $this.scrollTop() + $this.innerHeight();
             let nearBottom = $this[0].scrollHeight - scrollPosition;
-            let offset = 10; // 1px의 오차를 허용합니다.
+            let offset = 10;
 
             if (nearBottom < offset) {
                 $("#apply").prop("disabled", false);
@@ -53,10 +53,7 @@
                 alert('한글만 입력입력해주세요.')
                 return;
             }
-            // if (!numberReg.test(accountNumber)) {
-            //     alert('숫자만 입력해주세요')
-            //     return;
-            // }
+
 
 
             $.ajax({

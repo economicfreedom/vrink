@@ -38,7 +38,6 @@ public class FreeBoardController {
     private final HttpSession httpSession;
     private final MessageService messageService;
 
-//    private final Check check;
 
 
 

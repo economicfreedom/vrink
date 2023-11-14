@@ -139,8 +139,7 @@
 
         GROUP BY s.suggest_id, s.user_id, s.title, s.content, s.created_at, u.nickname, s.state
 
-        ORDER BY created_at DESC
-
+        ORDER BY s.suggest_id DESC
         LIMIT #{offset},#{countPerPage}
     </select>
     <select id="findStateById" resultType="java.lang.Integer">

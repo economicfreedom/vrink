@@ -125,7 +125,7 @@ public class KakaoController {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	    return "main";
+	    return "redirect:/";
 	    //////////////////////Token 정보 요청 끝//////////////////////
 	}
 }
