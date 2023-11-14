@@ -78,7 +78,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Main Page</div>
-                    <a class="nav-link" href="http://localhost">
+                    <a class="nav-link" href="/">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-chevron-down"></i></div>
                         VRINK
                     </a>
@@ -162,8 +162,8 @@
 
         async function logout() {
             try {
-                await fetch("http://localhost/user/log-out");
-                location.href = "http://localhost";
+                await fetch("/user/log-out");
+                location.href = "/";
             } catch (error) {
                 console.log(error);
             }

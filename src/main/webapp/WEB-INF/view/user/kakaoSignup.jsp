@@ -66,7 +66,7 @@
 	});
 
 	async function nicknameCheck(nickname) {
-		let result = await fetch('http://localhost/user/check-nickname/' + nickname);
+		let result = await fetch('/user/check-nickname/' + nickname);
 		let resultCode = await result.json();
 		if (resultCode !== 0) {
 			alert('이미 사용 중인 닉네임입니다.');
@@ -89,7 +89,7 @@
             return;
         }
 
-        fetch('http://localhost/user/sign-up', {
+        fetch('/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -105,7 +105,7 @@
             .then(response => {
                 if (response.ok) {
                     alert("회원가입이 완료되었습니다.");
-                    location.href="http://localhost/user/sign-in";
+                    location.href="/user/sign-in";
                 } else {
                     alert("회원가입 실패");
                     location.reload();

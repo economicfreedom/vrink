@@ -98,7 +98,7 @@
                 alert('잠시 후 시도해주십시오.');
             } else {
                 alert('게시물 작성이 완료되었습니다.');
-                location.href = "http://localhost/suggest/list";
+                location.href = "/suggest/list";
             }
         }
 

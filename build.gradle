@@ -7,6 +7,8 @@ plugins {
 
 group = 'com.green'
 version = '0.0.1-SNAPSHOT'
+bootWar.enabled = false
+war.enabled= true
 
 java {
     sourceCompatibility = '11'

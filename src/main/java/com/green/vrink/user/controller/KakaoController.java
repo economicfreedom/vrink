@@ -31,7 +31,7 @@ import com.green.vrink.util.Define;
 @RequestMapping("/kakao")
 @RequiredArgsConstructor
 public class KakaoController {
-	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://localhost/kakao/sign-in&response_type=code
+	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=/kakao/sign-in&response_type=code
 	// https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827
 	
 	private final UserRepository userRepository;
