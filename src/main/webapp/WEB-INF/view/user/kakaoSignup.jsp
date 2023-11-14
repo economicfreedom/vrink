@@ -24,7 +24,7 @@
 	                <div class="field">
 						<div class="check-div">
 							<input type="text" placeholder="닉네임" class="kakao-nickname-input"/>
-							<input type="button" value="중복확인" class="check-btn" id="nickname-check-btn"/>
+							<input type="button" value="중복확인" id="nickname-check-btn" class="check-btn" />
 							<input type="hidden" class="kakao-nickname-check-flag" value="1"/>
 						</div>
 	                </div>
@@ -44,78 +44,94 @@
 </div>
 <script type="text/javascript">
 	
+	$(document).ready(function() {
+		$('.kakao-password-input').change(function () {
+			let password = $('.kakao-password-input').val().trim();
+			console.log(password);
+			$('.kakao-password-check-flag').val('1');
+			if (passwordValidation(password)) {
+				$('.kakao-password-check-flag').val('0');
+			}
+		});
 
-	$('.kakao-password-input').change(function () {
-	    console.log($('.kakao-password-input').val());
-	    $('.kakao-password-check-flag').val('1');
-	});
-	
-	$('.kakao-password-check-input').change(function () {
-	    console.log($('.kakao-password-check-input').val());
-	    if ($('.kakao-password-input').val() != $('.kakao-password-check-input').val()) {
-	        alert('비밀번호가 서로 다릅니다.');
-	        $('.kakao-password-check-flag').val('1');
-	        return;
-	    }
-	    $('.kakao-password-check-flag').val('0');
-	});
+		$('.kakao-password-check-input').change(function () {
+			if ($('.kakao-password-input').val() != $('.kakao-password-check-input').val()) {
+				alert('비밀번호가 서로 다릅니다.');
+				$('.kakao-password-check-flag').val('1');
+				return;
+			}
+			$('.kakao-password-check-flag').val('0');
+		});
 
-	$('#nickname-check-btn').on('click', function () {
-		let nickname = $('.nickname-input').val().trim();
-		nicknameCheck(nickname);
-	});
+		$('#nickname-check-btn').on('click', function () {
+			alert('hi');
+			let nickname = $('.kakao-nickname-input').val().trim();
+			console.log(nickname);
+			nicknameCheck(nickname);
+		});
 
-	async function nicknameCheck(nickname) {
-		let result = await fetch('http://localhost/user/check-nickname/' + nickname);
-		let resultCode = await result.json();
-		if (resultCode !== 0) {
-			alert('이미 사용 중인 닉네임입니다.');
-			$('.nickname-input').val('');
-			$('.nickname-check-flag').val('1');
-			return;
+		$('.kakao-phone-input').change(function () {
+			let phone = $('.kakao-phone-input').val().trim();
+			$('.kakao-phone-check-flag').val('0');
+
+			if (phoneValidation(phone)) {
+				$('.kakao-phone-check-flag').val('1');
+			}
+		});
+
+		async function nicknameCheck(nickname) {
+			let result = await fetch('http://localhost/user/check-nickname/' + nickname);
+			let resultCode = await result.json();
+			if (resultCode !== 0) {
+				alert('이미 사용 중인 닉네임입니다.');
+				$('.nickname-input').val('');
+				$('.nickname-check-flag').val('1');
+				return;
+			}
+			alert('사용 가능한 닉네임입니다.');
+			$('.nickname-check-flag').val('0');
 		}
-		alert('사용 가능한 닉네임입니다.');
-		$('.nickname-check-flag').val('0');
-	}
-	
-	$('#kakao-sign-up-btn').on('click', function () {
-        if ($('.kakao-email-input').val().trim() == '' || $('.kakao-password-input').val().trim() == '' || $('.kakao-name-input').val().trim() == ''
-            || $('.kakao-nickname-input').val().trim() == '' || $('.kakao-phone-input').val().trim() == '') {
-            alert('모든 값을 입력해주세요.');
-            return;
-        }
-        if ($('.kakao-password-check-flag').val() != '0') {
-            alert('비밀번호가 서로 다릅니다.');
-            return;
-        }
 
-        fetch('http://localhost/user/sign-up', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: `${email}`,
-                password: $('.kakao-password-input').val().trim(),
-                name: $('.kakao-name-input').val().trim(),
-                nickname: `${nickname}`,
-                phone: $('.kakao-phone-input').val().trim()
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    alert("회원가입이 완료되었습니다.");
-                    location.href="http://localhost/user/sign-in";
-                } else {
-                    alert("회원가입 실패");
-                    location.reload();
-                }
-            })
-            .then(data =>
-                console.log(data)
-            )
-            .catch(error => console.error('Error:', error));
-    });
+		$('#kakao-sign-up-btn').on('click', function () {
+			if ($('.kakao-email-input').val().trim() == '' || $('.kakao-password-input').val().trim() == '' || $('.kakao-name-input').val().trim() == ''
+					|| $('.kakao-nickname-input').val().trim() == '' || $('.kakao-phone-input').val().trim() == '') {
+				alert('모든 값을 입력해주세요.');
+				return;
+			}
+			if ($('.kakao-password-check-flag').val() != '0') {
+				alert('비밀번호가 서로 다릅니다.');
+				return;
+			}
+
+			fetch('http://localhost/user/sign-up', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: `${email}`,
+					password: $('.kakao-password-input').val().trim(),
+					name: $('.kakao-name-input').val().trim(),
+					nickname: $('.kakao-nickname-input').val().trim(),
+					phone: $('.kakao-phone-input').val().trim()
+				})
+			})
+					.then(response => {
+						if (response.ok) {
+							alert("회원가입이 완료되었습니다.");
+							location.href="http://localhost/";
+						} else {
+							alert("회원가입 실패");
+							location.reload();
+						}
+					})
+					.then(data =>
+							console.log(data)
+					)
+					.catch(error => console.error('Error:', error));
+		});
+	});
+
 
 </script>
 
