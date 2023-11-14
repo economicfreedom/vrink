@@ -1,8 +1,11 @@
 package com.green.vrink.ad;
 
+import com.green.vrink.admin.dto.AdminAdDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +20,15 @@ public class ADServiceImpl implements ADService {
     @Override
     public String getAdImg() {
         return adRepository.findAdImg();
+    }
+
+    @Override
+    public List<AdminAdDto> getMainAdList() {
+        return adRepository.findRandMainAd();
+    }
+
+    @Override
+    public AdminAdDto getSideAdList() {
+        return adRepository.findRandSideAd();
     }
 }

@@ -9,4 +9,20 @@
         SELECT main_image FROM ad
         WHERE ad_id = (SELECT MAX(ad_id) FROM ad)
     </select>
+
+    <select id="findRandMainAd" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT main_image FROM ad
+        WHERE status = 1 and (main_image != 'undefined' and main_image != 'null')
+        ORDER BY RAND()
+        LIMIT 0,5;
+    </select>
+
+    <select id="findRandSideAd" resultType="com.green.vrink.admin.dto.AdminAdDto">
+        SELECT hhhh_image, vvvv_image FROM ad
+        WHERE status = 1
+        AND (hhhh_image IS NOT NULL OR vvvv_image IS NOT NULL)
+        AND (hhhh_image != 'undefined' OR vvvv_image != 'undefined')
+        ORDER BY RAND()
+        LIMIT 0,1
+    </select>
 </mapper>

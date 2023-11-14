@@ -432,8 +432,6 @@
                     for (var i = 0; i < adminCalculatorList.length; i++) {
                         var adminCalculator = adminCalculatorList[i];
 
-                        console.log(adminCalculator);
-
                         if (adminCalculator.calStatus === 0) {
                             adminCalculator.calStatus = '<text style="color: green">정산 신청중 <i class="fa-solid fa-hand-holding-dollar"></i></text>';
                         } else {
@@ -454,6 +452,9 @@
 
                         adminCalculator.totalPrice = (adminCalculator.totalPrice).toLocaleString('ko-KR') + "원";
                         adminCalculator.totalCharge = (adminCalculator.totalCharge).toLocaleString('ko-KR') + "원";
+
+                        if (adminCalculator.completeDate !== null) adminCalculator.totalRealPrice = '<text style="color: grey">' + adminCalculator.totalRealPrice + ' <i class="fa-solid fa-circle-check"></i></text>'
+                        else adminCalculator.totalRealPrice = '<text style="color: green">' + adminCalculator.totalRealPrice + ' <i class="fa-solid fa-hand-holding-dollar"></i></text>'
 
                         adminCalculatorListHTML += '<tr>'
                             + '<td style="width: 145px;"><p class="classification" style="min-width: 70px;">'

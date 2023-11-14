@@ -2,6 +2,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 
@@ -95,6 +97,13 @@
     .tagify__input {
         display: none;
     }
+
+    .intro-area {
+        border: 0;
+        width: 100%;
+        resize: none;
+        outline: none;
+    }
 </style>
 <section class="block">
     <div class="container">
@@ -146,7 +155,7 @@
                              src="${editorDetail.profileImage}">
                     </div>
                     <h4>${editorDetail.nickname}</h4>
-                    <h5>${editorDetail.introduce}</h5>
+                    <textarea class="t-center intro-area" spellcheck="false">${editorDetail.introduce}</textarea>
                     <input type="text" name="basic" class="customLook-detail" value="${tag}">
                     <div>
                         <c:if test="${not empty EDITOR_ID && EDITOR_ID eq editorDetail.editorId}">
@@ -167,7 +176,8 @@
                             <c:forEach items="${editorPrice}" var="editorPrice">
                                 <div class="d-flex j-around">
                                     <div><h5>${editorPrice.options}</h5></div>
-                                    <div><h5>${editorPrice.price}</h5></div>
+                                    <div><h5><fmt:formatNumber value="${editorPrice.price}" pattern="#,###" />
+                                    원</h5></div>
                                 </div>
                             </c:forEach>
                             <c:if test="${editorDetail.editorId != EDITOR_ID}">
@@ -494,7 +504,7 @@
             }
         });
 
-        $('.tagify__tag-text').parent().on('click',function(){
+        $('.tagify__tag-text').parent().on('click', function () {
             let keyword = $(this).text();
             let type = 'tag'
             location.href = "/editor/list?keyword=" + keyword + "&type=" + type;
@@ -517,9 +527,9 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data){
+                    if (data) {
                         alert(data.message)
-                    }else {
+                    } else {
                         alert("신고 되었습니다.")
                     }
                 })

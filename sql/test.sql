@@ -760,14 +760,14 @@ select * from review_count;
                u.email,
                u.phone
         FROM payment p
-        LEFT JOIN editor_detail ed ON ed.editor_id = p.editor_id
+        LEFT JOIN editor ed ON ed.editor_id = p.editor_id
         LEFT JOIN user u ON ed.user_id = u.user_id
         WHERE payment_id = 99
 
 SELECT * FROM payment
 WHERE payment_id= 99;
 
-SELECT * FROM editor_detail
+SELECT * FROM editor
 WHERE editor_id = 7;
 
 SELECT * FROM user

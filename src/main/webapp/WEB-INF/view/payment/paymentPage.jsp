@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
       var IMP = window.IMP;
@@ -20,7 +21,7 @@
 			  if (parseInt(manualAdjustInput.val()) >= 1) {
 				  // "options"와 "price" 요소를 선택하고 해당 텍스트를 가져옵니다.
 				  options.push($(this).find('.options').text())
-				  prices.push($(this).find('.mul-price').text());
+				  prices.push($(this).find('.mul-price').text().replace(',',''));
 				  quantities.push($(this).find('.manual-adjust').val());
 			  }
 		  });
@@ -29,7 +30,7 @@
 		  }
         IMP.request_pay(
           {
-            pg: "kcp.{TC0ONETIME}",
+            pg: "kcp.{INIpayTest}",
             pay_method: "card",
             merchant_uid: "merchant_"+new Date().getTime(),
             name: options[0] + name,
@@ -160,9 +161,9 @@
 									<div class="cart-thumb">
 										<h3><a class="options" href="#" title="">${priceDTO.options}</a></h3>
 										<div class="price-cart-item">
-											<span class="price-area">${priceDTO.price}</span>
+											<span class="price-area"><fmt:formatNumber type="number" maxFractionDigits="3" value="${priceDTO.price}"/></span>
 										</div>
-										<p>The best item that you can get</p>
+										<p></p>
 									</div>
 									<div class="c-input-number">
 										<span><input type="number" class="manual-adjust" min="0" value="0" title="Enter &quot;+x&quot; or &quot;+x%&quot; or &quot;*x&quot;
@@ -177,14 +178,10 @@
 							<li>
 								<div class="cart-thumb">
 									<h3><a class="options" href="#" title="">요청사항</a></h3>
-									<div class="price-cart-item">
-										<span class="price-area">${priceDTO.price}</span>
-									</div>
-									<p>The best item that you can get</p>
 								</div>
 								<div class="c-input-number cart-request">
 									<i class="fa fa-at"></i>
-									<textarea rows="3"></textarea>
+									<textarea rows="3" spellcheck="false"></textarea>
 								</div>
 								<div class="cart-item-quantity">
 
@@ -219,21 +216,21 @@
 
 	document.querySelectorAll('.manual-adjust').forEach(function (element) {
 		element.addEventListener('change', function (e) {
-			let price = this.closest('li').querySelector('.price-area').textContent;
+			let price = this.closest('li').querySelector('.price-area').textContent.replace(',','');
 			let money = this.closest('li').querySelector('.mul-price');
 			let quantity = this.value;
-			money.textContent = price * quantity;
+			money.textContent = (price * quantity).toLocaleString("ko-KR");
 
 			let mulPrice = document.querySelectorAll('.mul-price');
 			let totalPrice = document.getElementById('total-price');
 			let sum = 0;
 
 			for (let i = 0; i < mulPrice.length; i++) {
-				sum += parseFloat(mulPrice[i].textContent);
+				sum += parseFloat(mulPrice[i].textContent.replace(',',''));
 			}
 
-			totalPrice.textContent = sum;
-			paymentPrice = parseFloat(totalPrice.textContent);
+			totalPrice.textContent = sum.toLocaleString("ko-KR");
+			paymentPrice = parseFloat(totalPrice.textContent.replace(',',''));
 		});
 	});
 

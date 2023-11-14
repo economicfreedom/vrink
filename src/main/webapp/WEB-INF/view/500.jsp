@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 column">
-                            <img src="http://placehold.it/570x542" alt=""/>
+                            <img src="/image/erro.jpg" alt="서버 에러 이미지"/>
                         </div>
                     </div>
                 </div>

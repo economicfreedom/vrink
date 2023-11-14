@@ -115,16 +115,16 @@
 
 
         <if test="type == 'title'">
-            WHERE title LIKE CONCAT('%',#{keyword},'%')
+            WHERE s.title LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'content'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%')
+            WHERE s.content LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'nickname'">
-            WHERE nickname LIKE CONCAT('%',#{keyword},'%')
+            WHERE s.nickname LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'tc'">
-            WHERE content LIKE CONCAT('%',#{keyword},'%') AND
+            WHERE s.content LIKE CONCAT('%',#{keyword},'%') AND
             title LIKE CONCAT('%',#{keyword},'%')
         </if>
         <if test="type == 'all'">
