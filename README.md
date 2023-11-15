@@ -5,28 +5,6 @@
 
 <br>
 
-<table>
-<tr>
-  <td>항공권 예약/환불 (카카오페이)</td>
-  <td>마일리지샵 구매 (이메일 SMTP)</td>
-</tr>
-<tr>
-  <td>
-      
-![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/41e200d4-7115-4619-9869-3d1f8727014d)
-
-      
-  </td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/8021f046-485e-486f-9862-15098df8aa41/img.gif"></td>
-</tr>
-</table>
-
-![리뷰1](https://github.com/economicfreedom/vrink/assets/35636560/aa8e8c31-751b-4fa8-9995-de4ad0730a51)
-
-
-
-
-
 ## 🚀 프로젝트 개요
 - *모든 팀원이 능동적으로 개발에 참여했으며, 주 포지션은 아래와 같습니다.*
 
@@ -197,10 +175,20 @@
   <td>마일리지샵 구매 (이메일 SMTP)</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/1cd653da-4adf-4cd9-a653-24aed68336c2/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/8021f046-485e-486f-9862-15098df8aa41/img.gif"></td>
+  <td>
+    
+![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/41e200d4-7115-4619-9869-3d1f8727014d)
+      
+  </td>
+  <td>
+    
+![리뷰1](https://github.com/economicfreedom/vrink/assets/35636560/aa8e8c31-751b-4fa8-9995-de4ad0730a51)
+
+    
+  </td>
 </tr>
 </table>
+
 
 <br>
 
