@@ -51,7 +51,7 @@
                             <i style="">또는</i>
                             <span style="">LOGIN WITH</span>
                             <div class="kakao-login-div">
-                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://3.34.192.46/kakao/sign-in&response_type=code">
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3054fe89635c5de07719fe9908728827&redirect_uri=http://vrink.shop/kakao/sign-in&response_type=code">
                                     <img alt="카카오 로그인" src="/images/kakao_login_medium_wide.png">
                                 </a>
                             </div>

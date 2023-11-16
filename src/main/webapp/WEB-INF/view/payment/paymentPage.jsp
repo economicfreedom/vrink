@@ -21,7 +21,7 @@
 			  if (parseInt(manualAdjustInput.val()) >= 1) {
 				  // "options"와 "price" 요소를 선택하고 해당 텍스트를 가져옵니다.
 				  options.push($(this).find('.options').text())
-				  prices.push($(this).find('.mul-price').text().replace(',',''));
+				  prices.push($(this).find('.mul-price').text().replaceAll(',',''));
 				  quantities.push($(this).find('.manual-adjust').val());
 			  }
 		  });
@@ -216,7 +216,7 @@
 
 	document.querySelectorAll('.manual-adjust').forEach(function (element) {
 		element.addEventListener('change', function (e) {
-			let price = this.closest('li').querySelector('.price-area').textContent.replace(',','');
+			let price = this.closest('li').querySelector('.price-area').textContent.replaceAll(',','');
 			let money = this.closest('li').querySelector('.mul-price');
 			let quantity = this.value;
 			money.textContent = (price * quantity).toLocaleString("ko-KR");
@@ -226,11 +226,11 @@
 			let sum = 0;
 
 			for (let i = 0; i < mulPrice.length; i++) {
-				sum += parseFloat(mulPrice[i].textContent.replace(',',''));
+				sum += parseFloat(mulPrice[i].textContent.replaceAll(',',''));
 			}
 
 			totalPrice.textContent = sum.toLocaleString("ko-KR");
-			paymentPrice = parseFloat(totalPrice.textContent.replace(',',''));
+			paymentPrice = parseFloat(totalPrice.textContent.replaceAll(',',''));
 		});
 	});
 

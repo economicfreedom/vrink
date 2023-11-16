@@ -198,15 +198,15 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
+                <div class="col-sm-1">
+                    <img width="100" height="100" src="/image/bot.png"
+                         style="margin-left: -20px; margin-top: -35px;">
+                </div>
                 <c:choose>
                     <c:when test="${morph != null}">
-                        <div style="border: 1px solid black"><h5>${morph}</h5></div>
+                        <div class="col-sm-11" style="border: 1px solid black"><h5>${morph}</h5></div>
                     </c:when>
                     <c:otherwise>
-                        <div class="col-sm-1">
-                            <img width="100" height="100" src="/image/bot.png"
-                                 style="margin-left: -20px; margin-top: -35px;">
-                        </div>
                         <div class="col-sm-11" style="border: 1px solid black"><h5>아직 리뷰가 없어요..</h5></div>
                     </c:otherwise>
                 </c:choose>
