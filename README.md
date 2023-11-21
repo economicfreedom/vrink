@@ -13,7 +13,7 @@
 | Position | 프로젝트 설계 & VRM 기능 & 형태소분석 | 회원기능 & 좋아요 기능 & 의뢰기능 | 작가기능 & 결제기능 & DB설계 | 관리자 전체 페이지 & 정산기능 & 알림기능|
 
 - 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 15일
-- 시연 영상 (유튜브) : [(https://www.youtube.com/watch?v=CxigoHbVAAU)](https://www.youtube.com/watch?v=CxigoHbVAAU)
+- 시연 영상 (유튜브) : [https://www.youtube.com/watch?v=CxigoHbVAAU](https://www.youtube.com/watch?v=CxigoHbVAAU)
 
 <br> 
 
