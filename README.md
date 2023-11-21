@@ -171,37 +171,195 @@
 
 <table>
 <tr>
-  <td>항공권 예약/환불 (카카오페이)</td>
-  <td>마일리지샵 구매 (이메일 SMTP)</td>
+  <td>메인 페이지</td>
+  <td>작가 리스트</td>
 </tr>
 <tr>
   <td>
     
-![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/41e200d4-7115-4619-9869-3d1f8727014d)
+![메인사이즈조절](https://github.com/economicfreedom/vrink/assets/35636560/66050b1b-346d-4fdd-a56d-c031e53f3aa5)
+
+  </td>
+  <td>
+
+![작가리스트사이즈조절](https://github.com/economicfreedom/vrink/assets/35636560/6820843f-5b6f-478f-afa3-dcbf0fb959ad)
+    
+  </td>
+</tr>
+<tr>
+  <td>작가 상세보기</td>
+  <td>작가 vrm보기</td>
+</tr>
+<tr>
+  <td>
+    
+![작가디테일](https://github.com/economicfreedom/vrink/assets/35636560/e46312e2-5a26-471d-83f1-8631b733e73b)
       
   </td>
   <td>
-    
-![리뷰1](https://github.com/economicfreedom/vrink/assets/35636560/aa8e8c31-751b-4fa8-9995-de4ad0730a51)
+      
+![작가디테일VRM](https://github.com/economicfreedom/vrink/assets/35636560/5d30e324-4f8c-476d-9a1d-ab6af6b0694b)
 
-    
   </td>
 </tr>
 <tr>
-  <td>항공권 예약/환불 (카카오페이)</td>
-  <td>마일리지샵 구매 (이메일 SMTP)</td>
+  <td>VRM 크게보기</td>
+  <td>의뢰 게시판</td>
 </tr>
 <tr>
   <td>
     
-![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/41e200d4-7115-4619-9869-3d1f8727014d)
+![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/990bc586-98f4-42ae-85b7-07f9e6ade295)
+
+  </td>
+  <td>
+      
+![의뢰게시판](https://github.com/economicfreedom/vrink/assets/35636560/ec8cf95c-11a9-4749-ad14-72d51657df2b)
+
+  </td>
+</tr>
+<tr>
+  <td>의뢰 과정</td>
+  <td>리뷰</td>
+</tr>
+<tr>
+  <td>
+      
+![의뢰 로직](https://github.com/economicfreedom/vrink/assets/35636560/4598c4df-c2d8-4b9d-81ab-0871d6881af3)
       
   </td>
   <td>
-    
-![리뷰1](https://github.com/economicfreedom/vrink/assets/35636560/aa8e8c31-751b-4fa8-9995-de4ad0730a51)
+      
+![리뷰1](https://github.com/economicfreedom/vrink/assets/35636560/358c5d0d-7ba9-4e8c-91a2-ce8906cbce06)
 
-    
+  </td>
+</tr>
+<tr>
+  <td>좋아요</td>
+  <td>신고</td>
+</tr>
+<tr>
+  <td>
+      
+![좋아요](https://github.com/economicfreedom/vrink/assets/35636560/3070487c-5979-43c3-928d-a0edbc25385c)
+      
+  </td>
+  <td>
+      
+![신고](https://github.com/economicfreedom/vrink/assets/35636560/78fdc6ba-8ad1-4aaf-831a-b2f4a4efd506)
+
+  </td>
+</tr>
+<tr>
+  <td>구매하기</td>
+  <td>구매상세</td>
+</tr>
+<tr>
+  <td>
+      
+![구매](https://github.com/economicfreedom/vrink/assets/35636560/2c45daac-d181-44b7-8fbc-28655ff8d298)
+      
+  </td>
+  <td>
+      
+![구매상세 (1)](https://github.com/economicfreedom/vrink/assets/35636560/06e2141b-39f1-4748-b55d-6d9b22e1c99e)
+
+  </td>
+</tr>
+<tr>
+  <td>구매완료</td>
+  <td>작업완료</td>
+</tr>
+<tr>
+  <td>
+      
+![구매완료](https://github.com/economicfreedom/vrink/assets/35636560/a08287c4-49fd-4b88-b36b-c37c17d81852)
+      
+  </td>
+  <td>
+      
+![작업완료](https://github.com/economicfreedom/vrink/assets/35636560/f0b347a1-f22a-4dcd-93dc-673b7297cae3)
+
+  </td>
+</tr>
+<tr>
+  <td>환불</td>
+  <td>자유게시판 작성</td>
+</tr>
+<tr>
+  <td>
+      
+![환불](https://github.com/economicfreedom/vrink/assets/35636560/63e42a1b-9f75-4b94-bf47-203b396fa03e)
+      
+  </td>
+  <td>
+      
+![자유-게시판-C](https://github.com/economicfreedom/vrink/assets/35636560/a0b2a459-77e3-4f1f-8966-7fbfd9765e4d)
+
+  </td>
+</tr>
+<tr>
+  <td>자유게시판 조회</td>
+  <td>댓글</td>
+</tr>
+<tr>
+  <td>
+      
+![자유-게시판-R](https://github.com/economicfreedom/vrink/assets/35636560/7a93dd01-1e5b-4e44-99f6-4b490ad404f8)
+      
+  </td>
+  <td>
+      
+![자유-게시판 댓글-CRUD](https://github.com/economicfreedom/vrink/assets/35636560/549fab2c-19c9-493b-b5b5-4d96ed7e343d)
+
+  </td>
+</tr>
+<tr>
+  <td>작가-내정보</td>
+  <td>작가-내VRM 조회</td>
+</tr>
+<tr>
+  <td>
+      
+![작가-보기](https://github.com/economicfreedom/vrink/assets/35636560/1965c0bb-6098-4d51-8748-8d48f0af5e5b)
+      
+  </td>
+  <td>
+      
+![![VRM크게보기](https://github.com/economicfreedom/vrink/assets/35636560/1cc033bb-6e18-4650-8162-58b96a51680b)
+
+  </td>
+</tr>
+<tr>
+  <td>작가-내정보 수정</td>
+  <td>작가-가격 설정</td>
+</tr>
+<tr>
+  <td>
+      
+![작가 수정](https://github.com/economicfreedom/vrink/assets/35636560/3abc49df-e4c8-4098-a825-ce9bf4308a5d)
+      
+  </td>
+  <td>
+      
+![가격 설정](https://github.com/economicfreedom/vrink/assets/35636560/28736f0f-643e-4617-a844-7784e6312e63)
+
+  </td>
+</tr>
+<tr>
+  <td>작가-의뢰목록</td>
+  <td>작가-의뢰수락</td>
+</tr>
+<tr>
+  <td>
+      
+![의뢰 목록](https://github.com/economicfreedom/vrink/assets/35636560/35b01a00-de16-495b-b7b7-d7ebed7c3093)
+      
+  </td>
+  <td>
+      
+![의뢰 수락](https://github.com/economicfreedom/vrink/assets/35636560/2f452d52-1dc9-4b1b-9fd6-5945c8e5a0ab)
+
   </td>
 </tr>
 </table>
@@ -244,85 +402,70 @@
 
 <table>
 <tr>
-  <td>메인</td>
-  <td>회원 안내</td>
+  <td>이메일 로그인</td>
+  <td>카카오 로그인</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/3ea6b895-9579-47b6-a423-fbfcfb58833d"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/f46b7412-65ce-44f3-a84b-6e192ecc30e6"></td>
+  <td>
+      
+![이메일 로그인](https://github.com/economicfreedom/vrink/assets/35636560/c0d6bd5f-c060-41a5-b523-8fb6650da3f3)
+
+  </td>
+  <td>
+      
+![카카오로그인](https://github.com/economicfreedom/vrink/assets/35636560/998bab46-c308-47c6-9526-30a6e8fff40e)
+    
+  </td>
 </tr>
 <tr>
-  <td>카카오 소셜 로그인</td>
-  <td>비밀번호 찾기 (이메일 SMTP)</td>
+  <td>공지사항 확인</td>
+  <td>내 문의 내역</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/8b4dbb54-cb86-4e52-9b80-9795dc45cfd1/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/fac17342-cb00-4329-8f1f-06a7d4fa94f8/img.gif"></td>
+  <td>
+      
+![공지사항](https://github.com/economicfreedom/vrink/assets/35636560/8eaf9798-ee79-408c-bd99-6cef47d495e6)
+      
+  </td>
+  <td>
+      
+![내 문의 내역](https://github.com/economicfreedom/vrink/assets/35636560/116ca2af-36df-4560-a550-1c978fac1fa8)
+
+  </td>
 </tr>
 <tr>
+  <td>닉네임 변경</td>
   <td>비밀번호 변경</td>
-  <td>회원 정보 변경</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/65af6941-116b-443b-bf6a-022582240feb/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/9fa448ae-b9d3-44d2-82e6-e0b535ad7033a/img.gif"></td>
+  <td>
+      
+![닉네임변경](https://github.com/economicfreedom/vrink/assets/35636560/253a300b-e187-484b-a25b-1cbd221a14f7)
+
+  </td>
+  <td>
+      
+![비밀번호 변경](https://github.com/economicfreedom/vrink/assets/35636560/563f4b38-9972-48d1-8fa5-bfd8373c6d72)
+
+  </td>
 </tr>
 <tr>
-  <td>항공권 예약/환불 (카카오페이)</td>
-  <td>항공권 예약/환불 (마일리지)</td>
+  <td>작가 신청</td>
+  <td>팔로우 보기</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/1cd653da-4adf-4cd9-a653-24aed68336c2/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/8295e81a-39ec-4d1f-b1f4-04bf66ff3289/img.gif"></td>
+  <td>
+      
+![작가-신청](https://github.com/economicfreedom/vrink/assets/35636560/f3e5115b-f1c9-4c0c-a0a6-1e6a8b8606dd)
+      
+  </td>
+  <td>
+      
+![팔로우-보기](https://github.com/economicfreedom/vrink/assets/35636560/eabcdbe0-058b-4eb1-acaf-2b395e7cf187)
+
+  </td>
+
 </tr>
-<tr>
-  <td>기내 서비스 조회</td>
-  <td>위탁 수하물 신청</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/79470ee8-9b6d-42e3-877b-5b8e07bd3f84/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/c07b2977-7795-47e1-b2ba-b796f8d009ef/img.gif"></td>
-</tr>
-<tr>
-  <td>특별 기내식 조회</td>
-  <td>특별 기내식 신청</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/d075854e-8ebc-46ce-b78a-1fa218e5fd9c/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/dc56d0aa-5aff-4b47-963c-df326b674579/img.gif"></td>
-</tr>
-<tr>
-  <td>여행일지</td>
-  <td>공항 위치 정보 (구글 맵 API)</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/f5aab43f-dee4-4d17-838f-33668411aeaa/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/519cd0ca-d90a-4ed7-8fb2-e3d16f0ad3f2/img.gif"></td>
-</tr>
-<tr>
-  <td>항공기 정보</td>
-  <td>마일리지샵 구매 (이메일 SMTP)</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/3b1067de-58a7-478f-8576-fc91744a300d/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/8021f046-485e-486f-9862-15098df8aa41/img.gif"></td>
-</tr>
-<tr>
-  <td>마일리지샵 환불</td>
-  <td>공지사항</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/94235af1-5a2c-4fdd-9673-7aa45bd78b13/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/14721b13-882e-411b-b08a-00f1e11cbbc6/img.gif"></td>
-</tr>
-<tr>
-  <td>자주 묻는 질문</td>
-  <td>고객의 말씀 작성</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/3caecebf-071d-44c8-b5a2-bec30083b58c/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/ea38a3f9-cdae-42e6-8f3e-469970e2bdeb/img.gif"></td>
- </tr>
 </table>
 
 <br>
@@ -373,35 +516,99 @@
 
 <table>
 <tr>
-  <td>대시보드</td>
-  <td>회원 관리</td>
+  <td>관리자-대시보드</td>
+  <td>관리자-회원조회</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/a5dd6d2d-c462-476b-90d9-86e759df94e9" width="445"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/15547ecc-167f-4a2a-b87c-4462ecce1f43/img.gif"></td>
+  <td>
+      
+![어드민-통계](https://github.com/economicfreedom/vrink/assets/35636560/7a84be22-756f-4dee-a98f-2aaf867183c5)
+
+  </td>
+  <td>
+      
+![회원정보-조회](https://github.com/economicfreedom/vrink/assets/35636560/eb5093fe-4df2-4f23-be47-440a27a459fc)
+    
+  </td>
 </tr>
 <tr>
-  <td>게시판 관리</td>
-  <td>정산 관리</td>
+  <td>관리자-작가 승인</td>
+  <td>관리자-결제 목록</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/df7e0db1-de86-46cf-9c55-4ef402f77680/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/80afc88c-6ba2-4107-8a18-62bf118546df/img.gif"></td>
+  <td>
+      
+![작가-승인](https://github.com/economicfreedom/vrink/assets/35636560/dc7e7a97-25f4-487c-8109-92c0d089d23a)
+      
+  </td>
+  <td>
+      
+![결제 목록 정렬](https://github.com/economicfreedom/vrink/assets/35636560/6b462cc8-77af-463e-84ac-ebe931c7bd36)
+
+  </td>
 </tr>
 <tr>
-  <td>결제 관리</td>
-  <td>고객센터</td>
+  <td>관리자-결제 상세</td>
+  <td>관리자-정산 처리</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/28eb301d-1af1-4498-9a3b-2bd168987e39/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/7bea7e6a-0fab-4082-b406-446702474c90/img.gif"></td>
+  <td>
+      
+![결제 목록 상세](https://github.com/economicfreedom/vrink/assets/35636560/f0424eb3-5753-4e19-99df-eb0ad5a85545)
+
+  </td>
+  <td>
+      
+![정산-목록](https://github.com/economicfreedom/vrink/assets/35636560/dcf7b843-6d35-4f67-8e8d-23ffe5998818)
+
+  </td>
 </tr>
 <tr>
-  <td>배너 조회</td>
-  <td>배너 등록</td>
+  <td>관리자-배너 목록</td>
+  <td>관리자-배너 등록</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/f8fce7d1-ab33-4d66-b7d1-c4b03c7c94a0/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/b0c45e0b-c09e-4473-8605-500392a60542/img.gif"></td>
+  <td>
+      
+![배너-정렬](https://github.com/economicfreedom/vrink/assets/35636560/29a9144f-6a8b-4850-b6e1-18e0b26ce328)
+      
+  </td>
+  <td>
+      
+![배너 등록](https://github.com/economicfreedom/vrink/assets/35636560/eb9da21c-2ba6-4e8a-8a55-3b0fcc3d350d)
+
+  </td>
+</tr>
+<tr>
+  <td>관리자-공지 조회</td>
+  <td>관리자-공지 등록</td>
+</tr>
+<tr>
+  <td>
+      
+![공지 read](https://github.com/economicfreedom/vrink/assets/35636560/28b8e2de-48c3-4013-9c29-15e06d473c75)
+      
+  </td>
+  <td>
+      
+![공지 생성](https://github.com/economicfreedom/vrink/assets/35636560/dd8f2abf-3d1d-451e-bac3-fbf8e15fb8a2)
+
+  </td>
+</tr>
+<tr>
+  <td>관리자-고객 센터</td>
+  <td>관리자-게시판 관리</td>
+</tr>
+<tr>
+  <td>
+      
+![문의 목록](https://github.com/economicfreedom/vrink/assets/35636560/052cce09-e553-41cc-a5c2-7bca04d19c30)
+      
+  </td>
+  <td>
+      
+![자유게시판-관리](https://github.com/economicfreedom/vrink/assets/35636560/b7beccd0-4e66-4e48-9f8a-6dfa53ceee4f)
+
+  </td>
 </tr>
 </table>
