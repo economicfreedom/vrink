@@ -1,6 +1,6 @@
 <div align="center">
 	<img src="https://github.com/economicfreedom/vrink/assets/35636560/0f2ec704-b830-40ae-b739-5d0cbb84fe4a">
-	<img src="![KakaoTalk_20231115_184839433_01](https://github.com/economicfreedom/vrink/assets/129305385/19522179-4fc7-4ac8-89a7-cdd159a069ef)">
+	<img src="https://github.com/economicfreedom/vrink/assets/129305385/19522179-4fc7-4ac8-89a7-cdd159a069ef">
 </div>
 
 ## Virtual link to beyond reality, VRINK
